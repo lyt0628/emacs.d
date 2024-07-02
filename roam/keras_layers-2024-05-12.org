@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       f7ef336b-f383-4248-ac64-cc4d81a5b614
+:END:
+#+title: keras-layers
+#+date: [2024-05-12 日]
+#+last_modified: [2024-05-13 一 00:03]
+
+
+
+| layers | u说明 |
+|--------+------|
+| Dense  | 全连接层 |
+
+
+

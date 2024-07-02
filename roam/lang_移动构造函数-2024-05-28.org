@@ -1,0 +1,40 @@
+:PROPERTIES:
+:ID:       38b9b2d2-46a7-4589-92e4-b1abfedf2506
+:END:
+#+title: std-移动构造函数
+#+date: [2024-05-28 二]
+#+last_modified: [2024-05-28 二 17:01]
+
+
+用来描述 容器语义类型，用于从参数中获取其包含的元素 的这种构造.
+是 STD 提供的用来拷贝容器的方式
+
+* 结构
+#+BEGIN_SRC C++
+  set (set&& x);
+  set (set&& x, const allocator_type& alloc);
+
+#+END_SRC
+
+
+
+#+BEGIN_SRC C++
+  #include <iostream>
+  #include <set>
+
+  using namespace std;
+
+  int main(void) {
+     // Default constructor
+     std::set<char> t_set;
+     t_set.insert('x');
+     t_set.insert('y');
+     std::cout << "Size of set container t_set is : " << t_set.size();
+  
+     // Move constructor
+     std::set<char> t_set_new(std::move(t_set));
+     std::cout << "\nSize of new set container t_set_new is : " << t_set_new.size();
+     return 0;
+  }
+
+#+END_SRC

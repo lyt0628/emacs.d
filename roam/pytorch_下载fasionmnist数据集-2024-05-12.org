@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       9bf277a4-a783-4299-a29a-d42bbc9146ac
+:END:
+#+title: pytorch-下载FasionMNIST数据集
+#+date: [2024-05-12 日]
+#+last_modified: [2024-05-13 一 00:03]
+
+
+
+
+#+begin_src python
+
+#+end_src

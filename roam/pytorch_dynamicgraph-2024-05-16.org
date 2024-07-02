@@ -1,0 +1,60 @@
+:PROPERTIES:
+:ID:       8e3a28e8-09e5-450f-a307-805cf02f52bf
+:END:
+#+title: pytorch-dynamicgraph
+#+date: [2024-05-16 四]
+#+last_modified: [2024-05-16 四 00:12]
+
+
+
+#+begin_src python :results output
+  import torch
+  
+  first_counter = torch.Tensor([0])
+  second_counter = torch.Tensor([10])
+
+  while (first_counter < second_counter)[0]:
+    first_counter += 2
+    second_counter += 1
+
+  print("First: {}, Second: {}".format(first_counter,second_counter))
+#+end_src
+
+#+RESULTS:
+: First: tensor([20.]), Second: tensor([20.])
+
+
+
+
+* 静态图（TensorFlow）的循环
+
+
+#+begin_src python :session tf
+  import tensorflow as tf
+
+  first_counter = tf.constant(0)
+  second_counter = tf.constant(10)
+
+#+end_src
+
+
+#+begin_src python :session tf
+  def cond(first_counter, second_counter, *args):
+      return first_counter < second_counter
+
+  def body(first_counter, second_counter):
+      first_counter = tf.add(first_counter, 2)
+      second_counter = tf.add(second_counter, 1)
+      return first_counter, second_counter
+  "ok"
+#+end_src
+
+
+#+begin_src python
+  c1, c2 = tf.while_loop(cond, body, [first_counter, second_counter])
+
+  with tf.Session() as sess:
+    counter_1_res, counter_2_res = sess.run([c1, c2])
+
+
+#+end_src

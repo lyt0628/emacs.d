@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       14752f54-8454-44d6-921c-f86431da87e0
+:END:
+#+title: Qt-cfg-CMake API
+#+date: [2024-06-28 五]
+#+last_modified: [2024-06-28 五 15:25]
+
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-1075ef72-351f-11ef-9bf4-b48c9d0f4f89.png
+#+BEGIN_SRC plantuml
+  @startmindmap
+  + QtGui
+  ++ QGuiApplication & QWidnow
+  ++ Grag & Grop
+  ++ OpenGL
+  ++ Vulkan
+  ++ Mat & Vec
+  @endmindmap
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:/tmp/puml-1075ef72-351f-11ef-9bf4-b48c9d0f4f89.png]]
+

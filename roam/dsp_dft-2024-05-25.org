@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       428947d3-a3b4-428b-ab40-02692db02664
+:END:
+#+title: dsp-DFT
+#+date: [2024-05-25 六]
+#+last_modified: [2024-05-25 六 12:04]
+

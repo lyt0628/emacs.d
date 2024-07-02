@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       15b955f8-12dd-467c-88bf-e467ccc44718
+:END:
+#+title: OpenGL_
+#+date: [2024-06-28 五]
+#+last_modified: [2024-06-28 五 15:28]
+

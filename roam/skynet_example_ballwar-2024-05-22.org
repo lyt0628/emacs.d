@@ -1,0 +1,1241 @@
+:PROPERTIES:
+:ID:       db032b6f-f21a-4027-a939-1f6b66a85c8b
+:header-args:skynet: :noweb yes
+:END:
+#+title: skynet-example-ballwar
+#+date: [2024-05-22 三]
+#+last_modified: [2024-05-30 四 17:15]
+
+
+
+
+
+#+HEADER: :results file
+#+BEGIN_SRC dot :file /tmp/dot-d9713c7d-3400-474a-b6b0-ef188da46787.png
+  digraph G {
+    user -> gateway[label="1.发送登录协议"]
+    gateway -> login[label="2.转发协议"]
+    gateway -> agent
+    scene -> agent
+    login -> agentmgr[label="3.校验通过"]
+    agentmgr -> agent[label="4.创建用户实体,\n下线原用户"]
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/dot-d9713c7d-3400-474a-b6b0-ef188da46787.png]]
+
+
+
+* Get config
+
+
+#+NAME: runconfig
+#+begin_src skynet 
+  return {
+      --集群
+      cluster = {
+		    node1 = "127.0.0.1:7771", 
+		    node2 = "127.0.0.1:7772",
+      },
+      --agentmgr
+      agentmgr = { node = "node1" },
+
+      --scene
+      scene = {
+	node1 = {1001, 1002},  
+	node2 = {1003},
+      },
+
+      --节点1
+      node1 = {
+	  gateway = {
+	    [1] = {port=8001},
+	    [2] = {port=8002},
+	  },
+	  login = {
+	      [1] = {},
+	      [2] = {},
+	  },
+      },
+
+      --节点2
+      node2 = {
+	  gateway = {
+	    [1] = {port=8011},
+	    [2] = {port=8022},
+	  },
+	  login = {
+	      [1] = {},
+	      [2] = {},
+	  },
+      },
+  }
+
+#+end_src
+
+
+
+#+BEGIN_SRC skynet :results output :noweb yes
+
+  +++main
+  local skynet = require "skynet"
+  local runconfig = require "runconfig"
+
+  skynet.start(function()
+    skynet.error(runconfig.agentmgr.node)
+    skynet.exit()
+  end)
+
+ +++runconfig
+ <<runconfig>>
+#+END_SRC 
+
+#+RESULTS:
+#+begin_example
+[:00000002] LAUNCH snlua bootstrap
+[:00000003] LAUNCH snlua launcher
+[:00000004] LAUNCH snlua cdummy
+[:00000005] LAUNCH harbor 0 4
+[:00000006] LAUNCH snlua datacenterd
+[:00000007] LAUNCH snlua service_mgr
+[:00000008] LAUNCH snlua main
+[:00000008] node1
+[:00000008] KILL self
+[:00000002] KILL self
+#+end_example
+
+
+
+
+
+
+
+
+
+
+* Wrap Skynet
+
+
+
+#+NAME: service
+#+BEGIN_SRC skynet :noweb yes
+  local skynet = require "skynet"
+  local cluster = require "skynet.cluster"
+
+  <<lua#>> lua 的表可以充当对象，这和JS很像, 但 JS 获取的是单例，lua则是工厂
+  local M = {
+    name="", 
+    id=0, 
+
+    <<lua#>> 回调
+    exit=nil,
+    init=nil,
+
+    <<lua#>> 向service 发送消息，从resp表中查找函数进行调用
+    resp={},
+  }
+
+  <<dispatch>>
+
+  function init()
+    skynet.dispatch("lua", dispatch)
+    if M.init then
+      M.init()
+    end
+  end
+
+  <<lua#>> 脚本在顶级作用域中之间调用start方法, 向skynet中注册的 service 的 init回调
+  function M.start(name, id,...)
+    M.name = name
+    M.id = tonumber(id)
+    skynet.start(init)
+  end
+  <<util>>
+  return M
+
+#+END_SRC 
+
+#+RESULTS:
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/c5e8ea05-c1df-4bf4-a91b-1d31a4763465.png
+#+BEGIN_SRC plantuml
+@startuml
+
+participant script
+participant service
+participant skynet
+
+
+script -> service : service.start()
+service -> skynet : skynet.start(init)
+
+service <- skynet : init()
+script <- service : init()
+
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/c5e8ea05-c1df-4bf4-a91b-1d31a4763465.png]]
+
+
+#+NAME: dispatch
+#+BEGIN_SRC skynet
+
+   function traceback(err)
+     skynet.error(tostring(err))
+     skynet.error(debug.traceback())
+   end
+
+  local dispatch = function(session, address, cmd,...)
+    local fun = M.resp[cmd]
+    if not fun then
+      skynet.ret()
+      return
+    end
+
+   <<lua#>> lua 可以多值返回，pack 把他们打包成一个列表
+    local ret = table.pack(xpcall(fun, traceback, address, ...))
+    local isok = ret[1]
+
+    if not isok then
+      skynet.ret()
+      return
+    end
+
+    <<lua#>> 我们要求脚本用第一个返回值表示error, 这点设计和GO很像
+    skynet.retpack(table.unpack(ret, 2))
+  end
+
+#+END_SRC 
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/c4aa3b1a-6918-42ec-8c8b-fe0fb009669e.png
+#+BEGIN_SRC plantuml
+@startuml
+
+actor login 
+participant skynet
+participant service
+participant script
+
+
+login -> skynet : reqlogin
+skynet -> service : dispatch
+service -> script : call cmd(reqlogin)
+
+script -> service : cmd returnand check status
+service -> skynet : retpack
+skynet -> login : return value
+
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/c4aa3b1a-6918-42ec-8c8b-fe0fb009669e.png]]
+
+
+
+
+
+#+NAME: util
+#+BEGIN_SRC skynet :results output
+  <<lua#>> 帮忙判断 是本地还是其他节点，调用对应的 send和call
+
+  function M.call(node,srv,...)
+    local mynode = skynet.getenv("node")
+    if node == mynode then
+      return skynet.call(srv, "lua",...)
+    else
+      cluster.call(node,srv,...)
+    end
+
+  end
+
+  function M.send(node,srv,...)
+    local mynode = skynet.getenv("node")
+    if node == mynode then
+      return skynet.send(srv, "lua",...)
+    else
+      cluster.send(node,srv,...)
+    end
+
+  end
+
+#+END_SRC 
+
+
+
+
+* Test Service
+
+#+NAME: t-gateway
+#+BEGIN_SRC skynet :results output :mkdirp yes
+  local skynet = require "skynet"
+  local s = require "service"
+  <<lua#>> 空服务，仅仅编写init回调，注册service
+  
+  function s.init()
+    skynet.error("[start]"..s.name.." "..s.id)
+  end
+
+  s.start(...)
+#+END_SRC 
+
+
+#+BEGIN_SRC skynet :results output
+  +++main
+  local skynet = require "skynet"
+  local s = require "service"
+
+
+  skynet.start(function()
+    skynet.error("[start main]")
+
+    <<lua#>> 第一个参数制定服务，被skynet使用， 按配置查找服务脚本
+    <<lua#>> 后面的参数会在 lua模块 的 上下文中拿到（用...），模块工作得像函数一样
+    skynet.newservice("gateway", "gateway", 1)
+    skynet.exit()
+  end)
+
+  +++gateway
+  <<t-gateway>>
+
+  +++service
+  <<service>>
+
+ 
+#+END_SRC 
+
+#+RESULTS:
+#+begin_example
+[:00000002] LAUNCH snlua bootstrap
+[:00000003] LAUNCH snlua launcher
+[:00000004] LAUNCH snlua cdummy
+[:00000005] LAUNCH harbor 0 4
+[:00000006] LAUNCH snlua datacenterd
+[:00000007] LAUNCH snlua service_mgr
+[:00000008] LAUNCH snlua main
+[:00000009] LAUNCH snlua clusterd
+[:00000008] [start main]
+[:0000000a] LAUNCH snlua gateway gateway 1
+[:0000000a] [start]gateway 1
+[:00000008] KILL self
+[:00000002] KILL self
+#+end_example
+
+
+
+
+
+
+
+
+
+
+
+* Gateway
+
+** Entry
+#+NAME: gateway
+#+BEGIN_SRC skynet :results output :mkdirp yes
+  local skynet = require "skynet"
+  local s = require "service"
+
+  -- list
+  conns = {} 
+  players = {}
+
+  <<lua#>> 实体类，绑定 客户端 和 玩家信息
+  function conn()
+    local m = {
+	fd = nil,
+	playerid = nil
+    }
+    return m
+  end
+
+  <<lua#>> 实体类, 绑定 玩家， 对应的agent服务，和客户端（fd）
+  function gateplayer()
+    local m = {
+	playerid = nil,
+	agent = nil,
+	conn = nil
+    }
+    return m
+  end
+
+  <<lua#>> 处理IO
+  <<handle-conn>>
+
+  <<lua#>> 处理来自其他服务的消息
+  <<resp-login>>
+  <<resp-kick>>
+  s.start(...)
+#+END_SRC 
+
+#+begin_src dot :file /tmp/56124d57-1280-441e-91d4-1a74f474745e.png
+  digraph G {
+    gateway -> conn 
+    gateway -> gateplayer
+
+    conn -> gateplayer
+    gateplayer -> conn
+    gateplayer -> agent
+  } 
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/56124d57-1280-441e-91d4-1a74f474745e.png]]
+
+
+
+** Conn IO:
+
+
+#+NAME: handle-conn
+#+BEGIN_SRC skynet :results output
+  local runconfig = require "runconfig"
+  local socket = require "skynet.socket"
+
+
+  <<recv_loop>>
+  local connect = function(fd, addr)
+    print("connect from  "..addr..", "..fd)
+    local c = conn()
+    conns[fd]=c
+    c.fd = fd
+    skynet.fork(recv_loop, fd)
+   end
+
+
+   function s.init()
+    local node = skynet.getenv("node")
+    local nodecfg = runconfig[node]
+    local port = nodecfg.gateway[s.id].port
+
+    local listenfd = socket.listen("0.0.0.0", port)
+    skynet.error("listen socket>> ", "0.0.0.0:",port)
+    socket.start(listenfd, connect)
+  end
+
+#+END_SRC 
+
+
+
+#+NAME: recv_loop
+#+BEGIN_SRC skynet :results output
+  <<process_buff>>
+  <<disconnect>>
+  <<kick>>
+  local recv_loop = function(fd)
+    socket.start(fd) -- starting recv data
+
+    skynet.error("socket connnected "..fd)
+    local readbuf = ""
+    while true do
+      local recvstr = socket.read(fd)
+      if recvstr  then
+	readbuf = readbuf..recvstr
+	readbuf = process_buff(fd, readbuf)
+      else <<lua#>> FIN, 断开连接
+	skynet.error("socket close"..fd)
+	disconnect(fd)
+	socket.close(fd)
+      end
+    end
+  end
+#+END_SRC 
+
+
+
+** Handle Msg Protocol
+
+#+NAME: process_buff
+#+BEGIN_SRC skynet :results output
+  <<process_msg>>
+  local process_buff = function(fd, readbuff)
+    
+    while true do
+      local msgstr, rest = string.match(readbuff, "(.-)\r\n(.*)")
+      if msgstr then
+	  readbuff = rest
+	  process_msg(fd, msgstr)
+      else
+	  return readbuff
+      end
+    end
+  end
+#+END_SRC 
+
+
+
+
+#+NAME: packutil
+#+BEGIN_SRC skynet :results output
+    local str_unpack = function(msgstr)
+      local msg = {}
+      while true do
+	 local arg, rest = string.match(msgstr,"(.-),(.*)")
+	 if arg then
+	   msgstr = rest
+	   table.insert(msg, arg)
+	 else
+	   table.insert(msg, msgstr)
+	   break
+	 end
+      end
+      return msg[1], msg
+    end
+
+  local str_pack = function(cmd, msg)
+    return table.concat(msg, ",").."\r\n"
+  end
+#+END_SRC 
+
+
+#+NAME: process_msg
+#+BEGIN_SRC skynet :results output
+   <<packutil>>
+   local process_msg = function(fd, msgstr)
+     local cmd, msg =str_unpack(msgstr)
+     skynet.error("recv"..fd.."["..cmd.."] {"..table.concat(msg,",").."}")
+
+     local conn = conns[fd]
+     local playerid = conn.playerid
+
+     if not playerid then
+       local node =skynet.getenv("node")
+       local nodecfg = runconfig[node]
+       local loginid = math.random(1, #nodecfg.login)
+       local login = "login"..loginid
+       skynet.error("gateway: loginid is"..login)
+	---[[
+       skynet.send(login, "lua", "client", fd, cmd, msg)
+	 --]]
+       skynet.error("work1-Over")
+     else
+       local gplayer = players[playerid]
+       local agent = gplayer.agent
+       skynet.error("work2")
+
+	    ---[[
+       skynet.send(agent, "lua", "client", cmd, msg)
+	     --]]
+
+     end
+  end
+
+#+END_SRC 
+
+
+
+
+
+** 测试2
+
+
+#+BEGIN_SRC skynet :results output :configs "node=\"node1\""
+  +++main
+  local skynet = require "skynet"
+  local s = require "service"
+
+
+  skynet.start(function()
+    skynet.error("[start main]")
+
+    <<lua#>> 第一个参数制定服务，被skynet使用， 按配置查找服务脚本
+    <<lua#>> 后面的参数会在 lua模块 的 上下文中拿到（用...），模块工作得像函数一样
+    skynet.newservice("gateway", "gateway", 1)
+    skynet.exit()
+  end)
+
+  +++gateway
+  <<gateway>>
+
+  +++service
+  <<service>>
+
+  +++runconfig
+  <<runconfig>>
+
+#+END_SRC 
+
+#+RESULTS:
+#+begin_example
+[:00000002] LAUNCH snlua bootstrap
+[:00000003] LAUNCH snlua launcher
+[:00000004] LAUNCH snlua cdummy
+[:00000005] LAUNCH harbor 0 4
+[:00000006] LAUNCH snlua datacenterd
+[:00000007] LAUNCH snlua service_mgr
+[:00000008] LAUNCH snlua main
+[:00000009] LAUNCH snlua clusterd
+[:00000008] [start main]
+[:0000000a] LAUNCH snlua gateway gateway 1
+[:0000000a] listen socket>>  0.0.0.0: 8001
+[:00000008] KILL self
+[:00000002] KILL self
+connect from  127.0.0.1:46584, 2
+[:0000000a] socket connnected 2
+[:0000000a] recv2[login] {login,123,456}
+[:0000000a] lua call [0 to :a : 0 msgsz = 24] error : [31m./lualib/skynet.lua:970: ./lualib/skynet.lua:434: .../skynet-449e74b7-191d-11ef-a7eb-0242fe863792/gateway.lua:60: attempt to concatenate a table value (local 'nodecfg')
+#+end_example
+
+
+
+** 接受 Login 服务的消息
+
+*** 响应登录结果
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-7251b455-e87a-4fa8-951f-2cdbc2ffcf78.png
+#+BEGIN_SRC plantuml
+@startuml
+actor user
+participant gateway
+participant login
+
+user -> gateway: request login
+gateway -> login: forward request by skynet.send
+
+gateway <- login : dispatch
+user <-gateway : service.resq
+
+login -> agentmgr : login check pass,\nplease register agent
+agentmgr -> login : ok, agent is created
+login -> gateway : somebody was logined,\nsend his msg to agent service
+
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-7251b455-e87a-4fa8-951f-2cdbc2ffcf78.png]]
+
+
+
+#+NAME: resp-login
+#+BEGIN_SRC lua :results output
+  s.resp.send_by_fd = function(source, fd, msg)
+    skynet.error("send_by_fd speaking")
+    if not conns[fd] then
+      return
+    end
+
+    local buff = str_pack(msg[1], msg)
+    skynet.error("send "..fd.."["..msg[1].."]{"..table.concat(msg,",").."}")
+
+    socket.write(fd, buff)
+  end
+
+  s.resp.send = function(source, playerid,msg)
+    local gplayer = players[playerid]
+    if gplayer == nil then
+      return
+    end
+
+    local c = gplayer.conn
+    if c == nil then
+      return
+    end
+
+    s.resp.send_by_fd(nil, c.fd,msg)
+  end
+
+
+  s.resp.sure_agent = function(source, fd, playerid, agent)
+    local conn = conns[fd]
+    if not conn then
+      skynet.call("agentmgr", "lua", "reqkick", playerid, "Logout before login completion")
+      return false
+    end
+
+   conn.playerid = playerid
+
+   local gplayer = gateplayer()
+   gplayer.playerid =playerid
+   gplayer.agent = agent
+   gplayer.conn =conn
+   players[playerid] = gplayer
+
+   return true
+  end
+#+END_SRC 
+
+
+*** Logout
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-2890ce5f-76e4-43d6-ae5a-ccb47e4a18c3.png
+#+BEGIN_SRC plantuml
+@startuml
+gateway -> agentmgr : sombody is disconnected
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-2890ce5f-76e4-43d6-ae5a-ccb47e4a18c3.png]]
+
+#+NAME: disconnect
+#+BEGIN_SRC lua :results output
+  local disconnect = function(fd)
+    local c = conns[fd]
+    if not c then
+     return
+    end
+
+    local playerid = c.playerid
+    if not playerid then
+      return
+    else
+     players[playerid] = nil
+     local reason = "net lost"
+     skynet.call("agentmgr", "lua", "reqkick", playerid, reason)
+    end
+  end
+#+END_SRC 
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-bdb9c589-e2bf-41b6-8fa0-1cf81dc56761.png
+#+BEGIN_SRC plantuml
+@startuml
+gateway <- agentmgr : the agent was kicked,\n please disconnect it
+
+gateway -> agentmgr : disconnect
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-bdb9c589-e2bf-41b6-8fa0-1cf81dc56761.png]]
+
+
+
+#+NAME:  resp-kick
+#+BEGIN_SRC lua :results output
+  s.resp.kick = function(source, playerid)
+    local gplayer = players[playerid]
+    if not gplayer then
+      return
+    end
+
+    local c = gplayer.conn
+    players[playerid] = nil
+
+    if not c then
+     return
+    end
+    conns[c.fd] = nil
+    disconnect(c.fd)
+    socket.close(c.fd)
+ end
+#+END_SRC 
+
+
+* Login 服务
+
+
+
+
+| 协议        | 参数                     |
+|------------+-------------------------|
+| login      | 账号，密码                |
+|------------+-------------------------|
+| login(响应) | 0(失败)/1(成功)，原因字符串 |
+|------------+-------------------------|
+| client     |                         |
+|------------+-------------------------|
+
+
+
+
+
+
+
+
+
+
+
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/c5e8ea05-c1df-4bf4-a91b-1d31a4763465.png
+#+BEGIN_SRC plantuml
+@startuml
+
+participant client
+participant gateway
+participant login
+
+
+client -> gateway : login 消息
+gateway -> login : client 消息(cmd=login)
+
+login <- gateway : send_by_fd 消息
+client <- gateway : 消息
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/c5e8ea05-c1df-4bf4-a91b-1d31a4763465.png]]
+
+
+
+
+
+#+NAME: login
+#+begin_src skynet
+  local skynet = require "skynet"
+  local s = require "service"
+
+  s.client = {}
+  s.resp.client = function (source, fd, cmd, msg)
+    if s.client[cmd] then
+      local ret_msg = s.client[cmd](fd,  msg, source)
+      skynet.error("source:"..source)
+      skynet.error(msg)
+      skynet.send(source, "lua", "send_by_fd", fd, ret_msg)
+
+      skynet.error("s.resp.client success"..cmd)
+    else
+      skynet.error("s.resp.client failed"..cmd)
+    end
+  end
+
+  <<login-login2>>
+
+  s.start(...)
+#+end_src
+
+
+
+
+
+
+#+NAME: login-login
+#+begin_src skynet
+  s.client.login = function(fd,  msg, source)
+    skynet.error("Login: "..msg[1]..msg[2])
+
+
+    return {"login", -1, "测试"}
+  end
+#+end_src
+
+
+
+** 测试3
+
+#+BEGIN_SRC skynet :results output :configs "node=\"node1\""
+  +++main
+  local skynet = require "skynet"
+  local skynet_manager = require "skynet.manager"
+  local s = require "service"
+
+
+  skynet.start(function()
+    skynet.error("[start main]")
+
+    local mynode = skynet.getenv("node")
+
+  
+    <<lua#>> 第一个参数制定服务，被skynet使用， 按配置查找服务脚本
+    <<lua#>> 后面的参数会在 lua模块 的 上下文中拿到（用...），模块工作得像函数一样
+    local gateway = skynet.newservice("gateway", "gateway", 1)
+    skynet.name("gateway", gateway)
+
+    local login1 = skynet.newservice("login", "login", 3)
+    skynet.name("login1", login1)
+
+    local login2 = skynet.newservice("login", "login", 4)
+    skynet.name("login2", login2)
+
+    skynet.error("gateway"..gateway..", login1"..login1..", login2"..login2)
+    skynet.exit()
+  end)
+
+
+  +++gateway
+  <<gateway>>
+
+  +++login
+  <<login>>
+
+  +++service
+  <<service>>
+
+  +++runconfig
+  <<runconfig>>
+
+#+END_SRC 
+
+#+RESULTS:
+#+begin_example
+[:00000002] LAUNCH snlua bootstrap
+[:00000003] LAUNCH snlua launcher
+[:00000004] LAUNCH snlua cdummy
+[:00000005] LAUNCH harbor 0 4
+[:00000006] LAUNCH snlua datacenterd
+[:00000007] LAUNCH snlua service_mgr
+[:00000008] LAUNCH snlua main
+[:00000009] LAUNCH snlua clusterd
+[:00000008] [start main]
+[:0000000a] LAUNCH snlua gateway gateway 1
+[:0000000a] listen socket>>  0.0.0.0: 8001
+[:0000000b] LAUNCH snlua login login 3
+[:0000000c] LAUNCH snlua login login 4
+[:00000008] gateway10, login111, login212
+[:00000008] KILL self
+[:00000002] KILL self
+connect from  127.0.0.1:43116, 2
+[:0000000a] socket connnected 2
+[:0000000a] recv2[login] {login,123,456}
+[:0000000a] gateway: loginid islogin2
+[:0000000a] work1-Over
+[:0000000c] Login: login123
+[:0000000c] source:10
+[:0000000c] s.resp.client successlogin
+[:0000000a] send_by_fd speaking
+[:0000000a] send 2[login]{login,123,456}
+[:0000000a] recv2[login] {login,123,456}
+[:0000000a] gateway: loginid islogin2
+[:0000000a] work1-Over
+[:0000000c] Login: login123
+[:0000000c] source:10
+[:0000000c] s.resp.client successlogin
+[:0000000a] send_by_fd speaking
+[:0000000a] send 2[login]{login,123,456}
+[:0000000a] recv2[login] {login,666,777}
+[:0000000a] gateway: loginid islogin2
+[:0000000a] work1-Over
+[:0000000c] Login: login666
+[:0000000c] source:10
+[:0000000c] s.resp.client successlogin
+[:0000000a] send_by_fd speaking
+[:0000000a] send 2[login]{login,666,777}
+#+end_example
+
+
+
+
+
+
+#+NAME: login-login2
+#+BEGIN_SRC skynet
+  s.client.login = function(fd, msg, source)
+	  local playerid = tonumber(msg[2])
+	  local pw = tonumber(msg[3])
+	  local gate = source
+	  node = skynet.getenv("node")
+
+
+	  if pw ~= 123 then
+		  return {"login", 1, "密码错误"}
+	  end
+
+	  local isok, agent = skynet.call("agentmgr", "lua", "reqlogin", playerid, node, gate)
+	  if not isok then
+		  return {"login", 1, "请求mgr失败"}
+	  end
+
+
+	  --回应gate
+	  local isok = skynet.call(gate, "lua", "sure_agent", fd, playerid, agent)
+	  if not isok then
+		  return {"login", 1, "gate注册失败"}
+	  end
+
+      skynet.error("login succ "..playerid)
+      return {"login", 0, "登陆成功"}
+  end
+#+END_SRC
+
+* agentmgr 服务
+
+
+实体类
+#+NAME: agentmgr
+#+BEGIN_SRC skynet
+  local skynet = require "skynet"
+  local s = require "service"
+
+  --状态
+  STATUS = {
+	  LOGIN = 2,
+	  GAME = 3,
+	  LOGOUT = 4,
+  }
+
+  --玩家列表
+  local players = {}
+
+  --玩家类
+  function mgrplayer()
+      local m = {
+	  playerid = nil,
+		  node = nil,
+	  agent = nil,
+		  status = nil,
+		  gate = nil,
+      }
+      return m
+  end
+
+
+   <<agentmgr-reqlogin>>
+   <<agentmgr-reqkick>>
+
+  s.start(...)
+#+END_SRC
+
+
+
+** 相应登陆
+
+#+NAME: agentmgr-reqlogin
+#+BEGIN_SRC skynet
+  s.resp.reqlogin = function(source, playerid, node, gate)
+	  skynet.error("REQlogin")
+
+	  local mplayer = players[playerid]
+
+	  skynet.error("REQlogin2")
+	  --登陆过程禁止顶替
+	  if mplayer and mplayer.status == STATUS.LOGOUT then
+		  skynet.error("reqlogin fail, at status LOGOUT " ..playerid )
+		  return false
+	  end
+
+	  if mplayer and mplayer.status == STATUS.LOGIN then
+		  skynet.error("reqlogin fail, at status LOGIN " ..playerid)
+		  return false
+	  end
+	  --在线，顶替
+	  if mplayer then
+		  local pnode = mplayer.node
+		  local pagent = mplayer.agent
+		  local pgate = mplayer.gate
+		  mplayer.status = STATUS.LOGOUT,
+		  s.call(pnode, pagent, "kick")
+		  s.send(pnode, pagent, "exit")
+		  s.send(pnode, pgate, "send", playerid, {"kick","顶替下线"})
+		  s.call(pnode, pgate, "kick", playerid)
+	  end
+
+	  --上线
+	  local player = mgrplayer()
+	  player.playerid = playerid
+	  player.node = node
+	  player.gate = gate
+	  player.agent = nil
+	  player.status = STATUS.LOGIN
+	  players[playerid] = player
+
+	  local agent = s.call(node, "nodemgr", "newservice", "agent", "agent", playerid)
+	  player.agent = agent
+	  player.status = STATUS.GAME
+	  return true, agent
+  end
+
+#+END_SRC
+
+
+
+#+NAME: agentmgr-reqkick
+#+BEGIN_SRC skynet
+s.resp.reqkick = function(source, playerid, reason)
+	local mplayer = players[playerid]
+	if not mplayer then
+		return false
+	end
+	
+	if mplayer.status ~= STATUS.GAME then
+		return false
+	end
+
+	local pnode = mplayer.node
+	local pagent = mplayer.agent
+	local pgate = mplayer.gate
+	mplayer.status = STATUS.LOGOUT
+
+	s.call(pnode, pagent, "kick")
+	s.send(pnode, pagent, "exit")
+	s.send(pnode, pgate, "kick", playerid)
+	players[playerid] = nil
+
+	return true
+end
+#+END_SRC
+
+
+
+* nodemgr
+
+
+
+
+#+NAME: nodemgr
+#+BEGIN_SRC skynet
+  local skynet = require "skynet"
+  local s = require "service"
+
+  s.resp.newservice = function(source, name, ...)
+          skynet.error("I am Node mgr")
+	  local srv = skynet.newservice(name, ...)
+	  return srv
+  end
+
+  s.start(...)
+
+#+END_SRC
+
+
+* agent
+
+#+NAME: agent
+#+BEGIN_SRC skynet
+  local skynet = require "skynet"
+  local s = require "service"
+
+  s.client = {}
+  s.gate = nil
+
+
+
+  s.resp.client = function(source, cmd, msg)
+      s.gate = source
+      if s.client[cmd] then
+		  local ret_msg = s.client[cmd]( msg, source)
+		  if ret_msg then
+			  skynet.send(source, "lua", "send", s.id, ret_msg)
+		  end
+      else
+	  skynet.error("s.resp.client fail", cmd)
+      end
+  end
+
+
+  s.client.work = function(msg)
+	  s.data.coin = s.data.coin + 1
+          skynet.error("I am work")
+	  return {"work", s.data.coin}
+  end
+
+
+  s.resp.kick = function(source)
+	  s.leave_scene()
+	  --在此处保存角色数据
+	  skynet.sleep(200)
+  end
+
+  s.resp.exit = function(source)
+	  skynet.exit()
+  end
+
+  s.resp.send = function(source, msg)
+	  skynet.send(s.gate, "lua", "send", s.id, msg)
+  end
+
+
+  s.init = function( )
+	  --playerid = s.id
+	  --在此处加载角色数据
+	  skynet.sleep(200)
+	  s.data = {
+		  coin = 100,
+		  hp = 200,
+	  }
+  end
+
+  s.start(...)
+
+#+END_SRC
+
+
+
+
+
+
+
+* 测试点3
+#+BEGIN_SRC skynet :results output :configs "node=\"node1\""
+  +++main
+
+  local skynet = require "skynet"
+  local skynet_manager = require "skynet.manager"
+  local runconfig = require "runconfig"
+  local cluster = require "skynet.cluster"
+
+
+
+  skynet.start(function()
+	  --初始化
+	  local mynode = skynet.getenv("node")
+	  local nodecfg = runconfig[mynode]
+
+	  --节点管理
+	  local nodemgr = skynet.newservice("nodemgr","nodemgr", 0)
+	  skynet.name("nodemgr", nodemgr)
+
+	  --集群
+	  cluster.reload(runconfig.cluster)
+	  cluster.open(mynode)
+
+	  --gate
+	  for i, v in pairs(nodecfg.gateway or {}) do
+		  local srv = skynet.newservice("gateway","gateway", i)
+		  skynet.name("gateway"..i, srv)
+	  end
+
+	  --login
+	  for i, v in pairs(nodecfg.login or {})  do
+	  local srv = skynet.newservice("login","login", i)
+		  skynet.name("login"..i, srv)
+	  end
+
+	  --agentmgr
+	  local anode = runconfig.agentmgr.node
+	  if mynode == anode then
+		  local srv = skynet.newservice("agentmgr", "agentmgr", 0)
+		  skynet.name("agentmgr", srv)
+	  else
+		  local proxy = cluster.proxy(anode, "agentmgr")
+		  skynet.name("agentmgr", proxy)
+	  end
+
+ 
+	  --退出自身
+      skynet.exit()
+  end)
+
+
+
+
+  +++gateway
+  <<gateway>>
+
+  +++login
+  <<login>>
+
+  +++service
+  <<service>>
+
+  +++runconfig
+  <<runconfig>>
+
+  +++agentmgr
+  <<agentmgr>>
+
+  +++nodemgr
+  <<nodemgr>>
+
+  +++agent
+  <<agent>>
+#+END_SRC

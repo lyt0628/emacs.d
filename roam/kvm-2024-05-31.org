@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       e07eff4b-e6a0-4aee-bf11-0b9fdc4f3677
+:END:
+#+title: kvm
+#+date: [2024-05-31 五]
+#+last_modified: [2024-05-31 五 20:34]
+
+
+
+#+BEGIN_SRC sh
+  sudo apt install libvirt-daemon-system virtinst qemu-kvm virt-manager ksshaskpass -y
+
+#+END_SRC
+
+
+#+BEGIN_SRC sh
+  sudo apt-get install ssh
+#+END_SRC
+
+#+BEGIN_SRC sh
+  sudo usermod -a -G libvirt root
+  sudo usermod -a -G libvirt USER
+
+#+END_SRC
+
+#+BEGIN_SRC sh
+  lsmod | grep kvm
+#+END_SRC

@@ -1,0 +1,286 @@
+:PROPERTIES:
+:ID:       2e7e406f-5844-4f71-b0b8-d6f658de5672
+:END:
+#+title: keras-example-reuters
+#+date: [2024-05-14 二]
+#+last_modified: [2024-05-15 三 17:32]
+
+
+* 加载数据集
+
+#+begin_src python :session reuters
+  from tensorflow.keras.datasets import reuters
+
+  (train_data, train_labels), (test_data, test_labels) = reuters.load_data(num_words=10000)
+
+  "N train: {}, N test: {}".format(len(train_data), len(test_data))
+#+end_src
+
+#+RESULTS:
+: N train: 8982, N test: 2246
+
+
+#+begin_src python :session reuters
+  "words： {},\ntopic:{}".format(train_data[10],train_labels[10])
+#+end_src
+
+#+RESULTS:
+: words： [1, 245, 273, 207, 156, 53, 74, 160, 26, 14, 46, 296, 26, 39, 74, 2979, 3554, 14, 46, 4689, 4329, 86, 61, 3499, 4795, 14, 61, 451, 4329, 17, 12],
+: topic:3
+
+
+
+
+* 反转 k-v
+
+#+begin_src python :session reuters
+  word_index = reuters.get_word_index()
+
+  reverse_word_index = dict(
+      [(value, key) for (key, value) in word_index.items()])
+
+  decoded_review = " ".join(
+      [reverse_word_index.get(i - 3, "?") for i in train_data[0]])
+  
+#+end_src
+
+#+RESULTS:
+
+
+* One-Hot 编码
+
+
+
+#+NAME: to_one_hot
+#+begin_src python :session reuters
+  import numpy as np
+
+  def to_one_hot(labels, dimension=46):
+    results = np.zeros((len(labels), dimension))
+    for i, label in enumerate(labels):
+      results[i, label] = 1.
+    return results
+
+
+  one_hot_train_labels = to_one_hot(train_labels)
+  one_hot_train_labels[10]
+#+end_src
+
+#+RESULTS: to_one_hot
+| 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+
+#+begin_src python :session reuters
+
+  x_train = to_one_hot(train_data,dimension=10000)
+  x_test = to_one_hot(test_data,dimension=10000)
+
+  x_train[10]
+#+end_src
+
+#+RESULTS:
+| 0 | 1 | 0 | ... | 0 | 0 | 0 |
+
+
+
+
+#+begin_src python :session reuters
+  from tensorflow.keras.utils import to_categorical
+
+  y_train = to_categorical(train_labels)
+  y_test = to_categorical(test_labels)
+  y_train[10]
+#+end_src
+
+#+RESULTS:
+| 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+
+
+* 构建网络
+
+#+begin_src python :session reuters
+  from tensorflow import keras
+  from tensorflow.keras import layers
+  
+  model = keras.Sequential([
+      layers.Dense(64, activation="relu"),
+      layers.Dense(64, activation="relu"),
+      layers.Dense(46, activation="softmax")
+  ])
+  model
+#+end_src
+
+#+RESULTS:
+: <Sequential name=sequential, built=False>
+
+
+#+begin_src python :session reuters
+  model.compile(optimizer="rmsprop",
+		loss="categorical_crossentropy",
+		metrics=["accuracy"])
+  model
+#+end_src
+
+#+RESULTS:
+: <Sequential name=sequential, built=False>
+
+
+#+begin_src python
+
+#+end_src
+
+
+
+* 验证集调整超参数
+
+
+#+begin_src python :session reuters
+  x_val = x_train[:1000]
+  partial_x_train = x_train[1000:]
+  y_val = y_train[:1000]
+  partial_y_train = y_train[1000:]
+
+  len(partial_x_train)
+#+end_src
+
+#+RESULTS:
+: 7982
+
+
+
+* 训练网络
+
+
+#+begin_src python :session reuters 
+  history = model.fit(partial_x_train,
+		      partial_y_train,
+		      epochs=20,
+		      batch_size=512,
+		      validation_data=(x_val, y_val))
+  history
+#+end_src
+
+#+RESULTS:
+: <keras.src.callbacks.history.History object at 0x721999e824d0>
+
+
+* 可视化
+
+** 绘制损失
+
+#+begin_src python :session reuters :results silent
+  import matplotlib.pyplot as plt
+
+  plt.figure(figsize=(18, 18), dpi=100)
+
+  loss = history.history["loss"]
+  val_loss = history.history["val_loss"]
+  epochs = range(1, len(loss) + 1)
+  
+  plt.plot(epochs, loss, "bo", label="Training loss")
+  plt.plot(epochs, val_loss, "b", label="Validation loss")
+  plt.title("Training and validation loss")
+  plt.xlabel("Epochs")
+  plt.ylabel("Loss")
+  plt.legend()
+  plt.show()
+#+end_src
+
+#+RESULTS:
+: None
+
+
+** 绘制精度
+
+#+begin_src python :session reuters :results silent
+
+  plt.figure(figsize=(18, 18), dpi=100)
+
+  acc = history.history["accuracy"]
+  val_acc = history.history["val_accuracy"]
+
+  plt.plot(epochs, acc, "bo", label="Training accuracy")
+  plt.plot(epochs, val_acc, "b", label="Validation accuracy")
+  plt.title("Training and validation accuracy")
+  plt.xlabel("Epochs")
+  plt.ylabel("Accuracy")
+  plt.legend()
+  
+  plt.show()
+#+end_src
+
+
+
+
+* 重新训练9轮
+
+
+#+begin_src python :session reuters 
+  history = model.fit(partial_x_train,
+		      partial_y_train,
+		      epochs=9,
+		      batch_size=512,
+		      validation_data=(x_val, y_val))
+  
+  results = model.evaluate(x_test, y_test)
+  results
+#+end_src
+
+#+RESULTS:
+| 1.3155503273010254 | 0.7773820161819458 |
+
+
+
+* 预测测试集
+
+#+begin_src python :session reuters
+  predictions = model.predict(x_test)
+  
+  predictions[0].shape
+#+end_src
+
+#+RESULTS:
+| 46 |
+
+
+#+begin_src python :session reuters
+  np.sum(predictions[0])
+#+end_src
+
+#+RESULTS:
+: 1.0000001
+
+
+#+begin_src python :session reuters
+  np.argmax(predictions[0])
+#+end_src
+
+#+RESULTS:
+: 3
+
+
+* 编码离散值为整数张量
+
+
+#+begin_src python :session reuters
+  
+  y_train = np.asarray(train_labels)
+  y_test = np.asarray(test_labels)
+
+  y_train
+#+end_src
+
+#+RESULTS:
+| 3 | 4 | 3 | ... | 25 | 3 | 25 |
+
+
+#+begin_src python :session reuters
+  model.compile(optimizer="rmsprop",
+		loss="sparse_categorical_crossentropy",
+		metrics=["accuracy"])
+  model
+#+end_src
+
+#+RESULTS:
+: <Sequential name=sequential, built=True>

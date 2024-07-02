@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       15dac4e7-8c43-46d8-998b-d42a97891648
+:END:
+#+title: tensorflow-example-linerclassifier
+#+date: [2024-05-14 二]
+#+last_modified: [2024-05-14 二 18:08]
+

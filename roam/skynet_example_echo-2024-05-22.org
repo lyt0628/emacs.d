@@ -1,0 +1,64 @@
+:PROPERTIES:
+:ID:       5cf0b4ab-029e-4e8e-9486-87ec1f9c136e
+:END:
+#+title: skynet-example-echo
+#+date: [2024-05-22 三]
+#+last_modified: [2024-05-23 四 11:17]
+
+
+
+
+
+#+HEADER: :tangle ../skynet/skynet/examples/Pmain.lua
+#+BEGIN_SRC skynet :results output
++++main
+  local skynet = require "skynet"
+  local socket = require "skynet.socket"
+
+  function connect(fd, addr)
+      print(fd.." got a conn from addr: "..addr)
+
+      socket.start(fd)
+
+      while true do
+	  local readdata = socket.read(fd)
+
+	  if readdata ~= nil then
+	      print(fd.." recv "..readdata)
+	      socket.write(fd, readdata)
+	  else
+	      print(fd.." close ")
+	      socket.close(fd)
+	  end
+      end
+  end
+
+  skynet.start(function()
+      local listenfd = socket.listen("0.0.0.0", 8888)
+      socket.start(listenfd ,connect)
+  end)
+#+END_SRC 
+
+#+RESULTS:
+#+begin_example
+[:00000002] LAUNCH snlua bootstrap
+[:00000003] LAUNCH snlua launcher
+[:00000004] LAUNCH snlua cdummy
+[:00000005] LAUNCH harbor 0 4
+[:00000006] LAUNCH snlua datacenterd
+[:00000007] LAUNCH snlua service_mgr
+[:00000008] LAUNCH snlua main
+[:00000002] KILL self
+2 got a conn from addr: 127.0.0.1:49424
+2 recv 123
+
+[:00000008] lua call [0 to :8 : 0 msgsz = 24] error : [31m./lualib/skynet.lua:970: ./lualib/skynet.lua:434: ...9oV/skynet-af487a11-184b-11ef-af1b-024244b842ae/main.lua:13: attempt to concatenate a boolean value (local 'readdata')
+stack traceback:
+	...9oV/skynet-af487a11-184b-11ef-af1b-024244b842ae/main.lua:13: in function 'connect'
+	./lualib/skynet/socket.lua:145: in field '?'
+	./lualib/skynet/socket.lua:206: in upvalue 'f'
+	./lualib/skynet.lua:384: in function <./lualib/skynet.lua:356>
+stack traceback:
+	[C]: in function 'assert'
+	./lualib/skynet.lua:970: in function 'skynet.dispatch_message'[0m
+#+end_example

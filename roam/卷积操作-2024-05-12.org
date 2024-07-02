@@ -1,0 +1,36 @@
+:PROPERTIES:
+:ID:       ce037a71-476d-4de6-b13a-d06686e97248
+:END:
+#+title: 卷积操作
+#+date: [2024-05-12 日]
+#+last_modified: [2024-05-12 日 19:43]
+
+
+
+#+HEADER: :noweb yes
+#+HEADER: :results output
+#+BEGIN_SRC python
+  import torch
+
+  x = torch.rand(5,3)
+  print(x)
+#+END_SRC
+
+  #+RESULTS:
+  : tensor([[0.3096, 0.3733, 0.1947],
+  :         [0.3096, 0.9102, 0.4321],
+  :         [0.7149, 0.2627, 0.1250],
+  :         [0.0929, 0.8000, 0.0091],
+  :         [0.4007, 0.7464, 0.3660]])
+
+
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC python
+  import tensorflow as tf
+  x = tensorflow.Constant(3)
+  print(x)
+#+END_SRC
+
+#+RESULTS:
+

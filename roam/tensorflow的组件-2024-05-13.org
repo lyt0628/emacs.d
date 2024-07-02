@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       c4fd528a-2cd9-4350-b755-fe5aa54f9e35
+:END:
+#+title: tensorflow的组件
+#+date: [2024-05-13 一]
+#+last_modified: [2024-05-13 一 12:34]
+

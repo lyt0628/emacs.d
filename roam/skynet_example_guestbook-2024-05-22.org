@@ -1,0 +1,87 @@
+:PROPERTIES:
+:ID:       cd59bafc-012a-4e25-86e7-3eadc05e0c45
+:END:
+#+title: skynet-example-guestbook
+#+date: [2024-05-22 三]
+#+last_modified: [2024-05-22 三 23:00]
+
+
+
+
+#+HEADER: :tangle ../skynet/skynet/examples/Pmain.lua
+#+BEGIN_SRC lua :results output
+  local skynet = require "skynet"
+  local socket = require "skynet.socket"
+  local mysql = require "skynet.db.mysql"
+
+  local db= nil
+
+  function connect(fd, addr)
+      print(fd.." connected addr:"..addr)
+
+      socket.start(fd)
+      while true do
+	  local readdata = socket.read(fd)
+		  if readdata ~= nil then
+			  if readdata == "get\r\n" then
+				  local res = db:query("select * from msgs")
+				  for i,v in pairs(res) do
+					  socket.write (fd, v.id.." "..v.text.."\r\n")
+				  end
+			  else
+				  local data = string.match(readdata, "set (.-)\r\n")
+				  db:query("insert into msgs (text) values (\'"..data.."\')")
+			  end
+		    else
+			  print(fd.." close ")
+			  socket.close(fd)
+		    end
+	  end
+  end
+
+  skynet.start(function()
+
+      local listenfd = socket.listen("0.0.0.0", 8888)
+      socket.start(listenfd ,connect)
+  
+      db=mysql.connect({
+	      host="192.168.103.54",
+	      port=3306,
+	      database="msg_board",
+	      user="lyt",
+	      password="123456",
+	      max_packet_size = 1024 * 1024,
+	      on_connect = nil
+	  })
+  end)
+#+END_SRC 
+
+
+
+
+
+
+
+
+
+
+#+BEGIN_SRC sql
+  SHOW DATABASE;
+  CREATE DATABSE msg_board;
+  USE msg_board;
+  SELECT DATABASE();
+  SHOW TABLES;
+
+  CREATE TABLE msgs (
+    id int(11) NOT NULL,
+    msg TEXT,
+    PRIMARY KEY (id)
+  )engine=innodb default
+   charset=latin1;
+
+  INSERT INTO msgs(text) VALUES("hello");
+  INSERT INTO msgs(text) VALUES("hi");
+  INSERT INTO msgs(text) VALUES("Bye");
+  INSERT INTO msgs(text) VALUES("good bye");
+#+END_SRC
+

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       7bf414a5-e54d-433f-bc7c-6832e69fc87e
+:END:
+#+title: Qt-OpenGL
+#+date: [2024-06-28 五]
+#+last_modified: [2024-06-28 五 15:27]
+

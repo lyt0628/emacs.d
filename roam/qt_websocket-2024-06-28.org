@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       67bf958c-8cfb-47fb-b9e5-b4de20e2aab7
+:END:
+#+title: Qt-WebSocket
+#+date: [2024-06-28 五]
+#+last_modified: [2024-06-28 五 15:30]
+

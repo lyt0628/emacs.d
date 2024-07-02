@@ -1,0 +1,36 @@
+:PROPERTIES:
+:ID:       c9159175-ea63-4fc7-a467-4279210e01e8
+:END:
+#+title: skynet-example-mysql
+#+date: [2024-05-22 三]
+#+last_modified: [2024-05-22 三 22:59]
+
+
+
+
+
+#+HEADER: :tangle ../skynet/skynet/examples/Pmain.lua
+#+BEGIN_SRC lua :results output
+  local skynet = require "skynet"
+  local mysql = require "skynet.db.mysql"
+
+  skynet.start(function()
+      local db=mysql.connect({
+	  host="39.100.116.101",
+	  port=3306,
+	  database="message_board",
+	  user="root",
+	  password="7a77-788b889aB",
+	  max_packet_size = 1024 * 1024,
+	  on_connect = nil
+      })
+      local res = db:query("insert into msgs (text) values (\'hehe\')")
+
+      res = db:query("select * from msgs")
+
+      for i,v in pairs(res) do
+	  print ( i," ",v.id, " ",v.text)
+      end
+  end)
+#+END_SRC 
+

@@ -1,0 +1,58 @@
+:PROPERTIES:
+:ID:       6c273026-a96e-431b-85fc-015f833d5339
+:END:
+#+title: analy-Boost
+#+date: [2024-05-28 二]
+#+last_modified: [2024-05-28 二 19:21]
+
+
+#+NAME: 构建下载Boost
+#+HEADER: :dir "/home/lyt0628/download/boost_1_66_0"
+#+BEGIN_SRC sh
+  pwd
+  ./boostrap.sh
+  b2 --buildtype=complete install
+#+END_SRC
+
+#+RESULTS:
+
+
+
+
+#+BEGIN_SRC C++
+  #include<boost/version.hpp>
+  #include<boost/config.hpp>
+
+  #include <iostream>
+  using namespace std;
+
+  int
+  main()
+  {
+    cout << BOOST_VERSION <<endl;
+    cout << BOOST_LIB_VERSION <<endl;
+    cout << BOOST_PLATFORM <<endl;
+    cout << BOOST_COMPILER <<endl;
+    cout << BOOST_STDLIB <<endl;
+  }
+#+END_SRC
+
+#+RESULTS:
+| 107400 |           |         |          |
+| 1_74   |           |         |          |
+| linux  |           |         |          |
+| GNU    | C++       | version |   11.4.0 |
+| GNU    | libstdc++ | version | 20230528 |
+
+
+
+
+#+NAME: 下载b2
+#+HEADER: :dir "/home/lyt0628/download/boost_1_66_0"
+#+BEGIN_SRC sh
+  pwd
+  cd tools/build/
+  ./bootstrap.sh
+  ./b2 install
+#+END_SRC
+

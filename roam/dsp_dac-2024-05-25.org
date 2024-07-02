@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       710c90b6-06b7-4092-add3-6d3f013a5b03
+:END:
+#+title: dsp-DAC
+#+date: [2024-05-25 六]
+#+last_modified: [2024-05-25 六 12:04]
+

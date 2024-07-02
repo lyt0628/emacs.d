@@ -1,0 +1,301 @@
+:PROPERTIES:
+:ID:       9625f10d-8571-45aa-9f84-cd525172ed7c
+:END:
+#+title: gl-example-pyramid
+#+date: [2024-05-24 五]
+#+last_modified: [2024-05-24 五 11:51]
+
+
+  
+  
+#+HEADER: :dir workdir 
+#+HEADER: :flags "$(pkg-config --cflags glfw3  gl glx x11 xrandr xi xxf86vm  glew glu)" -I./deps/sb7/include
+#+HEADER: :libs "$(pkg-config --libs glfw3  gl glx x11 xrandr xi xxf86vm  glew glu) "
+#+HEADER: :var vShaderSource=cube_v
+#+HEADER: :var fShaderSource=cube_f
+#+BEGIN_SRC C++ :noweb yes
+  <<gl-head>>
+
+  #define numVAOs 1
+  #define numVBOs 2
+
+  GLuint rendingProgram;
+  GLuint vao[numVAOs];
+  GLuint vbo[numVBOs];
+
+
+  float cameraX, cameraY, cameraZ;
+  float cubeLocX, cubeLocY, cubeLocZ;
+
+
+  GLuint mvLoc, projLoc;
+  int width, height;
+  float aspect;
+  glm::mat4 pMat, vMat, mMat, mvMat;
+
+
+  void init(GLFWwindow* window) {
+
+      rendingProgram = createShaderProgram(vShaderSource, fShaderSource);
+
+      cameraX = 0.0f; cameraY = 0.0f; cameraZ = 8.0f;
+      cubeLocX = 0.0f; cubeLocY = -2.0f; cubeLocZ = 0.0f;
+
+      <<setupVertices>>
+  }
+
+
+
+
+
+  void display(GLFWwindow* window, double currentTime)
+  {
+      glClear(GL_DEPTH_BUFFER_BIT); 
+      glClear(GL_COLOR_BUFFER_BIT); 
+      glUseProgram(rendingProgram);
+
+
+      mvLoc = glGetUniformLocation(rendingProgram, "mv_matrix");
+      projLoc = glGetUniformLocation(rendingProgram, "proj_matrix");
+
+
+      glfwGetFramebufferSize(window, &width, &height);
+
+      aspect = (float) width / (float) height;
+      pMat = glm::perspective(1.0475f, aspect, 0.1f, 1000.0f); // 1.0475 = 60 度
+
+
+      vMat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, -cameraY, -cameraZ));
+      mMat = glm::translate(glm::mat4(1.0f), glm::vec3(cubeLocX, cubeLocY, cubeLocZ));
+      mvMat = vMat * mMat;
+
+
+      glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
+      glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(pMat));
+
+
+
+      glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+      glEnableVertexAttribArray(0);
+
+
+      glEnable(GL_DEPTH_TEST);
+      glDepthFunc(GL_LEQUAL);
+
+      glPointSize(20);
+      glDrawArrays(GL_POINTS, 0, 36);
+  }
+
+  <<gl-loop>>
+  #+END_SRC
+
+  #+RESULTS:
+
+ 
+
+** 顶点着色器
+  
+#+NAME: cube_v
+#+BEGIN_SRC ruby
+  "#version 450
+  layout(location=0) in vec3 position;
+
+  uniform mat4 mv_matrix;
+  uniform mat4 proj_matrix;
+
+  void main(void)
+  {
+    gl_Position = proj_matrix * mv_matrix * vec4(position,1.0);
+  }".gsub("\n", "\\\n\\n")
+#+END_SRC
+
+#+RESULTS: cube_v
+#+begin_example
+#version 450\
+\nlayout(location=0) in vec3 position;\
+\n\
+\nuniform mat4 mv_matrix;\
+\nuniform mat4 proj_matrix;\
+\n\
+\nvoid main(void)\
+\n{\
+\n  gl_Position = proj_matrix * mv_matrix * vec4(position,1.0);\
+\n}
+#+end_example
+
+
+** 片元着色器
+
+#+NAME: cube_f
+#+BEGIN_SRC ruby
+  "#version 450
+  out vec4 color;
+
+  uniform mat4 mv_matrix;
+  uniform mat4 proj_matrix;
+
+  void main(void)
+  {
+      color =  vec4(0.0,0.0,1.0,1.0);
+  }
+  ".gsub("\n", "\\\n\\n")
+#+END_SRC
+
+#+RESULTS: cube_f
+#+begin_example
+#version 450\
+\nout vec4 color;\
+\n\
+\nuniform mat4 mv_matrix;\
+\nuniform mat4 proj_matrix;\
+\n\
+\nvoid main(void)\
+\n{\
+\n    color =  vec4(0.0,0.0,1.0,1.0);\
+\n}\
+\n
+#+end_example
+
+
+** 顶点数据
+#+begin_src ruby
+(4 * 3 + 2 *3) * 3
+#+end_src 
+
+#+RESULTS:
+: 54
+
+#+begin_src ruby
+(6 * 2 * 3) *3
+#+end_src 
+
+#+RESULTS:
+: 108
+
+#+NAME: setupVertices
+#+begin_src C++
+  float vertices[54] = {
+    // 后面
+    -1.0f, 1.0f, -1.0f,
+    -1.0f, -1.0f, -1.0f,
+    1.0f, -1.0f, -1.0f,
+
+    1.0f, -1.0f, -1.0f,
+    1.0f, 1.0f, -1.0f,
+    -1.0f, 1.0f, -1.0f,
+
+
+    0.0f, 0.0f, 1.0f,
+  };
+
+  glGenVertexArrays(numVAOs, vao);
+  glBindVertexArray(vao[0]);
+
+  glGenBuffers(numVBOs, vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+#+end_src
+
+
+
+#+NAME: cube_v2
+#+BEGIN_SRC ruby :noweb yes
+  "#version 450
+
+  layout(location=0) in vec3 position;
+
+  uniform mat4 mv_matrix;
+  uniform mat4 proj_matrix;
+
+  out vec4 varyingColor;
+
+  void main(void)
+  {
+    gl_Position = proj_matrix * mv_matrix * vec4(position,1.0);
+    varyingColor = vec4(position, 1.0) * 0.5 + vec4(0.5,0.5,0.5, 0.5);
+  }".gsub("\n", "\\\n\\n")
+#+END_SRC
+
+#+RESULTS: cube_v2
+#+begin_example
+#version 450\
+\n\
+\nlayout(location=0) in vec3 position;\
+\n\
+\nuniform mat4 mv_matrix;\
+\nuniform mat4 proj_matrix;\
+\n\
+\nout vec4 varyingColor;\
+\n\
+\nvoid main(void)\
+\n{\
+\n  gl_Position = proj_matrix * mv_matrix * vec4(position,1.0);\
+\n  varyingColor = vec4(position, 1.0) * 0.5 + vec4(0.5,0.5,0.5, 0.5);\
+\n}
+#+end_example
+
+
+
+#+NAME: cube_v
+#+BEGIN_SRC ruby
+  "#version 450
+  layout(location=0) in vec3 position;
+
+  uniform mat4 mv_matrix;
+  uniform mat4 proj_matrix;
+
+  void main(void)
+  {
+    gl_Position = proj_matrix * mv_matrix * vec4(position,1.0);
+  }".gsub("\n", "\\\n\\n")
+#+END_SRC
+
+#+RESULTS: cube_v
+#+begin_example
+#version 450\
+\nlayout(location=0) in vec3 position;\
+\n\
+\nuniform mat4 mv_matrix;\
+\nuniform mat4 proj_matrix;\
+\n\
+\nvoid main(void)\
+\n{\
+\n  gl_Position = proj_matrix * mv_matrix * vec4(position,1.0);\
+\n}
+#+end_example
+
+
+** 片元着色器
+
+#+NAME: cube_f
+#+BEGIN_SRC ruby
+  "#version 450
+  out vec4 color;
+
+  uniform mat4 mv_matrix;
+  uniform mat4 proj_matrix;
+
+  void main(void)
+  {
+      color =  vec4(0.0,0.0,1.0,1.0);
+  }
+  ".gsub("\n", "\\\n\\n")
+#+END_SRC
+
+#+RESULTS: cube_f
+#+begin_example
+#version 450\
+\nout vec4 color;\
+\n\
+\nuniform mat4 mv_matrix;\
+\nuniform mat4 proj_matrix;\
+\n\
+\nvoid main(void)\
+\n{\
+\n    color =  vec4(0.0,0.0,1.0,1.0);\
+\n}\
+\n
+#+end_example
+
+

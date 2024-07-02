@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       4165f0b2-b63a-449b-96b0-7c4f50b36751
+:END:
+#+title: svs-GAN实现
+#+date: [2024-05-25 六]
+#+last_modified: [2024-05-25 六 12:05]
+

@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       c5a49455-3e5e-4acd-9836-9e5e42a83a7e
+:END:
+#+title: Qt-Core
+#+date: [2024-06-28 五]
+#+last_modified: [2024-06-28 五 15:08]
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-8eaa92bb-351c-11ef-8245-b48c9d0f4f89.png
+#+BEGIN_SRC plantuml
+  @startmindmap
+  + QtCore
+  ++ Container
+  ++ Event
+  ++ IO & Res
+  ++ Animation
+  ++ Thread
+  ++ Json
+  ++ Plugin
+
+
+
+  @endmindmap
+#+END_SRC
+
+  #+RESULTS:
+  [[file:/tmp/puml-8eaa92bb-351c-11ef-8245-b48c9d0f4f89.png]]
+
+

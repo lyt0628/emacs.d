@@ -1,0 +1,78 @@
+:PROPERTIES:
+:ID:       c03b05b3-43d5-487b-9cb8-3665a357c8c6
+:END:
+#+title: skynet-example-pingcluster
+#+date: [2024-05-22 三]
+#+last_modified: [2024-05-22 三 23:02]
+
+
+
+#+HEADER: :tangle ../skynet/skynet/examples/Pmain.lua
+#+BEGIN_SRC lua :results output
+  local skynet = require "skynet"
+  local cluster = require "skynet.cluster"
+  require "skynet.manager"
+
+  skynet.start(function()
+      cluster.reload({
+	  node1 = "127.0.0.1:7001",
+	  node2 = "127.0.0.1:7002"
+      })
+      local mynode = skynet.getenv("node")
+
+      if mynode == "node1" then
+	  cluster.open("node1")
+	  local ping1 = skynet.newservice("ping")
+	  local ping2 = skynet.newservice("ping")
+	  skynet.send(ping1, "lua", "start", "node2", "pong")
+	  skynet.send(ping2, "lua", "start", "node2", "pong")
+
+          -- peer is Pmain having no ping function to reply
+	  local pong = cluster.proxy("node2","pong") -- name refer to address
+	  skynet.send(pong, "lua", "ping", "node1", "ping1", 10)
+      elseif mynode == "node2" then
+	  cluster.open("node2")
+	  local ping3 = skynet.newservice("ping")
+	  skynet.name("pong", ping3)
+      end
+  end)
+#+END_SRC 
+
+
+
+
+
+
+
+
+
+
+
+
+
+#+HEADER: :tangle ../skynet/skynet/examples/ping.lua
+#+BEGIN_SRC lua :results output
+local skynet = require "skynet"
+local cluster = require "skynet.cluster"
+local mynode = skynet.getenv("node")
+
+local CMD = {}
+
+function CMD.ping(source, source_node, source_srv, count)
+    local id = skynet.self()
+    skynet.error("["..id.."] recv ping count="..count)
+    skynet.sleep(100)
+    cluster.send(source_node, source_srv, "ping", mynode, skynet.self(), count+1)
+end
+
+function CMD.start(source, target_node, target)
+    cluster.send(target_node, target, "ping", mynode, skynet.self(), 1)
+end
+
+skynet.start(function()
+    skynet.dispatch("lua", function(session, source, cmd, ...)
+      local f = assert(CMD[cmd])
+      f(source,...)
+    end)
+end)
+#+END_SRC 

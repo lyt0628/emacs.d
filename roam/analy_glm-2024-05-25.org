@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       cde17e8b-a0fc-49c2-ab07-556e74bcef93
+:END:
+#+title: analy_GLM
+#+date: [2024-05-25 六]
+#+last_modified: [2024-05-25 六 19:07]
+

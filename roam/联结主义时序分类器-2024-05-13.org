@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       a8c8af8e-7cd1-4e90-9fa5-432f7ab8b9fa
+:END:
+#+title: 联结主义时序分类器
+#+date: [2024-05-13 一]
+#+last_modified: [2024-05-13 一 12:37]
+

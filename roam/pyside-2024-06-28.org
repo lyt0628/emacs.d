@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       0e633ffc-34bc-4f3f-bbe7-6d1428e0f450
+:END:
+#+title: PySide
+#+date: [2024-06-28 五]
+#+last_modified: [2024-06-28 五 15:43]
+
+
+
+
+
+* See also
+- [[id:0acb56a8-090d-41c5-900a-e7b023c0e9c0][Qt]]

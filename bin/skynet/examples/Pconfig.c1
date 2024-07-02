@@ -1,0 +1,17 @@
+thread = 8                          
+cpath = "./cservice/?.so"           
+bootstrap = "snlua bootstrap"       
+node="node1"
+
+start = "Pmain"                     
+harbor = 0                          
+
+
+lualoader = "./lualib/loader.lua"
+luaservice = "./service/?.lua;".."./test/?.lua;".."./examples/?.lua;".."./test/?/init.lua"
+lua_path = "./lualib/?.lua;" .. "./lualib/?/init.lua"
+lua_cpath = "./luaclib/?.so"
+
+
+--daemon = "./skynet.pid"
+--logger = "./userlog"

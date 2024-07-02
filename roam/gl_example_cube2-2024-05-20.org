@@ -1,0 +1,293 @@
+:PROPERTIES:
+:ID:       7c6d037b-980f-4c0d-b67a-d734f058fd48
+:header-args:C++: :noweb yes
+:END:
+#+title: gl-example-cube2
+#+date: [2024-05-20 一]
+#+last_modified: [2024-06-03 一 11:46]
+
+- 漫反射
+- 环境反射
+
+
+#+HEADER: :dir workdir 
+#+HEADER: :flags "$(pkg-config --cflags glfw3  gl glx x11 xrandr xi xxf86vm  glew glu)" -I./deps/sb7/include
+#+HEADER: :libs "$(pkg-config --libs glfw3  gl glx x11 xrandr xi xxf86vm  glew glu) "
+#+HEADER: :var vShaderSource=cube_v
+#+HEADER: :var fShaderSource=cube_f
+#+BEGIN_SRC C++
+  <<gl-head>>
+
+  #define numVAOs 1
+  #define numVBOs 2
+
+  GLuint rendingProgram;
+  GLuint vao[numVAOs];
+  GLuint vbo[numVBOs];
+
+
+  float cameraX, cameraY, cameraZ;
+  float cubeLocX, cubeLocY, cubeLocZ;
+
+
+  GLuint mvLoc, projLoc, normalLoc, lightColorLoc, lightDirectionLoc;
+  int width, height;
+  float aspect;
+  glm::mat4 pMat, vMat, mMat, mvMat;
+  glm::vec3 lightDirection;
+
+  void init(GLFWwindow* window) {
+
+      rendingProgram = createShaderProgram(vShaderSource, fShaderSource);
+
+      cameraX = 0.0f; cameraY = 0.0f; cameraZ = 8.0f;
+      cubeLocX = 0.0f; cubeLocY = -2.0f; cubeLocZ = 0.0f;
+
+      <<setupVertices>>
+      <<setupNormals>>
+  }
+
+
+  void display(GLFWwindow* window, double currentTime)
+  {
+      glClear(GL_DEPTH_BUFFER_BIT); 
+      glClear(GL_COLOR_BUFFER_BIT); 
+      glUseProgram(rendingProgram);
+
+
+      mvLoc = glGetUniformLocation(rendingProgram, "mv_matrix");
+      projLoc = glGetUniformLocation(rendingProgram, "proj_matrix");
+      lightColorLoc = glGetUniformLocation(rendingProgram, "u_LightColor");
+      lightDirectionLoc = glGetUniformLocation(rendingProgram, "u_LightDirection");
+
+
+      glfwGetFramebufferSize(window, &width, &height);
+
+      aspect = (float) width / (float) height;
+      pMat = glm::perspective(1.0475f, aspect, 0.1f, 1000.0f); // 1.0475 = 60 度
+
+
+      vMat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, -cameraY, -cameraZ));
+
+      glm::mat4 rMat, tMat;
+      tMat = glm::translate(glm::mat4(1.0f), glm::vec3(cubeLocX, cubeLocY, cubeLocZ));
+      rMat = glm::rotate(glm::mat4(1.0f), 1.75f * (float) currentTime, 
+			 glm::vec3(0.0f, 1.0f, 0.0f));
+      mMat = rMat * tMat;
+
+      mvMat = vMat * mMat;
+
+
+      lightDirection = glm::vec3(0.5, 3.0, 4.0);
+      lightDirection = glm::normalize(lightDirection);
+
+
+      glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
+      glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(pMat));
+      glUniform3f(lightColorLoc, 1.0f, 1.0f, 1.0f);
+      glUniform3fv(lightDirectionLoc, 1, glm::value_ptr(lightDirection));
+
+
+      glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+      glEnableVertexAttribArray(0);
+
+
+      glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+      glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+      glEnableVertexAttribArray(1);
+
+
+      glEnable(GL_DEPTH_TEST);
+      glDepthFunc(GL_LEQUAL);
+      //glDrawArrays(GL_POINTS, 0, 36);
+      glDrawArrays(GL_TRIANGLES, 0, 36);
+  }
+
+  <<gl-loop>>
+  #+END_SRC
+
+  #+RESULTS:
+
+ 
+
+#+NAME: cube_v
+#+BEGIN_SRC ruby
+  "#version 450
+  layout(location=0) in vec3 position;
+  layout(location=1) in vec4 a_Normal;
+
+  uniform mat4 mv_matrix;
+  uniform mat4 proj_matrix;
+
+
+
+  uniform vec3 u_LightColor;
+  uniform vec3 u_LightDirection;
+
+
+  out vec4 a_Color;
+
+  void main(void)
+  {
+    gl_Position = proj_matrix * mv_matrix * vec4(position,1.0);
+
+    vec3 normal =  normalize(vec3(a_Normal));
+    float dot = max(dot(u_LightDirection, normal), 0);
+    vec3 diffuse = u_LightColor * vec3(1.0, 0.0, 0.0) * dot;
+
+    a_Color = vec4(diffuse, 1.0);
+
+  }".gsub("\n", "\\\n\\n")
+#+END_SRC
+
+#+RESULTS: cube_v
+#+begin_example
+#version 450\
+\nlayout(location=0) in vec3 position;\
+\nlayout(location=1) in vec4 a_Normal;\
+\n\
+\nuniform mat4 mv_matrix;\
+\nuniform mat4 proj_matrix;\
+\n\
+\n\
+\n\
+\nuniform vec3 u_LightColor;\
+\nuniform vec3 u_LightDirection;\
+\n\
+\n\
+\nout vec4 a_Color;\
+\n\
+\nvoid main(void)\
+\n{\
+\n  gl_Position = proj_matrix * mv_matrix * vec4(position,1.0);\
+\n\
+\n  vec3 normal =  normalize(vec3(a_Normal));\
+\n  float dot = max(dot(u_LightDirection, normal), 0);\
+\n  vec3 diffuse = u_LightColor * vec3(1.0, 1.0, 1.0) * dot;\
+\n  a_Color = vec4(diffuse, 1.0);\
+\n\
+\n}
+#+end_example
+
+
+** 片元着色器
+
+#+NAME: cube_f
+#+BEGIN_SRC ruby
+  "#version 450
+
+  in vec4 a_Color;
+  out vec4 color;
+
+
+  uniform mat4 mv_matrix;
+  uniform mat4 proj_matrix;
+
+  void main(void)
+  {
+      color = a_Color;
+  }
+  ".gsub("\n", "\\\n\\n")
+#+END_SRC
+
+#+RESULTS: cube_f
+#+begin_example
+#version 450\
+\nout vec4 color;\
+\n\
+\nuniform mat4 mv_matrix;\
+\nuniform mat4 proj_matrix;\
+\n\
+\nvoid main(void)\
+\n{\
+\n    color =  vec4(0.0,0.0,1.0,1.0);\
+\n}\
+\n
+#+end_example
+
+
+** 顶点数据
+
+#+NAME: setupVertices
+#+begin_src C++
+  float vertices[108] = {
+    // 1
+    -1.0f, 1.0f, -1.0f,
+    -1.0f, -1.0f, -1.0f,
+    1.0f, -1.0f, -1.0f,
+
+    1.0f, -1.0f, -1.0f,
+    1.0f, 1.0f, -1.0f,
+    -1.0f, 1.0f, -1.0f,
+
+
+    // 2
+    1.0f, -1.0f, -1.0f,
+    1.0f, -1.0f, 1.0f,
+    1.0f, 1.0f, -1.0f,
+
+    1.0f, -1.0f, 1.0f,
+    1.0f, 1.0f, 1.0f,
+    1.0f, 1.0f, -1.0f,
+
+
+
+    // 3
+    1.0f, -1.0f, 1.0f,
+    -1.0f, -1.0f, 1.0f,
+    1.0f, 1.0f, 1.0f,
+
+    -1.0f, -1.0f, 1.0f,
+    -1.0f, 1.0f, 1.0f,
+    1.0f, 1.0f, 1.0f,
+
+
+    // 4
+    -1.0f, -1.0f, 1.0f,
+    -1.0f, -1.0f, -1.0f,
+    -1.0f, 1.0f, 1.0f,
+
+    -1.0f, -1.0f, -1.0f,
+    -1.0f, 1.0f, -1.0f,
+    -1.0f, 1.0f, 1.0f,
+
+    // 5
+    -1.0f, -1.0f, 1.0f,
+    1.0f, -1.0f, 1.0f,
+    1.0f, -1.0f, -1.0f,
+
+    1.0f, -1.0f, -1.0f,
+    -1.0f, -1.0f, -1.0f,
+    -1.0f, -1.0f, 1.0f,
+
+
+    // 6
+    -1.0f, 1.0f, -1.0f,
+    1.0f, 1.0f, -1.0f,
+    1.0f, 1.0f, 1.0f,
+
+    1.0f, 1.0f, 1.0f,
+    -1.0f, 1.0f, 1.0f,
+    -1.0f, 1.0f, -1.0f
+
+  };
+
+  glGenVertexArrays(numVAOs, vao);
+  glBindVertexArray(vao[0]);
+
+  glGenBuffers(numVBOs, vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+#+end_src
+
+
+
+#+NAME: setupNormals
+#+begin_src C++
+
+  glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+#+end_src

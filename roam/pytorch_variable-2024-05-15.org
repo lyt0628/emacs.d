@@ -1,0 +1,106 @@
+:PROPERTIES:
+:ID:       298e89d9-5fbf-4406-82fd-a3e38fe89948
+:END:
+#+title: pytorch-Variable
+#+date: [2024-05-15 三]
+#+last_modified: [2024-05-15 三 23:25]
+
+
+#+begin_src python :session example
+  import torch
+  from torch.autograd import Variable
+
+#+end_src
+
+#+RESULTS:
+
+
+默认 Variable 是不需要求梯度的，所以我们用这个方式申明需要对其进行求梯度
+#+begin_src python :session example
+  x_tensor = torch.randn(10, 5)
+  y_tensor = torch.randn(10, 5)
+
+  x = Variable(x_tensor, requires_grad=True)
+  y = Variable(y_tensor, requires_grad=True)
+
+  x
+#+end_src
+
+#+RESULTS:
+#+begin_example
+tensor([[ 0.5660,  0.7303,  0.1028, -2.0363, -0.3555],
+        [-0.4532,  0.2472,  1.5681, -0.7431, -0.0940],
+        [ 0.4544, -0.9672,  0.4166, -0.3122,  0.9969],
+        [ 0.5723,  0.6614,  0.0862,  0.6708, -1.1619],
+        [-0.3658, -0.3622,  0.2550,  0.2074, -0.8903],
+        [-0.2964,  0.9028, -0.3786,  0.2485,  1.1257],
+        [ 0.1023, -2.0490, -1.2887,  0.2724,  0.6092],
+        [-0.7766, -0.2912,  0.1182,  1.2849, -1.6054],
+        [ 0.4623,  0.1332, -1.3262, -0.6091,  1.1896],
+        [-1.3211,  2.2649, -0.5078,  0.6720, -2.1126]], requires_grad=True)
+#+end_example
+
+* 得到导出的变量
+
+#+begin_src python :session example
+  z = torch.sum(x + y)
+
+#+end_src
+
+#+RESULTS:
+
+包装的Tensor
+#+begin_src python :session example
+  z.data
+#+end_src
+
+#+RESULTS:
+: tensor(0.4150)
+
+
+从什么函数得到的
+#+begin_src python :session example
+  z.grad_fn
+
+#+end_src
+
+#+RESULTS:
+: <SumBackward0 object at 0x7fde16c0ea40>
+
+** 自动求导
+
+#+begin_src python :session example
+  z.backward()
+
+  x.grad
+#+end_src
+
+#+RESULTS:
+#+begin_example
+tensor([[1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.]])
+#+end_example
+
+#+begin_src python :results output
+  import torch
+
+  tensor_x = torch.FloatTensor([2])
+
+  x = torch.autograd.Variable(tensor_x, requires_grad=True)
+  y = x ** 2
+
+  y.backward()
+  
+  print(x.grad)
+#+end_src
+
+#+RESULTS:
+: tensor([4.])

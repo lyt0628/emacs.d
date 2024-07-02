@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       933f739c-c0ac-4dd1-a1cd-c35e2c4f7033
+:END:
+#+title: 反向传播算法BP
+#+date: [2024-05-13 一]
+#+last_modified: [2024-05-13 一 12:32]
+

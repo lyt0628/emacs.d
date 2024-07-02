@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       4d9b3418-9d32-4aaa-908d-c0f669339e74
+:END:
+#+title: numpy-array
+#+date: [2024-05-14 二]
+#+last_modified: [2024-05-14 二 22:42]
+
+
+
+#+begin_src python
+import numpy as np
+x = np.ones(shape=(2, 2))
+x[0, 0] = 0.
+#+end_src
+
+#+RESULTS:
+: None

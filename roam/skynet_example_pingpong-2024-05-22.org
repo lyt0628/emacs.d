@@ -1,0 +1,105 @@
+:PROPERTIES:
+:ID:       311b4da0-290b-4f34-ad94-6c3b58471723
+:END:
+#+title: skynet-example-pingpong
+#+date: [2024-05-22 三]
+#+last_modified: [2024-05-24 五 08:19]
+
+
+#+HEADER: :tangle ../skynet/skynet/examples/Pmain.lua
+#+BEGIN_SRC skynet  :noweb yes
+
+  +++main
+
+    local skynet = require "skynet"
+
+    skynet.start(function()
+      skynet.error("[Pmain] start")
+
+
+      local ping1 = skynet.newservice("aping")
+
+      local ping2 = skynet.newservice("aping")
+
+
+
+     skynet.send(ping1, "lua", "start",
+		ping2)
+
+     skynet.exit()
+
+    end)
+
+
+  +++aping
+  <<ping>>
+
+
+#+END_SRC 
+
+#+RESULTS:
+#+begin_example
+[:00000002] LAUNCH snlua bootstrap
+[:00000003] LAUNCH snlua launcher
+[:00000004] LAUNCH snlua cdummy
+[:00000005] LAUNCH harbor 0 4
+[:00000006] LAUNCH snlua datacenterd
+[:00000007] LAUNCH snlua service_mgr
+[:00000008] LAUNCH snlua main
+[:00000008] [Pmain] start
+[:00000009] LAUNCH snlua aping
+[:00000009] [Ping] start
+[:0000000a] LAUNCH snlua aping
+[:0000000a] [Ping] start
+[:00000008] 9
+[:00000008] KILL self
+[:00000002] KILL self
+[:0000000a] [10] recv ping count=1
+[:00000009] [9] recv ping count=2
+[:0000000a] [10] recv ping count=3
+[:00000009] [9] recv ping count=4
+#+end_example
+
+
+#+NAME: ping
+#+HEADER: :tangle ../skynet/skynet/examples/ping.lua
+#+BEGIN_SRC skynet :results output
+  local skynet = require "skynet"
+
+  local CMD = {}
+
+  function CMD.start(source, target)
+      skynet.send(target, "lua", "ping",
+		  1)
+  end
+
+  function CMD.ping(source, count)
+      local id = skynet.self()
+      skynet.error("["..id.."] recv ping count="..count)
+      skynet.sleep(100)
+
+      skynet.send(source, "lua", "ping", count+1)
+  end
+
+
+  skynet.start(function()
+      skynet.error("[Ping] start")
+      skynet.dispatch("lua", function(session, source, cmd, ...)
+	local f = assert(CMD[cmd]) 
+	f(source,...)
+      end)
+  end)
+
+#+END_SRC 
+
+#+RESULTS: ping
+: [:00000002] LAUNCH snlua bootstrap
+: [:00000003] LAUNCH snlua launcher
+: [:00000004] LAUNCH snlua cdummy
+: [:00000005] LAUNCH harbor 0 4
+: [:00000006] LAUNCH snlua datacenterd
+: [:00000007] LAUNCH snlua service_mgr
+: [:00000008] LAUNCH snlua skynet-src-P6NPFn
+: [:00000008] [Ping] start
+: [:00000002] KILL self
+

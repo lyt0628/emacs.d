@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       d0ecdab8-2f87-4ac4-9216-e19de19f41b5
+:END:
+#+title: Qt-MultiMedia
+#+date: [2024-06-28 五]
+#+last_modified: [2024-06-28 五 15:30]
+

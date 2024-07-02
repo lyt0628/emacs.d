@@ -1,0 +1,176 @@
+:PROPERTIES:
+:ID:       080cf2b4-73f7-4b49-b2cc-6556581f9b32
+:END:
+#+title: Qt-cfg-Build With CMake
+#+date: [2024-06-28 五]
+#+last_modified: [2024-06-28 五 15:18]
+
+Index
+- [[添加 Qt组件的方式 | 创建 Console程序]]
+- [[创建 GUI 程序]]
+- [[划分项目结构]]
+- [[创建 Lib]]
+- [[添加 Qt资源]]
+
+* 添加 Qt组件的方式 | 创建 Console程序
+
+#+BEGIN_SRC cmake
+  cmake_minimun_required(VERSION 3.16)
+  project(prjName VERSION 1.0.0 LANGUAGE CXX)
+
+  ;; Qt6 需要 Cpp17+
+  set(CMAKE_CXX_STANDARD 17)
+  set(CMAKE_CXX_STANDARD_REQUIRE ON)
+
+  ;; 在开发环境中查找Qt
+  find_package(Qt6 REQUIRED COMPONENTS Core)
+  qt_standard_project_setup()
+
+  qt_add_executable( prjName
+    main.cpp  
+  )
+
+  ;; 链接 Qt6::Core
+  target_link_libraries(prjName PRIVATE Qt6::Core)
+#+END_SRC
+
+
+* 创建 GUI 程序
+
+#+BEGIN_SRC cmake
+  cmake_minimun_required(VERSION 3.16)
+  project(prjName VERSION 1.0.0 LANGUAGE CXX)
+
+  ;; Qt6 需要 Cpp17+
+  set(CMAKE_CXX_STANDARD 17)
+  set(CMAKE_CXX_STANDARD_REQUIRE ON)
+
+  ;; 在开发环境中查找Qt
+  find_package(Qt6 REQUIRED COMPONENTS Widgets)
+  qt_standard_project_setup()
+
+  qt_add_executable( prjName
+    main.cpp
+    mainwindow.cpp
+    mainwindow.ui // qt_standard_project_setup() 直到怎么处理 .ui 文件
+  )
+
+  ;; 链接 Qt6::Core
+  target_link_libraries(prjName PRIVATE Qt6::Widgets)
+
+  set_target_properties(
+    WIN32_EXECUTABLE ON
+    MACOSX_BUNDLE ON
+  )
+#+END_SRC
+
+- [[./qt-2024-06-28.org::Qt Comps][Qt 组件列表]]
+
+
+* 划分项目结构
+- ROOT
+  -CMakeLists.txt
+  - src
+    - app
+      -CMakeLists.txt
+      -main.cpp
+      -mainwindow.cpp
+      -mainwindow.h
+      -mainwindow.ui 
+
+
+#+NAME: CMakeLists.txt<ROOT>
+#+BEGIN_SRC cmake
+  cmake_minimun_required(VERSION 3.16)
+  project(prjName VERSION 1.0.0 LANGUAGE CXX)
+
+  ;; Qt6 需要 Cpp17+
+  set(CMAKE_CXX_STANDARD 17)
+  set(CMAKE_CXX_STANDARD_REQUIRE ON)
+
+  ;; 在开发环境中查找Qt
+  find_package(Qt6 REQUIRED COMPONENTS Widgets)
+  qt_standard_project_setup()
+
+  add_subdirectory(src/app)
+#+END_SRC
+
+
+#+NAME: cmakelists.txt<src/app>
+#+BEGIN_SRC cmake
+
+  qt_add_executable( prjName
+    main.cpp
+    mainwindow.cpp
+    mainwindow.ui // qt_standard_project_setup() 直到怎么处理 .ui 文件
+  )
+
+  ;; 链接 Qt6::Core
+  target_link_libraries(prjName PRIVATE Qt6::Widgets)
+
+  set_target_properties(
+    WIN32_EXECUTABLE ON
+    MACOSX_BUNDLE ON
+  )
+#+END_SRC
+
+* 创建 Lib
+- ROOT
+  -CMakeLists.txt
+  - src
+    - app
+      -CMakeLists.txt
+      -main.cpp
+      -mainwindow.cpp
+      -mainwindow.h
+      -mainwindow.ui
+     - bizLogic
+       -CMakeLists.txt
+       -bizlogic.cpp
+       -bizlogic.h 
+
+#+NAME: CMakeLists.txt<src/bizlogic>
+#+BEGIN_SRC cmake
+  qt_add_library(bizlogic STATIC
+    bizlogic.cpp
+  )
+
+  target_link_libraries(lizlogic PRIVATE Qt6:Core)
+  target_include_directories(lizlogic INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+#+END_SRC
+
+
+#+NAME: CMakeLists.txt<src/app>
+#+BEGIN_SRC cmake
+  ...
+  target_link_libraries(prjName PRIVATE
+    Qt6::Widgets
+    bizlogic
+  )
+#+END_SRC
+
+
+* 添加 Qt资源
+- 添加图片
+#+NAME: CMakeLists.txt<src/app>
+#+BEGIN_SRC cmake
+  ...
+  qt_add_resources(prjName imageresources
+    PREFIX "/images"
+    FILES logi.png slashscreen.png
+  )
+#+END_SRC
+
+logoLabel -> setPixmap(QPixmap(":/images/logo.png"))
+
+- 添加翻译资源
+
+  
+
+
+
+* See also:
+
+- [[id:d55ddc96-ac42-4eda-9b04-5af87afa174c][CMake]]
+- [[id:8cbf973a-efce-4f8b-9ea5-3d4739efc342][Qt-i18n]]
+- [[id:14752f54-8454-44d6-921c-f86431da87e0][Qt-cfg-CMake API]]

@@ -1,0 +1,117 @@
+:PROPERTIES:
+:ID:       445c3cb5-d332-4dc4-a55b-0803ca3b43fd
+:END:
+#+title: keras-example-mnist
+#+date: [2024-05-12 日]
+#+last_modified: [2024-05-13 一 00:30]
+
+
+
+
+* 加载 Mnist 数据集
+#+begin_src python :session mnist
+from tensorflow.keras.datasets import mnist
+(train_images, train_labels), (test_images, test_labels) = mnist.load_data(path="/home/lyt0628/download/mnist.npz")
+#+end_src
+
+#+RESULTS:
+
+
+- 查看数据集张量信息
+- 训练集 6000 张图片(28x28像素)
+#+begin_src python :session mnist :results output
+print("训练集个数：", len(train_labels), ", 张量形状为： ", train_images.shape, ", 标签值为:", train_labels)
+print("训练集个数：", len(test_labels), ", 张量形状为： ", test_images.shape, ", 标签值为:", test_labels)
+#+end_src
+
+#+RESULTS:
+: 训练集个数： 60000 , 张量形状为：  (60000, 28, 28) , 标签值为: [5 0 4 ... 5 6 8]
+: 训练集个数： 10000 , 张量形状为：  (10000, 28, 28) , 标签值为: [7 2 1 ... 4 5 6]
+
+* 构建网络
+
+#+begin_src python :session mnist
+from tensorflow import keras
+from tensorflow.keras import layers
+model = keras.Sequential([
+    layers.Dense(512, activation="relu"),
+    layers.Dense(10, activation="softmax")
+])
+#+end_src
+
+#+RESULTS:
+
+
+* 编译网络构件
+
+#+begin_src python :session mnist
+model.compile(optimizer="rmsprop",
+              loss="sparse_categorical_crossentropy",
+              metrics=["accuracy"])
+#+end_src
+
+#+RESULTS:
+: None
+
+
+
+* 数据处理（类型要求，归一化）
+
+#+begin_src python :session mnist
+
+  train_images = train_images.reshape((60000, 28 * 28))
+  train_images = train_images.astype("float32") / 255
+  test_images = test_images.reshape((10000, 28 * 28))
+  test_images = test_images.astype("float32") / 255
+
+#+end_src
+
+#+RESULTS:
+
+
+
+* 标签分类编码
+
+#+begin_src python :session mnist
+  from keras.utils import to_categorical
+  
+  train_labels = to_categorical(train_labels)
+  test_labels = to_categorical(test_labels)
+#+end_src
+
+#+RESULTS:
+
+
+* 拟合数据
+
+#+begin_src python :session mnist
+
+model.fit(train_images, train_labels, epochs=5, batch_size=128)#+end_src
+#+END_SRC
+
+#+RESULTS:
+: <keras.src.callbacks.history.History object at 0x774a72bd8810>
+
+
+* 预测测试集
+#+begin_src python :session mnist
+test_digits = test_images[0:10]
+predictions = model.predict(test_digits)
+predictions[0]
+#+end_src
+
+#+RESULTS:
+| 4.99098007e-09 | 4.46502746e-09 | 1.66306972e-06 | 5.94235789e-05 | 1.42314945e-11 | 4.62244998e-08 | 1.44655013e-12 | 0.99993825 | 7.59306999e-08 | 4.54973303e-07 |
+
+
+
+#+begin_src python :session mnist :results output
+
+  test_loss, test_acc = model.evaluate(test_images, test_labels)
+  print(f"test_acc: {test_acc}")
+
+#+end_src
+
+#+RESULTS:
+: [1m  1/313[0m [37m━━━━━━━━━━━━━━━━━━━━[0m [1m15s[0m 50ms/step - accuracy: 1.0000 - loss: 0.0039[1m 77/313[0m [32m━━━━[0m[37m━━━━━━━━━━━━━━━━[0m [1m0s[0m 665us/step - accuracy: 0.9797 - loss: 0.0671[1m152/313[0m [32m━━━━━━━━━[0m[37m━━━━━━━━━━━[0m [1m0s[0m 671us/step - accuracy: 0.9755 - loss: 0.0795[1m230/313[0m [32m━━━━━━━━━━━━━━[0m[37m━━━━━━[0m [1m0s[0m 662us/step - accuracy: 0.9749 - loss: 0.0815[1m313/313[0m [32m━━━━━━━━━━━━━━━━━━━━[0m[37m[0m [1m0s[0m 641us/step - accuracy: 0.9760 - loss: 0.0781
+: test_acc: 0.9800000190734863

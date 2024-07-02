@@ -1,0 +1,104 @@
+:PROPERTIES:
+:ID:       60697b7a-b87a-44d2-ab5d-37f971ba1ef0
+:header-args:python: :results output
+:END:
+#+title: 梯度下降优化算法
+#+date: [2024-05-13 一]
+#+last_modified: [2024-05-14 二 22:42]
+
+
+* 导数和梯度
+
+#+begin_src python :session example
+  import tensorflow as tf
+  
+  x = tf.Variable(0.)
+  with tf.GradientTape() as tape:
+      y = 2 * x + 3
+  grad_of_y_wrt_x = tape.gradient(y, x)
+
+  print(grad_of_y_wrt_x)
+#+end_src
+
+#+RESULTS:
+: tf.Tensor(2.0, shape=(), dtype=float32)
+
+
+#+begin_src python :session example
+  x = tf.Variable(tf.random.uniform((2, 2)))
+  print(x)
+  
+  with tf.GradientTape() as tape:
+      y = 2 * x + 3
+  grad_of_y_wrt_x = tape.gradient(y, x)
+  print(grad_of_y_wrt_x)
+#+end_src
+
+#+RESULTS:
+: <tf.Variable 'Variable:0' shape=(2, 2) dtype=float32, numpy=
+: array([[0.7850826, 0.9987503],
+:        [0.5897089, 0.2778858]], dtype=float32)>
+: tf.Tensor(
+: [[2. 2.]
+:  [2. 2.]], shape=(2, 2), dtype=float32)
+
+
+#+begin_src python :session example
+  W = tf.Variable(tf.random.uniform((2, 2)))
+  b = tf.Variable(tf.zeros((2,)))
+  x = tf.random.uniform((2, 2))
+  with tf.GradientTape() as tape:
+      y = tf.matmul(x, W) + b
+  grad_of_y_wrt_W_and_b = tape.gradient(y, [W, b])
+
+  print(grad_of_y_wrt_W_and_b)
+#+end_src
+
+#+RESULTS:
+: [<tf.Tensor: shape=(2, 2), dtype=float32, numpy=
+: array([[0.92746365, 0.92746365],
+:        [0.8540883 , 0.8540883 ]], dtype=float32)>, <tf.Tensor: shape=(2,), dtype=float32, numpy=array([2., 2.], dtype=float32)>]
+
+
+
+
+#+begin_src python :session example
+  input_var = tf.Variable(initial_value=3.)
+  with tf.GradientTape() as tape:
+     result = tf.square(input_var)
+  gradient = tape.gradient(result, input_var)
+  print(gradient)
+#+end_src
+
+#+RESULTS:
+: tf.Tensor(6.0, shape=(), dtype=float32)
+
+
+
+#+begin_src python :session example
+  input_const = tf.constant(3.)
+  with tf.GradientTape() as tape:
+     tape.watch(input_const)
+     result = tf.square(input_const)
+  gradient = tape.gradient(result, input_const)
+
+  print(gradient)
+#+end_src
+
+#+RESULTS:
+: tf.Tensor(6.0, shape=(), dtype=float32)
+
+
+#+begin_src python :session example 
+time = tf.Variable(2.)
+with tf.GradientTape() as outer_tape:
+    with tf.GradientTape() as inner_tape:
+        position =  4.9 * time ** 2
+    speed = inner_tape.gradient(position, time)
+acceleration = outer_tape.gradient(speed, time)
+print("v: ",speed,",\na: ", acceleration)
+#+end_src
+
+#+RESULTS:
+: v:  tf.Tensor(19.6, shape=(), dtype=float32) ,
+: a:  tf.Tensor(9.8, shape=(), dtype=float32)

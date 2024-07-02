@@ -1,0 +1,2166 @@
+:PROPERTIES:
+:ID:       c2166bc0-a37f-432e-ad1d-9e9fda2e3b99
+:header-args:C++: :noweb yes :results output
+:END:
+#+title: gl
+#+date: [2024-05-17 五]
+#+last_modified: [2024-05-26 日 18:14]
+
+* 查找依赖
+
+#+begin_src sh
+  pkg-config --print-requires --print-requires-private glfw3
+#+end_src
+
+#+RESULTS:
+| x11     |
+| xrandr  |
+| xi      |
+| xxf86vm |
+| gl      |
+
+
+
+#+begin_src sh
+  pkg-config --print-requires --print-requires-private glew
+#+end_src
+
+#+RESULTS:
+: glu
+
+
+
+* 头文件
+
+#+NAME: head
+#+BEGIN_SRC C++
+  #include <stdio.h>
+  #include <string.h>
+  #include <unistd.h>
+  #include <math.h>
+
+  #include <iostream>
+
+
+  #include "GL/glew.h"
+  #include "GLFW/glfw3.h"
+
+
+  using namespace std;
+#+END_SRC
+
+
+* 事件循环
+
+#+NAME: loop
+#+begin_src C++
+  int main() {
+
+	  if (!glfwInit()) { exit(EXIT_FAILURE); }
+
+	  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+
+
+	  GLFWwindow* window = glfwCreateWindow(600, 600, "OpenGL-hw", NULL, NULL);
+	  glfwMakeContextCurrent(window);
+
+	  if (glewInit() != GLEW_OK) { exit(EXIT_FAILURE); }
+  	  glfwSwapInterval(1);
+
+	  init(window);
+
+	  while (!glfwWindowShouldClose(window)) { 
+
+		  display(window, glfwGetTime());
+
+		  glfwSwapBuffers(window); 
+		  glfwPollEvents();
+	  }
+
+
+	  glfwDestroyWindow(window);
+	  glfwTerminate();
+	  exit(EXIT_FAILURE);
+  }
+#+end_src
+
+#+RESULTS: loop
+
+#+RESULTS:
+
+
+
+* 第一个GL程序 
+
+** GLClear函数
+
+#+HEADER: :dir workdir 
+#+HEADER: :flags "$(pkg-config --cflags glfw3  gl glx x11 xrandr xi xxf86vm  glew glu)" 
+#+HEADER: :libs "$(pkg-config --libs glfw3  gl glx x11 xrandr xi xxf86vm  glew glu) "
+#+BEGIN_SRC C++
+  <<head>>
+
+
+  void init(GLFWwindow* window) {}
+
+  void display(GLFWwindow* window, double currentTime)
+  {
+	  glClearColor(1.0, 0.0, 0.0, 1.0); 
+	  glClear(GL_COLOR_BUFFER_BIT); 
+  }
+
+  <<loop>>
+  #+END_SRC
+
+  #+RESULTS:
+
+
+
+** GLClearfv 函数
+
+#+HEADER: :dir workdir 
+#+HEADER: :flags "$(pkg-config --cflags glfw3  gl glx x11 xrandr xi xxf86vm  glew glu)"
+#+HEADER: :libs "$(pkg-config --libs glfw3  gl glx x11 xrandr xi xxf86vm  glew glu) "
+#+BEGIN_SRC C++
+  <<head>>
+  void init(GLFWwindow* window) {}
+
+  void display(GLFWwindow* window, double currentTime)
+  {
+          static const GLfloat red[] = {1.0, 0.0, 0.0, 1.0};
+	  glClearBufferfv(GL_COLOR, 0, red); 
+  }
+
+  <<loop>>
+  #+END_SRC
+
+  #+RESULTS:
+
+
+
+* 着色器程序 画一个点
+
+** 主程序
+
+#+HEADER: :dir workdir 
+#+HEADER: :flags "$(pkg-config --cflags glfw3  gl glx x11 xrandr xi xxf86vm  glew glu)"
+#+HEADER: :libs "$(pkg-config --libs glfw3  gl glx x11 xrandr xi xxf86vm  glew glu) "
+#+HEADER: :var vShaderSource=point_v 
+#+HEADER: :var fShaderSource=point_f
+#+BEGIN_SRC C++  
+  <<head>>
+  <<createShaderProgram>>
+
+  #define numVAOs 1
+
+  GLuint rendingProgram;
+  GLuint vao[numVAOs];
+
+
+  void init(GLFWwindow* window) {
+
+      rendingProgram = createShaderProgram(vShaderSource, fShaderSource);
+
+      glGenVertexArrays(numVAOs, vao);
+      glBindVertexArray(vao[0]);
+  }
+
+  void display(GLFWwindow* window, double currentTime)
+  {
+
+      <<bg_color_anim>>
+
+      glUseProgram(rendingProgram);
+
+      glPointSize(30.0f);
+      glDrawArrays(GL_POINTS, 0, 1);
+  }
+
+  <<loop>>
+#+END_SRC
+
+#+RESULTS:
+
+** 顶点着色器
+
+#+NAME: point_v
+#+BEGIN_SRC ruby
+   "#version 450 
+    void main(void)
+    {
+       gl_Position = vec4(0.0,0.0,0.0,1.0);
+    }".gsub("\n", "\\\n\\n")
+#+END_SRC
+
+#+RESULTS: point_v
+: #version 450 \
+: \n void main(void)\
+: \n {\
+: \n    gl_Position = vec4(0.0,0.0,0.0,1.0);\
+: \n }
+
+
+** 片元着色器
+
+#+NAME: point_f
+#+BEGIN_SRC ruby
+  "#version 450
+   out vec4 color;
+   void main(void)
+   {
+      color = vec4(0.0,0.0,1.0,1.0);
+   }
+  ".gsub("\n", "\\\n\\n")
+#+END_SRC
+
+#+RESULTS: point_f
+: #version 450\
+: \n out vec4 color;\
+: \n void main(void)\
+: \n {\
+: \n    color = vec4(0.0,0.0,1.0,1.0);\
+: \n }\
+: \n
+
+
+** 链接编译着色器
+
+#+BEGIN_SRC C++
+  GLuint createShaderProgram(const char *v_shd_src, const char *f_shd_src) {
+
+	    GLuint v_shd = glCreateShader(GL_VERTEX_SHADER);
+	    GLuint f_shd = glCreateShader(GL_FRAGMENT_SHADER);
+
+	    glShaderSource(v_shd, 1, &v_shd_src, NULL);
+	    glShaderSource(f_shd, 1, &f_shd_src, NULL);
+
+	    glCompileShader(v_shd);
+	    glCompileShader(f_shd);
+
+
+	    GLuint prog = glCreateProgram();
+	    glAttachShader(prog, v_shd);
+	    glAttachShader(prog, f_shd);
+	    glLinkProgram(prog);
+
+	    return prog;
+  }
+
+#+END_SRC
+
+
+#+NAME: createShaderProgram
+#+begin_src C++
+
+/*
+Log 3rror If qny Error hapens in Shader Compilation
+*/
+void log_shderr_if_any(GLuint shd)
+{
+	int len = 0;
+	int w_ch = 0;
+	char* msg;
+
+	glGetShaderiv(shd, GL_INFO_LOG_LENGTH, &len);
+	if (len > 0) {
+		msg = (char*)malloc(len);
+		glGetShaderInfoLog(shd, len, &w_ch, msg);
+		cout << "Compile Shader Error!!! >>> " << msg << endl;
+		free(msg);
+	}
+}
+/*
+Log 3rror If qny Error hapens in Program Compilation
+*/
+void log_progerr_if_any(GLuint prog)
+{
+	int len = 0;
+	int w_ch = 0;
+	char* msg;
+
+	glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &len);
+	if (len > 0) {
+		msg = (char*)malloc(len);
+		glGetProgramInfoLog(prog, len, &w_ch, msg);
+		cout << "Compile Link Program Error!!! >>> " << msg << endl;
+		free(msg);
+	}
+}
+/*
+Return true if any error hapens in program or shader compilation
+with some log are printed
+*/
+bool chk_glerr()
+{
+	bool found_err = false;
+	int glerr = glGetError();
+	while (glerr != GL_NO_ERROR) {
+		cout << "GL Error!!! >>>" << glerr << endl;
+		found_err = true;
+		glerr = glGetError();
+	}
+	return found_err;
+}
+
+/*
+Wraping function for glCompileShader
+*/
+void GLCompileShader(const GLuint& shd, string msg)
+{
+	GLint stat;
+	
+	glCompileShader(shd);
+	chk_glerr();
+	glGetShaderiv(shd, GL_COMPILE_STATUS, &stat);
+	if (stat != 1) {
+		cout << msg << endl;
+		log_shderr_if_any(shd);
+	}
+
+}
+
+/*
+Wraping function for glLinkProgram
+*/
+void GLLinkProgram(const GLuint& prog)
+{
+	GLint stat;
+	glLinkProgram(prog);
+	chk_glerr();
+	glGetProgramiv(prog, GL_LINK_STATUS, &stat);
+	if (stat != 1) {
+		cout << "Progrm Link Failed!!!" << endl;
+		log_progerr_if_any(prog);
+	}
+}
+
+/*
+Given vertcc shader and gragmant shader GLSL file,
+return the id of compiled shader program.
+*/
+GLuint createShaderProgram(const char *v_shd_src, const char *f_shd_src) {
+
+	GLuint v_shd = glCreateShader(GL_VERTEX_SHADER);
+	GLuint f_shd = glCreateShader(GL_FRAGMENT_SHADER);
+
+	glShaderSource(v_shd, 1, &v_shd_src, NULL);
+	glShaderSource(f_shd, 1, &f_shd_src, NULL);
+
+	GLCompileShader(v_shd, "Vertic Compile Failure!!!");
+	GLCompileShader(f_shd, "Fragment Compile Failure!!!");
+
+
+	GLuint prog = glCreateProgram();
+	glAttachShader(prog, v_shd);
+	glAttachShader(prog, f_shd);
+	GLLinkProgram(prog);
+
+	return prog;
+}
+#+end_src
+
+
+** 颜色变化动画
+
+#+NAME: bg_color_anim
+#+begin_src C++
+     const GLfloat color[] = {(float)sin(currentTime) * 0.5f + 0.5f,
+			     (float)sin(currentTime) * 0.5f + 0.5f, 0.0f, 1.0f};
+     glClearBufferfv(GL_COLOR, 0, color);
+
+#+end_src
+
+
+* 绘制三角形
+
+
+#+HEADER: :dir workdir 
+#+HEADER: :flags "$(pkg-config --cflags glfw3  gl glx x11 xrandr xi xxf86vm  glew glu)"
+#+HEADER: :libs "$(pkg-config --libs glfw3  gl glx x11 xrandr xi xxf86vm  glew glu) "
+#+HEADER: :var vShaderSource=triangle_v 
+#+HEADER: :var fShaderSource=point_f
+#+BEGIN_SRC C++ 
+  <<head>>
+  <<createShaderProgram>>
+
+  #define numVAOs 1
+  #define numVBOs 2
+
+  GLuint rendingProgram;
+  GLuint vao[numVAOs];
+  GLuint vbo[numVBOs];
+
+
+  void init(GLFWwindow* window) {
+
+      rendingProgram = createShaderProgram(vShaderSource, fShaderSource);
+
+      glGenVertexArrays(numVAOs, vao);
+      glBindVertexArray(vao[0]);
+  }
+
+  void display(GLFWwindow* window, double currentTime)
+  {
+      glUseProgram(rendingProgram);
+
+      glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+      glEnableVertexAttribArray(0);
+
+
+      glDrawArrays(GL_TRIANGLES, 0, 3);
+  }
+
+  <<loop>>
+
+#+END_SRC
+
+#+RESULTS:
+
+
+** 顶点着色器 三角形 
+#+NAME: triangle_v
+#+BEGIN_SRC ruby 
+  "#version 450 core 
+  layout(location=0) in vec3 position;
+  void main(void)
+  {
+     const vec4 vertices[3] = vec4[3](vec4(0.25, -0.25, 0.5, 1.0),
+				      vec4(-0.25, -0.25, 0.5, 1.0),
+				      vec4(0.25, 0.25, 0.5, 1.0));
+
+     gl_Position = vertices[gl_VertexID];
+  }".gsub("\n", "\\\n\\n")
+#+END_SRC
+
+#+RESULTS: triangle_v
+#+begin_example
+#version 450 core \
+\nlayout(location=0) in vec3 position;\
+\nvoid main(void)\
+\n{\
+\n   const vec4 vertices[3] = vec4[3](vec4(0.25, -0.25, 0.5, 1.0),\
+\n				    vec4(-0.25, -0.25, 0.5, 1.0),\
+\n				    vec4(0.25, 0.25, 0.5, 1.0));\
+\n\
+\n   gl_Position = vertices[gl_VertexID];\
+\n}
+#+end_example
+
+
+* GLFW 示例
+
+** Triangle
+
+#+HEADER: :dir workdir 
+#+HEADER: :flags "$(pkg-config --cflags glfw3 glew gl glx x11 xrandr xi xxf86vm)"
+#+HEADER: :libs "$(pkg-config --libs glfw3 glew gl glx x11 xrandr xi xxf86vm )"
+#+begin_src C++
+
+#include <GLFW/glfw3.h>
+
+#include <stdlib.h>
+#include <stdio.h>
+
+static void error_callback(int error, const char* description)
+{
+    fputs(description, stderr);
+}
+
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+}
+
+int main(void)
+{
+    GLFWwindow* window;
+
+    glfwSetErrorCallback(error_callback);
+
+    if (!glfwInit())
+        exit(EXIT_FAILURE);
+
+    window = glfwCreateWindow(640, 480, "Simple example", NULL, NULL);
+    if (!window)
+    {
+        glfwTerminate();
+        exit(EXIT_FAILURE);
+    }
+
+    glfwMakeContextCurrent(window);
+
+    glfwSetKeyCallback(window, key_callback);
+
+    while (!glfwWindowShouldClose(window))
+    {
+        float ratio;
+        int width, height;
+
+        glfwGetFramebufferSize(window, &width, &height);
+        ratio = width / (float) height;
+
+        glViewport(0, 0, width, height);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
+        glMatrixMode(GL_MODELVIEW);
+
+        glLoadIdentity();
+        glRotatef((float) glfwGetTime() * 50.f, 0.f, 0.f, 1.f);
+
+        glBegin(GL_TRIANGLES);
+        glColor3f(1.f, 0.f, 0.f);
+        glVertex3f(-0.6f, -0.4f, 0.f);
+        glColor3f(0.f, 1.f, 0.f);
+        glVertex3f(0.6f, -0.4f, 0.f);
+        glColor3f(0.f, 0.f, 1.f);
+        glVertex3f(0.f, 0.6f, 0.f);
+        glEnd();
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+    glfwDestroyWindow(window);
+
+    glfwTerminate();
+    exit(EXIT_SUCCESS);
+}
+#+end_src
+
+#+RESULTS:
+
+
+** Boing
+
+#+HEADER: :dir workdir 
+#+HEADER: :flags "$(pkg-config --cflags glfw3 glew gl glx x11 xrandr xi xxf86vm)"
+#+HEADER: :libs "$(pkg-config --libs glfw3 glew gl glx x11 xrandr xi xxf86vm )"
+#+begin_src C++
+/*****************************************************************************
+ * Title:   GLBoing
+ * Desc:    Tribute to Amiga Boing.
+ * Author:  Jim Brooks  <gfx@jimbrooks.org>
+ *          Original Amiga authors were R.J. Mical and Dale Luck.
+ *          GLFW conversion by Marcus Geelnard
+ * Notes:   - 360' = 2*PI [radian]
+ *
+ *          - Distances between objects are created by doing a relative
+ *            Z translations.
+ *
+ *          - Although OpenGL enticingly supports alpha-blending,
+ *            the shadow of the original Boing didn't affect the color
+ *            of the grid.
+ *
+ *          - [Marcus] Changed timing scheme from interval driven to frame-
+ *            time based animation steps (which results in much smoother
+ *            movement)
+ *
+ * History of Amiga Boing:
+ *
+ * Boing was demonstrated on the prototype Amiga (codenamed "Lorraine") in
+ * 1985. According to legend, it was written ad-hoc in one night by
+ * R. J. Mical and Dale Luck. Because the bouncing ball animation was so fast
+ * and smooth, attendees did not believe the Amiga prototype was really doing
+ * the rendering. Suspecting a trick, they began looking around the booth for
+ * a hidden computer or VCR.
+ *****************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define GLFW_INCLUDE_GLU
+#include <GLFW/glfw3.h>
+
+
+/*****************************************************************************
+ * Various declarations and macros
+ *****************************************************************************/
+
+/* Prototypes */
+void init( void );
+void display( void );
+void reshape( GLFWwindow* window, int w, int h );
+void key_callback( GLFWwindow* window, int key, int scancode, int action, int mods );
+void DrawBoingBall( void );
+void BounceBall( double dt );
+void DrawBoingBallBand( GLfloat long_lo, GLfloat long_hi );
+void DrawGrid( void );
+
+#define RADIUS           70.f
+#define STEP_LONGITUDE   22.5f                   /* 22.5 makes 8 bands like original Boing */
+#define STEP_LATITUDE    22.5f
+
+#define DIST_BALL       (RADIUS * 2.f + RADIUS * 0.1f)
+
+#define VIEW_SCENE_DIST (DIST_BALL * 3.f + 200.f)/* distance from viewer to middle of boing area */
+#define GRID_SIZE       (RADIUS * 4.5f)          /* length (width) of grid */
+#define BOUNCE_HEIGHT   (RADIUS * 2.1f)
+#define BOUNCE_WIDTH    (RADIUS * 2.1f)
+
+#define SHADOW_OFFSET_X -20.f
+#define SHADOW_OFFSET_Y  10.f
+#define SHADOW_OFFSET_Z   0.f
+
+#define WALL_L_OFFSET   0.f
+#define WALL_R_OFFSET   5.f
+
+/* Animation speed (50.0 mimics the original GLUT demo speed) */
+#define ANIMATION_SPEED 50.f
+
+/* Maximum allowed delta time per physics iteration */
+#define MAX_DELTA_T 0.02f
+
+/* Draw ball, or its shadow */
+typedef enum { DRAW_BALL, DRAW_BALL_SHADOW } DRAW_BALL_ENUM;
+
+/* Vertex type */
+typedef struct {float x; float y; float z;} vertex_t;
+
+/* Global vars */
+GLfloat deg_rot_y       = 0.f;
+GLfloat deg_rot_y_inc   = 2.f;
+GLfloat ball_x          = -RADIUS;
+GLfloat ball_y          = -RADIUS;
+GLfloat ball_x_inc      = 1.f;
+GLfloat ball_y_inc      = 2.f;
+DRAW_BALL_ENUM drawBallHow;
+double  t;
+double  t_old = 0.f;
+double  dt;
+
+/* Random number generator */
+#ifndef RAND_MAX
+ #define RAND_MAX 4095
+#endif
+
+/* PI */
+#ifndef M_PI
+ #define M_PI 3.1415926535897932384626433832795
+#endif
+
+
+/*****************************************************************************
+ * Truncate a degree.
+ *****************************************************************************/
+GLfloat TruncateDeg( GLfloat deg )
+{
+   if ( deg >= 360.f )
+      return (deg - 360.f);
+   else
+      return deg;
+}
+
+/*****************************************************************************
+ * Convert a degree (360-based) into a radian.
+ * 360' = 2 * PI
+ *****************************************************************************/
+double deg2rad( double deg )
+{
+   return deg / 360 * (2 * M_PI);
+}
+
+/*****************************************************************************
+ * 360' sin().
+ *****************************************************************************/
+double sin_deg( double deg )
+{
+   return sin( deg2rad( deg ) );
+}
+
+/*****************************************************************************
+ * 360' cos().
+ *****************************************************************************/
+double cos_deg( double deg )
+{
+   return cos( deg2rad( deg ) );
+}
+
+/*****************************************************************************
+ * Compute a cross product (for a normal vector).
+ *
+ * c = a x b
+ *****************************************************************************/
+void CrossProduct( vertex_t a, vertex_t b, vertex_t c, vertex_t *n )
+{
+   GLfloat u1, u2, u3;
+   GLfloat v1, v2, v3;
+
+   u1 = b.x - a.x;
+   u2 = b.y - a.y;
+   u3 = b.y - a.z;
+
+   v1 = c.x - a.x;
+   v2 = c.y - a.y;
+   v3 = c.z - a.z;
+
+   n->x = u2 * v3 - v2 * v3;
+   n->y = u3 * v1 - v3 * u1;
+   n->z = u1 * v2 - v1 * u2;
+}
+
+/*****************************************************************************
+ * Calculate the angle to be passed to gluPerspective() so that a scene
+ * is visible.  This function originates from the OpenGL Red Book.
+ *
+ * Parms   : size
+ *           The size of the segment when the angle is intersected at "dist"
+ *           (ie at the outermost edge of the angle of vision).
+ *
+ *           dist
+ *           Distance from viewpoint to scene.
+ *****************************************************************************/
+GLfloat PerspectiveAngle( GLfloat size,
+                          GLfloat dist )
+{
+   GLfloat radTheta, degTheta;
+
+   radTheta = 2.f * (GLfloat) atan2( size / 2.f, dist );
+   degTheta = (180.f * radTheta) / (GLfloat) M_PI;
+   return degTheta;
+}
+
+
+
+#define BOING_DEBUG 0
+
+
+/*****************************************************************************
+ * init()
+ *****************************************************************************/
+void init( void )
+{
+   /*
+    * Clear background.
+    */
+   glClearColor( 0.55f, 0.55f, 0.55f, 0.f );
+
+   glShadeModel( GL_FLAT );
+}
+
+
+/*****************************************************************************
+ * display()
+ *****************************************************************************/
+void display(void)
+{
+   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+   glPushMatrix();
+
+   drawBallHow = DRAW_BALL_SHADOW;
+   DrawBoingBall();
+
+   DrawGrid();
+
+   drawBallHow = DRAW_BALL;
+   DrawBoingBall();
+
+   glPopMatrix();
+   glFlush();
+}
+
+
+/*****************************************************************************
+ * reshape()
+ *****************************************************************************/
+void reshape( GLFWwindow* window, int w, int h )
+{
+   glViewport( 0, 0, (GLsizei)w, (GLsizei)h );
+
+   glMatrixMode( GL_PROJECTION );
+   glLoadIdentity();
+
+   gluPerspective( PerspectiveAngle( RADIUS * 2, 200 ),
+                   (GLfloat)w / (GLfloat)h,
+                   1.0,
+                   VIEW_SCENE_DIST );
+
+   glMatrixMode( GL_MODELVIEW );
+   glLoadIdentity();
+
+   gluLookAt( 0.0, 0.0, VIEW_SCENE_DIST,/* eye */
+              0.0, 0.0, 0.0,            /* center of vision */
+              0.0, -1.0, 0.0 );         /* up vector */
+}
+
+void key_callback( GLFWwindow* window, int key, int scancode, int action, int mods )
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+}
+
+/*****************************************************************************
+ * Draw the Boing ball.
+ *
+ * The Boing ball is sphere in which each facet is a rectangle.
+ * Facet colors alternate between red and white.
+ * The ball is built by stacking latitudinal circles.  Each circle is composed
+ * of a widely-separated set of points, so that each facet is noticably large.
+ *****************************************************************************/
+void DrawBoingBall( void )
+{
+   GLfloat lon_deg;     /* degree of longitude */
+   double dt_total, dt2;
+
+   glPushMatrix();
+   glMatrixMode( GL_MODELVIEW );
+
+  /*
+   * Another relative Z translation to separate objects.
+   */
+   glTranslatef( 0.0, 0.0, DIST_BALL );
+
+   /* Update ball position and rotation (iterate if necessary) */
+   dt_total = dt;
+   while( dt_total > 0.0 )
+   {
+       dt2 = dt_total > MAX_DELTA_T ? MAX_DELTA_T : dt_total;
+       dt_total -= dt2;
+       BounceBall( dt2 );
+       deg_rot_y = TruncateDeg( deg_rot_y + deg_rot_y_inc*((float)dt2*ANIMATION_SPEED) );
+   }
+
+   /* Set ball position */
+   glTranslatef( ball_x, ball_y, 0.0 );
+
+  /*
+   * Offset the shadow.
+   */
+   if ( drawBallHow == DRAW_BALL_SHADOW )
+   {
+      glTranslatef( SHADOW_OFFSET_X,
+                    SHADOW_OFFSET_Y,
+                    SHADOW_OFFSET_Z );
+   }
+
+  /*
+   * Tilt the ball.
+   */
+   glRotatef( -20.0, 0.0, 0.0, 1.0 );
+
+  /*
+   * Continually rotate ball around Y axis.
+   */
+   glRotatef( deg_rot_y, 0.0, 1.0, 0.0 );
+
+  /*
+   * Set OpenGL state for Boing ball.
+   */
+   glCullFace( GL_FRONT );
+   glEnable( GL_CULL_FACE );
+   glEnable( GL_NORMALIZE );
+
+  /*
+   * Build a faceted latitude slice of the Boing ball,
+   * stepping same-sized vertical bands of the sphere.
+   */
+   for ( lon_deg = 0;
+         lon_deg < 180;
+         lon_deg += STEP_LONGITUDE )
+   {
+     /*
+      * Draw a latitude circle at this longitude.
+      */
+      DrawBoingBallBand( lon_deg,
+                         lon_deg + STEP_LONGITUDE );
+   }
+
+   glPopMatrix();
+
+   return;
+}
+
+
+/*****************************************************************************
+ * Bounce the ball.
+ *****************************************************************************/
+void BounceBall( double delta_t )
+{
+   GLfloat sign;
+   GLfloat deg;
+
+   /* Bounce on walls */
+   if ( ball_x >  (BOUNCE_WIDTH/2 + WALL_R_OFFSET ) )
+   {
+      ball_x_inc = -0.5f - 0.75f * (GLfloat)rand() / (GLfloat)RAND_MAX;
+      deg_rot_y_inc = -deg_rot_y_inc;
+   }
+   if ( ball_x < -(BOUNCE_HEIGHT/2 + WALL_L_OFFSET) )
+   {
+      ball_x_inc =  0.5f + 0.75f * (GLfloat)rand() / (GLfloat)RAND_MAX;
+      deg_rot_y_inc = -deg_rot_y_inc;
+   }
+
+   /* Bounce on floor / roof */
+   if ( ball_y >  BOUNCE_HEIGHT/2      )
+   {
+      ball_y_inc = -0.75f - 1.f * (GLfloat)rand() / (GLfloat)RAND_MAX;
+   }
+   if ( ball_y < -BOUNCE_HEIGHT/2*0.85 )
+   {
+      ball_y_inc =  0.75f + 1.f * (GLfloat)rand() / (GLfloat)RAND_MAX;
+   }
+
+   /* Update ball position */
+   ball_x += ball_x_inc * ((float)delta_t*ANIMATION_SPEED);
+   ball_y += ball_y_inc * ((float)delta_t*ANIMATION_SPEED);
+
+  /*
+   * Simulate the effects of gravity on Y movement.
+   */
+   if ( ball_y_inc < 0 ) sign = -1.0; else sign = 1.0;
+
+   deg = (ball_y + BOUNCE_HEIGHT/2) * 90 / BOUNCE_HEIGHT;
+   if ( deg > 80 ) deg = 80;
+   if ( deg < 10 ) deg = 10;
+
+   ball_y_inc = sign * 4.f * (float) sin_deg( deg );
+}
+
+
+/*****************************************************************************
+ * Draw a faceted latitude band of the Boing ball.
+ *
+ * Parms:   long_lo, long_hi
+ *          Low and high longitudes of slice, resp.
+ *****************************************************************************/
+void DrawBoingBallBand( GLfloat long_lo,
+                        GLfloat long_hi )
+{
+   vertex_t vert_ne;            /* "ne" means south-east, so on */
+   vertex_t vert_nw;
+   vertex_t vert_sw;
+   vertex_t vert_se;
+   vertex_t vert_norm;
+   GLfloat  lat_deg;
+   static int colorToggle = 0;
+
+  /*
+   * Iterate thru the points of a latitude circle.
+   * A latitude circle is a 2D set of X,Z points.
+   */
+   for ( lat_deg = 0;
+         lat_deg <= (360 - STEP_LATITUDE);
+         lat_deg += STEP_LATITUDE )
+   {
+     /*
+      * Color this polygon with red or white.
+      */
+      if ( colorToggle )
+         glColor3f( 0.8f, 0.1f, 0.1f );
+      else
+         glColor3f( 0.95f, 0.95f, 0.95f );
+#if 0
+      if ( lat_deg >= 180 )
+         if ( colorToggle )
+            glColor3f( 0.1f, 0.8f, 0.1f );
+         else
+            glColor3f( 0.5f, 0.5f, 0.95f );
+#endif
+      colorToggle = ! colorToggle;
+
+     /*
+      * Change color if drawing shadow.
+      */
+      if ( drawBallHow == DRAW_BALL_SHADOW )
+         glColor3f( 0.35f, 0.35f, 0.35f );
+
+     /*
+      * Assign each Y.
+      */
+      vert_ne.y = vert_nw.y = (float) cos_deg(long_hi) * RADIUS;
+      vert_sw.y = vert_se.y = (float) cos_deg(long_lo) * RADIUS;
+
+     /*
+      * Assign each X,Z with sin,cos values scaled by latitude radius indexed by longitude.
+      * Eg, long=0 and long=180 are at the poles, so zero scale is sin(longitude),
+      * while long=90 (sin(90)=1) is at equator.
+      */
+      vert_ne.x = (float) cos_deg( lat_deg                 ) * (RADIUS * (float) sin_deg( long_lo + STEP_LONGITUDE ));
+      vert_se.x = (float) cos_deg( lat_deg                 ) * (RADIUS * (float) sin_deg( long_lo                  ));
+      vert_nw.x = (float) cos_deg( lat_deg + STEP_LATITUDE ) * (RADIUS * (float) sin_deg( long_lo + STEP_LONGITUDE ));
+      vert_sw.x = (float) cos_deg( lat_deg + STEP_LATITUDE ) * (RADIUS * (float) sin_deg( long_lo                  ));
+
+      vert_ne.z = (float) sin_deg( lat_deg                 ) * (RADIUS * (float) sin_deg( long_lo + STEP_LONGITUDE ));
+      vert_se.z = (float) sin_deg( lat_deg                 ) * (RADIUS * (float) sin_deg( long_lo                  ));
+      vert_nw.z = (float) sin_deg( lat_deg + STEP_LATITUDE ) * (RADIUS * (float) sin_deg( long_lo + STEP_LONGITUDE ));
+      vert_sw.z = (float) sin_deg( lat_deg + STEP_LATITUDE ) * (RADIUS * (float) sin_deg( long_lo                  ));
+
+     /*
+      * Draw the facet.
+      */
+      glBegin( GL_POLYGON );
+
+      CrossProduct( vert_ne, vert_nw, vert_sw, &vert_norm );
+      glNormal3f( vert_norm.x, vert_norm.y, vert_norm.z );
+
+      glVertex3f( vert_ne.x, vert_ne.y, vert_ne.z );
+      glVertex3f( vert_nw.x, vert_nw.y, vert_nw.z );
+      glVertex3f( vert_sw.x, vert_sw.y, vert_sw.z );
+      glVertex3f( vert_se.x, vert_se.y, vert_se.z );
+
+      glEnd();
+
+#if BOING_DEBUG
+      printf( "----------------------------------------------------------- \n" );
+      printf( "lat = %f  long_lo = %f  long_hi = %f \n", lat_deg, long_lo, long_hi );
+      printf( "vert_ne  x = %.8f  y = %.8f  z = %.8f \n", vert_ne.x, vert_ne.y, vert_ne.z );
+      printf( "vert_nw  x = %.8f  y = %.8f  z = %.8f \n", vert_nw.x, vert_nw.y, vert_nw.z );
+      printf( "vert_se  x = %.8f  y = %.8f  z = %.8f \n", vert_se.x, vert_se.y, vert_se.z );
+      printf( "vert_sw  x = %.8f  y = %.8f  z = %.8f \n", vert_sw.x, vert_sw.y, vert_sw.z );
+#endif
+
+   }
+
+  /*
+   * Toggle color so that next band will opposite red/white colors than this one.
+   */
+   colorToggle = ! colorToggle;
+
+  /*
+   * This circular band is done.
+   */
+   return;
+}
+
+
+/*****************************************************************************
+ * Draw the purple grid of lines, behind the Boing ball.
+ * When the Workbench is dropped to the bottom, Boing shows 12 rows.
+ *****************************************************************************/
+void DrawGrid( void )
+{
+   int              row, col;
+   const int        rowTotal    = 12;                   /* must be divisible by 2 */
+   const int        colTotal    = rowTotal;             /* must be same as rowTotal */
+   const GLfloat    widthLine   = 2.0;                  /* should be divisible by 2 */
+   const GLfloat    sizeCell    = GRID_SIZE / rowTotal;
+   const GLfloat    z_offset    = -40.0;
+   GLfloat          xl, xr;
+   GLfloat          yt, yb;
+
+   glPushMatrix();
+   glDisable( GL_CULL_FACE );
+
+  /*
+   * Another relative Z translation to separate objects.
+   */
+   glTranslatef( 0.0, 0.0, DIST_BALL );
+
+  /*
+   * Draw vertical lines (as skinny 3D rectangles).
+   */
+   for ( col = 0; col <= colTotal; col++ )
+   {
+     /*
+      * Compute co-ords of line.
+      */
+      xl = -GRID_SIZE / 2 + col * sizeCell;
+      xr = xl + widthLine;
+
+      yt =  GRID_SIZE / 2;
+      yb = -GRID_SIZE / 2 - widthLine;
+
+      glBegin( GL_POLYGON );
+
+      glColor3f( 0.6f, 0.1f, 0.6f );               /* purple */
+
+      glVertex3f( xr, yt, z_offset );       /* NE */
+      glVertex3f( xl, yt, z_offset );       /* NW */
+      glVertex3f( xl, yb, z_offset );       /* SW */
+      glVertex3f( xr, yb, z_offset );       /* SE */
+
+      glEnd();
+   }
+
+  /*
+   * Draw horizontal lines (as skinny 3D rectangles).
+   */
+   for ( row = 0; row <= rowTotal; row++ )
+   {
+     /*
+      * Compute co-ords of line.
+      */
+      yt = GRID_SIZE / 2 - row * sizeCell;
+      yb = yt - widthLine;
+
+      xl = -GRID_SIZE / 2;
+      xr =  GRID_SIZE / 2 + widthLine;
+
+      glBegin( GL_POLYGON );
+
+      glColor3f( 0.6f, 0.1f, 0.6f );               /* purple */
+
+      glVertex3f( xr, yt, z_offset );       /* NE */
+      glVertex3f( xl, yt, z_offset );       /* NW */
+      glVertex3f( xl, yb, z_offset );       /* SW */
+      glVertex3f( xr, yb, z_offset );       /* SE */
+
+      glEnd();
+   }
+
+   glPopMatrix();
+
+   return;
+}
+
+
+/*======================================================================*
+ * main()
+ *======================================================================*/
+
+int main( void )
+{
+   GLFWwindow* window;
+   int width, height;
+
+   /* Init GLFW */
+   if( !glfwInit() )
+      exit( EXIT_FAILURE );
+
+   glfwWindowHint(GLFW_DEPTH_BITS, 16);
+
+   window = glfwCreateWindow( 400, 400, "Boing (classic Amiga demo)", NULL, NULL );
+   if (!window)
+   {
+       glfwTerminate();
+       exit( EXIT_FAILURE );
+   }
+
+   glfwSetFramebufferSizeCallback(window, reshape);
+   glfwSetKeyCallback(window, key_callback);
+
+   glfwMakeContextCurrent(window);
+   glfwSwapInterval( 1 );
+
+   glfwGetFramebufferSize(window, &width, &height);
+   reshape(window, width, height);
+
+   glfwSetTime( 0.0 );
+
+   init();
+
+   /* Main loop */
+   for (;;)
+   {
+       /* Timing */
+       t = glfwGetTime();
+       dt = t - t_old;
+       t_old = t;
+
+       /* Draw one frame */
+       display();
+
+       /* Swap buffers */
+       glfwSwapBuffers(window);
+       glfwPollEvents();
+
+       /* Check if we are still running */
+       if (glfwWindowShouldClose(window))
+           break;
+   }
+
+   glfwTerminate();
+   exit( EXIT_SUCCESS );
+}
+
+#+end_src
+
+#+RESULTS:
+
+
+** 三视图
+
+#+HEADER: :dir workdir 
+#+HEADER: :flags "$(pkg-config --cflags glfw3 glew gl glx x11 xrandr xi xxf86vm)"
+#+HEADER: :libs "$(pkg-config --libs glfw3 glew gl glx x11 xrandr xi xxf86vm )"
+#+begin_src C++
+//========================================================================
+// This is an example program for the GLFW library
+//
+// The program uses a "split window" view, rendering four views of the
+// same scene in one window (e.g. uesful for 3D modelling software). This
+// demo uses scissors to separete the four different rendering areas from
+// each other.
+//
+// (If the code seems a little bit strange here and there, it may be
+//  because I am not a friend of orthogonal projections)
+//========================================================================
+
+#define GLFW_INCLUDE_GLU
+#include <GLFW/glfw3.h>
+
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
+
+//========================================================================
+// Global variables
+//========================================================================
+
+// Mouse position
+static double xpos = 0, ypos = 0;
+
+// Window size
+static int width, height;
+
+// Active view: 0 = none, 1 = upper left, 2 = upper right, 3 = lower left,
+// 4 = lower right
+static int active_view = 0;
+
+// Rotation around each axis
+static int rot_x = 0, rot_y = 0, rot_z = 0;
+
+// Do redraw?
+static int do_redraw = 1;
+
+
+//========================================================================
+// Draw a solid torus (use a display list for the model)
+//========================================================================
+
+#define TORUS_MAJOR     1.5
+#define TORUS_MINOR     0.5
+#define TORUS_MAJOR_RES 32
+#define TORUS_MINOR_RES 32
+
+static void drawTorus(void)
+{
+    static GLuint torus_list = 0;
+    int    i, j, k;
+    double s, t, x, y, z, nx, ny, nz, scale, twopi;
+
+    if (!torus_list)
+    {
+        // Start recording displaylist
+        torus_list = glGenLists(1);
+        glNewList(torus_list, GL_COMPILE_AND_EXECUTE);
+
+        // Draw torus
+        twopi = 2.0 * M_PI;
+        for (i = 0;  i < TORUS_MINOR_RES;  i++)
+        {
+            glBegin(GL_QUAD_STRIP);
+            for (j = 0;  j <= TORUS_MAJOR_RES;  j++)
+            {
+                for (k = 1;  k >= 0;  k--)
+                {
+                    s = (i + k) % TORUS_MINOR_RES + 0.5;
+                    t = j % TORUS_MAJOR_RES;
+
+                    // Calculate point on surface
+                    x = (TORUS_MAJOR + TORUS_MINOR * cos(s * twopi / TORUS_MINOR_RES)) * cos(t * twopi / TORUS_MAJOR_RES);
+                    y = TORUS_MINOR * sin(s * twopi / TORUS_MINOR_RES);
+                    z = (TORUS_MAJOR + TORUS_MINOR * cos(s * twopi / TORUS_MINOR_RES)) * sin(t * twopi / TORUS_MAJOR_RES);
+
+                    // Calculate surface normal
+                    nx = x - TORUS_MAJOR * cos(t * twopi / TORUS_MAJOR_RES);
+                    ny = y;
+                    nz = z - TORUS_MAJOR * sin(t * twopi / TORUS_MAJOR_RES);
+                    scale = 1.0 / sqrt(nx*nx + ny*ny + nz*nz);
+                    nx *= scale;
+                    ny *= scale;
+                    nz *= scale;
+
+                    glNormal3f((float) nx, (float) ny, (float) nz);
+                    glVertex3f((float) x, (float) y, (float) z);
+                }
+            }
+
+            glEnd();
+        }
+
+        // Stop recording displaylist
+        glEndList();
+    }
+    else
+    {
+        // Playback displaylist
+        glCallList(torus_list);
+    }
+}
+
+
+//========================================================================
+// Draw the scene (a rotating torus)
+//========================================================================
+
+static void drawScene(void)
+{
+    const GLfloat model_diffuse[4]  = {1.0f, 0.8f, 0.8f, 1.0f};
+    const GLfloat model_specular[4] = {0.6f, 0.6f, 0.6f, 1.0f};
+    const GLfloat model_shininess   = 20.0f;
+
+    glPushMatrix();
+
+    // Rotate the object
+    glRotatef((GLfloat) rot_x * 0.5f, 1.0f, 0.0f, 0.0f);
+    glRotatef((GLfloat) rot_y * 0.5f, 0.0f, 1.0f, 0.0f);
+    glRotatef((GLfloat) rot_z * 0.5f, 0.0f, 0.0f, 1.0f);
+
+    // Set model color (used for orthogonal views, lighting disabled)
+    glColor4fv(model_diffuse);
+
+    // Set model material (used for perspective view, lighting enabled)
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, model_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, model_specular);
+    glMaterialf(GL_FRONT, GL_SHININESS, model_shininess);
+
+    // Draw torus
+    drawTorus();
+
+    glPopMatrix();
+}
+
+
+//========================================================================
+// Draw a 2D grid (used for orthogonal views)
+//========================================================================
+
+static void drawGrid(float scale, int steps)
+{
+    int i;
+    float x, y;
+
+    glPushMatrix();
+
+    // Set background to some dark bluish grey
+    glClearColor(0.05f, 0.05f, 0.2f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // Setup modelview matrix (flat XY view)
+    glLoadIdentity();
+    gluLookAt(0.0, 0.0, 1.0,
+              0.0, 0.0, 0.0,
+              0.0, 1.0, 0.0);
+
+    // We don't want to update the Z-buffer
+    glDepthMask(GL_FALSE);
+
+    // Set grid color
+    glColor3f(0.0f, 0.5f, 0.5f);
+
+    glBegin(GL_LINES);
+
+    // Horizontal lines
+    x = scale * 0.5f * (float) (steps - 1);
+    y = -scale * 0.5f * (float) (steps - 1);
+    for (i = 0;  i < steps;  i++)
+    {
+        glVertex3f(-x, y, 0.0f);
+        glVertex3f(x, y, 0.0f);
+        y += scale;
+    }
+
+    // Vertical lines
+    x = -scale * 0.5f * (float) (steps - 1);
+    y = scale * 0.5f * (float) (steps - 1);
+    for (i = 0;  i < steps;  i++)
+    {
+        glVertex3f(x, -y, 0.0f);
+        glVertex3f(x, y, 0.0f);
+        x += scale;
+    }
+
+    glEnd();
+
+    // Enable Z-buffer writing again
+    glDepthMask(GL_TRUE);
+
+    glPopMatrix();
+}
+
+
+//========================================================================
+// Draw all views
+//========================================================================
+
+static void drawAllViews(void)
+{
+    const GLfloat light_position[4] = {0.0f, 8.0f, 8.0f, 1.0f};
+    const GLfloat light_diffuse[4]  = {1.0f, 1.0f, 1.0f, 1.0f};
+    const GLfloat light_specular[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+    const GLfloat light_ambient[4]  = {0.2f, 0.2f, 0.3f, 1.0f};
+    double aspect;
+
+    // Calculate aspect of window
+    if (height > 0)
+        aspect = (double) width / (double) height;
+    else
+        aspect = 1.0;
+
+    // Clear screen
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Enable scissor test
+    glEnable(GL_SCISSOR_TEST);
+
+    // Enable depth test
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+
+    // ** ORTHOGONAL VIEWS **
+
+    // For orthogonal views, use wireframe rendering
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+    // Enable line anti-aliasing
+    glEnable(GL_LINE_SMOOTH);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    // Setup orthogonal projection matrix
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-3.0 * aspect, 3.0 * aspect, -3.0, 3.0, 1.0, 50.0);
+
+    // Upper left view (TOP VIEW)
+    glViewport(0, height / 2, width / 2, height / 2);
+    glScissor(0, height / 2, width / 2, height / 2);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(0.0f, 10.0f, 1e-3f,   // Eye-position (above)
+              0.0f, 0.0f, 0.0f,     // View-point
+              0.0f, 1.0f, 0.0f);   // Up-vector
+    drawGrid(0.5, 12);
+    drawScene();
+
+    // Lower left view (FRONT VIEW)
+    glViewport(0, 0, width / 2, height / 2);
+    glScissor(0, 0, width / 2, height / 2);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(0.0f, 0.0f, 10.0f,    // Eye-position (in front of)
+              0.0f, 0.0f, 0.0f,     // View-point
+              0.0f, 1.0f, 0.0f);   // Up-vector
+    drawGrid(0.5, 12);
+    drawScene();
+
+    // Lower right view (SIDE VIEW)
+    glViewport(width / 2, 0, width / 2, height / 2);
+    glScissor(width / 2, 0, width / 2, height / 2);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(10.0f, 0.0f, 0.0f,    // Eye-position (to the right)
+              0.0f, 0.0f, 0.0f,     // View-point
+              0.0f, 1.0f, 0.0f);   // Up-vector
+    drawGrid(0.5, 12);
+    drawScene();
+
+    // Disable line anti-aliasing
+    glDisable(GL_LINE_SMOOTH);
+    glDisable(GL_BLEND);
+
+    // ** PERSPECTIVE VIEW **
+
+    // For perspective view, use solid rendering
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+    // Enable face culling (faster rendering)
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glFrontFace(GL_CW);
+
+    // Setup perspective projection matrix
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(65.0f, aspect, 1.0f, 50.0f);
+
+    // Upper right view (PERSPECTIVE VIEW)
+    glViewport(width / 2, height / 2, width / 2, height / 2);
+    glScissor(width / 2, height / 2, width / 2, height / 2);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(3.0f, 1.5f, 3.0f,     // Eye-position
+              0.0f, 0.0f, 0.0f,     // View-point
+              0.0f, 1.0f, 0.0f);   // Up-vector
+
+    // Configure and enable light source 1
+    glLightfv(GL_LIGHT1, GL_POSITION, light_position);
+    glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, light_specular);
+    glEnable(GL_LIGHT1);
+    glEnable(GL_LIGHTING);
+
+    // Draw scene
+    drawScene();
+
+    // Disable lighting
+    glDisable(GL_LIGHTING);
+
+    // Disable face culling
+    glDisable(GL_CULL_FACE);
+
+    // Disable depth test
+    glDisable(GL_DEPTH_TEST);
+
+    // Disable scissor test
+    glDisable(GL_SCISSOR_TEST);
+
+    // Draw a border around the active view
+    if (active_view > 0 && active_view != 2)
+    {
+        glViewport(0, 0, width, height);
+
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0.0, 2.0, 0.0, 2.0, 0.0, 1.0);
+
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        glTranslatef((GLfloat) ((active_view - 1) & 1), (GLfloat) (1 - (active_view - 1) / 2), 0.0f);
+
+        glColor3f(1.0f, 1.0f, 0.6f);
+
+        glBegin(GL_LINE_STRIP);
+        glVertex2i(0, 0);
+        glVertex2i(1, 0);
+        glVertex2i(1, 1);
+        glVertex2i(0, 1);
+        glVertex2i(0, 0);
+        glEnd();
+    }
+}
+
+
+//========================================================================
+// Framebuffer size callback function
+//========================================================================
+
+static void framebufferSizeFun(GLFWwindow* window, int w, int h)
+{
+    width  = w;
+    height = h > 0 ? h : 1;
+    do_redraw = 1;
+}
+
+
+//========================================================================
+// Window refresh callback function
+//========================================================================
+
+static void windowRefreshFun(GLFWwindow* window)
+{
+    do_redraw = 1;
+}
+
+
+//========================================================================
+// Mouse position callback function
+//========================================================================
+
+static void cursorPosFun(GLFWwindow* window, double x, double y)
+{
+    // Depending on which view was selected, rotate around different axes
+    switch (active_view)
+    {
+        case 1:
+            rot_x += (int) (y - ypos);
+            rot_z += (int) (x - xpos);
+            do_redraw = 1;
+            break;
+        case 3:
+            rot_x += (int) (y - ypos);
+            rot_y += (int) (x - xpos);
+            do_redraw = 1;
+            break;
+        case 4:
+            rot_y += (int) (x - xpos);
+            rot_z += (int) (y - ypos);
+            do_redraw = 1;
+            break;
+        default:
+            // Do nothing for perspective view, or if no view is selected
+            break;
+    }
+
+    // Remember cursor position
+    xpos = x;
+    ypos = y;
+}
+
+
+//========================================================================
+// Mouse button callback function
+//========================================================================
+
+static void mouseButtonFun(GLFWwindow* window, int button, int action, int mods)
+{
+    if ((button == GLFW_MOUSE_BUTTON_LEFT) && action == GLFW_PRESS)
+    {
+        // Detect which of the four views was clicked
+        active_view = 1;
+        if (xpos >= width / 2)
+            active_view += 1;
+        if (ypos >= height / 2)
+            active_view += 2;
+    }
+    else if (button == GLFW_MOUSE_BUTTON_LEFT)
+    {
+        // Deselect any previously selected view
+        active_view = 0;
+    }
+
+    do_redraw = 1;
+}
+
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+}
+
+
+//========================================================================
+// main
+//========================================================================
+
+int main(void)
+{
+    GLFWwindow* window;
+
+    // Initialise GLFW
+    if (!glfwInit())
+    {
+        fprintf(stderr, "Failed to initialize GLFW\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Open OpenGL window
+    window = glfwCreateWindow(500, 500, "Split view demo", NULL, NULL);
+    if (!window)
+    {
+        fprintf(stderr, "Failed to open GLFW window\n");
+
+        glfwTerminate();
+        exit(EXIT_FAILURE);
+    }
+
+    // Set callback functions
+    glfwSetFramebufferSizeCallback(window, framebufferSizeFun);
+    glfwSetWindowRefreshCallback(window, windowRefreshFun);
+    glfwSetCursorPosCallback(window, cursorPosFun);
+    glfwSetMouseButtonCallback(window, mouseButtonFun);
+    glfwSetKeyCallback(window, key_callback);
+
+    // Enable vsync
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
+
+    glfwGetFramebufferSize(window, &width, &height);
+    framebufferSizeFun(window, width, height);
+
+    // Main loop
+    for (;;)
+    {
+        // Only redraw if we need to
+        if (do_redraw)
+        {
+            // Draw all views
+            drawAllViews();
+
+            // Swap buffers
+            glfwSwapBuffers(window);
+
+            do_redraw = 0;
+        }
+
+        // Wait for new events
+        glfwWaitEvents();
+
+        // Check if the window should be closed
+        if (glfwWindowShouldClose(window))
+            break;
+    }
+
+    // Close OpenGL window and terminate GLFW
+    glfwTerminate();
+
+    exit(EXIT_SUCCESS);
+}
+
+#+end_src
+
+#+RESULTS:
+
+
+** 可视化波平面
+
+
+#+HEADER: :dir workdir 
+#+HEADER: :flags "$(pkg-config --cflags glfw3 glew gl glx x11 xrandr xi xxf86vm)"
+#+HEADER: :libs "$(pkg-config --libs glfw3 glew gl glx x11 xrandr xi xxf86vm )"
+#+begin_src C++
+/*****************************************************************************
+ * Wave Simulation in OpenGL
+ * (C) 2002 Jakob Thomsen
+ * http://home.in.tum.de/~thomsen
+ * Modified for GLFW by Sylvain Hellegouarch - sh@programmationworld.com
+ * Modified for variable frame rate by Marcus Geelnard
+ * 2003-Jan-31: Minor cleanups and speedups / MG
+ * 2010-10-24: Formatting and cleanup - Camilla Berglund
+ *****************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define GLFW_INCLUDE_GLU
+#include <GLFW/glfw3.h>
+
+#ifndef M_PI
+ #define M_PI 3.1415926535897932384626433832795
+#endif
+
+// Maximum delta T to allow for differential calculations
+#define MAX_DELTA_T 0.01
+
+// Animation speed (10.0 looks good)
+#define ANIMATION_SPEED 10.0
+
+GLfloat alpha = 210.f, beta = -70.f;
+GLfloat zoom = 2.f;
+
+GLboolean locked = GL_FALSE;
+
+int cursorX;
+int cursorY;
+
+struct Vertex
+{
+    GLfloat x, y, z;
+    GLfloat r, g, b;
+};
+
+#define GRIDW 50
+#define GRIDH 50
+#define VERTEXNUM (GRIDW*GRIDH)
+
+#define QUADW (GRIDW - 1)
+#define QUADH (GRIDH - 1)
+#define QUADNUM (QUADW*QUADH)
+
+GLuint quad[4 * QUADNUM];
+struct Vertex vertex[VERTEXNUM];
+
+/* The grid will look like this:
+ *
+ *      3   4   5
+ *      *---*---*
+ *      |   |   |
+ *      | 0 | 1 |
+ *      |   |   |
+ *      *---*---*
+ *      0   1   2
+ */
+
+//========================================================================
+// Initialize grid geometry
+//========================================================================
+
+void init_vertices(void)
+{
+    int x, y, p;
+
+    // Place the vertices in a grid
+    for (y = 0;  y < GRIDH;  y++)
+    {
+        for (x = 0;  x < GRIDW;  x++)
+        {
+            p = y * GRIDW + x;
+
+            vertex[p].x = (GLfloat) (x - GRIDW / 2) / (GLfloat) (GRIDW / 2);
+            vertex[p].y = (GLfloat) (y - GRIDH / 2) / (GLfloat) (GRIDH / 2);
+            vertex[p].z = 0;
+
+            if ((x % 4 < 2) ^ (y % 4 < 2))
+                vertex[p].r = 0.0;
+            else
+                vertex[p].r = 1.0;
+
+            vertex[p].g = (GLfloat) y / (GLfloat) GRIDH;
+            vertex[p].b = 1.f - ((GLfloat) x / (GLfloat) GRIDW + (GLfloat) y / (GLfloat) GRIDH) / 2.f;
+        }
+    }
+
+    for (y = 0;  y < QUADH;  y++)
+    {
+        for (x = 0;  x < QUADW;  x++)
+        {
+            p = 4 * (y * QUADW + x);
+
+            quad[p + 0] = y       * GRIDW + x;     // Some point
+            quad[p + 1] = y       * GRIDW + x + 1; // Neighbor at the right side
+            quad[p + 2] = (y + 1) * GRIDW + x + 1; // Upper right neighbor
+            quad[p + 3] = (y + 1) * GRIDW + x;     // Upper neighbor
+        }
+    }
+}
+
+double dt;
+double p[GRIDW][GRIDH];
+double vx[GRIDW][GRIDH], vy[GRIDW][GRIDH];
+double ax[GRIDW][GRIDH], ay[GRIDW][GRIDH];
+
+//========================================================================
+// Initialize grid
+//========================================================================
+
+void init_grid(void)
+{
+    int x, y;
+    double dx, dy, d;
+
+    for (y = 0; y < GRIDH;  y++)
+    {
+        for (x = 0; x < GRIDW;  x++)
+        {
+            dx = (double) (x - GRIDW / 2);
+            dy = (double) (y - GRIDH / 2);
+            d = sqrt(dx * dx + dy * dy);
+            if (d < 0.1 * (double) (GRIDW / 2))
+            {
+                d = d * 10.0;
+                p[x][y] = -cos(d * (M_PI / (double)(GRIDW * 4))) * 100.0;
+            }
+            else
+                p[x][y] = 0.0;
+
+            vx[x][y] = 0.0;
+            vy[x][y] = 0.0;
+        }
+    }
+}
+
+
+//========================================================================
+// Draw scene
+//========================================================================
+
+void draw_scene(GLFWwindow* window)
+{
+    // Clear the color and depth buffers
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // We don't want to modify the projection matrix
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    // Move back
+    glTranslatef(0.0, 0.0, -zoom);
+    // Rotate the view
+    glRotatef(beta, 1.0, 0.0, 0.0);
+    glRotatef(alpha, 0.0, 0.0, 1.0);
+
+    glDrawElements(GL_QUADS, 4 * QUADNUM, GL_UNSIGNED_INT, quad);
+
+    glfwSwapBuffers(window);
+}
+
+
+//========================================================================
+// Initialize Miscellaneous OpenGL state
+//========================================================================
+
+void init_opengl(void)
+{
+    // Use Gouraud (smooth) shading
+    glShadeModel(GL_SMOOTH);
+
+    // Switch on the z-buffer
+    glEnable(GL_DEPTH_TEST);
+
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
+    glVertexPointer(3, GL_FLOAT, sizeof(struct Vertex), vertex);
+    glColorPointer(3, GL_FLOAT, sizeof(struct Vertex), &vertex[0].r); // Pointer to the first color
+
+    glPointSize(2.0);
+
+    // Background color is black
+    glClearColor(0, 0, 0, 0);
+}
+
+
+//========================================================================
+// Modify the height of each vertex according to the pressure
+//========================================================================
+
+void adjust_grid(void)
+{
+    int pos;
+    int x, y;
+
+    for (y = 0; y < GRIDH;  y++)
+    {
+        for (x = 0;  x < GRIDW;  x++)
+        {
+            pos = y * GRIDW + x;
+            vertex[pos].z = (float) (p[x][y] * (1.0 / 50.0));
+        }
+    }
+}
+
+
+//========================================================================
+// Calculate wave propagation
+//========================================================================
+
+void calc_grid(void)
+{
+    int x, y, x2, y2;
+    double time_step = dt * ANIMATION_SPEED;
+
+    // Compute accelerations
+    for (x = 0;  x < GRIDW;  x++)
+    {
+        x2 = (x + 1) % GRIDW;
+        for(y = 0; y < GRIDH; y++)
+            ax[x][y] = p[x][y] - p[x2][y];
+    }
+
+    for (y = 0;  y < GRIDH;  y++)
+    {
+        y2 = (y + 1) % GRIDH;
+        for(x = 0; x < GRIDW; x++)
+            ay[x][y] = p[x][y] - p[x][y2];
+    }
+
+    // Compute speeds
+    for (x = 0;  x < GRIDW;  x++)
+    {
+        for (y = 0;  y < GRIDH;  y++)
+        {
+            vx[x][y] = vx[x][y] + ax[x][y] * time_step;
+            vy[x][y] = vy[x][y] + ay[x][y] * time_step;
+        }
+    }
+
+    // Compute pressure
+    for (x = 1;  x < GRIDW;  x++)
+    {
+        x2 = x - 1;
+        for (y = 1;  y < GRIDH;  y++)
+        {
+            y2 = y - 1;
+            p[x][y] = p[x][y] + (vx[x2][y] - vx[x][y] + vy[x][y2] - vy[x][y]) * time_step;
+        }
+    }
+}
+
+
+//========================================================================
+// Print errors
+//========================================================================
+
+static void error_callback(int error, const char* description)
+{
+    fprintf(stderr, "Error: %s\n", description);
+}
+
+
+//========================================================================
+// Handle key strokes
+//========================================================================
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (action != GLFW_PRESS)
+        return;
+
+    switch (key)
+    {
+        case GLFW_KEY_ESCAPE:
+            glfwSetWindowShouldClose(window, GL_TRUE);
+            break;
+        case GLFW_KEY_SPACE:
+            init_grid();
+            break;
+        case GLFW_KEY_LEFT:
+            alpha += 5;
+            break;
+        case GLFW_KEY_RIGHT:
+            alpha -= 5;
+            break;
+        case GLFW_KEY_UP:
+            beta -= 5;
+            break;
+        case GLFW_KEY_DOWN:
+            beta += 5;
+            break;
+        case GLFW_KEY_PAGE_UP:
+            zoom -= 0.25f;
+            if (zoom < 0.f)
+                zoom = 0.f;
+            break;
+        case GLFW_KEY_PAGE_DOWN:
+            zoom += 0.25f;
+            break;
+        default:
+            break;
+    }
+}
+
+
+//========================================================================
+// Callback function for mouse button events
+//========================================================================
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+    if (button != GLFW_MOUSE_BUTTON_LEFT)
+        return;
+
+    if (action == GLFW_PRESS)
+    {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        locked = GL_TRUE;
+    }
+    else
+    {
+        locked = GL_FALSE;
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
+}
+
+
+//========================================================================
+// Callback function for cursor motion events
+//========================================================================
+
+void cursor_position_callback(GLFWwindow* window, double x, double y)
+{
+    if (locked)
+    {
+        alpha += (GLfloat) (x - cursorX) / 10.f;
+        beta += (GLfloat) (y - cursorY) / 10.f;
+    }
+
+    cursorX = (int) x;
+    cursorY = (int) y;
+}
+
+
+//========================================================================
+// Callback function for scroll events
+//========================================================================
+
+void scroll_callback(GLFWwindow* window, double x, double y)
+{
+    zoom += (float) y / 4.f;
+    if (zoom < 0)
+        zoom = 0;
+}
+
+
+//========================================================================
+// Callback function for framebuffer resize events
+//========================================================================
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    float ratio = 1.f;
+
+    if (height > 0)
+        ratio = (float) width / (float) height;
+
+    // Setup viewport
+    glViewport(0, 0, width, height);
+
+    // Change to the projection matrix and set our viewing volume
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(60.0, ratio, 1.0, 1024.0);
+}
+
+
+//========================================================================
+// main
+//========================================================================
+
+int main(int argc, char* argv[])
+{
+    GLFWwindow* window;
+    double t, dt_total, t_old;
+    int width, height;
+
+    glfwSetErrorCallback(error_callback);
+
+    if (!glfwInit())
+        exit(EXIT_FAILURE);
+
+    window = glfwCreateWindow(640, 480, "Wave Simulation", NULL, NULL);
+    if (!window)
+    {
+        glfwTerminate();
+        exit(EXIT_FAILURE);
+    }
+
+    glfwSetKeyCallback(window, key_callback);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
+    glfwSetCursorPosCallback(window, cursor_position_callback);
+    glfwSetScrollCallback(window, scroll_callback);
+
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
+
+    glfwGetFramebufferSize(window, &width, &height);
+    framebuffer_size_callback(window, width, height);
+
+    // Initialize OpenGL
+    init_opengl();
+
+    // Initialize simulation
+    init_vertices();
+    init_grid();
+    adjust_grid();
+
+    // Initialize timer
+    t_old = glfwGetTime() - 0.01;
+
+    while (!glfwWindowShouldClose(window))
+    {
+        t = glfwGetTime();
+        dt_total = t - t_old;
+        t_old = t;
+
+        // Safety - iterate if dt_total is too large
+        while (dt_total > 0.f)
+        {
+            // Select iteration time step
+            dt = dt_total > MAX_DELTA_T ? MAX_DELTA_T : dt_total;
+            dt_total -= dt;
+
+            // Calculate wave propagation
+            calc_grid();
+        }
+
+        // Compute height of each vertex
+        adjust_grid();
+
+        // Draw wave grid to OpenGL display
+        draw_scene(window);
+
+        glfwPollEvents();
+    }
+
+    exit(EXIT_SUCCESS);
+}
+
+#+end_src
+
+#+RESULTS:

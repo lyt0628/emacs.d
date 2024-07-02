@@ -1,0 +1,247 @@
+:PROPERTIES:
+:ID:       381fb30d-4bdf-4d08-b8d1-6ddeae462a43
+:header-args:python: :results output
+:END:
+#+title: tensorflow-example-minist2
+#+date: [2024-05-13 一]
+#+last_modified: [2024-05-13 一 22:42]
+
+
+
+
+* 全连接层
+
+#+begin_src python :session mnist
+import tensorflow as tf
+
+class NaiveDense:
+    def __init__(self, input_size, output_size, activation):
+        self.activation = activation
+
+        w_shape = (input_size, output_size)
+        w_initial_value = tf.random.uniform(w_shape, minval=0, maxval=1e-1)
+        self.W = tf.Variable(w_initial_value)
+
+        b_shape = (output_size,)
+        b_initial_value = tf.zeros(b_shape)
+        self.b = tf.Variable(b_initial_value)
+
+    def __call__(self, inputs):
+        return self.activation(tf.matmul(inputs, self.W) + self.b)
+
+    @property
+    def weights(self):
+        return [self.W, self.b]
+#+end_src
+
+#+RESULTS:
+
+
+* 层化
+
+#+begin_src python :session mnist
+class NaiveSequential:
+    def __init__(self, layers):
+        self.layers = layers
+
+    def __call__(self, inputs):
+        x = inputs
+        for layer in self.layers:
+           x = layer(x)
+        return x
+
+    @property
+    def weights(self):
+       weights = []
+       for layer in self.layers:
+           weights += layer.weights
+       return weights
+#+end_src
+
+#+RESULTS:
+
+** 测试
+#+begin_src python :session mnist
+model = NaiveSequential([
+    NaiveDense(input_size=28 * 28, output_size=512, activation=tf.nn.relu),
+    NaiveDense(input_size=512, output_size=10, activation=tf.nn.softmax)
+])
+assert len(model.weights) == 4
+#+end_src
+
+#+RESULTS:
+
+
+* 批次处理
+
+#+begin_src python :session mnist
+import math
+
+class BatchGenerator:
+    def __init__(self, images, labels, batch_size=128):
+        assert len(images) == len(labels)
+        self.index = 0
+        self.images = images
+        self.labels = labels
+        self.batch_size = batch_size
+        self.num_batches = math.ceil(len(images) / batch_size)
+
+    def next(self):
+        images = self.images[self.index : self.index + self.batch_size]
+        labels = self.labels[self.index : self.index + self.batch_size]
+        self.index += self.batch_size
+        return images, labels
+#+end_src
+
+#+RESULTS:
+
+
+* 执行一次训练
+
+#+begin_src python :session mnist
+def one_training_step(model, images_batch, labels_batch):
+    with tf.GradientTape() as tape:
+        predictions = model(images_batch)
+        per_sample_losses = tf.keras.losses.sparse_categorical_crossentropy(
+            labels_batch, predictions)
+        average_loss = tf.reduce_mean(per_sample_losses)
+    gradients = tape.gradient(average_loss, model.weights)
+    update_weights(gradients, model.weights)
+    return average_loss
+#+end_src
+
+#+RESULTS:
+
+
+#+begin_src python :session mnist
+learning_rate = 1e-3
+
+def update_weights(gradients, weights):
+    for g, w in zip(gradients, weights):
+        w.assign_sub(g * learning_rate)
+#+end_src
+
+#+RESULTS:
+
+
+#+begin_src python :session mnist
+from tensorflow.keras import optimizers
+
+optimizer = optimizers.SGD(learning_rate=1e-3)
+
+def update_weights(gradients, weights):
+    optimizer.apply_gradients(zip(gradients, weights))
+#+end_src
+
+#+RESULTS:
+
+
+* 拟合函数
+
+#+begin_src python :session mnist
+def fit(model, images, labels, epochs, batch_size=128):
+    for epoch_counter in range(epochs):
+        print(f"Epoch {epoch_counter}")
+        batch_generator = BatchGenerator(images, labels)
+        for batch_counter in range(batch_generator.num_batches):
+            images_batch, labels_batch = batch_generator.next()
+            loss = one_training_step(model, images_batch, labels_batch)
+            if batch_counter % 100 == 0:
+                print(f"loss at batch {batch_counter}: {loss:.2f}")
+#+end_src
+
+#+RESULTS:
+
+* 训练模型
+
+#+begin_src python :session mnist
+from tensorflow.keras.datasets import mnist
+(train_images, train_labels), (test_images, test_labels) = mnist.load_data(path="/home/lyt0628/download/mnist.npz")
+
+train_images = train_images.reshape((60000, 28 * 28))
+train_images = train_images.astype("float32") / 255
+test_images = test_images.reshape((10000, 28 * 28))
+test_images = test_images.astype("float32") / 255
+
+fit(model, train_images, train_labels, epochs=10, batch_size=128)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Epoch 0
+loss at batch 0: 4.47
+loss at batch 100: 2.23
+loss at batch 200: 2.22
+loss at batch 300: 2.06
+loss at batch 400: 2.18
+Epoch 1
+loss at batch 0: 1.89
+loss at batch 100: 1.87
+loss at batch 200: 1.84
+loss at batch 300: 1.69
+loss at batch 400: 1.79
+Epoch 2
+loss at batch 0: 1.58
+loss at batch 100: 1.58
+loss at batch 200: 1.51
+loss at batch 300: 1.42
+loss at batch 400: 1.48
+Epoch 3
+loss at batch 0: 1.33
+loss at batch 100: 1.34
+loss at batch 200: 1.25
+loss at batch 300: 1.20
+loss at batch 400: 1.26
+Epoch 4
+loss at batch 0: 1.13
+loss at batch 100: 1.16
+loss at batch 200: 1.06
+loss at batch 300: 1.04
+loss at batch 400: 1.10
+Epoch 5
+loss at batch 0: 0.99
+loss at batch 100: 1.02
+loss at batch 200: 0.92
+loss at batch 300: 0.92
+loss at batch 400: 0.98
+Epoch 6
+loss at batch 0: 0.88
+loss at batch 100: 0.91
+loss at batch 200: 0.81
+loss at batch 300: 0.83
+loss at batch 400: 0.90
+Epoch 7
+loss at batch 0: 0.79
+loss at batch 100: 0.83
+loss at batch 200: 0.73
+loss at batch 300: 0.76
+loss at batch 400: 0.83
+Epoch 8
+loss at batch 0: 0.73
+loss at batch 100: 0.76
+loss at batch 200: 0.67
+loss at batch 300: 0.71
+loss at batch 400: 0.78
+Epoch 9
+loss at batch 0: 0.68
+loss at batch 100: 0.71
+loss at batch 200: 0.62
+loss at batch 300: 0.66
+loss at batch 400: 0.74
+#+end_example
+
+
+
+* 评估结果
+#+begin_src python :session mnist
+  import numpy as np
+  
+  predictions = model(test_images)
+  predictions = predictions.numpy()
+  predicted_labels = np.argmax(predictions, axis=1)
+  matches = predicted_labels == test_labels
+  print(f"accuracy: {matches.mean():.2f}")
+#+end_src
+
+#+RESULTS:
+: accuracy: 0.82

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       620fac9f-1f49-44d6-a632-6405a3bfc8b3
+:END:
+#+title: c2d
+#+date: [2024-05-24 五]
+#+last_modified: [2024-05-24 五 11:29]
+

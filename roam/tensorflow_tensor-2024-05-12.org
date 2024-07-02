@@ -1,0 +1,662 @@
+:PROPERTIES:
+:ID:       3fc0273f-33cc-4eff-bd62-d0358f984801
+:END:
+#+title: tensorflow-Tensor
+#+date: [2024-05-12 日]
+#+last_modified: [2024-05-14 二 18:58]
+
+
+
+
+
+* Hello TensorFlow
+
+#+begin_src python
+  import tensorflow as tf
+
+  text = tf.constant("Hello TensorFlow")
+  
+  print(text)
+#+end_src
+
+#+RESULTS:
+: tf.Tensor(b'Hello TensorFlow', shape=(), dtype=string)
+
+
+* Import Dependencies
+
+#+begin_src python :session example
+  import tensorflow as tf
+  import numpy as np
+  import matplotlib.pyplot as plt
+  import time
+
+#+end_src
+
+#+RESULTS:
+
+
+* 创建张量
+
+
+
+** 全一张量和全0张量
+#+NAME: all-ones
+#+begin_src python :session example
+  x = tf.ones(shape=(2, 1))
+  x
+
+#+end_src
+
+#+RESULTS:
+: tf.Tensor(
+: [[1.]
+:  [1.]], shape=(2, 1), dtype=float32)
+
+
+#+NAME: all-zeros
+#+begin_src python :session example
+  x = tf.zeros(shape=(2, 1))
+
+  x
+#+end_src
+
+#+RESULTS: all-zeros
+: tf.Tensor(
+: [[0.]
+:  [0.]], shape=(2, 1), dtype=float32)
+
+* 随机张量
+
+#+NAME: random-tensor
+#+begin_src python :session example
+  x = tf.random.normal(shape=(3, 1), mean=0., stddev=1.)
+  x
+
+#+end_src
+
+#+RESULTS: random-tensor
+: tf.Tensor(
+: [[ 0.45979905]
+:  [ 0.33782527]
+:  [-0.55519736]], shape=(3, 1), dtype=float32)
+
+
+
+#+NAME: random-tensor2
+#+begin_src python :session example
+  x = tf.random.uniform(shape=(3, 1), minval=0., maxval=1.)
+  x
+
+#+end_src
+
+#+RESULTS: random-tensor2
+: tf.Tensor(
+: [[0.50127614]
+:  [0.66771555]
+:  [0.06487894]], shape=(3, 1), dtype=float32)
+
+
+
+* 张量类型
+
+** 标量 Scalar
+
+
+#+NAME: 0dim
+#+begin_src python :session example
+  x = np.array(12)
+
+  x.ndim
+#+end_src
+
+#+RESULTS:
+: 0
+
+
+** 矢量 一维张量
+#+NAME: 1dim
+#+begin_src python :session example
+  x = np.array([12, 3, 6, 14, 7])
+  x.ndim
+
+#+end_src
+
+#+RESULTS:
+: 1
+
+** 矩阵 二维张量
+
+#+NAME: 2dim
+#+begin_src python :session example
+  x = np.array([[5, 78, 2, 34, 0],
+		[6, 79, 3, 35, 1],
+		[7, 80, 4, 36, 2]])
+  x.ndim
+
+#+end_src
+
+#+RESULTS:
+: 2
+
+
+** 更高维度的张量
+
+#+NAME: 3dim
+#+begin_src python :session example
+x = np.array([[[5, 78, 2, 34, 0],
+               [6, 79, 3, 35, 1],
+               [7, 80, 4, 36, 2]],
+              [[5, 78, 2, 34, 0],
+               [6, 79, 3, 35, 1],
+               [7, 80, 4, 36, 2]],
+              [[5, 78, 2, 34, 0],
+               [6, 79, 3, 35, 1],
+               [7, 80, 4, 36, 2]]])
+x.ndim
+#+end_src
+
+#+RESULTS:
+: 3
+
+
+* 张量属性
+#+NAME: mnist-datasets
+#+begin_src python :session example :results silent
+from tensorflow.keras.datasets import mnist
+(train_images, train_labels), (test_images, test_labels) = mnist.load_data(path="/home/lyt0628/download/mnist.npz")
+#+end_src
+
+
+#+begin_src python :session example
+  train_images.ndim
+#+end_src
+
+#+RESULTS:
+: 3
+
+#+begin_src python :session example
+  train_images.shape
+#+end_src
+
+#+RESULTS:
+| 60000 | 28 | 28 |
+
+#+begin_src python :session example
+  train_images.dtype
+#+end_src
+
+#+RESULTS:
+: uint8
+
+
+
+* 图片展示
+#+begin_src python :session example
+  digit = train_images[4]
+  plt.imshow(digit, cmap=plt.cm.binary)
+  plt.show()
+
+  train_labels[4]
+#+end_src
+
+#+RESULTS:
+: 9
+
+
+* 张量切片
+获取90张图片数据
+#+begin_src python :session example
+  my_slice = train_images[10:100]
+
+  my_slice.shape
+#+end_src
+
+#+RESULTS:
+| 90 | 28 | 28 |
+
+
+#+begin_src python :session example
+my_slice = train_images[10:100, :, :]
+my_slice.shape
+#+end_src
+
+
+#+RESULTS:
+| 90 | 28 | 28 |
+
+
+#+begin_src python :session example
+my_slice = train_images[10:100, 0:28, 0:28]
+my_slice.shape
+#+end_src
+
+#+RESULTS:
+| 90 | 28 | 28 |
+
+
+#+begin_src python :session example
+  my_slice = train_images[:, 14:, 14:]
+
+  my_slice.shape
+#+end_src
+
+#+RESULTS:
+| 60000 | 14 | 14 |
+
+#+begin_src python :session example
+  my_slice = train_images[:, 7:-7, 7:-7]
+  my_slice.shape
+#+end_src
+
+#+RESULTS:
+| 60000 | 14 | 14 |
+
+
+* 数据批次操作
+#+begin_src python :session example
+  batch = train_images[:128]
+  batch = train_images[128:256]
+
+  n = 3
+  batch = train_images[128 * n:128 * (n + 1)]
+
+  batch.shape
+#+end_src
+
+#+RESULTS:
+| 128 | 28 | 28 |
+
+
+
+* 编码数据为张量
+** 向量数据 2DTensor （samples, features）
+** 序列(时间)顺序 3DTensor (samples, timesteps, features)
+** 图像 4DTensor (samples, height, width, channels) 或  (samples, channels, height, width)
+** 视频 5DTensor (samples, frames, height, width, channels) 或  (samples, channels, frames, height, width)
+
+
+* 张量运算
+
+** 四则运算
+*** 加法
+#+NAME: native_add
+#+begin_src python :session example :results silent
+def naive_add(x, y):
+    assert len(x.shape) == 2
+    assert x.shape == y.shape
+    x = x.copy()
+    for i in range(x.shape[0]):
+        for j in range(x.shape[1]):
+            x[i, j] += y[i, j]
+    return x
+#+end_src
+
+
+
+*** 原地加法
+#+begin_src python :session example :noweb yes
+  <<v>>
+
+  v.assign_add(tf.ones((3, 1)))
+
+  v
+#+end_src
+
+#+RESULTS:
+: <tf.Variable 'Variable:0' shape=(3, 1) dtype=float32, numpy=
+: array([[ 2.09683  ],
+:        [-0.8748808],
+:        [ 1.2727028]], dtype=float32)>
+
+
+** 其它
+
+#+NAME: a
+#+begin_src python :session example
+  a = tf.ones((2, 2))
+  a
+#+end_src
+
+#+RESULTS: a
+: tf.Tensor(
+: [[1. 1.]
+:  [1. 1.]], shape=(2, 2), dtype=float32)
+
+
+
+#+NAME: b
+#+begin_src python :session example :noweb yes
+  <<a>>
+  b = tf.square(a)
+  b
+#+end_src
+
+#+RESULTS: b
+: tf.Tensor(
+: [[1. 1.]
+:  [1. 1.]], shape=(2, 2), dtype=float32)
+
+
+#+NAME: c
+#+begin_src python :session example :noweb yes
+  <<b>>
+  c = tf.sqrt(a)
+  c
+#+end_src
+
+#+RESULTS: c
+: tf.Tensor(
+: [[1. 1.]
+:  [1. 1.]], shape=(2, 2), dtype=float32)
+
+
+
+#+NAME: d
+#+begin_src python :session example :noweb yes
+  <<c>>
+  d = b + c
+  d
+#+end_src
+
+#+RESULTS: d
+: tf.Tensor(
+: [[2. 2.]
+:  [2. 2.]], shape=(2, 2), dtype=float32)
+
+
+#+NAME:  e
+#+begin_src python :session example :noweb yes
+  <<d>>
+  e = tf.matmul(a, b)
+  e *= d
+  e
+#+end_src
+
+#+RESULTS: e
+: tf.Tensor(
+: [[4. 4.]
+:  [4. 4.]], shape=(2, 2), dtype=float32)
+
+
+
+
+** 激活函数
+
+#+NAME:  native_relu
+#+begin_src python :session example
+def naive_relu(x):
+    assert len(x.shape) == 2
+    x = x.copy()
+    for i in range(x.shape[0]):
+        for j in range(x.shape[1]):
+            x[i, j] = max(x[i, j], 0)
+    return x
+#+end_src
+
+
+
+** 广播 形状不同的张量运算
+
+#+begin_src python :session example
+  X = np.random.random((32, 10))
+  y = np.random.random((10,))
+
+  "x.shape: {}\ny.shape: {}".format(x.shape, y.shape)
+#+end_src
+#+RESULTS:
+: x.shape: (20, 100)
+: y.shape: (10,)
+
+
+#+begin_src python :session example
+  y = np.expand_dims(y, axis=1)
+  y.shape
+#+end_src
+
+#+RESULTS:
+| 10 | 1 |
+
+
+#+begin_src python :session example
+  Y = np.concatenate([y] * 32, axis=0)
+  Y.shape
+#+end_src
+
+#+RESULTS:
+| 320 | 1 |
+
+
+
+#+NAME: naive_add_matrix_and_vector
+#+begin_src python :session example :results silent
+def naive_add_matrix_and_vector(x, y):
+    assert len(x.shape) == 2
+    assert len(y.shape) == 1
+    assert x.shape[1] == y.shape[0]
+    x = x.copy()
+    for i in range(x.shape[0]):
+        for j in range(x.shape[1]):
+            x[i, j] += y[j]
+    return x
+#+end_src
+
+
+** maximum
+#+begin_src python :session example
+  x = np.random.random((64, 3, 32, 10))
+  y = np.random.random((32, 10))
+  z = np.maximum(x, y)
+
+  z.shape
+#+end_src
+
+#+RESULTS:
+| 64 | 3 | 32 | 10 |
+
+
+** 点积
+
+#+begin_src python :session example
+  x = np.random.random((32,))
+  y = np.random.random((32,))
+  z = np.dot(x, y)
+  x.shape
+#+end_src
+
+#+RESULTS:
+| 32 |
+
+
+
+#+NAME: naive_vector_dot
+#+begin_src python :session example
+def naive_vector_dot(x, y):
+    assert len(x.shape) == 1
+    assert len(y.shape) == 1
+    assert x.shape[0] == y.shape[0]
+    z = 0.
+    for i in range(x.shape[0]):
+        z += x[i] * y[i]
+    return z
+#+end_src
+
+
+#+NAME: naive_matrix_vector_dot
+#+begin_src python :session example
+def naive_matrix_vector_dot(x, y):
+    assert len(x.shape) == 2
+    assert len(y.shape) == 1
+    assert x.shape[1] == y.shape[0]
+    z = np.zeros(x.shape[0])
+    for i in range(x.shape[0]):
+        for j in range(x.shape[1]):
+            z[i] += x[i, j] * y[j]
+    return z
+#+end_src
+
+
+#+NAME: naive_matrix_vector_dot2
+#+begin_src python :session example
+def naive_matrix_vector_dot(x, y):
+    z = np.zeros(x.shape[0])
+    for i in range(x.shape[0]):
+        z[i] = naive_vector_dot(x[i, :], y)
+    return z
+#+end_src
+
+
+
+** 矩阵乘法
+
+#+NAME: naive_matrix_dot
+#+begin_src python :session example
+def naive_matrix_dot(x, y):
+    assert len(x.shape) == 2
+    assert len(y.shape) == 2
+    assert x.shape[1] == y.shape[0]
+    z = np.zeros((x.shape[0], y.shape[1]))
+    for i in range(x.shape[0]):
+        for j in range(y.shape[1]):
+            row_x = x[i, :]
+            column_y = y[:, j]
+            z[i, j] = naive_vector_dot(row_x, column_y)
+    return z
+#+end_src
+
+* 修改张量形状
+
+#+begin_src python :session example
+train_images = train_images.reshape((60000, 28 * 28))
+#+end_src
+
+#+begin_src python :session example
+  x = np.array([[0., 1.],
+	       [2., 3.],
+	       [4., 5.]])
+
+  x.shape
+#+end_src
+
+#+RESULTS:
+| 3 | 2 |
+
+
+#+begin_src python :session example
+  x = x.reshape((6, 1))
+  x
+
+#+end_src
+
+#+RESULTS:
+| 0 |
+| 1 |
+| 2 |
+| 3 |
+| 4 |
+| 5 |
+
+
+** 转置
+
+#+begin_src python :session example
+  x = np.zeros((300, 20))
+  x = np.transpose(x)
+  x.shape
+
+#+end_src
+
+#+RESULTS:
+| 20 | 300 |
+
+
+* 测速
+
+#+NAME: speed1
+#+begin_src python :session example
+
+  x = np.random.random((20, 100))
+  y = np.random.random((20, 100))
+
+  t0 = time.time()
+  for _ in range(10000):
+      z = x + y
+      z = np.maximum(z, 0.)
+
+  "Took: {0:.2f} s".format(time.time() - t0)
+#+end_src
+
+#+RESULTS: speed1
+: Took: 0.02 s
+
+#+RESULTS:
+
+
+
+#+begin_src python :session example :noweb yes 
+  <<speed1>>
+  <<native_add>>
+  <<native_relu>>
+
+  t0 = time.time()
+  for _ in range(1000):
+      z = naive_add(x, y)
+      z = naive_relu(z)
+
+  "Took: {0:.2f} s".format(time.time() - t0)
+#+end_src
+
+#+RESULTS:
+: Took: 0.60 s
+
+
+
+
+
+
+
+* TensorFlow 变量
+
+
+#+NAME: v
+#+begin_src python :session example
+v = tf.Variable(initial_value=tf.random.normal(shape=(3, 1)))
+v
+#+end_src
+
+#+RESULTS: v
+: <tf.Variable 'Variable:0' shape=(3, 1) dtype=float32, numpy=
+: array([[-0.54212934],
+:        [-0.3482014 ],
+:        [ 0.03232562]], dtype=float32)>
+
+
+** 赋值
+
+#+begin_src python :session example
+  v.assign(tf.ones((3, 1)))
+  v
+#+end_src
+
+#+RESULTS:
+: <tf.Variable 'Variable:0' shape=(3, 1) dtype=float32, numpy=
+: array([[1.],
+:        [1.],
+:        [1.]], dtype=float32)>
+
+
+
+
+#+begin_src python :session example
+  v[0, 0].assign(3.)
+  v
+#+end_src
+
+#+RESULTS:
+: <tf.Variable 'Variable:0' shape=(3, 1) dtype=float32, numpy=
+: array([[3.],
+:        [1.],
+:        [1.]], dtype=float32)>
+
+
+

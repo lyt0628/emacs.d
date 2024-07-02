@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       7186ddd1-060f-4d72-b20c-293f3234fb8b
+:END:
+#+title: Cpp_
+#+date: [2024-06-28 五]
+#+last_modified: [2024-06-28 五 15:46]
+

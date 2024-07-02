@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       890ceacf-9226-42db-b642-7864a381fe97
+:END:
+#+title: mutio-poll
+#+date: [2024-06-02 日]
+#+last_modified: [2024-06-02 日 16:42]
+

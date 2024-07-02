@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       619685a6-c3ee-4e0f-ad02-e5e72e9d3a10
+:END:
+#+title: 交叉熵
+#+date: [2024-05-13 一]
+#+last_modified: [2024-05-13 一 12:36]
+

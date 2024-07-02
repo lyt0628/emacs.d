@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       8cbf973a-efce-4f8b-9ea5-3d4739efc342
+:END:
+#+title: Qt-i18n
+#+date: [2024-06-28 五]
+#+last_modified: [2024-06-28 五 14:57]
+

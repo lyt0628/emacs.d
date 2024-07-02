@@ -1,0 +1,191 @@
+:PROPERTIES:
+:ID:       d3e9e6f4-062f-4e64-b973-8060b6d9d1cb
+:header-args:python: :session example
+:END:
+#+title: pytorch-autograd
+#+date: [2024-05-15 三]
+#+last_modified: [2024-05-16 四 00:05]
+
+
+
+#+begin_src python
+  import torch
+  from torch.autograd import Variable
+  "ok"
+#+end_src
+
+#+RESULTS:
+: ok
+
+
+
+* 对标量求导
+
+#+begin_src python
+  x = Variable(torch.Tensor([2]), requires_grad=True)
+  y = x + 2
+  z = y ** 2 + 3
+
+  z.backward()
+  x.grad
+#+end_src
+
+#+RESULTS:
+: tensor([8.])
+
+
+#+begin_src python
+  x = Variable(torch.randn(10, 20), requires_grad=True)
+  y = Variable(torch.randn(10, 5), requires_grad=True)
+  w = Variable(torch.randn(20, 5), requires_grad=True)
+
+  out = torch.mean(y - torch.matmul(x, w)) # torch.matmul 是做矩阵乘法
+  out.backward()
+  x.grad
+#+end_src
+
+#+RESULTS:
+#+begin_example
+tensor([[ 0.0822, -0.0072, -0.0563, -0.0017,  0.0516,  0.0381,  0.0606, -0.0224,
+          0.0266,  0.0554,  0.0480, -0.0012, -0.0558,  0.0095,  0.0443, -0.0571,
+         -0.0666,  0.0461, -0.0006, -0.0061],
+        [ 0.0822, -0.0072, -0.0563, -0.0017,  0.0516,  0.0381,  0.0606, -0.0224,
+          0.0266,  0.0554,  0.0480, -0.0012, -0.0558,  0.0095,  0.0443, -0.0571,
+         -0.0666,  0.0461, -0.0006, -0.0061],
+        [ 0.0822, -0.0072, -0.0563, -0.0017,  0.0516,  0.0381,  0.0606, -0.0224,
+          0.0266,  0.0554,  0.0480, -0.0012, -0.0558,  0.0095,  0.0443, -0.0571,
+         -0.0666,  0.0461, -0.0006, -0.0061],
+        [ 0.0822, -0.0072, -0.0563, -0.0017,  0.0516,  0.0381,  0.0606, -0.0224,
+          0.0266,  0.0554,  0.0480, -0.0012, -0.0558,  0.0095,  0.0443, -0.0571,
+         -0.0666,  0.0461, -0.0006, -0.0061],
+        [ 0.0822, -0.0072, -0.0563, -0.0017,  0.0516,  0.0381,  0.0606, -0.0224,
+          0.0266,  0.0554,  0.0480, -0.0012, -0.0558,  0.0095,  0.0443, -0.0571,
+         -0.0666,  0.0461, -0.0006, -0.0061],
+        [ 0.0822, -0.0072, -0.0563, -0.0017,  0.0516,  0.0381,  0.0606, -0.0224,
+          0.0266,  0.0554,  0.0480, -0.0012, -0.0558,  0.0095,  0.0443, -0.0571,
+         -0.0666,  0.0461, -0.0006, -0.0061],
+        [ 0.0822, -0.0072, -0.0563, -0.0017,  0.0516,  0.0381,  0.0606, -0.0224,
+          0.0266,  0.0554,  0.0480, -0.0012, -0.0558,  0.0095,  0.0443, -0.0571,
+         -0.0666,  0.0461, -0.0006, -0.0061],
+        [ 0.0822, -0.0072, -0.0563, -0.0017,  0.0516,  0.0381,  0.0606, -0.0224,
+          0.0266,  0.0554,  0.0480, -0.0012, -0.0558,  0.0095,  0.0443, -0.0571,
+         -0.0666,  0.0461, -0.0006, -0.0061],
+        [ 0.0822, -0.0072, -0.0563, -0.0017,  0.0516,  0.0381,  0.0606, -0.0224,
+          0.0266,  0.0554,  0.0480, -0.0012, -0.0558,  0.0095,  0.0443, -0.0571,
+         -0.0666,  0.0461, -0.0006, -0.0061],
+        [ 0.0822, -0.0072, -0.0563, -0.0017,  0.0516,  0.0381,  0.0606, -0.0224,
+          0.0266,  0.0554,  0.0480, -0.0012, -0.0558,  0.0095,  0.0443, -0.0571,
+         -0.0666,  0.0461, -0.0006, -0.0061]])
+#+end_example
+
+
+* 对多维数组求导
+
+** Example1
+准备自变量n 和 因变量 m
+#+begin_src python
+  m = Variable(torch.FloatTensor([[2, 3]]), requires_grad=True) # 构建一个 1 x 2 的矩阵
+  n = torch.zeros_like(m)
+  
+  n
+#+end_src
+
+#+RESULTS:
+: tensor([[0., 0.]])
+
+** 准备关系式
+#+begin_src python
+  n[0, 0] = m[0, 0] ** 2
+  n[0, 1] = m[0, 1] ** 3
+
+  n
+#+end_src
+
+#+RESULTS:
+: tensor([[ 4., 27.]], grad_fn=<CopySlices>)
+
+
+
+** 求导
+需求求的导数维度, 有0表示求偏导
+#+begin_src python
+  n.backward(torch.ones_like(n))
+  m.grad
+#+end_src
+
+#+RESULTS:
+: tensor([[ 4., 27.]])
+
+
+* 多次求导
+
+#+begin_src python
+  x = Variable(torch.FloatTensor([3]), requires_grad=True)
+  y = x * 2 + x ** 2 + 3
+  y
+#+end_src
+
+#+RESULTS:
+: tensor([18.], grad_fn=<AddBackward0>)
+
+
+#+begin_src python
+
+  y.backward(retain_graph=True)
+  x.grad
+#+end_src
+
+#+RESULTS:
+: tensor([8.])
+
+
+#+begin_src python
+  y.backward()
+  x.grad
+#+end_src
+
+#+RESULTS:
+: tensor([16.])
+
+
+
+#+begin_src python
+  x = Variable(torch.FloatTensor([2, 3]), requires_grad=True)
+  k = Variable(torch.zeros(2))
+
+  k[0] = x[0] ** 2 + 3 * x[1]
+  k[1] = x[1] ** 2 + 2 * x[0]
+
+  k
+#+end_src
+
+#+RESULTS:
+: tensor([13., 13.], grad_fn=<CopySlices>)
+
+
+#+begin_src python
+  j = torch.zeros(2, 2)
+
+  k.backward(torch.FloatTensor([1, 0]), retain_graph=True)
+  j[0] = x.grad.data
+
+  x.grad.data.zero_() # 归零之前求得的梯度
+
+  k.backward(torch.FloatTensor([0, 1]))
+  j[1] = x.grad.data
+
+  "x.grad: {}".format(torch.sum(j, dim=0))
+#+end_src
+
+#+RESULTS:
+: x.grad: tensor([6., 9.])
+
+
+#+begin_src python
+
+  k.backward(torch.ones_like(x))
+  x.grad.data
+#+end_src
+
+#+RESULTS:
+: tensor([6., 9.])
