@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       2bf1024c-52b6-4ac2-b43f-dc6037633d26
+:END:
+#+title: linux-tool-pgrep
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 18:18]
+
+
+* Find Pid Of specific program
+#+BEGIN_SRC sh
+  pgrep  emacs
+
+#+END_SRC
+
+#+RESULTS:
+|   1788 |
+| 511881 |
+
+

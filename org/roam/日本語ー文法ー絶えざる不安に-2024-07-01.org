@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       5ebbbce8-6fab-4111-b97c-4832ec24fbc9
+:END:
+#+title: 日本語ー文法ー絶えざる不安に
+#+filetags: :日本語:
+#+date: [2024-07-01 一]
+#+last_modified: [2024-07-05 五 23:23]
+
+* <Vあ>ざるN
+** 例
+- 絶えざる不安に夜も寝れない

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       44d8813d-34d7-479b-852a-544922ab3294
+:END:
+#+title: windows-Socket API
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 01:13]
+

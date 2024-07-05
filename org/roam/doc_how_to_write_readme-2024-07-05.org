@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       305ef6ec-7271-4e93-b04f-c003383fe5e1
+:END:
+#+title: doc-How to write README
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 11:57]
+

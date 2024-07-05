@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       18b5da92-0c99-4063-9388-07f26ed97188
+:END:
+#+title: linux-Socket API
+#+filetags: :c:socket:
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 21:17]
+
+
+
+
+#+BEGIN_SRC C
+  #include <stdio.h>
+  
+  printf("Hello");
+#+END_SRC
+
+#+RESULTS:
+: Hello

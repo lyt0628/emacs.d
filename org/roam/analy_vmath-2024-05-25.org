@@ -1,0 +1,184 @@
+:PROPERTIES:
+:ID:       8e339e42-7b46-42a6-97fb-0be0e20efcd0
+:END:
+#+title: cpp-analy_vmath
+#+date: [2024-05-25 六]
+#+last_modified: [2024-07-05 五 11:55]
+
+
+vmath 是一个单头文件，即定义和实现一起编写在头文件里(应该起名为.hpp后缀才对).
+vmath 支持向量和矩阵的运算，以及CG的常用函数。建立在C++的基础上。与GLM不同，
+并不涉及内存布局和指令级优化相关概念。
+
+
+
+* 向量的实现
+
+** 领域模型定义
+#+begin_src C++
+  template <typename T, const int len>
+  class vecN
+  {
+  public:
+      typedef class vecN<T,len> my_type;
+      typedef T element_type;
+  ...
+  
+  protected:
+      T data[len];
+  }
+#+end_src
+
+这个模板类接受两个模板参数，
+| T   | 向量元素类型      |
+|-----+----------------|
+| len | 表示向量的元素个数 |
+
+按C++元编程的观点，这个 模板类是典型的“函数”
+| 输入             | 输出                 |
+|-----------------+---------------------|
+| 模板参数 T 和 len | my_type 偏特化的模板类 |
+|                 | element_type 元素类型 |
+
+我们可以这样使用输出的新类型
+#+begin_src C++
+  vacN<int, 2> a_ivec2 = new vecN<int, 2>(1, 2);
+#+end_src
+你会发现，这样很容易就可以定义诸如二维向量，三维向量这些常用的偏特化类型，
+以及类型和维度都确定的特化类型。
+我们使用using指示进行名称定义
+#+begin_src C++
+  template<T, len>
+  using vec = vecN<T, len>::my_type;
+
+  vec<int, 2> a_ivec2 = new vec<int, 2>(1, 2)
+#+end_src
+这样看上去就像是一个独立实现的模板类，用起来方便多了。
+我们仿照上面的形式，可以写出特化的版本
+#+begin_src C++
+  template<int, 2>
+  using ivec2 = vecN<int, 2>::my_type;
+#+end_src
+我不太清楚是不是逐步的片特化会更好一些。
+
+#+begin_src C++
+  template<int, len>
+  using ivec = vecN<int, len>::my_type;
+  
+  template<len>
+  using ivec = ivec<2>::my_type;
+#+end_src
+
+
+** 向量操作实现
+*** 构造
+**** 构造函数
+- vmath的向量的属性是简单的向量数据封装, 空构造自然是什么也不做, 但是不明白为什么实现为inline
+#+begin_src  C++
+    inline vecN(){}
+#+end_src
+
+- 标量构造，即使用一个常量填充向量的data属性
+  vmath 也使用其它构造方法实现了这个子元素构造，但我不喜欢这样
+
+**** 拷贝构造
+
+**** 赋值构造
+
+*** 操作符重载
+- 逐元素加法
+- 逐元素减法
+- 逐元素乘法
+- 逐元素触发
+- 偏移运算符重载
+- 指针运算符重载
+  因为重载了指针运算法，所以可以直接使用 &a_ivec2 传递数据给 OpenGL
+
+
+
+** 模板偏特化
+vecN 实现的方法是类型无关的，具体表现是所有的方法的能正确地应用于其特化类型。
+因此没必要使用多态，也不要使用多态。模板代码应该远离多类，两者的作用实质上是差不多的。
+
+这里使用继承来表达模板的偏特化
+#+begin_src C++
+
+  template <typename T>
+  class Tvec2 : public vecN<T,2>
+  {..}
+#+end_src
+
+特化类型支持从父类来的构造
+#+begin_src C++
+    inline Tvec2(const base& v) : base(v) {}
+#+end_src
+另外新增了两个子元素的构造
+
+#+begin_src C++
+    inline Tvec2(T x, T y)
+    {
+        base::data[0] = x;
+        base::data[1] = y;
+    }
+
+#+end_src
+
+
+** 为特化类型取别名
+
+#+begin_src C++
+typedef vecN<float, 1> vec1;
+typedef vecN<int, 1> ivec1;
+typedef vecN<unsigned int, 1> uvec1;
+typedef vecN<double, 1> dvec1;
+
+typedef Tvec2<float> vec2;
+typedef Tvec2<int> ivec2;
+typedef Tvec2<unsigned int> uvec2;
+typedef Tvec2<double> dvec2;
+
+typedef Tvec3<float> vec3;
+typedef Tvec3<int> ivec3;
+typedef Tvec3<unsigned int> uvec3;
+typedef Tvec3<double> dvec3;
+
+typedef Tvec4<float> vec4;
+typedef Tvec4<int> ivec4;
+typedef Tvec4<unsigned int> uvec4;
+typedef Tvec4<double> dvec4;
+
+#+end_src
+
+
+** 模板类位于右值的函数重载（模板函数）
+#+begin_src C++
+  template <typename T, int n>
+  static inline const vecN<T,n> operator * (T x, const vecN<T,n>& v)
+  {
+      return v * x;
+  }
+
+#+end_src
+
+
+- 为什么这里除法提供的是偏特化模板的模板函数 而不是像乘法一样复用模板类
+  #+begin_src C++
+    template <typename T>
+    static inline const Tvec2<T> operator / (T x, const Tvec2<T>& v)
+    {
+	return Tvec2<T>(x / v[0], x / v[1]);
+    }
+
+  #+end_src
+
+** 其他运算
+
+*** 点乘
+
+*** 叉乘
+
+*** 长度
+
+*** 距离
+
+*** 角度

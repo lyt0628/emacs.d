@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       9d70b57d-9b84-42ff-822b-856d83d410ea
+:END:
+#+title: linux-tool-package_config
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 18:20]
+

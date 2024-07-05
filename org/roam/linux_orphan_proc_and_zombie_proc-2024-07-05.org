@@ -1,0 +1,131 @@
+:PROPERTIES:
+:ID:       992f5b10-55b5-46ea-822a-1b3c0d218005
+:END:
+#+title: linux-Handle Zombie_Proc By wait() and waitpid()
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 17:32]
+
+
+* Wait For Zombie_Child
+
+** Use wait() to Handle Zombie_Child
+#+BEGIN_SRC C :noweb yes
+  #include <unistd.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  int main()
+  {
+	pid_t pid;
+	pid_t cpid;
+
+	pid = fork();
+	if(pid > 0){ <</>> Now  Proc
+		printf("Now:   My Pid is %d, My Parent one is %d\n", getpid(), getppid());
+
+		cpid = wait(NULL);
+		printf("Now:   My child became Zombie, whose Pid is %d\n", cpid);
+	}
+	else if(pid == 0){ <</>> Child Proc
+		printf("Child: My Pid is %d, My Parent one is %d\n", getpid(), getppid());
+  		sleep(1);
+	}
+	else { <</>> Fail
+		perror("Error: fork failed");
+	}
+
+	return 0;
+  }
+#+END_SRC
+
+#+RESULTS:
+| Child: My Pid is 747489       | My Parent one is 747488 |
+| Now:   My Pid is 747488       | My Parent one is 511881 |
+| Now:   My child became Zombie | whose Pid is 747489     |
+
+
+** Use wait() to get Child_Status 
+#+BEGIN_SRC C :noweb yes
+  #include <unistd.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  int main()
+  {
+	pid_t pid;
+	pid_t cpid;
+	int stat;
+
+	pid = fork();
+	if(pid > 0){ <</>> Now  Proc
+		printf("Now:   My Pid is %d, My Parent one is %d\n", getpid(), getppid());
+
+		cpid = wait(&stat);
+		if(WIFEXITED(stat)){
+			printf("Now:   My child became Zombie, whose Pid is %d, But he completed the work. \n", cpid);
+		}
+		else{
+			printf("Now:   My child became Zombie, whose Pid is %d, And he even not completed the work. \n", cpid);
+		}
+	}
+	else if(pid == 0){ <</>> Child Proc
+		printf("Child: My Pid is %d, My Parent one is %d\n", getpid(), getppid());
+		sleep(1);
+
+  		<</>> exit(EXIT_FAILURE)
+	}
+	else { <</>> Fail
+		perror("Error: fork failed");
+	}
+
+	return 0;
+  }
+#+END_SRC
+
+#+RESULTS:
+| Child: My Pid is 758521       | My Parent one is 758520 |                            |
+| Now:   My Pid is 758520       | My Parent one is 511881 |                            |
+| Now:   My child became Zombie | whose Pid is 758521     | But he completed the work. |
+
+
+
+** Use waitpid to handle child Specific Child_Proc
+
+#+BEGIN_SRC C :noweb yes
+  #include <unistd.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  int main()
+  {
+	pid_t pid;
+	pid_t cpid;
+	int stat;
+
+	pid = fork();
+	if(pid > 0){ <</>> Now  Proc
+		printf("Now:   My Pid is %d, My Parent one is %d\n", getpid(), getppid());
+
+		cpid = waitpid(pid ,&stat, 0); <</>> ->[pid,-1,0:No Async Wait Job]
+  		<</>> cpid = waitpid(pid ,&stat, WHOHANG);  Wait Async
+  		<</>> cpid = waitpid(-1 ,&stat, 0);  Wait For Any Child
+  		<</>> cpid = waitpid(-1 ,&stat, 0);  Wait For Any Child In the same Proc_Group
+  		<</>> cpid = waitpid(-1234 ,&stat, 0);  Wait For Specific Child In the same Proc_Group, whose pid is 1234
+
+	}
+	else if(pid == 0){ <</>> Child Proc
+		printf("Child: My Pid is %d, My Parent one is %d\n", getpid(), getppid());
+		sleep(1);
+	}
+	else { <</>> Fail
+		perror("Error: fork failed");
+	}
+
+	return 0;
+  }
+#+END_SRC
+
+#+RESULTS:
+| Child: My Pid is 790996 | My Parent one is 790995 |
+| Now:   My Pid is 790995 | My Parent one is 511881 |
+

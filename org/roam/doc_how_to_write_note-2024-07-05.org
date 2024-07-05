@@ -1,0 +1,31 @@
+:PROPERTIES:
+:ID:       33349f2e-6c66-49bb-af13-f8c2f888e975
+:END:
+#+title: doc-How to write Note
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 12:19]
+
+* 1
+
+Note is a reminder to give us cule to recall the knowledge we knew.
+So Note must be simple and clear. In My Note, two pointers are needed
+- executable code example
+- text to explain how the example works
+
+
+A Note go around a topic, which is simple and independent, i.g. "how to use gdb in a cmake project".
+sub topic is actual step we should do.
+the structure should look like the following:
+#+BEGIN_SRC markdown
+# Hwo to use gdb in a cmake project
+
+## Requirements
+...
+## Config CMake Project To Generate Debug Information
+...
+
+## Run the executable using gdb
+...
+#+END_SRC
+
+For a clear structure, The level of title hierarchy limited by 3

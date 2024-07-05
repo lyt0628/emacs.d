@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       55300c3e-8f18-451e-bddb-7c73b01a5542
+:END:
+#+title: java-Socket API
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 01:15]
+
+
+
+* See also
+- [[id:44d8813d-34d7-479b-852a-544922ab3294][windows-Socket API]]
+- [[id:18b5da92-0c99-4063-9388-07f26ed97188][linux-Socket API]]
+- [[id:1abe430d-d55c-40cf-aa4c-7b02a574af39][go-Socket API]]
+- [[id:fe25849f-e415-4a58-b651-2e3835fd0f22][python-Socket API]]
+- [[id:e06d43e9-9401-45d6-85b7-8cdc14b87aa4][ruby-Socket API]]
+- [[id:8183fb32-3777-4965-97bb-b4c7a5efd7c7][node-Socket API]]
+- [[id:eb44fc12-7254-40f7-969c-5977bd8d8a04][cpp-Socket API]]

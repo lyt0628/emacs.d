@@ -14,9 +14,16 @@
 
 
 
-(defconst lyt-extre-modifier-key "s-")
+(defconst lyt-extra-modifier-key "s")
+
+(defconst lyt-emacs-directory "~/data/emacs.d/")
 
 
+
+;; Overrite emacs variables
+
+(setq custom-file
+   (expand-file-name "custom.el" lyt-emacs-directory))
 
 
 (provide 'init-variables)

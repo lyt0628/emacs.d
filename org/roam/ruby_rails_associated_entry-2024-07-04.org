@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       0dc53191-e66d-48a6-8a32-e35051b1b840
+:END:
+#+title: ruby-rails-associated entry
+#+filetags: :rails:
+#+date: [2024-07-04 四]
+#+last_modified: [2024-07-05 五 21:23]
+

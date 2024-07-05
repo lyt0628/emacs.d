@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       5ea334a0-a9a3-4a14-a128-78480e92339e
+:END:
+#+title: skynet
+#+filetags: :core:
+#+date: [2024-07-02 二]
+#+last_modified: [2024-07-05 五 23:46]
+
+
+
+
+
+* See also
+- [[id:db032b6f-f21a-4027-a939-1f6b66a85c8b][skynet-example-ballwar]]
+- [[id:311b4da0-290b-4f34-ad94-6c3b58471723][skynet-example-pingpong]]
+- [[id:5cf0b4ab-029e-4e8e-9486-87ec1f9c136e][skynet-example-echo]]
+- [[id:c03b05b3-43d5-487b-9cb8-3665a357c8c6][skynet-example-pingcluster]]
+- [[id:cd59bafc-012a-4e25-86e7-3eadc05e0c45][skynet-example-guestbook]]
+- [[id:c9159175-ea63-4fc7-a467-4279210e01e8][skynet-example-mysql]]
+- [[id:2302481c-95d4-4148-b889-56e1107408c5][skynet-example-chat]]

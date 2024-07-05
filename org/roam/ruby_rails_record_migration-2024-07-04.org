@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       8e70cbfd-c1e2-49e5-8cc1-ccca269dd00b
+:END:
+#+title: ruby-rails-record migration
+#+filetags: :rails:
+#+date: [2024-07-04 四]
+#+last_modified: [2024-07-05 五 21:23]
+

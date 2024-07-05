@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       7d4d9046-7466-4b22-aa79-9b6f08965600
+:END:
+#+title: spring
+#+filetags: :spring:kotlin:java:
+#+date: [2024-06-28 五]
+#+last_modified: [2024-07-05 五 21:36]
+
+
+
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-70727f03-3522-11ef-9b58-b48c9d0f4f89.png
+#+BEGIN_SRC plantuml
+  @startmindmap
+  + Spring
+  @endmindmap
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:/tmp/puml-70727f03-3522-11ef-9b58-b48c9d0f4f89.png]]
+  [[file:/tmp/puml-70727f03-3522-11ef-9b58-b48c9d0f4f89.png]]]]
+
+
+  

@@ -1,0 +1,59 @@
+:PROPERTIES:
+:ID:       f4207a0f-23ef-469b-96c8-1e85644930f2
+
+:END:
+#+title: ruby-rails-Command Line Usage
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 12:35]
+
+
+* create a new rals proj named blog
+#+BEGIN_SRC sh :dir /tmp
+rails new blog
+#+END_SRC
+
+* run rails proj in webserver, defaut puma
+#+BEGIN_SRC sh :dir /tmp/blog :eval no
+  bin/rails server
+
+#+END_SRC
+
+*  Generate a new Controller named Article with a action named index
+#+BEGIN_SRC sh :dir /tmp/blog
+  bin/rails generate controller Articles index --skip-routes
+#+END_SRC
+| --skip-routes | indicates not generating routes infomation in /config/routes.conf |
+
+
+* Generate a new Model named Article with two props title(type is string) and body(type is text)
+#+BEGIN_SRC sh :dir /tmp/blog
+  bin/rails generate model Article title:string body:text
+
+#+END_SRC
+
+* Execute migration for database and create tables defined in /app/db/migrations/
+#+BEGIN_SRC sh :dir/tmp/blog
+bin/rails db:migrate
+
+#+END_SRC
+
+
+* Start IRB to directly communicate with Rails server
+#+BEGIN_SRC sh :dir /tmp/blog
+bin/rails console
+#+END_SRC
+
+
+* Print the routes infomation of proj
+#+BEGIN_SRC sh :dir /tmp/blog
+bin/rails routes
+
+#+END_SRC
+
+
+* Generate model with a foreign key to Article(using article_id to id)
+#+BEGIN_SRC sh :dir /tmp/blog
+  bin/rails generate model Comment commenter:string body:text article:references
+
+#+END_SRC
+- need to execute db:migrate again for model changed

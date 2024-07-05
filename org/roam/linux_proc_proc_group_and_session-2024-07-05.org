@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       31f6cb8f-13a5-4e83-9b7e-0ac711a11eeb
+:END:
+#+title: linux-Proc Proc_Group And Session
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 16:10]
+
+* A Session has many Proc Groups and a proc group has many Proc
+- The proc stared first called Group_Leader
+- The pid of Group_Leader identifies a Proc_Group, called pgid
+- Session works the same as Proc_Group, identifier called sid

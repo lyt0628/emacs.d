@@ -1,0 +1,152 @@
+:PROPERTIES:
+:ID:       6af82d44-1d47-4ad2-b36f-e136e86b34a1
+:END:
+#+title: ruby
+#+date: [2024-07-03 三]
+#+last_modified: [2024-07-05 五 12:45]
+
+* Basic operations is the same as other language
+
+- 1
+  #+BEGIN_SRC ruby :results output
+    puts 5.4  - 2.2
+    puts 3 * 4
+    puts 7/3
+
+    puts 2**3
+
+    puts 4 < 6
+    puts 2 + 2 == 5
+  #+END_SRC
+
+  #+RESULTS:
+  : 3.2
+  : 12
+  : 2
+  : 8
+  : true
+  : false
+
+
+- 2  
+  #+BEGIN_SRC ruby 
+    small = 8
+    mid = 10
+    mid +=small
+    mid
+  #+END_SRC
+
+  #+RESULTS:
+  : 18
+
+
+* Ruby is a dynamic programming language
+
+#+BEGIN_SRC ruby :results output
+    small = 8
+    mid = 10
+    puts small + mid
+
+    pie = "apple"
+    pie = 3.14
+    puts pie
+#+END_SRC
+
+
+
+* Ruby string is a object with som simple methods
+
+- 1
+  #+BEGIN_SRC ruby
+    "hello".upcase
+  #+END_SRC
+
+  #+RESULTS:
+  : HELLO
+
+
+- 2
+  #+BEGIN_SRC ruby
+    "hello".reverse
+  #+END_SRC
+
+  #+RESULTS:
+  : olleh
+
+
+* Ruby operation can be different by type
+  #+BEGIN_SRC ruby
+    pre = "hello"
+    suf = " world"
+    pre += suf
+
+    pre
+  #+END_SRC
+
+  #+RESULTS:
+  : hello world
+
+
+
+* Method name of Ruby is simple and real
+- 1 
+  #+BEGIN_SRC ruby
+    42.even?
+
+  #+END_SRC
+
+  #+RESULTS:
+  : true
+
+  
+- 2
+  #+BEGIN_SRC ruby
+    -42.abs
+
+  #+END_SRC
+
+  #+RESULTS:
+  : 42
+
+  
+* Only methods that needs params need to be followed by ()
+  #+BEGIN_SRC ruby
+    rand(25)
+
+  #+END_SRC
+
+  #+RESULTS:
+  : 18
+
+
+* class method of every object will returen the type of object
+
+ - 1
+  #+BEGIN_SRC ruby
+    123.class
+
+  #+END_SRC
+
+  #+RESULTS:
+  : Integer
+
+- 2
+  #+BEGIN_SRC ruby
+    "abc".class
+
+  #+END_SRC
+
+  #+RESULTS:
+  : String
+
+
+
+* puts and gets used console IO
+- 1
+  #+BEGIN_SRC ruby :results output
+    puts "hello world"
+  #+END_SRC
+
+  #+RESULTS:
+  : hello world
+

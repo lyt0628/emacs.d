@@ -1,0 +1,29 @@
+
+
+
+
+#+NAME: /
+#+BEGIN_SRC C
+  //
+#+END_SRC
+
+
+#+NAME: /-
+#+BEGIN_SRC C
+  /*
+#+END_SRC
+
+
+#+NAME: -/
+#+BEGIN_SRC C
+  */
+#+END_SRC
+
+
+
+#+NAME: -
+#+BEGIN_SRC C
+  #
+#+END_SRC
+
+

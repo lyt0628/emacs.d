@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       6cfaa153-67fb-44eb-9b5f-973db761e510
+:END:
+#+title: linux-tool-jobs
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 17:52]
+

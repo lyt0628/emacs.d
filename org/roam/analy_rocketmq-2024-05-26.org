@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       eb876ced-b827-45cd-8a1e-b54348d90505
+:END:
+#+title: java-analy-rocketmq
+#+filetags: :java:
+#+date: [2024-05-26 日]
+#+last_modified: [2024-07-05 五 21:26]
+
+
+
+* See also
+- [[id:9f398a01-85e7-4342-8273-b8af54c66808][rocketmq]]

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       c394ac48-fd5b-446b-8c5e-6bd4c75f4966
+:END:
+#+title: go
+#+date: [2024-07-04 四]
+#+last_modified: [2024-07-04 四 15:36]
+

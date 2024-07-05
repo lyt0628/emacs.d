@@ -4,15 +4,13 @@
 ;; 
 
 ;;; Code:
-(require 'init-hydra)
+(require 'init-package-hydra)
 
+(require 'init-package-ivy)
 
-(require 'init-evil)
-(require 'init-ivy)
-(require 'init-undo-tree)
+(require 'init-package-undo-tree)
 
-
-
+(require 'init-package-evil)
 
 
 
@@ -23,8 +21,6 @@
   (amx-mode))
 
 
-
-
 (use-package which-key
   :ensure t
   :init (which-key-mode))
@@ -33,11 +29,12 @@
 (use-package marginalia
   :ensure t
   :init (marginalia-mode)
-  :bind (:map minibuffer-local-map 
+  :bind (:map minibuffer-local-map
 	      ("M-A" . marginalia-cycle)))
 
+
 (use-package dashboard
-  :ensure t 
+  :ensure t
   :config
   (setq dashboard-banner-logo-title "Welcome to Emacs!")
   (setq dashboard-startup-banner 'official)
@@ -46,10 +43,11 @@
 			  (projects . 10)))
   (dashboard-setup-startup-hook))
 
-					; m1\n10 | int func%02d ()
-					; M-x tiny-expand
+;; m1\n10 | int func%02d ()
+;; M-x tiny-expand
 (use-package tiny
   :ensure t)
+
 
 (use-package highlight-symbol
   :ensure t

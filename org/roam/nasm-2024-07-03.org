@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       fded501b-af77-42cd-9054-316a0737cfe4
+:END:
+#+title: nasm
+#+date: [2024-07-03 三]
+#+last_modified: [2024-07-03 三 19:35]
+
+* See also
+- [[id:3b7cfed9-0f12-40b2-81be-1cc7b8b879f1][nasm-C_Nasm混合编译]]
+
+- [[id:85915050-f74c-4aa4-9425-0a6237cbf064][gas]]
+- [[id:a4415b0e-c99a-4a15-92f2-2e8a057ede81][riscv]]

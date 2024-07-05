@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       922784f2-6126-4817-89f4-82af81012ee8
+:END:
+#+title: linux-tool-dd
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 18:20]
+

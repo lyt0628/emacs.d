@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       f3fcca2e-8423-4a62-bdc7-f1ca2d6fb3af
+:END:
+#+title: 日本語ー文法ー散歩がてら
+#+filetags: :日本語:
+#+date: [2024-07-03 三]
+#+last_modified: [2024-07-05 五 23:23]
+
+* <Nv> がてら
+** 例
+- 散歩がてら、本屋nい行ってくるよ
+
+
+
+* See also
+- [[id:2a68e9a4-970f-4ae6-a3a0-2ea70de9e489][日本語ー文法ーご挨拶かたがた]]

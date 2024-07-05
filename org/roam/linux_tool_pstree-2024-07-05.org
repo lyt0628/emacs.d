@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       c1b9b9eb-ef83-4059-a124-efd4017d956c
+:END:
+#+title: linux-tool-pstree
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 17:51]
+

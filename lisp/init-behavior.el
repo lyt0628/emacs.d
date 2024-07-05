@@ -5,10 +5,7 @@
 
 ;;; Code:
 
-
-
 (setq make-backup-files nil)
-
 
 (defconst *spell-check-support-enabled* nil)
 

@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       278da5ad-30ab-4125-832b-12559fc5eba7
+:END:
+#+title: tensorflow
+#+date: [2024-07-02 二]
+#+last_modified: [2024-07-05 五 21:37]
+
+
+
+
+
+* See also
+- [[id:3fc0273f-33cc-4eff-bd62-d0358f984801][tensorflow-Tensor]]
+- [[id:c4fd528a-2cd9-4350-b755-fe5aa54f9e35][tensorflow的组件]]
+- [[id:acb0f2da-4d8e-43e4-83e8-b70abd4f88d9][tensorflow-example-minist]]
+- [[id:381fb30d-4bdf-4d08-b8d1-6ddeae462a43][tensorflow-example-minist2]]
+- [[id:381fb30d-4bdf-4d08-b8d1-6ddeae462a43][tensorflow-example-minist2]] 
+
+- [[id:f7ef336b-f383-4248-ac64-cc4d81a5b614][keras-layers]]
+
+- [[id:445c3cb5-d332-4dc4-a55b-0803ca3b43fd][keras-example-mnist]]
+- [[id:b9ca736a-007a-4a58-9689-08e2f219f5a4][keras-example-boston]]
+- [[id:3aeca188-c73c-4593-9fde-c199cc10e0e7][keras-example-imdb]]
+- [[id:2e7e406f-5844-4f71-b0b8-d6f658de5672][keras-example-reuters]]
+
+- [[id:a1f3be18-85fb-49ce-8cbe-0d7096cd9674][analy_tensorflow]] 

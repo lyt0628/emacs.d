@@ -1,0 +1,73 @@
+:PROPERTIES:
+:ID:       0acb56a8-090d-41c5-900a-e7b023c0e9c0
+:END:
+#+title: Qt
+#+filetags: :core:
+#+date: [2024-06-28 五]
+#+last_modified: [2024-07-05 五 23:44]
+
+
+* Index
+  - [[id:c5a49455-3e5e-4acd-9836-9e5e42a83a7e][Core]]
+  - [[id:26b89e51-d908-4902-94bb-04742dfc46d5][Gui]]
+  - [[id:d0ecdab8-2f87-4ac4-9216-e19de19f41b5][MultiMedia]]
+  - [[id:67bf958c-8cfb-47fb-b9e5-b4de20e2aab7][WebSocket]]
+  - [[id:7bf414a5-e54d-433f-bc7c-6832e69fc87e][Opengl]]
+ 
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-249a5d9b-3502-11ef-9e40-b48c9d0f4f89.png
+#+BEGIN_SRC plantuml
+  @startmindmap
+  + Qt
+  ++ QtCore
+  +++ Meta-Object System
+  ++++ Impl
+  +++++ QObject: 实现基类
+  +++++ 宏 Q_OBJECT: 启用 Feat, else 继承(Static)自 supCls
+  +++++ Meta-Object Compiler(MOC): 编译时注入 Q_OBJECT 声明Feat的实现代码
+  ++++ QObject
+  +++++ Signal And Slot
+  ++++++ signals 关键字
+  ++++++ emit sig(args);
+  +++++ metaObject()
+  +++++ className() objectName() FP
+  +++++ inherits()
+  +++++ tr()
+  ++++ QMetaobject
+  +++++ newInstance()
+  +++++ propertyCount() & property(idx):QMetaProperty
+  +++++ cassinfo() & 宏 Q_CLASSINFO("key","val")
+  ++++ Q_Enum(enumCls) & Q_FLAG() & Q_DECLARE_METATYPE()
+  +++ Property System
+  ++++ 宏Q_PROPERTY
+  +++++ (type name READ getter WRITE setter RESET resetter)
+  +++++ (type name MEMBER prop NOTIFY propChangedFn )
+  ++++ property(name|idx) & setProperty(name, val|str_enumValName)
+  ++++ QMetaProperty::name()
+  +++ Object Model
+  ++++ Event & EventFilter
+  ++++ i18n
+  ++++ QPointer
+  ++++ QVariant
+  ++++ qobject_cast<Type*>(): suc ->pType else ->nullptr(0/f)
+  ++++ custom type
+  ++++ QMetaClassInfo QMetaEnum QMetaMethod QMetaObject QMetapropety QMetaSequence QMetaType 
+  ++++ QObject QObjectCleanupHandler QSignalBlocker QSignalMapper
+
+  -- B
+
+  @endmindmap
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-249a5d9b-3502-11ef-9e40-b48c9d0f4f89.png]]
+
+
+
+ 
+  
+
+
+* See also
+ - [[id:0e633ffc-34bc-4f3f-bbe7-6d1428e0f450][PySide]]

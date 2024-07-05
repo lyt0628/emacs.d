@@ -37,8 +37,10 @@
 (eval-when-compile (require 'use-package))
 
 (require 'init-face)
+
+
 (require 'init-org)
-(require 'init-babel)
+
 
 (require 'init-basic)
 
@@ -46,13 +48,8 @@
 
 
 (require 'init-clojure)
+
 (require 'init-lua)
-
-
-(require 'ob-skynet)
-
-(require 'ob-html)
-
 
 
 (provide '_init)

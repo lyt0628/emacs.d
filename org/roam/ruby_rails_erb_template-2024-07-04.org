@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       d2f32dd0-8bda-4567-83bc-33dea7d56496
+:END:
+#+title: ruby-rails-erb template
+#+filetags: :rails:
+#+date: [2024-07-04 四]
+#+last_modified: [2024-07-05 五 21:23]
+

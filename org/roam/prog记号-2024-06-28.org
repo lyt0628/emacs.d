@@ -1,0 +1,37 @@
+:PROPERTIES:
+:ID:       d4bb00b5-fad9-47e3-b960-641668d3794c
+:END:
+#+title: ProgMark
+#+date: [2024-06-28 五]
+#+last_modified: [2024-07-05 五 22:21]
+
+
+- [...] used to list results
+  - [0,-1] means The Function will return 0 when successed, -1 when failed
+    The First_Position belongs to success condition
+    The Second_Position belongs to falilure condition
+    Every position devided by ,
+    i.e.
+    - [0,!0]: Functions will return 0 when success, and any unknown number but not zero
+  - result used = to indicate
+    - [errno=ESRCH] indicates a case the errno is assigned to ESRCH
+  - : can be used to explain why the result happened
+    [errno=ESRCH:no Proc else no Auth]
+  - [] can be embbbed
+    i.e.
+    - [0,-1[errno=ESRCH:no Proc else no Auth]] means 0 when successed, -1 when failed.
+      errno will be set as ESRCH, which means Dest_Proc not exists or Caller has no auth
+      to do it
+   
+
+
+
+| suc  | success      |
+|------+--------------|
+| fail | fail         |
+|------+--------------|
+| proc | proccess     |
+|------+--------------|
+| ret  | return value |
+|------+--------------|
+| recv | receive         |

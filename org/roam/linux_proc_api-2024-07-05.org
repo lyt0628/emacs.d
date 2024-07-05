@@ -1,0 +1,237 @@
+:PROPERTIES:
+:ID:       d2fc88a7-1afd-425e-aa66-90b6dcc5979e
+:END:
+#+title: linux-Proc API
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 17:05]
+
+* Linux 进程管理
+
+** Proc Data
+
+| 进程属性 | Note                       | API       |
+|--------+----------------------------+-----------|
+| pid    |                            | getpid()  |
+|--------+----------------------------+-----------|
+| ppid   |                            | getppid() |
+|--------+----------------------------+-----------|
+| uid    | lyt0628 run $sudo -i makes | getuid()  |
+|        | uid root                   |           |
+|--------+----------------------------+-----------|
+| euid   |                            | geteuid() |
+|--------+----------------------------+-----------|
+| gid    | group id  of user that     | getgid()  |
+|        | create the proc            |           |
+|--------+----------------------------+-----------|
+| egid   |                            | getegid() |
+|--------+----------------------------+-----------|
+| \      |                            |           |
+
+
+
+#+BEGIN_SRC C :noweb yes :results verbatim
+    #include <unistd.h>
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main()
+    {
+	printf("My Pid is %d, My Parent one is %d\n", getpid(), getppid());
+	printf("My uid is %d, My Ex one is %d\n", getuid(), geteuid());
+	printf("My gid is %d, My Ex one is %d\n", getgid(), getegid());
+	printf("My sid is %d", getsid(getpid()));
+	return 0;
+    }
+#+END_SRC
+
+#+RESULTS:
+: My Pid is 667146, My Parent one is 511881
+: My uid is 1000, My Ex one is 1000
+: My gid is 1000, My Ex one is 1000
+: My sid is 667146
+
+
+
+
+** Fork
+
+*** Get Pid And PPid
+#+BEGIN_SRC C :noweb yes
+  #include <unistd.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  int main()
+  {
+	pid_t pid;
+
+	pid = fork();
+	if(pid > 0){ <</>> Now  Proc
+		printf("Now:   My Pid is %d, My Parent one is %d\n", getpid(), getppid());
+	}
+	else if(pid == 0){ <</>> Child Proc
+		printf("Child: My Pid is %d, My Parent one is %d\n", getpid(), getppid());
+	}
+	else { <</>> Fail
+		perror("Error: fork failed");
+	}
+
+	return 0;
+  }
+#+END_SRC
+
+#+RESULTS:
+| Now:   My Pid is 653052 | My Parent one is 511881 |
+| Child: My Pid is 653057 | My Parent one is 653052 |
+
+
+*** Get Gid and EGid
+
+#+BEGIN_SRC C :noweb yes
+  #include <unistd.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  int main()
+  {
+	pid_t pid;
+
+	pid = fork();
+	if(pid > 0){ <</>> Now  Proc
+		printf("Now:   My gid is %d, My EGid is %d\n", getgid(), getegid());
+	}
+	else if(pid == 0){ <</>> Child Proc
+		printf("Child: My gid is %d, My EGid is %d\n", getgid(), getegid());
+	}
+	else { <</>> Fail
+		perror("Error: fork failed");
+	}
+
+	return 0;
+  }
+#+END_SRC
+
+#+RESULTS:
+| Now:   My gid is 1000 | My EGid is 1000 |
+| Child: My gid is 1000 | My EGid is 1000 |
+
+
+** Exec Family : Change Proc Instructions
+
+|                                   | l: vary_args             | v: argv                     |
+|-----------------------------------+--------------------------+-----------------------------|
+| \                                 | path, vary_args          | path, argv                  |
+|-----------------------------------+--------------------------+-----------------------------|
+| p(would find the exe in env PATH) | file, vary_args          | file, argv                  |
+|-----------------------------------+--------------------------+-----------------------------|
+| e                                 | path, vary_args, p_env[] | path, argv, p_env[] (inner) |
+
+
+
+
+
+#+BEGIN_SRC C :noweb yes :dir / 
+  #include <unistd.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  int main()
+  {
+	pid_t pid;
+
+	pid = fork();
+	if(pid > 0){ <</>> Now  Proc
+		printf("Now:   My gid is %d, My EGid is %d\n", getgid(), getegid());
+	}
+	else if(pid == 0){ <</>> Child Proc
+		printf("Child: My gid is %d, My EGid is %d\n", getgid(), getegid());
+
+		char* argv[] = {"-a", "-l", NULL}; <</>> NULL indicates The_END
+		execvp("ls", argv);
+
+		perror("Error: Exec_Function failed");
+  
+		<</->> Use Ohter Exec_Function
+		execl("/bin/ls", "-a", "-l", NULL);
+		execlp("ls", "-a", "-l", NULL);
+
+		<<-/>>
+	}
+	else { <</>> Fail
+		perror("Error: fork failed");
+	}
+
+	return 0;
+  }
+#+END_SRC
+
+#+RESULTS:
+| Now:       |      My | gid  | is   |      1000, | My  | EGid |    is | 1000       |    |            |
+| total      | 2097244 |      |      |            |     |      |       |            |    |            |
+| lrwxrwxrwx |       1 | root | root |          7 | 9月  |    3 |  2023 | bin        | -> | usr/bin    |
+| drwxr-xr-x |       4 | root | root |       4096 | 5月  |   31 | 06:12 | boot       |    |            |
+| drwxrwxr-x |       2 | root | root |       4096 | 9月  |    3 |  2023 | cdrom      |    |            |
+| drwxr-xr-x |      20 | root | root |       5560 | 7月  |    5 | 09:45 | dev        |    |            |
+| drwxr-xr-x |     169 | root | root |      12288 | 7月  |    5 | 10:41 | etc        |    |            |
+| drwxr-xr-x |       3 | root | root |       4096 | 9月  |    3 |  2023 | home       |    |            |
+| lrwxrwxrwx |       1 | root | root |          7 | 9月  |    3 |  2023 | lib        | -> | usr/lib    |
+| lrwxrwxrwx |       1 | root | root |          9 | 9月  |    3 |  2023 | lib32      | -> | usr/lib32  |
+| lrwxrwxrwx |       1 | root | root |          9 | 9月  |    3 |  2023 | lib64      | -> | usr/lib64  |
+| lrwxrwxrwx |       1 | root | root |         10 | 9月  |    3 |  2023 | libx32     | -> | usr/libx32 |
+| drwx------ |       2 | root | root |      16384 | 9月  |    3 |  2023 | lost+found |    |            |
+| drwxr-xr-x |       3 | root | root |       4096 | 9月  |    6 |  2023 | media      |    |            |
+| drwxr-xr-x |       4 | root | root |       4096 | 12月 |   27 |  2023 | mnt        |    |            |
+| drwxr-xr-x |       9 | root | root |       4096 | 6月  |   26 | 09:36 | opt        |    |            |
+| dr-xr-xr-x |     481 | root | root |          0 | 7月  |    2 | 08:04 | proc       |    |            |
+| drwx------ |      14 | root | root |       4096 | 5月  |   31 | 20:05 | root       |    |            |
+| drwxr-xr-x |      46 | root | root |       1360 | 7月  |    5 | 13:16 | run        |    |            |
+| lrwxrwxrwx |       1 | root | root |          8 | 9月  |    3 |  2023 | sbin       | -> | usr/sbin   |
+| drwxr-xr-x |      36 | root | root |       4096 | 6月  |   26 | 02:32 | snap       |    |            |
+| drwxr-xr-x |       2 | root | root |       4096 | 6月  |   27 | 15:45 | srv        |    |            |
+| -rw------- |       1 | root | root | 2147483648 | 9月  |    3 |  2023 | swapfile   |    |            |
+| dr-xr-xr-x |      13 | root | root |          0 | 7月  |    2 | 08:04 | sys        |    |            |
+| drwxrwxrwt |      46 | root | root |      16384 | 7月  |    5 | 16:56 | tmp        |    |            |
+| drwxr-xr-x |      16 | root | root |       4096 | 3月  |   18 | 21:13 | usr        |    |            |
+| drwxr-xr-x |      14 | root | root |       4096 | 2月  |   23 |  2023 | var        |    |            |
+
+
+
+* End Proc
+
+#+BEGIN_SRC C :noweb yes
+  #include <unistd.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  int main()
+  {
+	pid_t pid;
+
+	pid = fork();
+	if(pid > 0){ <</>> Now  Proc
+		printf("Now:   My gid is %d, My EGid is %d\n", getgid(), getegid());
+	}
+	else if(pid == 0){ <</>> Child Proc
+		printf("Child: My gid is %d, My EGid is %d\n", getgid(), getegid());
+  
+		exit(EXIT_SUCCESS);
+		<</>> exit(EXIT_FAILURE);
+
+		printf("Child: My gid is %d, My EGid is %d\n", getgid(), getegid());
+
+	}
+	else { <</>> Fail
+		perror("Error: fork failed");
+	}
+
+	return 0;
+  }
+#+END_SRC
+
+#+RESULTS:
+| Now:   My gid is 1000 | My EGid is 1000 |
+| Child: My gid is 1000 | My EGid is 1000 |
+
+
+
+

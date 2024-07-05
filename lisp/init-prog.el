@@ -5,87 +5,18 @@
 
 ;;; Code:
 
+(require 'init-package-magit)
 
+(require 'init-package-company)
 
-
-
-
-(use-package magit
-  :ensure t
-  :hydra (hydra-magit ()
-		      ""
-		     ("c" magit-clone "git clone")
-		     ("q" nil "quit")))
-
-
-
-(global-set-key (kbd "s-g") 'hydra-magit/body)
-
-
-
-(use-package company
-  :ensure t
-  :init (global-company-mode)
-  :config
-  (setq company-minimum-prefix-length 5) ; 我希望它晚点触发，为了性能考虑
-  (setq company-tooltip-align-annotations t)
-  (setq company-idle-delay 0.0)
-  (setq company-show-quick-access nil) ; 不如直接移动光标来得实在。 给选项编号 (按快捷键 M-1、M-2 等等来进行选择).
-  (setq company-selection-wrap-around t)
-  (setq company-tabnine-wait 0.25)
-  (setq company-transformers '(company-sort-by-occurrence))) ; 根据选择的频率进行排序
-
-(use-package company-box
-  :ensure t
-  :if window-system
-  :hook (company-mode . company-box-mode))
-
-(use-package company-tabnine
-  :ensure t
-  :init (add-to-list 'company-backends #'company-tabnine))
-
-(use-package yasnippet
-  :ensure t
-  :hook
-  (prog-mode . yas-minor-mode)
-  (org-mode . yas-minor-mode)
-  :config
-  (yas-reload-all)
-;  (setq yas-snippet-dirs (append yas-snippet-dirs
-;                                '("~/Downloads/interesting-snippets")))
-  ;; add company-yasnippet to company-backends
-  (defun company-mode/backend-with-yas (backend)
-    (if (and (listp backend) (member 'company-yasnippet backend))
-	     backend
-      (append (if (consp backend) backend (list backend))
-              '(:with company-yasnippet))))
-  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
-
-  ;; using C+<tab> to expand instead of default <tab>
-  (define-key yas-minor-mode-map [(tab)]        nil)
-  (define-key yas-minor-mode-map (kbd "TAB")    nil)
-  (define-key yas-minor-mode-map (kbd "<tab>")  nil)
-  :bind (:map yas-minor-mode-map ("C-<tab>" . yas-expand)))
-
-(use-package yasnippet-snippets
-  :ensure t
-  :after yasnippet)
-(global-set-key (kbd "M-/") 'hippie-expand)
-
-(defhydra hydra-snippet (global-map "s-s")
-	"snippet: "
-	("n" yas-new-snippet "new" :color blue)
-	("s" yas-load-snippet-buffer-and-close "save snippet")
-	("t" yas-tryout-snippet "try snippet")
-	("v" yas-visit-snippet-file "visit snippet")
-	("q" nil "quit"))
+(require 'init-package-yasnippet)
 
 
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode)
-  :config (setq truncate-lines nil)
-)
+  :config (setq truncate-lines nil))
+
 
 
 (use-package lsp-mode
@@ -96,10 +27,10 @@
   :hook
   (lsp-mode .lsp-enable-which-key-integration)
   :commands (lsp lsp-deferred)
-  :config 
+  :config
   (setq lsp-completion-provide :none)
   (setq lsp-headerline-breadcrumb-enable t)
-  :bind 
+  :bind
   ("C-c l s" . lsp-ivy-workspace-symbol))
 
 (use-package lsp-ui

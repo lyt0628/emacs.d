@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       0d985dfe-85e5-43d1-97a4-057267ea77f2
+:END:
+#+title: linux-tool-wpa_supplicant
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 18:21]
+
+
+
+

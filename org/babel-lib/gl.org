@@ -1,0 +1,223 @@
+
+
+
+#+NAME: gl-glew_glfw3_glm
+#+BEGIN_SRC C++
+  #include "GL/glew.h"
+
+  #include "GLFW/glfw3.h"
+
+  #include <glm/glm.hpp>
+  #include <glm/gtc/type_ptr.hpp>
+  #include <glm/gtc/matrix_transform.hpp>
+
+
+  void init(GLFWwindow* window);
+  void display(GLFWwindow* window, double currentTime);
+  int main() {
+
+	  if (!glfwInit()) { exit(EXIT_FAILURE); }
+
+	  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+
+
+	  GLFWwindow* window = glfwCreateWindow(600, 600, "OpenGL Hello World", NULL, NULL);
+	  glfwMakeContextCurrent(window);
+
+	  if (glewInit() != GLEW_OK) { exit(EXIT_FAILURE); }
+	  glfwSwapInterval(1);
+
+	  init(window);
+
+	  while (!glfwWindowShouldClose(window)) { 
+
+		  display(window, glfwGetTime());
+
+		  glfwSwapBuffers(window); 
+		  glfwPollEvents();
+	  }
+
+
+	  glfwDestroyWindow(window);
+	  glfwTerminate();
+	  exit(EXIT_FAILURE);
+  }
+#+END_SRC
+
+
+
+
+#+NAME: gl-util
+#+begin_src C++
+
+/*
+Log 3rror If qny Error hapens in Shader Compilation
+*/
+void logShaderErrorIfAny(GLuint shd)
+{
+	int len = 0;
+	int w_ch = 0;
+	char* msg;
+
+	glGetShaderiv(shd, GL_INFO_LOG_LENGTH, &len);
+	if (len > 0) {
+		msg = (char*)malloc(len);
+		glGetShaderInfoLog(shd, len, &w_ch, msg);
+		cout << "Compile Shader Error!!! >>> " << msg << endl;
+		free(msg);
+	}
+}
+/*
+Log 3rror If qny Error hapens in Program Compilation
+*/
+void logProgramErrorIfAny(GLuint prog)
+{
+	int len = 0;
+	int w_ch = 0;
+	char* msg;
+
+	glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &len);
+	if (len > 0) {
+		msg = (char*)malloc(len);
+		glGetProgramInfoLog(prog, len, &w_ch, msg);
+		cout << "Compile Link Program Error!!! >>> " << msg << endl;
+		free(msg);
+	}
+}
+/*
+Return true if any error hapens in program or shader compilation
+with some log are printed
+*/
+bool checkGLError()
+{
+	bool found_err = false;
+	int glerr = glGetError();
+	while (glerr != GL_NO_ERROR) {
+		cout << "GL Error!!! >>>" << glerr << endl;
+		found_err = true;
+		glerr = glGetError();
+	}
+	return found_err;
+}
+
+/*
+Wraping function for glCompileShader
+*/
+void GLCompileShader(const GLuint& shd, string msg)
+{
+	GLint stat;
+	
+	glCompileShader(shd);
+        checkGLError();
+	glGetShaderiv(shd, GL_COMPILE_STATUS, &stat);
+	if (stat != 1) {
+		cout << msg << endl;
+		logShaderErrorIfAny(shd);
+	}
+
+}
+
+/*
+Wraping function for glLinkProgram
+*/
+void GLLinkProgram(const GLuint& prog)
+{
+	GLint stat;
+	glLinkProgram(prog);
+        checkGLError();
+	glGetProgramiv(prog, GL_LINK_STATUS, &stat);
+	if (stat != 1) {
+		cout << "Progrm Link Failed!!!" << endl;
+		logShaderErrorIfAny(prog);
+	}
+}
+
+/*
+Given vertcc shader and gragmant shader GLSL file,
+return the id of compiled shader program.
+*/
+GLuint createShaderProgram(const char *v_shd_src, const char *f_shd_src) {
+
+	GLuint v_shd = glCreateShader(GL_VERTEX_SHADER);
+	GLuint f_shd = glCreateShader(GL_FRAGMENT_SHADER);
+
+	glShaderSource(v_shd, 1, &v_shd_src, NULL);
+	glShaderSource(f_shd, 1, &f_shd_src, NULL);
+
+	GLCompileShader(v_shd, "Vertic Compile Failure!!!");
+	GLCompileShader(f_shd, "Fragment Compile Failure!!!");
+
+
+	GLuint prog = glCreateProgram();
+	glAttachShader(prog, v_shd);
+	glAttachShader(prog, f_shd);
+	GLLinkProgram(prog);
+
+	return prog;
+}
+#+end_src
+
+
+
+
+#+NAME: glsl-rts
+#+BEGIN_SRC glsl
+  mat4 buildTranslate(float x, float y, float z)
+  {
+     mat4 trans = mat4(
+       1.0, 0.0, 0.0, 0.0,
+       0.0, 1.0, 0.0, 0.0,
+       0.0, 0.0, 1.0, 0.0,
+       x, y, z, 1.0
+    );
+    return trans;
+  }
+
+  mat4 buildRotateX(float rad)
+  {
+     mat4 xrot = mat4(
+       1.0, 0.0, 0.0, 0.0,
+       0.0, cos(rad), -sin(rad), 0.0,
+       0.0, sin(rad), cos(rad), 0.0,
+       0, 0, 0, 1.0
+    );
+    return xrot;
+  }
+
+  mat4 buildRotateY(float rad)
+  {
+     mat4 yrot = mat4(
+       cos(rad), 0.0, sin(rad), 0.0,
+       0.0, 1.0, 0.0, 0.0,
+       -sin(rad), 0.0, cos(rad), 0.0,
+       0.0, 0.0, 0.0, 1.0
+    );
+    return yrot;
+  }
+
+  mat4 buildRotateZ(float rad)
+  {
+     mat4 zrot = mat4(
+       cos(rad), -sin(rad), 0.0, 0.0,
+       sin(rad), cos(rad), 0.0, 0.0,
+       0.0, 0.0, 1.0, 0.0,
+       0.0, 0.0, 0.0, 1.0
+    );
+    return zrot;
+  }
+
+  mat4 buildScale(float x, float y, float z)
+  {
+     mat4 scale = mat4(
+       x, 0.0, 0.0, 0.0,
+       0.0, y, 0, 0.0,
+       0.0, 0, z, 0.0,
+       0.0, 0.0, 0.0, 1.0
+    );
+    return scale;
+  }
+
+
+#+END_SRC
+

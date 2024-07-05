@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       9ffd6188-9879-4895-9bd0-32fb541a5de8
+:END:
+#+title: linux-tool-nice
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 17:51]
+

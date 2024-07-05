@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       e187d99f-d3b5-4338-a4b6-ff752346abd7
+:END:
+#+title: Java-JDK
+#+filetags: :java:
+#+date: [2024-06-28 五]
+#+last_modified: [2024-07-05 五 21:24]
+

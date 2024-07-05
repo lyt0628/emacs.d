@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       9f398a01-85e7-4342-8273-b8af54c66808
+:END:
+#+title: rocketmq
+#+filetags: :java:mq:
+#+date: [2024-05-16 四]
+#+last_modified: [2024-07-05 五 21:26]
+

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       cdb9b133-8493-4fa2-b51c-2c6318ed8f47
+:END:
+#+title: cpp-lang-赋值构造
+#+date: [2024-05-31 五]
+#+last_modified: [2024-07-03 三 21:12]
+

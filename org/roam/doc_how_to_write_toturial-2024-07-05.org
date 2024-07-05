@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       49842037-23c0-4728-93db-133c2f71560a
+:END:
+#+title: doc-How to write toturial
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 11:57]
+

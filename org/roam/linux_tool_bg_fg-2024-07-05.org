@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       9344a284-2039-457d-9b7c-6e7a5decb58a
+:END:
+#+title: linux-tool-bg&fg
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 17:51]
+

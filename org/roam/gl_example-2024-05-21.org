@@ -1,0 +1,29 @@
+:PROPERTIES:
+:ID:       9c5b5a45-2198-4a88-8036-44a9de04c864
+:END:
+#+title: gl-Clear Color Buffer
+#+date: [2024-05-21 二]
+#+last_modified: [2024-07-05 五 13:07]
+
+
+
+
+
+#+HEADER: :flags "$(pkg-config --cflags glfw3  gl glx x11 xrandr xi xxf86vm  glew glu)" 
+#+HEADER: :libs "$(pkg-config --libs glfw3  gl glx x11 xrandr xi xxf86vm  glew glu) "
+#+BEGIN_SRC C++ :noweb yes 
+  <<cpp>>
+  <<gl-glew_glfw3_glm>>
+
+  void init(GLFWwindow* window) {}
+
+  void display(GLFWwindow* window, double currentTime)
+  {
+	  glClearColor(1.0, 0.0, 0.0, 1.0); 
+	  glClear(GL_COLOR_BUFFER_BIT); 
+  }
+
+#+END_SRC
+
+#+RESULTS:
+

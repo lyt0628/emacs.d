@@ -1,0 +1,40 @@
+:PROPERTIES:
+:ID:       a2eaffb2-d763-45e6-bc40-5152b443b7cf
+:END:
+#+title: ruby-rails
+#+filetags: :rails:ruby:
+#+date: [2024-07-04 四]
+#+last_modified: [2024-07-05 五 21:21]
+
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-249a5d9b-3502-11ef-9e40-b48c9d0f4f89.png
+#+BEGIN_SRC plantuml
+  @startmindmap
+  + Rails
+  ++ Model
+  +++ Associated Entry
+  ++ View
+  +++ erb template
+  ++ Control
+  +++ URL config
+  +++ resources API
+  -- mantain
+  --- DB migration
+  -- API only webapp
+  @endmindmap
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-249a5d9b-3502-11ef-9e40-b48c9d0f4f89.png]]
+
+
+
+* See also
+- [[id:8e70cbfd-c1e2-49e5-8cc1-ccca269dd00b][ruby-rails-record migration]]
+- [[id:d2f32dd0-8bda-4567-83bc-33dea7d56496][ruby-rails-erb template]]
+- [[id:0dc53191-e66d-48a6-8a32-e35051b1b840][ruby-rails-associated entry]]
+
+
+
