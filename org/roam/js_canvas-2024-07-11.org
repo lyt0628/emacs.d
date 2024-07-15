@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       66829525-eece-4cf5-8b46-aaffc95c1f3b
+:END:
+#+title: js-canvas
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-15 一 18:05]
+
+- Canvas has two major ctxt *WebGl* and *2D*
+  About WebGl, see [[id:ffdbbe1e-8cc8-46e2-911f-8691cc628713][js-webgl]].
+  Usualy, we reference Canvas as Canvas2D API.
+  

@@ -1,9 +1,9 @@
 :PROPERTIES:
 :ID:       d2fc88a7-1afd-425e-aa66-90b6dcc5979e
 :END:
-#+title: linux-Proc API
+#+title: linux-Proc
 #+date: [2024-07-05 五]
-#+last_modified: [2024-07-05 五 17:05]
+#+last_modified: [2024-07-09 二 15:27]
 
 * Linux 进程管理
 

@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       9f3b0886-b135-4eaa-9201-9cc57712becb
+:END:
+#+title: js-lang-GC
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

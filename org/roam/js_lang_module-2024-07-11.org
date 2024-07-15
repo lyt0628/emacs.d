@@ -1,0 +1,8 @@
+PROPERTIES:
+:ID:       0bee2c5c-a6d5-4de5-a30c-eb9cd19abe24
+:END:
+#+title: js-lang-module
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

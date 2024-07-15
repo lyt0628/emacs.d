@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       d4be574b-dad4-4a3c-8c51-1080df1ea6e7
+:END:
+#+title: linux-syscall-epoll
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 07:48]
+

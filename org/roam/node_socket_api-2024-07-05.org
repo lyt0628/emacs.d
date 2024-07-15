@@ -3,5 +3,26 @@
 :END:
 #+title: node-Socket API
 #+date: [2024-07-05 五]
-#+last_modified: [2024-07-05 五 01:15]
+#+last_modified: [2024-07-11 四 07:43]
+
+
+#+HEADER: :tangle ./tmp/js/hello.js
+#+BEGIN_SRC js  :mkdirp yes :eval no
+  var net = require("net");
+
+  var server = net.createServer(function(socket){
+    console.log("connected from port: " + socket.remotePort);
+
+    socket.on('data', function(data){
+       console.log("data: " + data);
+      socket.write("OK!\n");
+    });
+
+    socket.on('close', function(){
+	 console.log("close from port: " + socket.remotePort);
+    });
+  })
+  server.listen(8001);
+#+END_SRC
+
 

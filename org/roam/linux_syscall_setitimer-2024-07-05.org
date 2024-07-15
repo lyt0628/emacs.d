@@ -3,7 +3,7 @@
 :END:
 #+title: linux-syscall-setitimer
 #+date: [2024-07-05 五]
-#+last_modified: [2024-07-05 五 23:06]
+#+last_modified: [2024-07-08 一 11:04]
 
 * setitimer to get accurate and repeatable alarm
 #+BEGIN_SRC C :noweb yes
@@ -12,6 +12,7 @@
   #include <stdlib.h>
   #include <sys/time.h>
   #include <errno.h>
+  
 
   int main()
   {
@@ -27,9 +28,9 @@
 
 	setitimer(ITIMER_REAL, &itimer, &old_itimer); <</>>[0,-1[errno]]
 	<</->>
-  		ITIMER_REAL: Count Real Time, send SIGALARM
-  		ITIMER_REAL: Count CPU Time, send SIGALARM
-  		ITIMER_PROF: Count CPU_Time & Wait_Time, send SIGPROF
+		ITIMER_REAL: Count Real Time, send SIGALARM
+		ITIMER_REAL: Count CPU Time, send SIGALARM
+		ITIMER_PROF: Count CPU_Time & Wait_Time, send SIGPROF
 	<<-/>>
 
 	return 0;
@@ -40,14 +41,16 @@
 
 
 
-#+HEADER: 
-#+HEADER: 
-#+BEGIN_SRC plantuml :results file :file /tmp/puml-f3705290-3adb-11ef-b156-0242980bb4f0.png
+#+HEADER:
+#+HEADER:
+#+BEGIN_SRC plantuml :results file :file ./tmp/puml-f3705290-3adb-11ef-b156-0242980bb4f0.png
   @startuml
       struct "ittimerval" as timer
-      struct timeval 
+      struct timeval
 
       timer -> timeval
+
+
 
 
       timer : it_interval : timeval
@@ -59,7 +62,4 @@
 #+END_SRC
 
 #+RESULTS:
-[[file:/tmp/puml-f3705290-3adb-11ef-b156-0242980bb4f0.png]]
-
-
-
+[[file:./tmp/puml-f3705290-3adb-11ef-b156-0242980bb4f0.png]]

@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       ac7a56ae-8a08-4beb-9082-9feda91bbd5f
+:END:
+#+title: js-async-Promise
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

@@ -13,7 +13,8 @@
 (use-package org-roam
    :ensure t
    :config
-   ;(org-roam-db-autosync-enable)
+   (org-roam-db-sync)
+   (org-roam-db-autosync-enable)
    ;;--------------------------
    ;; Handling file properties for ‘LAST_MODIFIED’
    ;;--------------------------
@@ -69,7 +70,7 @@ it can be passed in POS."
    :hook
    (before-save . pv/org-set-last-modified) ; 保存文件时调用
    :custom
-   (org-roam-directory (concat lyt-note-directory "roam/"))  ; 设置 org-roam 目录
+   (org-roam-directory (s-concat lyt-note-directory "/" "roam"))  ; 设置 org-roam 目录
    ;; 自定义默认模板
    (org-roam-capture-templates
     '(("d" "default" plain "%?"

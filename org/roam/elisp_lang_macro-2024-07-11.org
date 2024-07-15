@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       b93b7b0f-ac51-4327-ad32-08bd9ffdaf18
+:END:
+#+title: elisp-lang-macro
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:29]
+

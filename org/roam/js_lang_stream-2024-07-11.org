@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       e8ecedde-f6c4-4595-8f55-249f01381ac6
+:END:
+#+title: js-lang-stream
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:15]
+

@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       06e2edae-3a4e-4a25-bec3-8e7780636a8f
+:END:
+#+title: js-ev-event flow
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

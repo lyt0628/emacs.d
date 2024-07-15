@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       6107efe0-af85-44af-a25e-fdd943816029
+:END:
+#+title: js-bom-Window
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

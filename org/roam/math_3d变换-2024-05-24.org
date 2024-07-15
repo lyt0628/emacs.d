@@ -1,17 +1,25 @@
 :PROPERTIES:
 :ID:       ca1b0727-9b62-4298-9af6-e07543bf922e
 :END:
-#+title: math-3d变换
+#+title: math-3D Transform
 #+date: [2024-05-24 五]
-#+last_modified: [2024-05-25 六 02:21]
+#+last_modified: [2024-07-06 六 23:29]
 
 
 
 
 
-#+begin_src latex-as-png
+#+begin_src latex-as-png 
 
 #+end_src
 
 #+RESULTS:
 [[file:ob-latex-as-png.png]]
+
+
+
+
+
+
+* See also
+- [[id:57dc7c67-27ca-4358-96f7-2b5109318787][math-2D Transform]]

@@ -1,0 +1,77 @@
+:PROPERTIES:
+:ID:       b2b538fe-d1f4-4571-a45d-47dd5eab5f33
+:END:
+#+title: linux-socket-Echo Prog Using Per Proc per Req cncr model
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 09:06]
+
+
+
+#+HEADER: :tangle ./tmp/echo.c
+#+BEGIN_SRC C :noweb yes :eval no
+  <<linux>>
+  <<m_def>>
+  <<sig_chld>>
+  <<echo_srv>>
+
+  <<lib-unp-echo>>
+
+
+  int main(){
+
+    int	listenfd, connfd;
+    socklen_t cli_len;
+    struct sockaddr_in cli_addr, srv_addr;
+
+    pid_t cpid;
+    void sig_chld(int);
+
+
+    listenfd = socket(AF_INET, SOCK_STREAM, 0);
+
+    bzero(&srv_addr, sizeof(srv_addr));
+    srv_addr.sin_family      = AF_INET;
+    srv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    srv_addr.sin_port        = htons(8080);
+
+
+    bind(listenfd, (SA *) &srv_addr, sizeof(srv_addr));
+    listen(listenfd, 20);
+
+
+    signal(SIGCHLD, sig_chld);	/* must call waitpid() */
+
+
+    cli_len = sizeof(cli_addr);
+
+    while (TRUE) {
+       connfd = accept(listenfd, (SA *) &cli_addr, &cli_len);
+       if ( connfd < 0) {
+	  if (errno == EINTR)
+		  continue;		/* back to for() */
+	  else
+		  perror("accept error");
+       }
+
+       cpid = fork();
+       if ( cpid == 0) {	/* child process */
+	  close(listenfd);	/* close listening socket */
+	  echo_srv(connfd);	/* process the request */
+
+	  close(connfd);			/* parent closes connected socket */
+
+	  exit(EXIT_SUCCESS);
+       }
+
+       close(connfd);			/* parent closes connected socket */
+
+
+    }
+    close(listenfd);
+  }
+#+END_SRC
+
+
+
+
+

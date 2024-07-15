@@ -24,6 +24,9 @@
 
 (setq custom-file
    (expand-file-name "custom.el" lyt-emacs-directory))
+(load custom-file)
+
+
 
 
 (provide 'init-variables)

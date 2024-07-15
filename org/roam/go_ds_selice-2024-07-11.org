@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       9c92e71d-819a-43e6-b525-847d2b6991de
+:END:
+#+title: go-ds-selice
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 21:50]
+

@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       d392afaa-c13d-47e0-9f93-8da113a6ef66
+:END:
+#+title: js-lang-fn
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

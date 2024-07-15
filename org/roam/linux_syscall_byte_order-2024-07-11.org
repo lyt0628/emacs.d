@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       0fdf4c35-8d7d-450d-a022-c0a40a88171c
+:END:
+#+title: linux-syscall-byte order
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 17:39]
+
+
+* API
+- *htons(host_num:int):int[net_num]*
+  short use for port
+- *ntohs(net_num:int):int[host_num]*
+  
+- *htonl()*
+  
+  long use for inet_addr
+- *ntohl()*
+  
+- *inet_pton()*
+
+- *inet_ntop([[id:b9a987a7-f7f8-444c-93d1-08e3b856a518][domin]],inet_addr,buf:void *, buf_len)* 
+

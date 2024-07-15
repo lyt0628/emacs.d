@@ -1,0 +1,81 @@
+:PROPERTIES:
+:ID:       196efae2-9fab-4632-8a75-338fcd4f279d
+:END:
+#+title: linux-syscall-Catch Signal
+#+date: [2024-07-08 一]
+#+last_modified: [2024-07-08 一 16:52]
+
+
+#+BEGIN_SRC C :eval no :tangle /tmp/example_signal.c :noweb yes
+  #include <unistd.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <signal.h>
+  #include <string.h>
+
+  void sigaction_int(int signo)
+  {
+    printf(">>> catch SIGINT\n");
+    signal(SIGINT, SIG_DFL); <</>> SIGDEL, default signal action 
+  } 
+  int main()
+  {
+    signal(SIGINT, sigaction_int);
+    while(1);
+    return 0;
+  } 
+#+END_SRC
+
+
+
+
+#+BEGIN_SRC C :eval no :tangle  /tmp/example_sigaction.c :noweb yes
+  #include <unistd.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <signal.h>
+  #include <string.h>
+
+  void sigint_handler(int signo)
+  {
+    printf("%d  ", signo);
+    printf(">>> catch SIGINT\n");
+    sleep(1);
+  }
+
+  int main()
+  {
+    struct sigaction sigact, old_sigact;
+
+    sigact.sa_handler = sigint_handler;
+    sigemptyset(&sigact.sa_mask);
+    sigaddset(&sigact.sa_mask, SIGINT);
+    sigact.sa_flags = 0;
+    sigaction(SIGINT, &sigact, &old_sigact); <</>> [0,-1]
+    while(1);
+    return 0;
+  }
+  
+#+END_SRC
+
+
+#+BEGIN_SRC plantuml :results file :file /tmp/puml-08e8750e-3d05-11ef-bb18-0242e2b9ec23.png
+  @startuml
+	  struct sigaction{
+		 void(* sa_handler)(int);
+		 void(* sa_action)(int, siginfo_t*, void*);
+		 sigset_t sa_mask;
+		 int sa_flag;
+		 void(* sa_restorer)(void);
+	  }
+
+	  struct siginfo_t{
+	  
+	  }
+
+
+  @enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-08e8750e-3d05-11ef-bb18-0242e2b9ec23.png]]

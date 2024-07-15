@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       8cd5c191-1679-475b-ba5c-af18a018f161
+:END:
+#+title: linux-syscall-poll
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 07:48]
+

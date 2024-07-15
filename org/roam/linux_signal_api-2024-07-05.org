@@ -1,23 +1,29 @@
 :PROPERTIES:
 :ID:       1fd0d0e3-932d-4ca6-83da-4751bcc5e533
 :END:
-#+title: linux-Signal API
+#+title: linux-Signal
 #+filetags: :signal:
 #+date: [2024-07-05 五]
-#+last_modified: [2024-07-05 五 23:23]
+#+last_modified: [2024-07-09 二 15:27]
 
 * Index
-SIG_Sender
+*SIG_Sender:*
 - [[id:6e7800e5-78b4-4445-8ecf-497f66d20182][linux-syscall-kill]]
 - [[id:98a6ec36-de59-4c39-bfde-f6e80866d932][linux-syscall-raise]]
 - [[id:42418a83-89e3-433d-81f1-f5bd97e8727a][linux-syscall-abort]]
 
 
-Timer
+*Timer*
 - [[id:8aa4ebb2-14d3-4639-a5d7-136879a67307][linux-syscall-alarm]]
 - [[id:e4419c80-95ac-4d6a-8ddc-28d231f98404][linux-syscall-setitimer]]
 
-  
+
+*Recv Signal*
+- [[id:196efae2-9fab-4632-8a75-338fcd4f279d][linux-syscall-Catch Signal]]
+- [[id:5eb42053-fce6-42e8-9633-ac724ce260c3][linux-syscall-Signal Mask]]
+
+
+
 * Show All Available Sigals
 
 #+BEGIN_SRC sh :results list
@@ -108,3 +114,6 @@ Timer
 
 
 
+
+* Example
+- [[id:d5afa04e-131a-4bb3-a1bd-0b28777f6086][linux-syscall-example-msleep]]

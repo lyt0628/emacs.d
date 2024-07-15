@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       3b1b2a15-5e76-4c2f-aeda-d369c04a8888
+:END:
+#+title: go-ds-map
+#+filetags: :go:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:15]
+

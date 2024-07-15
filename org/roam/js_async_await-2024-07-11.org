@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       1dabf9cb-a59d-4581-b833-09b979d0f34d
+:END:
+#+title: js-async-Await
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

@@ -4,10 +4,10 @@
 :END:
 #+title: gl-example-cube
 #+date: [2024-05-19 日]
-#+last_modified: [2024-07-05 五 13:15]
+#+last_modified: [2024-07-06 六 23:42]
 
 
-  
+
 #+HEADER: :flags "$(pkg-config --cflags glfw3  gl glx x11 xrandr xi xxf86vm  glew glu)" 
 #+HEADER: :libs "$(pkg-config --libs glfw3  gl glx x11 xrandr xi xxf86vm  glew glu) "
 #+HEADER: :var vShaderSource=cube_v3

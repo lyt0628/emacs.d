@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       b285003b-4721-4305-b117-75f9e483c02d
+:END:
+#+title: js-dom-drag
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:15]
+

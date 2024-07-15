@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       cbeb38d4-6836-40c7-aba2-1ceb21625995
+:END:
+#+title: js-lang-Generator
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:25]
+

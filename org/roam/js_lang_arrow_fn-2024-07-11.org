@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       b4381d4d-0a23-411e-a6cf-a5445388bcbb
+:END:
+#+title: js-lang-arrow fn
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

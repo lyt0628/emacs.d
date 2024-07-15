@@ -4,12 +4,24 @@
 #+title: skynet
 #+filetags: :core:
 #+date: [2024-07-02 二]
-#+last_modified: [2024-07-06 六 02:15]
+#+last_modified: [2024-07-07 日 00:16]
 
 
+* A
+  
+** B
 
+** C *CC* 
+   
+   
+*AC*
+/AA/
+_AA_
+=AA=    
+~#include <stdio.h>~
++AAA+
 
-
++CCC+
 
 * See also
 - [[id:db032b6f-f21a-4027-a939-1f6b66a85c8b][skynet-example-ballwar]]

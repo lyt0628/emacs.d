@@ -3,8 +3,8 @@
 :END:
 #+title: 日本語ー文法
 #+filetags: :core:日本語:
-#+date: [2024-06-28 五]
-#+last_modified: [2024-07-06 六 02:24]
+#+date: [2024-06-28 [[id:78d85115-7bf0-4cc7-8f7d-5ee7d37a6025][日本語ー漢字ー古]]五]
+#+last_modified: [2024-07-06 六 19:14]
 
 * Mark
 |             |                                       |

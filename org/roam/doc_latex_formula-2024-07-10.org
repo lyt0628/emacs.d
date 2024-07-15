@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       10b7c41c-c45f-4c74-928c-ad849ded99bd
+:END:
+#+title: doc-latex-formula
+#+date: [2024-07-10 三]
+#+last_modified: [2024-07-10 三 21:47]
+

@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       bf7d340f-79d8-40aa-b93d-c1ed029e5bfc
+:END:
+#+title: linux-syscall-mkfifo
+#+date: [2024-07-09 二]
+#+last_modified: [2024-07-09 二 18:39]
+
+
+
+
+
+
+* See also
+- [[id:56deeac6-c94f-4686-9e9d-39012cd24589][linux-tool-mkfifo]]

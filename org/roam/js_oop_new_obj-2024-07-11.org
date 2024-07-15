@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       146359c7-7d10-4ba8-8292-99f7efc9d8e2
+:END:
+#+title: js-oop-New Obj
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

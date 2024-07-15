@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       babd681d-38df-48d2-91f1-7c5c6da8e816
+:END:
+#+title: js-lang-var
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       62e16632-dbe3-48ef-8635-b6e639594026
+:END:
+#+title: cpp-lang-cast
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 18:33]
+
+- *static_cast*
+  i.e `int a = static_cast<int>(1.0);`
+
+
+- *reinterpret_cast*
+  reinpterprete *Pointer* to other pointer type
+  i.e. `imgWidth = *(reinterpret_case<char *> (&binImg));`
+
+
+- *const_cast*
+  rm *const* contrains
+
+  
+- *dynamic_cast*

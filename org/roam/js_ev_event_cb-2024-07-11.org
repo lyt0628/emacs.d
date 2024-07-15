@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       91985381-4654-4f61-b26d-2604fc6b8fb4
+:END:
+#+title: js-ev-event cb
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:15]
+

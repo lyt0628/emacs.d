@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       04a52cbc-009d-4e38-a10e-04b987bd6284
+:END:
+#+title: js
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:24]
+
+
+* Index
+- [[id:af74fb70-f0ff-4a2b-a370-995a790aa549][js-lang]]
+  
+- [[id:25315b6a-3f30-4ca3-bb57-41acefdd9818][js-dom]]
+  
+- [[id:7f49a54d-d00e-4089-ac17-d9c52e6f139d][js-lib]]
+  
+- [[id:0554b106-aa89-480e-b089-02db918cbea7][js-ds]]
+  
+- [[id:bdbb6b24-df1f-4756-8a26-936c403067d1][js-ev]]
+  
+- [[id:66829525-eece-4cf5-8b46-aaffc95c1f3b][js-canvas]]
+  
+- [[id:457282bf-01a2-4262-a878-3f51b6b8e0fb][js-oop]]
+
+- 
+
+  
+*Async*
+- [[id:1dabf9cb-a59d-4581-b833-09b979d0f34d][js-async-Await]]
+- [[id:ac7a56ae-8a08-4beb-9082-9feda91bbd5f][js-async-Promise]]

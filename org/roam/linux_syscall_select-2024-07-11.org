@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       c249ff7d-22f9-444e-bc15-0118a57f68d3
+:END:
+#+title: linux-syscall-select
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 07:47]
+

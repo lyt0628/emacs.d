@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       10d94463-fe2d-4541-bb88-0bd2e64d302f
+:END:
+#+title: js-lang-sentence
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

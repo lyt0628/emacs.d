@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       76d56b0e-4b7d-4211-a955-86bbfc16d4da
+:END:
+#+title: js-lang-wrap type
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

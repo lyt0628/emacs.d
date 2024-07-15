@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       891aa90c-fda0-4b6c-aef8-876a76757401
+:END:
+#+title: elisp
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:28]
+

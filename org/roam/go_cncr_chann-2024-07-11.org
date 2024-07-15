@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       bc3b00aa-6d6b-49fb-9fe1-5396b0d0b8d8
+:END:
+#+title: go-cncr-chann
+#+filetags: :go:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:15]
+

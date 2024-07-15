@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       b85f0477-ef20-4717-857f-be44ab1963c0
+:END:
+#+title: elisp-buf
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:29]
+

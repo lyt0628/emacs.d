@@ -1,0 +1,72 @@
+:PROPERTIES:
+:ID:       075d205e-22cf-40dd-b240-9408584298c3
+:END:
+#+title: linux-syscall-popen&pclose
+#+date: [2024-07-09 二]
+#+last_modified: [2024-07-09 二 15:47]
+
+
+* API
+- *pope(cmd:str, r_w:str):[fp,NULL]*
+- *pclose(fp)[,-1]*
+
+
+* Example
+
+** Read From Other Process
+#+BEGIN_SRC C :noweb yes :results verbatim
+   <<linux>>
+
+  
+  int main()
+  {
+   FILE* fp;
+   char buff[1024];
+   int nchar;
+
+   memset(buff, '\0', sizeof(buff));
+
+
+   fp = popen("uname -a", "r");
+   nchar = fread(buff, sizeof(char), 1024, fp);
+   if(nchar > 0) printf("Output was:\n %s\n", buff);
+
+
+   pclose(fp);
+  }
+#+END_SRC
+
+#+RESULTS:
+: Output was:
+:  Linux lyt 6.5.0-41-generic #41~22.04.2-Ubuntu SMP PREEMPT_DYNAMIC Mon Jun  3 11:32:55 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+: 
+
+
+** Write To Other Process
+#+BEGIN_SRC C :noweb yes :results verbatim
+   <<linux>>
+
+
+  int main()
+  {
+   FILE* fp;
+   char buff[1024];
+
+   sprintf(buff, "Once upon a time, there was...\n");
+
+
+   fp = popen("od -c", "w");
+   fwrite(buff, sizeof(char),strlen(buff), fp);
+
+  
+   pclose(fp);
+  }
+#+END_SRC
+
+#+RESULTS:
+: 0000000   O   n   c   e       u   p   o   n       a       t   i   m   e
+: 0000020   ,       t   h   e   r   e       w   a   s   .   .   .  \n
+: 0000037
+
+
+

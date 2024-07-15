@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       2e0bee63-db5e-4e60-8080-be82333d0228
+:END:
+#+title: doc-latex-mark
+#+date: [2024-07-10 三]
+#+last_modified: [2024-07-10 三 21:47]
+
+* Direct Letter
+#+BEGIN_SRC latex-as-png :file /tmp/tex-79c5b5a5-a10b-45ef-a99f-bd02040f73f3.png
+, . ; : ! ? ' ‘ ’ () [] - / * @
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/tex-79c5b5a5-a10b-45ef-a99f-bd02040f73f3.png]]
+
+* “” and ‘’ 
+#+BEGIN_SRC latex-as-png :file /tmp/tex-054fcce4-d440-41a1-91e5-158e333d127f.png
+  ‘‘\,‘a’ or ‘b’\,’’ he asked.
+
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/tex-054fcce4-d440-41a1-91e5-158e333d127f.png]]
+
+
+- 两个左单引号表示左双引号
+  两个右单引号表示右双引号
+- 单引号和双引号连着的时候用 \, 斜杠和逗号隔开

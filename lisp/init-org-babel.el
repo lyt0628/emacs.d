@@ -12,10 +12,28 @@
 
 (use-package uuidgen :ensure t)
 (use-package ob-rust :ensure t)
-(use-package ob-latex-as-png :ensure t)
 (use-package ob-go :ensure t)
 (use-package ob-elixir :ensure t)
 (use-package ob-prolog :ensure t)
+
+(use-package graphviz-dot-mode :ensure t
+  :config
+  (define-derived-mode dot-mode graphviz-dot-mode "Dot"
+  "Major mode for editing dot code."
+  :group 'graphviz-dot))
+;; End of use-package
+
+(use-package ob-latex-as-png :ensure t
+  :config
+  (setq ob-latex-as-png-header '("\\usepackage[greek,english]{babel}")))
+
+
+(use-package plantuml-mode :ensure t
+  :custom
+  (org-plantuml-jar-path  "~/data/emacs.d/bin/plantuml-lgpl-1.2024.3.jar"))
+;; End of use-package
+
+
 (org-babel-do-load-languages
   'org-babel-load-languages
       '((js                  . t)
@@ -36,16 +54,6 @@
 	(plantuml            . t)
 	(dot                 . t)
 	(latex-as-png        . t)))
-
-
-
-(defconst org-plantuml-jar-path
-  "~/data/emacs.d/bin/plantuml-lgpl-1.2024.3.jar")
-
-
-(define-derived-mode dot-mode graphviz-dot-mode "Dot"
-  "Major mode for editing dot code."
-  :group 'graphviz-dot)
 
 
 (require 'ob-skynet)

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       f99bc876-d222-4026-b969-a9e883ad4742
+:END:
+#+title: linux-tool-od
+#+date: [2024-07-09 二]
+#+last_modified: [2024-07-09 二 15:46]
+

@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       55f83922-bdf9-4dd1-8f13-4e5859a898ae
+:END:
+#+title: js-dom-selector api
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

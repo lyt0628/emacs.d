@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       66f1a5fc-cac4-45d3-a83d-09035a2a8385
+:END:
+#+title: js-oop-obj
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       98cdbdb7-ccf0-43ee-9a74-75c354ae0661
+:END:
+#+title: js-oop-Inherite
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

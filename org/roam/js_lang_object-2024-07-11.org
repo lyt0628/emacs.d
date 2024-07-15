@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       5f125d0f-d0f0-4f3a-bc83-9a4818c4c9ce
+:END:
+#+title: js-lang-Object
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

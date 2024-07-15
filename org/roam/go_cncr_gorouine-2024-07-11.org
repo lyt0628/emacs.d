@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       945e96dd-0a33-43ac-9bfe-29280313a45c
+:END:
+#+title: go-cncr-gorouine
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 21:51]
+

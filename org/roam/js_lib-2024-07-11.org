@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       7f49a54d-d00e-4089-ac17-d9c52e6f139d
+:END:
+#+title: js-lib
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:20]
+
+
+* Index
+- [[id:e3d2abde-215a-412a-867a-03de3b55296e][js-lib-Date]]
+- [[id:2701f880-38e0-45f0-9572-e01ae3f6ff71][js-lib-Math]]
+- [[id:f08b8319-ea39-441a-acf1-a711a9f0d872][js-lib-Global]]
+- [[id:f14e1794-5748-4bc5-a7c9-2f3c1c2c5885][js-lib-json]]
+- [[id:22934316-632a-4872-af8a-93cdd05dc388][js-lib-xml]]
+- [[id:a839f570-a7dd-4f28-92e7-2af5256b5794][js-lib-cookie]]
+- [[id:1058be89-f675-4d6b-9ae3-2ef1f4328b13][js-lib-ajax]]
+- [[id:e890313c-c50b-408a-9080-569dc45142ef][js-lib-fetch]]
+- [[id:3414af38-b6fa-4370-a377-c6fb5ecdf81f][js-lib-web socket]]

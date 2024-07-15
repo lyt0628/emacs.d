@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       03f6999c-ec46-43c3-91f3-c37b8e4f4144
+:END:
+#+title: doc-latex
+#+date: [2024-07-10 三]
+#+last_modified: [2024-07-10 三 21:25]
+
+
+
+#+BEGIN_SRC latex-as-png :file  /tmp/tex-c528b5c8-c027-40f2-b0a2-e8abbb1de0d6.png
+  \[
+  	a^2 + b^2 = c^2
+  \]
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/tex-c528b5c8-c027-40f2-b0a2-e8abbb1de0d6.png]]
+
+

@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       4faec2c3-d344-41e9-bb23-02308ab50972
+:END:
+#+title: js-lang-reflect
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

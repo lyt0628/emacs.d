@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       d5afa04e-131a-4bb3-a1bd-0b28777f6086
+:END:
+#+title: linux-syscall-example-msleep
+#+date: [2024-07-08 一]
+#+last_modified: [2024-07-08 一 16:55]
+
+
+
+
+
+
+
+

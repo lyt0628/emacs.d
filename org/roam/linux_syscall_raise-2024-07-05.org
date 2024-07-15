@@ -4,9 +4,10 @@
 #+title: linux-syscall-raise
 #+filetags: :signal:
 #+date: [2024-07-05 五]
-#+last_modified: [2024-07-05 五 23:23]
+#+last_modified: [2024-07-08 一 01:25]
 
 ** raise send Signal to self
+
 #+BEGIN_SRC C :noweb yes
   #include <unistd.h>
   #include <stdio.h>

@@ -1,19 +1,22 @@
 :PROPERTIES:
 :ID:       18b5da92-0c99-4063-9388-07f26ed97188
 :END:
-#+title: linux-Socket API
+#+title: linux-socket
 #+filetags: :c:socket:
 #+date: [2024-07-05 五]
-#+last_modified: [2024-07-05 五 21:17]
+#+last_modified: [2024-07-11 四 08:57]
+
+
+
+* Index
+- [[id:0fdf4c35-8d7d-450d-a022-c0a40a88171c][linux-syscall-byte order]]
+- [[id:b9a987a7-f7f8-444c-93d1-08e3b856a518][linux-syscall-socket & bind & listen & accept & recv && & connect & send & close]]
+- [[id:f2baff0d-85e2-4e37-a72e-51e695806768][linux-syscall-recvfrom & sendto]]
 
 
 
 
-#+BEGIN_SRC C
-  #include <stdio.h>
+* See also
+- [[id:85cf644e-6c69-4f35-85ca-cbbc2a54d385][linux-socket-Echo Prog Using Per Thrd Per Req cncr model]]
+- :w
   
-  printf("Hello");
-#+END_SRC
-
-#+RESULTS:
-: Hello

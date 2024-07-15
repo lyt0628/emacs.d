@@ -3,7 +3,7 @@
 :END:
 #+title: doc-How to write Note
 #+date: [2024-07-05 五]
-#+last_modified: [2024-07-05 五 12:19]
+#+last_modified: [2024-07-06 六 23:08]
 
 * 1
 
@@ -29,3 +29,18 @@ the structure should look like the following:
 #+END_SRC
 
 For a clear structure, The level of title hierarchy limited by 3
+
+
+
+* 2
+
+The content that recorded int note include the following things:
+
+- API, Rule, method
+  i.e. [[id:72898faa-e242-4d59-90a0-e66b0342b2d3][linux-syscall]], [[id:0acb56a8-090d-41c5-900a-e7b023c0e9c0][Qt]], and this doc
+  
+- Principle
+  i.e. [[id:ca1b0727-9b62-4298-9af6-e07543bf922e][math-3D Transform]]
+  
+- Konwledge about a actual Entry or Concept
+  i.e. [[id:a9bc03a8-69f5-4b66-a8dc-9fc612479deb][c-analy-redis]], [[id:8ac35aa8-8352-4e1d-a185-fbf5c4e06b3c][datastructure-Red_Black_Tree]]

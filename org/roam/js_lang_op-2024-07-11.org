@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       9fae51b5-1d27-424b-a6d2-a3b4808660f3
+:END:
+#+title: js-lang-op
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       0bf58434-e130-4a0a-926f-02049779eaec
+:END:
+#+title: js-midi
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 21:46]
+

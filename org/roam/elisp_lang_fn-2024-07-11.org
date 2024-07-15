@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       a6334ec2-fd14-4ba9-898c-675ff61d6e3f
+:END:
+#+title: elisp-lang-fn
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:29]
+

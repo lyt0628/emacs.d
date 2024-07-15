@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       74bbd654-4257-47f4-bdd0-084205550e7e
+:END:
+#+title: js-ev-event obj
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:15]
+

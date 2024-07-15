@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       e3d2abde-215a-412a-867a-03de3b55296e
+:END:
+#+title: js-lib-Date
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:12]
+

@@ -1,0 +1,89 @@
+:PROPERTIES:
+:ID:       64dcd264-7457-44dd-9742-7f341954faf8
+:END:
+#+title: linux-MtiIO
+#+date: [2024-07-09 二]
+#+last_modified: [2024-07-11 四 07:48]
+
+
+
+* Index
+- [[id:c249ff7d-22f9-444e-bc15-0118a57f68d3][linux-syscall-select]]
+- [[id:8cd5c191-1679-475b-ba5c-af18a018f161][linux-syscall-poll]]
+- [[id:d4be574b-dad4-4a3c-8c51-1080df1ea6e7][linux-syscall-epoll]]
+
+
+
+**** echoselect
+
+#+HEADER: :tangle ./tmp/unp/echov3.c
+#+HEADER: :results verbatim
+#+HEADER: :noweb yes
+#+HEADER: :flags "-D__DEV__"
+#+BEGIN_SRC C 
+  <<unix>>
+  int main(int argc, char **argv)
+  {
+  // declare variable
+	  int					listenfd, connfd;
+	  struct sockaddr_in	                servaddr, cliaddr;
+	  int                                   servaddrlen, cliaddrlen;
+	  char				        buff[MAXLINE];
+
+	  listenfd = Socket(AF_INET, SOCK_STREAM, 0);
+
+  // init listen sock
+	  bzero(&servaddr, sizeof(servaddr));
+	  servaddr.sin_family      = AF_INET;
+	  servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+	  servaddr.sin_port        = htons(8082);	/* daytime server */
+
+	  Bind(listenfd, (SA *) &servaddr, sizeof(servaddr));
+
+	  Listen(listenfd, LISTENQ);
+
+	  for ( ; ; ) {
+	      connfd = Accept(listenfd, (SA *) NULL, NULL);
+
+	      fd_set rdfds, errfds;
+	      FD_ZERO(&rdfds);
+	      FD_ZERO(&errfds);
+
+	      for(;;){
+
+	      int n = Select(connfd+1, &rdfds, NULL, &errfds, NULL);
+
+	      if(FD_ISSET(connfd, &rdfds)){
+		  n = Recv(connfd, buff, sizeof(buff)-1, NULL);
+		  printf("get %d bytes: %s", n, buff); 
+	      }
+	      else if(FD_ISSET(connfd, &errfds)){
+		  n = Recv(connfd, buff, sizeof(buff)-1, NULL);
+		  printf("get %d bytes: %s", n, buff); 
+	      }
+
+	      return 0;
+	 }
+
+	      Close(connfd);
+	  }
+	Close(listenfd);
+  }
+#+END_SRC
+
+#+RESULTS:
+
+#+RESULTS: echoselect
+
+
+
+#+NAME: echoselect-handle-request-looply
+#+BEGIN_SRC C :noweb yes
+#+END_SRC
+
+#+NAME: echoselect-handle-bisness
+#+BEGIN_SRC C :noweb yes
+#+END_SRC
+
+
+

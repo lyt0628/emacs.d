@@ -3,8 +3,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(yasnippet-snippets which-key uuidgen use-package-hydra undo-tree treemacs-projectile toml-mode tiny rainbow-delimiters plantuml-mode pdf-tools org-roam-ui org-download ob-rust ob-prolog ob-latex-as-png ob-go ob-elixir marginalia magit lua-mode lsp-ui lsp-ivy highlight-symbol graphviz-dot-mode go-mode glsl-mode flycheck fish-mode evil erlang elixir-mode doom-themes dashboard dap-mode counsel-projectile company-tabnine company-box cmake-mode clj-refactor cdlatex auctex amx all-the-icons)))
+ '(custom-enabled-themes '(doom-vibrant))
+ '(custom-safe-themes
+   '("013728cb445c73763d13e39c0e3fd52c06eefe3fbd173a766bfd29c6d040f100" default))
+ '(safe-local-variable-values
+   '((org-roam-db-location . "/home/lyt0628/data/emacs.d/org/roam/org-roam.db")
+     (org-roam-directory . "/home/lyt0628/data/emacs.d/org/roam"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

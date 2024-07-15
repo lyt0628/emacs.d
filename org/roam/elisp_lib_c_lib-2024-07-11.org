@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       dd35fc58-57ae-4300-b2a4-8c4e1eaaf097
+:END:
+#+title: elisp-lib-c_lib
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:29]
+

@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       72898faa-e242-4d59-90a0-e66b0342b2d3
+:END:
+#+title: linux-syscall
+#+filetags: :core:
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 23:43]
+
+
+* Index
+- [[id:d2fc88a7-1afd-425e-aa66-90b6dcc5979e][linux-Proc API]]
+- [[id:1fd0d0e3-932d-4ca6-83da-4751bcc5e533][linux-Signal API]]
+- [[id:18b5da92-0c99-4063-9388-07f26ed97188][linux-Socket API]]
+
+
+

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       814258be-1f97-406d-be18-caad8b27c0aa
+:END:
+#+title: go-test
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 21:52]
+

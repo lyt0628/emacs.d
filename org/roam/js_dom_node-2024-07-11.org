@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       54d1e380-6d3e-42f4-a5be-fd853b11fd0c
+:END:
+#+title: js-dom-node
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:15]
+

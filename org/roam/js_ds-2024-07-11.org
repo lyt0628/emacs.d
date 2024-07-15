@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       0554b106-aa89-480e-b089-02db918cbea7
+:END:
+#+title: js-ds
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:22]
+
+
+* Index
+- [[id:dc022d16-1404-4983-bb9e-56b1eaf8d749][js-ds-Array]]
+- [[id:01385c04-8805-473a-8eb5-a0140ea71882][js-ds-Map]]
+- [[id:e81b2754-320b-4fe1-b4ae-2e1f33579453][js-ds-WeakMap]]
+- [[id:e81b2754-320b-4fe1-b4ae-2e1f33579453][js-ds-WeakMap]]
+- [[id:19300007-1fa6-4dc0-8db2-8035099d2aac][js-ds-Set]]
+- [[id:1db36f73-aa90-4920-ae1e-594f10a28b09][js-ds-WeakSet]]
+  
+- [[id:a3508b24-8dfb-4305-b378-9c3fb97f381b][js-ds-Itor]]

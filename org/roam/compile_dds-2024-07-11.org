@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       914286c5-4575-45fc-b79c-f6892ede97d6
+:END:
+#+title: compile-DDS
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 18:35]
+
+

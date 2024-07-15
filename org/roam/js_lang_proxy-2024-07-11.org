@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       230f4439-3115-4a66-a5b3-fc21eec05705
+:END:
+#+title: js-lang-proxy
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

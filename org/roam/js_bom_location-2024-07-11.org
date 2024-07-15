@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       188790d2-c611-43d7-817d-167b1e4fabee
+:END:
+#+title: js-bom-Location
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

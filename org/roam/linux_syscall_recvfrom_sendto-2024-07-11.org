@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       f2baff0d-85e2-4e37-a72e-51e695806768
+:END:
+#+title: linux-syscall-recvfrom & sendto
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 08:14]
+

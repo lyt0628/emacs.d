@@ -1,0 +1,36 @@
+:PROPERTIES:
+:ID:       aa7f440e-3cb3-4f1f-9520-36c54a809ec6
+:END:
+#+title: linux-IPC
+#+date: [2024-07-09 二]
+#+last_modified: [2024-07-09 二 18:39]
+
+
+
+
+* Index
+*Tmp Pipe*
+- [[id:8efaa9be-b35a-420a-9c6e-5e9411bf2a6d][linux-syscall-pipe]]
+- [[id:75f60d1a-2da3-45b5-ba0f-4ed661c3e2ab][linux-syscall-dup2]]
+-[[id:075d205e-22cf-40dd-b240-9408584298c3][linux-syscall-popen&pclose]] 
+
+*File Pipe*
+-[[id:bf7d340f-79d8-40aa-b93d-c1ed029e5bfc][linux-syscall-mkfifo]] 
+
+
+*MQ*
+- [[id:b21863b0-8c98-45eb-a3f6-0a8113c1eef9][linux-syscall-msgq]]
+
+  
+*Sem*
+- [[id:b1ef8a9c-2bc3-4bf8-b0b3-20d3f21f796d][linux-syscall-semget]]
+- [[id:e8095bcb-e915-4a5e-b2a6-9126845ca5b8][linux-syscall-semctl]]
+- [[id:a54a7863-fb90-40ee-9f46-4121296168eb][linux-syscall-semop]]
+
+
+*Shm*
+- [[id:62ae34e9-5c21-4b39-b948-b9a50116b3a5][linux-syscall-shmget]]
+- [[id:fdc44d7d-44f4-41be-a4fa-1319cf0ca172][linux-syscall-shmat]]
+- [[id:d5d1c26b-b461-44f6-9d7f-c08537d82a55][linux-syscall-shmdt]]
+- [[id:d83037ef-f650-484e-ae4e-1e5601cc2c06][linux-syscall-shmctl]]
+

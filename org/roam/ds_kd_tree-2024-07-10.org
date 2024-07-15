@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       417761dc-1b5c-4f18-81ca-d75be42f3b3d
+:END:
+#+title: ds-kd tree
+#+date: [2024-07-10 三]
+#+last_modified: [2024-07-10 三 21:55]
+

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       b41c49c7-9e14-4293-aca9-9b05cbd22491
+:END:
+#+title: compile-MIDI
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 09:01]
+

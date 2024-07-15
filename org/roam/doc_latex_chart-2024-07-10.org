@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       9963cf7a-76b1-4d91-9b0f-89cfa8f49ae9
+:END:
+#+title: doc-latex-chart
+#+date: [2024-07-10 三]
+#+last_modified: [2024-07-10 三 21:50]
+

@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       435b3ff5-668d-45eb-8cbb-286e35e0f491
+:END:
+#+title: c-std-io
+#+date: [2024-07-09 二]
+#+last_modified: [2024-07-09 二 18:49]
+
+
+* Access Mode
+| Mode | Note |
+|------+------|
+|      |      |

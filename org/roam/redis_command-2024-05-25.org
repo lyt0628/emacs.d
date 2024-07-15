@@ -3,7 +3,7 @@
 :END:
 #+title: redis-command
 #+date: [2024-05-25 六]
-#+last_modified: [2024-07-01 一 09:03]
+#+last_modified: [2024-07-11 四 22:15]
 
 
 
@@ -60,7 +60,7 @@
 #+end_src
 
 #+RESULTS:
-: string
+: none
 
 ** del
 

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       41533f10-5287-4899-b25f-8028bcf9865b
+:END:
+#+title: go-ds-array
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 21:49]
+

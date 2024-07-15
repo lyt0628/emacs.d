@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       1058be89-f675-4d6b-9ae3-2ef1f4328b13
+:END:
+#+title: js-lib-ajax
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:14]
+

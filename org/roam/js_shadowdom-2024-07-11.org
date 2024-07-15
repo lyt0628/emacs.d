@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       6b76e531-e215-4fab-acc3-c041d39e427e
+:END:
+#+title: js-dom-shadowdom
+#+filetags: :js:
+#+date: [2024-07-11 四]
+#+last_modified: [2024-07-11 四 22:15]
+
