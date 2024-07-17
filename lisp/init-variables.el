@@ -28,10 +28,10 @@
 (defconst lyt-extra-modifier-key "s")
 
 
-(when lyt-system-is-windows
+(when lyt-system-is-linux
   (defconst lyt-emacs-directory "~/data/emacs.d/"))
 
-(when lyt-system-is-linux
+(when lyt-system-is-windows
 (defconst lyt-emacs-directory "D:/data/emacs.d/"))
 
 
