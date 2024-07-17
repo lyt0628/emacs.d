@@ -71,7 +71,7 @@ it can be passed in POS."
    (before-save . pv/org-set-last-modified) ; 保存文件时调用
    :custom
    (org-roam-directory (concat lyt-note-directory "/" "roam"))  ; 设置 org-roam 目录
-   (org-roam-db-location (concat org-roam-directory "org-roam.db"))
+   (org-roam-db-location (concat org-roam-directory "/" "org-roam.db"))
    ;; 自定义默认模板
    (org-roam-capture-templates
     '(("d" "default" plain "%?"
