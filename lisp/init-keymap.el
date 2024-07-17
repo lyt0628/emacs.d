@@ -5,12 +5,13 @@
 
 ;;; Code:
 
-(require 's)
+; (require 's)
+
 (require 'init-variables)
 
 (defun lyt-kbd-with-extra-modifier-key (key)
   "Return kbd code of KEY that combined with `lyt-extra-modifier-key'."
-  (kbd (s-concat lyt-extra-modifier-key "-" key)))
+  (kbd (concat lyt-extra-modifier-key "-" key)))
 
 (require 'init-keymap-reset)
 

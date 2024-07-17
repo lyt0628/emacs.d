@@ -11,16 +11,22 @@
 (when (version< emacs-version "28.1")
   (message "Your Emacs is old, and some functionality in this config will be disabled. Please upgrade if possible."))
 
-(add-to-list 'load-path "~/data/emacs.d/lisp")
+(when (string= system-type "windows-nt")
+  (add-to-list 'load-path "D:/data/emacs.d/lisp"))
 
+(when (string= system-type "gnu/linux")
+  (add-to-list 'load-path "~/data/emacs.d/lisp"))
 
 (require 'init-util)
 
 (lyt-util-add-remote-package-repository
  "melpa-orgin"  "https://melpa.org/packages/")
+
 (lyt-util-add-remote-package-repository
  "marmalade-origin"  "http://marmalade-repo.org/packages/")
+
 (package-initialize)
+
 (package-refresh-contents)
 
 

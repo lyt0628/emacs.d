@@ -28,7 +28,7 @@ When ANYWHERE is non-nil, search beyond the preamble."
               (save-excursion
                 (re-search-forward org-outline-regexp-bol nil t))))
          (when (re-search-forward (format "^#\\+%s:" property)
-                                  (if anywhere nil first-heading)
+      g                           (if anywhere nil first-heading)
                                   t)
            (point)))))
 
@@ -70,7 +70,8 @@ it can be passed in POS."
    :hook
    (before-save . pv/org-set-last-modified) ; 保存文件时调用
    :custom
-   (org-roam-directory (s-concat lyt-note-directory "/" "roam"))  ; 设置 org-roam 目录
+   (org-roam-directory (concat lyt-note-directory "/" "roam"))  ; 设置 org-roam 目录
+   (org-roam-db-location (concat org-roam-directory "org-roam.db"))
    ;; 自定义默认模板
    (org-roam-capture-templates
     '(("d" "default" plain "%?"

@@ -12,7 +12,7 @@
 (require 'init-util)
 
 
-(defconst lyt-note-directory "~/data/emacs.d/org")
+(defconst lyt-note-directory (expand-file-name "org" lyt-emacs-directory))
 
 
 (require 'init-org-keymap)
