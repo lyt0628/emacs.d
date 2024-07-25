@@ -5,3 +5,46 @@
 #+date: [2024-07-11 四]
 #+last_modified: [2024-07-11 四 22:29]
 
+
+
+#+begin_src emacs-lisp 
+  (buffer-name)
+  (buffer-file-name)
+
+  (current-buffer)
+  (other-buffer)
+
+  (switch-to-buffer (other-buffer))
+
+  (buffer-size)
+  (point)
+  (point-min)
+  (point-max)
+
+  
+#+end_src
+
+#+RESULTS:
+
+
+
+#+begin_src emacs-lisp :tangle yes
+  (beginning-of-buffer)
+
+
+  (defun m-beginning-of-buffer ()
+    (interactive)
+    (push-mark)
+    (goto-char (point-min)))
+
+  (m-beginning-of-buffer)
+#+end_src
+
+
+#+begin_src emacs-lisp :tangle yes
+  (defun m-mark-whole-buffer()
+    (interactive)
+    (push-mark (point))
+    (push-mark (point-max))
+    (goto-char (point-min)))
+#+end_src

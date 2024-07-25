@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       bf38c677-5ec7-4eb8-ad91-e013e00caed4
+:END:
+#+title: img-proc
+#+date: [2024-07-19 周五]
+#+last_modified:  
+
+

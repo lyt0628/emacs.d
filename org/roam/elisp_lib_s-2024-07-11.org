@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       d76229aa-e036-4066-a6f0-ee69acb4c8b6
-:END:
-#+title: elisp-lib-s_
-#+date: [2024-07-11 四]
-#+last_modified: [2024-07-11 四 22:28]
-

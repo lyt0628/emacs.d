@@ -5,3 +5,30 @@
 #+date: [2024-07-11 四]
 #+last_modified: [2024-07-11 四 22:28]
 
+
+
+
+#+begin_src emacs-lisp 
+  (let (
+	(abc "abc")
+	(def "def"))
+  
+	(message "%s--%s" abc def))
+
+#+end_src
+
+#+RESULTS:
+
+
+#+begin_src emacs-lisp :tangle yes
+  (if (> 3 5)
+	(message "t")
+  	(message "nil"))
+#+end_src
+
+
+#+begin_src emacs-lisp :tangle yes
+  (defun afun ()
+      (save-excursion
+	    ))
+#+end_src

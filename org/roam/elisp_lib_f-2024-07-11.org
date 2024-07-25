@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       14682cde-3052-4a0d-9656-29c964a89f9e
-:END:
-#+title: elisp-lib-f_
-#+date: [2024-07-11 四]
-#+last_modified: [2024-07-11 四 22:28]
-

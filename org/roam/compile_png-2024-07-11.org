@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       9e3cd1d0-2638-4597-bfef-190d25ebdc76
-:END:
-#+title: compile-PNG
-#+date: [2024-07-11 四]
-#+last_modified: [2024-07-11 四 09:01]
-

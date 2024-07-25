@@ -5,3 +5,34 @@
 #+date: [2024-07-11 四]
 #+last_modified: [2024-07-11 四 22:29]
 
+
+
+#+begin_src emacs-lisp 
+	  (defun multiply-by-seven (number)
+	      "
+  Return The NUMBER multiplied by seven.
+  Example:
+	(multiply-by-seven 3) ;21"
+	     (* 7 number))
+
+
+	(multiply-by-seven 3)
+	  (defun multiply-by-seven (number)
+	      "
+  Return The NUMBER multiplied by seven.
+  Example:
+	(multiply-by-seven 3) ;21"
+  	     (interactive "p")
+	     (message "Result is %d" (* 7 number)))
+
+
+#+end_src
+
+
+
+#+begin_src emacs-lisp :tangle yes
+  (defun get-region (buffer start end)
+    (interactive "r")
+    (message "Buffer %s region: %d - %d"， buffer start end))
+  
+#+end_src

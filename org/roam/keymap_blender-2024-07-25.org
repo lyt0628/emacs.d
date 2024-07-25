@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       8a851257-f12d-42ae-b521-58dd11a6b97e
+:END:
+#+title: keymap-blender
+#+date: [2024-07-25 周四]
+#+last_modified:  
+

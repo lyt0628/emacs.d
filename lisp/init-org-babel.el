@@ -30,7 +30,7 @@
 
 (use-package plantuml-mode :ensure t
   :custom
-  (org-plantuml-jar-path  "~/data/emacs.d/bin/plantuml-lgpl-1.2024.3.jar"))
+  (org-plantuml-jar-path  (concat lyt-emacs-directory "bin/plantuml-lgpl-1.2024.3.jar")))
 ;; End of use-package
 
 

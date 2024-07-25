@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       90199b68-b10d-4691-9984-f72ba1a6596b
+:END:
+#+title: elisp-buf-narrow
+#+date: [2024-07-25 周四]
+#+last_modified:  
+
