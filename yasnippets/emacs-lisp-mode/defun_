@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: fn_
+# key: fn_
+# --
+
+(defun ${1:m-fn} ($2)
+"${3:My fn doc string.}"
+   $0)

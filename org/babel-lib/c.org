@@ -1,0 +1,10 @@
+
+
+#+NAME: stdc
+#+BEGIN_SRC C
+#include <assert.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+#+END_SRC
+

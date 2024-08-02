@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: concept_	
+# key: concept_
+# --
+
+* ${1: Concept}
+** Model
+  ${3: What is the concept. why and when use it.}
+
+
+** Structure
+   ${4: How to identify or construct the concept.}
+
+
+* See also
+- $5

@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: concept2_
+# key: concept2_
+# --
+
+* ${1: Concept}
+** Structure
+
+
+* See Also
+- $3

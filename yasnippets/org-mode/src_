@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: src_
+# key: src_
+# --
+
+#+BEGIN_SRC ${1: C} :noweb yes
+$0
+#+END_SRC
