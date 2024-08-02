@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       5fa66421-b7c2-4e71-b55c-6bd1af2aee74
+:END:
+#+title: asm-translate-case&loop
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+
+* Case
+** Less Case - Cmp&Jmp
+*Tp Var*
+
+
+** More Case - Jump Table
+
+1. Order Case Num(eg. 0x11 0x13 0x15 0x20 0x23 0x25, max dlt is 0x14)
+2. ECX = base - 0x11(min)
+3. tp = ECX
+4. tp > 0x14, fail
+5. Any Cases use dlt as Idx, hd-code by Compiler

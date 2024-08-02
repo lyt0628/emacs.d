@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       e02641e2-fbf2-4572-8a3a-f25c0e6df28c
+:END:
+#+title: asm-From NASM To MASM
+#+date: [2024-08-01 周四]
+#+last_modified:  
+

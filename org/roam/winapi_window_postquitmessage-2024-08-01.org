@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       fa8b5793-8913-46f2-8130-e66eae41160b
+:END:
+#+title: winapi-window-PostQuitMessage()
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+* PostQuitMessage(wParam)
+
+
+* See Also
+- 

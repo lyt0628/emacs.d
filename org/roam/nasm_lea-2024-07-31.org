@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       952a46e2-73c1-4b0b-b21e-1da90537246c
+:END:
+#+title: nasm-lea
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+*lea* instruction mov the address of symbol to dest
+
+#+begin_src nasm
+  lea edx, aaa
+#+end_src
+
+
+*Note*
+- optor1 must be a bit-fit register

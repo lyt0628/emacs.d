@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       50a40dd8-08b2-4987-b914-a8dd3e7a4406
+:END:
+#+title: nasm-sal&sar
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+* API
+- *sal <lab>, <lab>*
+pad using sign-bit
+
+- *sar <lab>, <lab>*
+same as [[id:e574e100-eb5e-4d52-954b-16a271ce7907][shr]]
+
+
+* See Also
+- [[id:e574e100-eb5e-4d52-954b-16a271ce7907][nasm-shl&shr]]
+- [[id:7210fd66-f3ac-4eab-a7b6-907cd7aa10ae][nasm-rol&ror]]

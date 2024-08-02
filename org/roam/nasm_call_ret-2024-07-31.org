@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       ebdc60b5-1ee2-4450-a1d0-008348d56838
+:END:
+#+title: nasm-call&ret
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+* call <lab>
+   make REG::PC jump to other address of ARG::LAB,
+   until Instor::RET then PC return to the next adress
+   of current instor(call).
+
+
+* RET
+- Pop PC, Return to Caller
+- Can Follow with nByte， See: [[id:57c8a122-3436-4faf-8aec-b9b07a6c6095][ret N]]
+
+* See Also
+- [[id:14da1791-8f05-4b43-b535-45d4dd3a1da0][nasm-jmp]]
+

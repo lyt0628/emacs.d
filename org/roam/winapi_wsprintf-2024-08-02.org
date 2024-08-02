@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       a66b3e23-90bb-4f4c-863c-8c254737ce6d
+:END:
+#+title: winapi-wsprintf()
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+
+* wsprintf(szBuf, fmt:TEXT, varg) :nWt
+
+
+* See Also
+- 

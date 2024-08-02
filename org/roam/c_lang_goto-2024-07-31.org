@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       edd43617-2f20-4bac-b532-89bab5b5d3f1
+:END:
+#+title: c-lang-goto
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+
+
+
+#+BEGIN_SRC  C :noweb yes
+  <<stdc>>
+
+  int main()
+  {
+	printf("hello world");
+  }
+#+END_SRC
+
+#+RESULTS:
+: hello world

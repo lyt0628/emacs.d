@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       8208a128-d13d-4b39-864d-95b2559bdfab
+:END:
+#+title: winapi-window-GetDC()&ReleaseDC()
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+
+* API
+- *GetDC(hWnd) :HDC*
+
+
+- *ReleaseDC(hWnd, hdc)*
+
+
+
+* See Also	

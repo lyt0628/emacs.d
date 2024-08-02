@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       075de3fd-e359-4cd4-9626-f05b5fedd6ac
+:END:
+#+title: winapi-window-SetTextColor()
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+* SetTextColor(hdc, crColor) :[old,CLR_INVALID]
+
+
+* See Also
+- 

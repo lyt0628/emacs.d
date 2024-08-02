@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       cd51037c-bcce-4340-b181-acd45784dcf9
+:END:
+#+title: nasm-inc&dec
+#+date: [2024-08-02 周五]
+#+last_modified:  
+

@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       25acc57f-4312-49fb-bf92-02614934d41d
+:END:
+#+title: winapi-window-RECT
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+
+#+BEGIN_SRC  C :noweb yes
+  struct tagRECT{
+    &, p, NP, LP
+    LONG left;
+    LONG top;
+    LONG right;
+    LONG bottom;
+  } 
+#+END_SRC
+
+
+
+
+* See also
+- [[id:1ec439b2-8eb6-4eb1-bb6e-93493ab63b81][POINT]]

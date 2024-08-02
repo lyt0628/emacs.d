@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       20cb717b-2f6f-43a2-af38-c1ef5e82cbba
+:END:
+#+title: c-std-bool
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+
+#+BEGIN_SRC  C :noweb yes
+#include <stdbool.h>
+#include <stdio.h>
+
+int main()
+{
+  printf("Bool %d---%d", true, false);
+}
+
+#+END_SRC
+
+#+RESULTS:
+: Bool 1---0

@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       955b17d5-bb06-4a42-b3a5-fceb193c4e4d
+:END:
+#+title: winapi-window-UpdateWindow()
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+
+
+* UpdateWindow(hWnd) :[TRUE,FALSE]
+snd MSG::WM_PAINT to WndProc 
+
+
+* See Also
+- 

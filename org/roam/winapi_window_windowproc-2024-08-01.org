@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       f5a3640a-97ee-42f4-9a4d-bd1c13a4423a
+:END:
+#+title: winapi-window-WindowProc()
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+* CB WindowProc(hwnd, uMsg, wParam, lParam)
+
+
+
+* See Also
+- [[id:bb9799a0-b8ec-4422-806e-c862e7c656e8][Wnd MSG Enum]]
+- [[id:15cd3a12-6f4d-4e24-8abd-76316d406e12][winapi-window-DefWindowProc()]]

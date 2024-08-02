@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       0873c7d2-ab72-46ec-9759-afed7869f93c
+:END:
+#+title: winapi
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+
+* Index
+- [[id:b40940eb-dc27-4569-af62-90a4d055cb34][winapi-Name Rule]]
+- [[id:fca8cba2-50b4-40e9-8de4-578a83fdb6aa][winapi-Datatype]]
+- [[id:c990f5a8-a43b-4720-9ef4-8afe013b887f][winapi-lib-tchar]]
+
+
+- [[id:60215107-1747-4ce5-9f14-935f3bef5fb1][winapi-window]]
+- [[id:44d8813d-34d7-479b-852a-544922ab3294][winapi-Socket API]]

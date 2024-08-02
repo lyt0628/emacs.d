@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       e574e100-eb5e-4d52-954b-16a271ce7907
+:END:
+#+title: nasm-shl&shr
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+
+* API
+- *shl <lab>, <lab>*
+
+
+- *shr <lab>, <lab>*
+
+
+
+* See Also
+- [[id:50a40dd8-08b2-4987-b914-a8dd3e7a4406][nasm-sal&sar]]
+- [[id:7210fd66-f3ac-4eab-a7b6-907cd7aa10ae][nasm-rol&ror]]

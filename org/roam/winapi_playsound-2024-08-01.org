@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       3180e408-eb61-4d8f-acd8-08ab88fb4edc
+:END:
+#+title: winapi-PlaySound()
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+* PlaySound(lpszSound, hmod, fdwSound) :BOOL
+
+| fdwSound bFlag | Note |
+|----------------+------|
+| SND_FILE_NAME  |      |
+|----------------+------|
+| SND_ASYNC      |      |
+|----------------+------|
+| SND_SYNC       |      |
+
+* See Also
+- 

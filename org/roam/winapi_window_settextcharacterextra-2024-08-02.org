@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       d7135abd-7955-4cbb-b2f8-51e1119bf5e0
+:END:
+#+title: winapi-window-SetTextCharacterExtra()&GetTextCharacterExtra()
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+
+* SetTextCharacterExtra(hdc, nChExtra) :[old, 0x80000000]
+- default is 0
+- 
+
+* See Also
+- 

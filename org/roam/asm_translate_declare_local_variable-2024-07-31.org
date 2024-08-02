@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       76881231-f703-4859-b472-d5044e2ed00a
+:END:
+#+title: asm-translate-declare local variable
+#+date: [2024-07-31 周三]
+#+last_modified:  
+

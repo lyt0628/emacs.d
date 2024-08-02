@@ -1,0 +1,47 @@
+:PROPERTIES:
+:ID:       14da1791-8f05-4b43-b535-45d4dd3a1da0
+:END:
+#+title: nasm-jmp
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+* API
+** JMP <lab>
+
+
+** JL <lab>
+  jump if less with sign
+
+  
+** JNL <lab>  | JGE <lab>
+  jump if not less(greater or eq) with sign
+
+  
+** JG <lab>
+  jump if greater with sign
+
+  
+** JNG <lab>  | JLE <lab>
+  jump if not greater(less or eq) with sign
+
+
+  
+*Note*:
+ |----------+----+----+----+-----------------------|
+ | Relation | ZF | SF | OF | Note                  |
+ |----------+----+----+----+-----------------------|
+ | <        |  0 |  1 |  0 | nag, no overflow      |
+ |----------+----+----+----+-----------------------|
+ | <        |  0 |  0 |  1 | positive, overflow    |
+ |----------+----+----+----+-----------------------|
+ | >        |  0 |  1 |  1 | nag, overflow         |
+ |----------+----+----+----+-----------------------|
+ | >        |  0 |  0 |  0 | positive, no overflow |
+ |----------+----+----+----+-----------------------|
+  when overflowing, number *round back*, sign changes.
+  
+
+* See also
+- [[id:ca14fa6e-28cf-413d-8ed4-b1d81ce56603][nasm-cmp&je&jne]]
+- [[id:7d80605e-a08b-467e-be10-202612dbbaf0][nasm-jmp without sign]]
+- [[id:edd43617-2f20-4bac-b532-89bab5b5d3f1][c-lang-goto]]

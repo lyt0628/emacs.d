@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       61d31d49-babb-4317-b9b8-690e129cac8e
+:END:
+#+title: python
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+
+#+begin_src python
+
+return "666"
+
+#+end_src
+

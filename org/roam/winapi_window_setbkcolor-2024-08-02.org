@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       13a2f78e-6c7c-467f-aa09-b3c15a19eb21
+:END:
+#+title: winapi-window-SetBkColor()
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+
+* SetBkColor(hdc, crColor) :[old,CLR_INVALID]
+
+
+* See Also
+- [[id:140ca50f-9051-4a57-9c6e-f01b8d064e02][COLORREF]]

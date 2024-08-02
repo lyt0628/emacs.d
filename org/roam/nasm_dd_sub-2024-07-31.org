@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       2248ec3b-aca6-4001-a83c-17705b769ed7
+:END:
+#+title: nasm-add&sub
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+
+* add
+*add <dest>, <optor2>*
+
+*Note*
+- At least, one optor is reg
+* sub
+*sub <dest>, <optor2>*

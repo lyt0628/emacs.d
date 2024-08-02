@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       965d482e-c092-49d3-906a-0c8163c53e13
+:END:
+#+title: nasm-mov
+#+date: [2024-07-31 周三]
+#+last_modified:  
+

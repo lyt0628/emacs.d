@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       2d28ea6c-69e7-44c7-a1d9-a39944327e1b
+:END:
+#+title: asm-From NASM To GAS
+#+date: [2024-08-01 周四]
+#+last_modified:  
+

@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       60215107-1747-4ce5-9f14-935f3bef5fb1
+:END:
+#+title: winapi-window
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+* Index
+- [[id:7795e078-db7c-4508-aeb1-9dce83d6d47e][winapi-window-window]]
+- [[id:0af32247-5877-4c2b-a757-e2cc8b24df3f][winapi-window-Messagebox]]
+
+
+
+
+#+BEGIN_SRC plantuml
+  + 
+#+END_SRC
+
+
+
+- .pdb File
+
+- __ASM <ASM Code>

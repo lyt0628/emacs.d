@@ -1,0 +1,29 @@
+:PROPERTIES:
+:ID:       0af32247-5877-4c2b-a757-e2cc8b24df3f
+:END:
+#+title: winapi-window-Messagebox
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+* API
+#+begin_src C
+  MessageBox(NULL,
+	     cont :TEXT, title :TEXT,
+	     btn_flag :MB_bFLG) :int;
+#+end_src
+
+#+RESULTS:
+
+|---------------------+-------------+------|
+| <<MB_bFLG>>         | ret enum    | Note |
+|---------------------+-------------+------|
+| MB_OK               |             |      |
+|---------------------+-------------+------|
+| MB_OKCANCEL         |             |      |
+|---------------------+-------------+------|
+| MB_YESNO            | IDYES, IDNO |      |
+|---------------------+-------------+------|
+| MB_ICON-INFORMATION |             |      |
+|---------------------+-------------+------|
+| MB_DEF-BUTTON2      |             |      |
+|---------------------+-------------+------|

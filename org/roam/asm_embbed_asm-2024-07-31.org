@@ -1,0 +1,32 @@
+:PROPERTIES:
+:ID:       655b1f62-86de-45a2-843b-ba64c6387222
+:END:
+#+title: asm-Embbed Asm
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+We can Embbed ASM in C/C++ Code.
+When compiling, the ASM code will be put in bin file directly.
+We needs a macro to tell compiler that the code is Embbed ASM.
+The macro is various depenting on compiler.
+
+- In VS Compiler
+#+begin_src C
+  __asm mov aaa, 0x778899
+
+  __asm
+  {
+	mov aaa, 0x778899
+  	mov bbb, 0x778899
+  }
+#+end_src
+
+- In GCC
+#+begin_src C
+  __asm move aaa, 0x778899
+  __asm move aaa, 0x778899
+  __ASM move aaa, 0x778899
+  __ASM__ move aaa, 0x778899
+#+end_src
+
+

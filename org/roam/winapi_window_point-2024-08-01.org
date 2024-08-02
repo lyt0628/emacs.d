@@ -1,0 +1,31 @@
+:PROPERTIES:
+:ID:       1ec439b2-8eb6-4eb1-bb6e-93493ab63b81
+:END:
+#+title: winapi-window-POINT
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+
+
+#+BEGIN_SRC  C :noweb yes
+  struct tagPOINT{
+    LONG x;
+    LONG y; 
+  } 
+#+END_SRC
+
+| typedef  | ref            |
+|----------+----------------|
+| POINT    | tagPOINT       |
+|          |                |
+|----------+----------------|
+| P-POINt  | tagPOINT*      |
+|----------+----------------|
+| NP-POINT | NEAR tagPOINT* |
+|----------+----------------|
+| LP-POINT | FAR tagPOINT*  |
+|----------+----------------|
+
+
+* See Also
+- [[id:25acc57f-4312-49fb-bf92-02614934d41d][winapi-window-RECT]]

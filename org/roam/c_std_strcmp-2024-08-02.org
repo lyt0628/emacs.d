@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       055b49e9-7b73-4559-99ab-a478779811e6
+:END:
+#+title: c-std-strcmp()
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+
+
+* strcmp(s1, s2) :[1,0,-1]
+#+BEGIN_SRC  C :noweb yes :results value
+<<stdc>>
+
+int
+main()
+{
+  printf("%d\n", strcmp("ab","a"));
+  printf("%d\n", strcmp("ab","ab"));
+  printf("%d\n", strcmp("a","ab"));
+}
+#+END_SRC
+
+#+RESULTS:
+|  1 |
+|  0 |
+| -1 |

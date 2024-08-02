@@ -1,0 +1,37 @@
+:PROPERTIES:
+:ID:       b422e147-3572-43de-bc62-821c53e540f7
+:END:
+#+title: elisp-lang-list
+#+date: [2024-07-25 周四]
+#+last_modified:  
+
+
+
+#+begin_src emacs-lisp 
+  (+ 2 2)
+
+  (concat "abc" "def")
+
+  (substring "abcdefg" 0 3)
+
+
+  (integer-or-marker-p 3)
+
+  (message "a msg")
+
+  (message "%d>>>%s" 123 "a c-like placeholder")
+
+
+  (set 'anims '(mouse tiger rabbit))
+  (setq anims '(lion tiger leopard))
+
+
+  (setq counter 0)
+  (setq counter (+ counter 1))
+  counter
+
+  
+#+end_src
+
+#+RESULTS:
+: 1

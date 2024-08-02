@@ -1,0 +1,29 @@
+:PROPERTIES:
+:ID:       0561b0a3-e97b-46b0-bd5e-52e32e63fc02
+:END:
+#+title: winapi-window-LoadIcon()
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+*  API Name
+** Form
+*** LoadIcon (hInstance|NULL , lpIconName: LPCT-STR) :[HICON, NULL]
+    | Pre App ICON                    | Note |
+    |---------------------------------+------|
+    | IDI_APPLICATION                 |      |
+    |---------------------------------+------|
+    | IDI_ASTE-RISK                   |      |
+    |---------------------------------+------|
+    | IDI_ERROR                       |      |
+    |---------------------------------+------|
+    | IDI_QUESTION                    |      |
+    |---------------------------------+------|
+    | IDI_EX-CLAMATION or IDO_WARNING |      |
+    |---------------------------------+------|
+    | IDI_SHIELD                      |      |
+    |---------------------------------+------|
+
+
+
+* See Also
+- 

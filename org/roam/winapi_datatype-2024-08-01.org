@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       fca8cba2-50b4-40e9-8de4-578a83fdb6aa
+:END:
+#+title: winapi-Datatype
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+
+
+
+* Index
+- [[id:8d154c65-9ac8-4af0-ab85-a07ca0b6f9a8][winapi-Wide Str]]
+- [[id:cfef5c1b-1d7a-4616-87b0-81d1fe4b5fd7][winapi-Number]]
+
+
+** Window Datatype
+- [[id:1ec439b2-8eb6-4eb1-bb6e-93493ab63b81][winapi-window-POINT]]
+
+

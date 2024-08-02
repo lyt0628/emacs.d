@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       2b932897-e844-4e81-8e11-6762d9d13c1c
+:END:
+#+title: nasm-byteorder
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+IA32 use little-endian(low-bit locates in fore, heig-bit locates in post),
+is reversed as what we write.
+*0x112233* stores as  *33 22 11* 

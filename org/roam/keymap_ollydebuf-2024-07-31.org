@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       f00f648d-3228-4f01-b977-53103147e10d
+:END:
+#+title: keymap-ollydebug
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+
+| Function              | Key   | Note |
+|-----------------------+-------+------|
+| Swith Src And Comment | Alt+c |      |
+|-----------------------+-------+------|

@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       2b9957e2-31ec-4887-b040-db5c93727eda
+:END:
+#+title: winapi-window-GetSystemMettrics()
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+* GetSystemMetrics(SM_em) :int
+
+|--------------+-----------------|
+| SM_em        | Note            |
+|--------------+-----------------|
+| SM_CS-SCreen | Width of Screen |
+|--------------+-----------------|
+|              |                 |
+|--------------+-----------------|

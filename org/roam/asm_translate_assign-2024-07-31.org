@@ -1,0 +1,50 @@
+:PROPERTIES:
+:ID:       5f75aaa3-33fd-4683-af90-26fc4c3ea8c7
+:END:
+#+title: asm-translate-assign
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+
+* Assign little bit-len to big bit-len
+** From int to char
+#+begin_src C
+  int i = 0x123456789;
+  char c = 0x33;
+
+  i = c;
+#+end_src
+will be translated as
+#+begin_src asm
+  mov i, 0x123456789
+  mov c, 0x33
+
+  movsx eax, c
+  mov i, eax
+#+end_src
+
+
+*Note*
+- as most, one optor can be mem. if wanting mov from mem to mem, reg should
+  used as bridge.
+
+*Info*
+- W4 in VS warns, if assigning big bit-len to little bit-len.
+
+
+** From int to char with unsign-cast
+#+begin_src C
+  int i = 0x123456789;
+  char c = 0x33;
+
+  i = (unsigned char)c;
+#+end_src
+will be translated as
+#+begin_src asm
+  mov i, 0x123456789
+  mov c, 0x33
+
+  movzx eax, c
+  mov i, eax
+#+end_src
+

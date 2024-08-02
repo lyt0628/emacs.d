@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       6ee27771-bbda-4ad4-84d3-fac6a6fa1cd1
+:END:
+#+title: c-std-strncmp()
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+
+* strncmp(s1, s2) :[1,0,-1]
+#+BEGIN_SRC  C :noweb yes :results value
+<<stdc>>
+
+int
+main()
+{
+  printf("%d\n", strncmp("ab","a", 1));
+  printf("%d\n", strncmp("ab","ab", 2));
+}
+#+END_SRC
+
+#+RESULTS:
+| 0 |
+| 0 |
+

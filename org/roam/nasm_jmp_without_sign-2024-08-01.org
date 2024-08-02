@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       7d80605e-a08b-467e-be10-202612dbbaf0
+:END:
+#+title: nasm-jmp without sign
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+
+* API
+** *JA <lab>*
+
+** *JNA <lab>*
+
+** *JB <lab>*
+
+** *JNB <lab>*
+
+** *JC <lab>*
+
+** *JNC <lab>*
+jmp when no catch
+
+* See Also
+- [[id:14da1791-8f05-4b43-b535-45d4dd3a1da0][nasm-jmp]]

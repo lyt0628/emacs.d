@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       39b1de91-5140-447f-b65b-2ffcc0f33780
+:END:
+#+title: clj-lang-macro
+#+date: [2024-08-01 周四]
+#+last_modified:  
+

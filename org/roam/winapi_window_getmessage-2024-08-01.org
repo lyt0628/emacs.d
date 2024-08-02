@@ -1,0 +1,65 @@
+:PROPERTIES:
+:ID:       4b710792-2846-438a-b9aa-c1b847164108
+:END:
+#+title: winapi-window-GetMessage()
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+
+* GetMessage(lpMsg:LPMSG, hWnd, wMsgFilterMin, wMsgFilterMax) :[MSG, -1]
+
+| Arg           | Note                                |
+|---------------+-------------------------------------|
+| lpMsg         |                                     |
+|---------------+-------------------------------------|
+| hWnd          | Ident Window  MSG belong to,        |
+|               | Get all MSG in Thrd if hWnd is NULL |
+|---------------+-------------------------------------|
+| wMsgFilterMin | All Msg if min=max=0                |
+| wMsgFilterMax | WM_QUIT alway can be catched        |
+|               |                                     |
+|---------------+-------------------------------------|
+
+#+NAME: tagMsg
+#+BEGIN_SRC  C :noweb yes
+  struct tagMSG {
+    HWND hWnd;
+    UINT message;
+    WPaRAM wParam;
+    LPARAM lParam;
+    DWORD time;
+    POINT pt;
+  }
+#+END_SRC
+|---------+--------------|
+| typedef | ref          |
+|---------+--------------|
+| MSG     | tagMsg       |
+|---------+--------------|
+| P-MSG   | tagMsg*      |
+|---------+--------------|
+| NP-MSG  | NEAR tagMsg* |
+|---------+--------------|
+| LP-MSG  | Far tagMsg*  |
+|---------+--------------|
+
+|---------+-------------------------|
+| Member  | Note                    |
+|---------+-------------------------|
+| hwnd    |                         |
+|---------+-------------------------|
+| message | [[id:bb9799a0-b8ec-4422-806e-c862e7c656e8][Wnd MSG Enum]]            |
+|---------+-------------------------|
+| wParam  | mean depend on msg-type |
+|---------+-------------------------|
+| lParam  | mean depend on msg-type |
+|---------+-------------------------|
+| time    |                         |
+|---------+-------------------------|
+| pt      | See: [[id:1ec439b2-8eb6-4eb1-bb6e-93493ab63b81][POINT]]              |
+|---------+-------------------------|
+
+
+
+* See Also
+- 	

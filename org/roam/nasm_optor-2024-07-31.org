@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       3f777d03-8f3f-4ac7-8e19-6c9e7b2bf440
+:END:
+#+title: nasm-optor
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+* Get Memory of Address stored in other address
+[imm&reg]
+
+* Get Content of Symbol
+sym
+
+

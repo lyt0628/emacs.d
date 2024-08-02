@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       8cc60b6d-c91e-4ee1-9a56-1a74e5a1e6cf
+:END:
+#+title: video
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+
+
+* Index
+- [[id:092ec31f-80a7-4fd1-a8b2-4999fa6d0729][video-ffmpeg]]

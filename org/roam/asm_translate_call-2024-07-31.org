@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       29169555-317a-4ea6-8fe0-b4ee44c26aca
+:END:
+#+title: asm-translate-call
+#+date: [2024-07-31 周三]
+#+last_modified:  
+

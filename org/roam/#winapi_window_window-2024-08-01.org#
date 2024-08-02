@@ -1,0 +1,104 @@
+:PROPERTIES:
+:ID:       7795e078-db7c-4508-aeb1-9dce83d6d47e
+:END:
+#+title: winapi-window-window
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+
+1. Fill RegisterClassEx()
+2. CreateWindowEx()
+3. ShowWindow()&UpdateWindow()
+4. Msg Loop
+
+
+* Fill RegisterClassEx
+#+BEGIN_SRC  C :noweb yes
+  struct tagWNDCLASSEX{
+    UINT cbSize;
+    UINT style;
+    WNDPROC lpfnWndProc;
+    int cbClsExtra;
+    int cbWndExtra;
+    HINSTANCE hInstance;
+    HICON hIcon;
+    HCURSOR hCursor;
+    HBRUSH hbrBackground;
+    LPCTSTR lpszMenuName;
+    LPSTSTR lpszClassName;
+    HICON hIconSm;
+  }
+  
+#+END_SRC											
+|-----------------+------------------------------------------------|
+| member          | Note                                           |
+|-----------------+------------------------------------------------|
+| cbSize          | size of instance constly be sizeof(WNDCLASSEX) |
+|-----------------+------------------------------------------------|
+| style           | bFlgs, See [[CS_bFlag]]                            |
+|-----------------+------------------------------------------------|
+| lpfnwndproc     | Window Process to handle Msg                   |
+|-----------------+------------------------------------------------|
+| cbClsExtra      | size of custom attach data                     |
+|                 | limit 40b                                      |
+|-----------------+------------------------------------------------|
+| cbWndExtra      | size of custom attach data                     |
+|                 | limit 40b                                      |
+|-----------------+------------------------------------------------|
+| hInstance       | WinMain handler                                |
+|-----------------+------------------------------------------------|
+| hIcon           | ret by [[id:0561b0a3-e97b-46b0-bd5e-52e32e63fc02][LoadIcon()]]                              |
+|-----------------+------------------------------------------------|
+| hCursor         |                                                |
+|-----------------+------------------------------------------------|
+| hbrBackground   | ret by [[id:c9cb1884-a693-4873-a449-8c4ad808cf52][winapi-window-GetStockObject()]]          |
+|-----------------+------------------------------------------------|
+| lpszMenuName    | res name of menu,                              |
+|                 | can set in [[id:65297ffa-52b6-45f0-b28c-78ada5c297c6][CreateWindowEx()]] too                |
+|                 |                                                |
+|-----------------+------------------------------------------------|
+| lpszClassName   | name of WndClass                               |
+|                 | get by [[id:5ee25bf6-aadc-40eb-b9f3-301c4e599e4c][GetClassName()]]                                   |
+|-----------------+------------------------------------------------|
+| hiconSm         | icon hander used when minimized                |
+|-----------------+------------------------------------------------|
+|-----------------+------------------------------------------------|
+| <<CS_bFlag>>    | Note                                           |
+|-----------------+------------------------------------------------|
+| CS_H-REDRAW     | redraw when horizontal size vary               |
+|-----------------+------------------------------------------------|
+| CS_V-REDRAW     | redraw when vertical size vary                 |
+|-----------------+------------------------------------------------|
+| CS_NOCLOSE      | disable close btn                              |
+|-----------------+------------------------------------------------|
+| CS_DBL-CLKS     | accept MSG::WM_L-BUTTON-DB-LCLK                |
+|                 | when user double-click                         |
+|-----------------+------------------------------------------------|
+| CS_GLOBAL-CLASS | ?                                              |
+|-----------------+------------------------------------------------|
+| CS_OWN-DC       | per DC(device convironment) per single Wnd     |
+|-----------------+------------------------------------------------|
+| CS_CLASS-DS     | one DC of All Wnd                              |
+|-----------------+------------------------------------------------|
+| CS_PARENT-DC    | chld Wnd can paint in Parent                   |
+|-----------------+------------------------------------------------|
+
+
+* Use CreateWindowEx to create Window Instance
+
+
+
+[[id:65297ffa-52b6-45f0-b28c-78ada5c297c6][winapi-window-CreateWindowEx()]]
+
+
+
+* Display Window
+- [[id:db6c5ad7-c29f-44f3-b709-ba6d772c1ec9][winapi-window-ShowWindow()]]
+- [[id:955b17d5-bb06-4a42-b3a5-fceb193c4e4d][winapi-window-UpdateWindow()]]
+
+
+* Msg Loop
+- [[id:4b710792-2846-438a-b9aa-c1b847164108][winapi-window-GetMessage()]]
+- [[id:60b720eb-775b-415c-995c-a6101554620a][winapi-window-TranslateMessage()]]
+- [[id:0ee2dfcd-38bd-4f19-b7f6-9e5dd43a7c4b][winapi-window-DispatchMessage()]]
+- [[id:f5a3640a-97ee-42f4-9a4d-bd1c13a4423a][winapi-window-WindowProc()]]

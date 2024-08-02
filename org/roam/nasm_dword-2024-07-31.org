@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       78f23562-a7e5-4b08-9286-e1a45605e036
+:END:
+#+title: nasm-dword
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+imm and mem with no bit-len information, we must
+use byte(8B, default), word(16B), dword(32B), qword(64B) modifier to decorate.
+Without any modifier, number beyond 1B will be contrated.
+
+#+begin_src asm
+  add [ebx], 0x333
+  add byte [ebx], 0x333
+
+  ;; in bochs
+  add byte ptr [ebx], 0x333
+#+end_src
+memory [ebx] will be assigned as 0x33
+
+if optor contains reg, bit-len decorator is no need.

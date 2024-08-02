@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       af7065f0-c8e7-4cd5-b990-a15ac36e4efe
+:END:
+#+title: nasm-fadd&fsub&fmul&fdiv
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+* API
+- *fadd <mem>*
+  fst0 = fst0 + <mem>
+
+- *fsub <mem>*
+  fst0 = fst0 - <mem>
+
+- *fmul <mem>*
+
+- *fdiv <mem>*
+
+*Note*
+- need bit-len decorate
+
+* See Also

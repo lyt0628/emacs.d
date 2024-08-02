@@ -1,0 +1,34 @@
+:PROPERTIES:
+:ID:       8d154c65-9ac8-4af0-ab85-a07ca0b6f9a8
+:END:
+#+title: winapi-Wide Str
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+
+
+#+BEGIN_SRC plantuml
+  + Windows Charset
+  ++ Charset Type
+  +++ Ascii
+  +++ Unicode
+  ++ wide type
+  +++ wchar_t 
+  +++ L str-prefix
+  ++ Port Macro
+  +++ CHAR&WCHAR
+  +++ TCHAR& TEXT(<str or ch>)
+
+
+#+END_SRC
+
+Windows Prog can use two charset:
+- Ascii(narrow)
+- Unicode(wide)
+
+
+W-subfix present wide, means prog use Unicode, and A-subfix presents Ascii.
+
+
+
+The Symbols included in <windows.h>.

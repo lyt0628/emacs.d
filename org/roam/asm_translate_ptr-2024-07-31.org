@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       9b5ef5ae-d3ca-4d78-b94b-59b32038f4e2
+:END:
+#+title: asm-translate-ptr
+#+date: [2024-07-31 周三]
+#+last_modified:  
+

@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       ca14fa6e-28cf-413d-8ed4-b1d81ce56603
+:END:
+#+title: nasm-cmp&je&jne
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+* Instor
+- *cmp <optor1>, <optor2>*
+- *JE|JNE <label>*
+when ZF is (not) 0, PC jmp into label.
+
+
+*Note*
+- cmp will change ZF. when optor1 eq to optor2, ZF set
+- co-work with  jmp instor

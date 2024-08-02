@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       65f7c7f0-d840-48a6-b6bd-9990957b7fb7
+:END:
+#+title: winapi-window-SetBkMode()
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+* SetBkMode(hdc, mode) :[old,0]
+|-------------+------|
+| mode        | Note |
+|-------------+------|
+| OPAOUE      |      |
+|-------------+------|
+| TRANSPARENT |      |
+|-------------+------|
+
+* See Also
+- 

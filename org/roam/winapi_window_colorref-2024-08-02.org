@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       140ca50f-9051-4a57-9c6e-f01b8d064e02
+:END:
+#+title: winapi-window-COLORREF
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+
+* API
+- *RGB(r,g,b) :COLORREF*
+
+
+- *GetRValue(cr),GetGValue(cr),GetBValue(cr)*
+
+
+
+* See Also

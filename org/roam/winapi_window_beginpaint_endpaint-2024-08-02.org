@@ -1,0 +1,35 @@
+:PROPERTIES:
+:ID:       b8f019de-ef70-4e9d-b920-8a0a2a668420
+:END:
+#+title: winapi-window-BeginPaint()&EndPaint()
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+* API
+- *BeginPaint(hWnd, lpPaintStruct) ：[hDC, NULL]*
+#+BEGIN_SRC  C :noweb yes
+struct tagPAINT-STRUCT {
+  PAINT-STRUCT P-PAINT-STRUCT 
+  HDC hdc;
+  BOOL fErase;
+  RECT rcPaint;
+  BOOL fRestore;
+  BOOL fIncUpdate;
+  BYTE rgbReserved[32];
+}
+#+END_SRC
+|---------+---------------------------------------|
+| Member  | Note                                  |
+|---------+---------------------------------------|
+| fErase  | set 0 when cleared(erased) background |
+|---------+---------------------------------------|
+| rcPaint | Bound                                 |
+|---------+---------------------------------------|
+| other   | sys reserve, no use                   |
+|---------+---------------------------------------|
+
+- *EndPaint(hWnd, lpPaintStruct) :TRUE*
+
+
+
+* See Also

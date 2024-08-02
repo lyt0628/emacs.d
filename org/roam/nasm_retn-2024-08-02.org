@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       57c8a122-3436-4faf-8aec-b9b07a6c6095
+:END:
+#+title: nasm-ret N
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+
+* RET <nbyte>
+- Pop PC, Return to Caller, 
+- Auto Clear nByte Arg
+
+
+* See Also
+- [[id:51f13fc0-6c41-4114-b127-2fa811df5b55][Call Promise]]

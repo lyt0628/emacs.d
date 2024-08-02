@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       14f26495-cd50-4079-be31-e8001183a8e5
+:END:
+#+title: asm-translate
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+* Index
+- [[id:5f75aaa3-33fd-4683-af90-26fc4c3ea8c7][asm-translate-assign]]
+- [[id:9b5ef5ae-d3ca-4d78-b94b-59b32038f4e2][asm-translate-ptr]]
+- [[id:76881231-f703-4859-b472-d5044e2ed00a][asm-translate-declare local variable]]
+- [[id:29169555-317a-4ea6-8fe0-b4ee44c26aca][asm-translate-call]]
+- [[id:5fa66421-b7c2-4e71-b55c-6bd1af2aee74][asm-translate-case&loop]]

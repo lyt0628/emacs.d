@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       cfef5c1b-1d7a-4616-87b0-81d1fe4b5fd7
+:END:
+#+title: winapi-Number
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+winapi directly use mem-len  as type
+
+macro BYTE, WORD, DWORD is char, short, int in C-lang.
+
+The Symbols included in <windows.h>.
+ 

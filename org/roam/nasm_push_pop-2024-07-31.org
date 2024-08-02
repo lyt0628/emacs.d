@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       a5bbb482-bfc1-4ca8-bf35-e0452ab66cfe
+:END:
+#+title: nasm-push&pop
+#+date: [2024-07-31 周三]
+#+last_modified:  
+

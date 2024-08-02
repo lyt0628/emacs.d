@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       2c320b21-c872-42b5-9d77-9127c1becbb5
+:END:
+#+title: nasm-fld&fstp
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+* API
+- *FLD <lab>*
+push float into REG::ST0
+
+- *FSTP <lab>*
+pop ERG::ST0 into <lab>
+
+
+* See Also

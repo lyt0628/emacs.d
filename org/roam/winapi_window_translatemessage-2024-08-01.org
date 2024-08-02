@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       60b720eb-775b-415c-995c-a6101554620a
+:END:
+#+title: winapi-window-TranslateMessage()
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+* TranslateMessage(lpMsg) :[TRUE,FALSE]
+- conv KeyCode to char(as wParam)
+- out FN
+
+* See Also
+- 

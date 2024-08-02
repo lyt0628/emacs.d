@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       0a4fc0b4-5240-4e45-8978-4307077516ad
+:END:
+#+title: c-tool-gdb
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+
+* keymap

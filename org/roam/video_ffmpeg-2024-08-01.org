@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       092ec31f-80a7-4fd1-a8b2-4999fa6d0729
+:END:
+#+title: video-ffmpeg
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+
+* Index
+- [[id:a21b445c-1312-4be9-9bab-4717afc63c3b][video-ffmpeg-command]]

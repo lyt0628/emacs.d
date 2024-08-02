@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       f3c15443-f322-4173-8fc6-047d7e6b3523
+:END:
+#+title: nasm-movsx&movzx
+#+date: [2024-07-31 周三]
+#+last_modified:  
+* movsx -- mov sign ext
+mov with sign-bit
+
+*Usage*
+#+begin_src C
+  movsx <optor1>, <optor2>
+#+end_src
+
+
+*Danger*:
+- the bit-len of optor1 must bigger than optor2
+
+
+* movzx -- mov zero ext
+mov without sign-bit
+
+*Usage*:
+#+begin_src C
+  movsx <optor1>, <optor2>
+#+end_src
+
+*Danger*:
+- the bit-len of optor1 must bigger than optor2
+
+*Info*:
+- When assigned optor is nagtive number, movsx will pad using 1, while
+  movzx will pad using 0. 

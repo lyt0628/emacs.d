@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       5e7baf0c-8f1b-4781-bf1c-6d3658f5edab
+:END:
+#+title: asm
+#+date: [2024-07-31 周三]
+#+last_modified:  
+
+
+
+
+- [[id:655b1f62-86de-45a2-843b-ba64c6387222][asm-Embbed Asm]]
+- [[id:51f13fc0-6c41-4114-b127-2fa811df5b55][asm-Call Promise]]
+- [[id:14f26495-cd50-4079-be31-e8001183a8e5][asm-translate]]
+
+  
+* See also
+- [[id:fded501b-af77-42cd-9054-316a0737cfe4][nasm]]
+- [[id:a4415b0e-c99a-4a15-92f2-2e8a057ede81][riscv]]
+- [[id:2d28ea6c-69e7-44c7-a1d9-a39944327e1b][asm-From NASM To GAS]]
+- [[id:e02641e2-fbf2-4572-8a3a-f25c0e6df28c][asm-From NASM To MASM]]

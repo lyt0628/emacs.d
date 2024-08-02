@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       4501e88b-2cd0-4a92-b684-75f39372d6f8
+:END:
+#+title: node
+#+date: [2024-08-01 周四]
+#+last_modified:  
+

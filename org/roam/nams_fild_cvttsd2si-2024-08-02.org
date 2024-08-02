@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       847aa1ee-5432-457d-84d5-28a3357d3813
+:END:
+#+title: nams-fild&cvttsd2si
+#+date: [2024-08-02 周五]
+#+last_modified:  
+
+* API
+ - *FILD <mem>*
+st0 = (double)<mem>
+
+ - *cvttsd2si <reg>, <mem|ST0>*
+<reg> = (int)<mem|ST0>
+
+
+* See Also

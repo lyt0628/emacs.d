@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       0ee2dfcd-38bd-4f19-b7f6-9e5dd43a7c4b
+:END:
+#+title: winapi-window-DispatchMessage()
+#+date: [2024-08-01 周四]
+#+last_modified:  
+
+
+* DispatchMessage(lpMsg) :LRESULT
+
+
+* See Also
+- 
