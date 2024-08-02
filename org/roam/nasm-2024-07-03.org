@@ -20,6 +20,11 @@
 - [[id:ca14fa6e-28cf-413d-8ed4-b1d81ce56603][nasm-cmp&jmp]]
 - [[id:cd51037c-bcce-4340-b181-acd45784dcf9][nasm-inc&dec]]
 - [[id:af7065f0-c8e7-4cd5-b990-a15ac36e4efe][nasm-fadd&fsub&fmul&fdiv]]
+- [[id:e574e100-eb5e-4d52-954b-16a271ce7907][nasm-shl&shr]]
+- [[id:50a40dd8-08b2-4987-b914-a8dd3e7a4406][nasm-sal&sar]]
+- [[id:e574e100-eb5e-4d52-954b-16a271ce7907][nasm-shl&shr]]
+- [[id:fcde0610-1932-40fd-a6dc-6f9c8bef4998][nasm-sete&setene]]
+- [[id:ec50cd58-f703-411d-a97b-4d51f8764c3d][nasm-scase&repne]]
 
 
 

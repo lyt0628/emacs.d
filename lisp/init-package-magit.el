@@ -10,6 +10,8 @@
   :hydra (hydra-magit ()
 		      ""
 		      ("c" magit-clone "git clone")
+		      ("m" magit-cmmit "git commit")
+		      ("p" magit-push "git push")
 		      ("q" nil "quit")))
 
 (global-set-key (kbd "C-z g") 'hydra-magit/body)
