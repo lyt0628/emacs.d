@@ -80,7 +80,7 @@ it can be passed in POS."
                   "#+title: ${title}\n#+date: %u\n#+last_modified: \n\n")
        :immediate-finish t)))
    :bind
-   (("C-c n f" . org-roam-node-find)
+   (("C-c n f" . org-roam-node-find) ; note find
     (:map org-mode-map
           (("C-c n i" . org-roam-node-insert)
            ("C-c n o" . org-id-get-create)

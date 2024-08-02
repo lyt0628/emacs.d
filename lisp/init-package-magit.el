@@ -12,8 +12,7 @@
 		      ("c" magit-clone "git clone")
 		      ("q" nil "quit")))
 
-
-(global-set-key (kbd "s-g") 'hydra-magit/body)
+(global-set-key (kbd "C-z g") 'hydra-magit/body)
 
 
 

@@ -82,12 +82,12 @@
 
 (prefer-coding-system 'utf-8)
 
-(set-fontset-font t 'han (font-spec :family "Microsoft YaHei" :size 36))
+(set-fontset-font t 'han (font-spec :family "Microsoft YaHei" :size 17))
 
 
 
 						
-(setq tab-always-indent nil) ; 是否关闭任意缩进
+(setq tab-always-indent t) ; alawy indent
 
 
 (setq indent-tabs-mode nil) ; ？
@@ -95,8 +95,8 @@
 (setq tab-width 2)
 
 
-(require 'org-cycle)
-(setq org-cycle-emulate-tab 'exc-hl-bol)
+;(require 'org-cycle)
+;(setq org-cycle-emulate-tab 'exc-hl-bol)
 
 (provide 'init-behavior )
 

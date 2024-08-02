@@ -32,13 +32,14 @@
 
 
 
-
 (require 'init-variables)
 
 
 (require 'init-behavior)
 
 (require 'init-keymap)
+
+(require 'init-kmacro)
 
 (eval-when-compile (require 'use-package))
 
@@ -49,6 +50,7 @@
 
 
 (require 'init-basic)
+(require 'init-keymap-hydra)
 
 (require 'init-prog)
 

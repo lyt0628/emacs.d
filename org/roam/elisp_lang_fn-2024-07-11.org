@@ -5,34 +5,62 @@
 #+date: [2024-07-11 四]
 #+last_modified: [2024-07-11 四 22:29]
 
+* defun	
+** Form
+*** Basic Form
+#+NAME: m-multiply-by-seven 
+#+BEGIN_SRC emacs-lisp 
+    (defun m-multiply-by-seven (number)
+	"
+	Return The NUMBER multiplied by seven.
+	  Example:
+	  `(multiply-by-seven 3) ;21`"
+       (* 7 number))
+#+END_SRC
+
+#+RESULTS: m-multiply-by-seven
+: m-multiply-by-seven
 
 
-#+begin_src emacs-lisp 
-	  (defun multiply-by-seven (number)
-	      "
-  Return The NUMBER multiplied by seven.
-  Example:
-	(multiply-by-seven 3) ;21"
-	     (* 7 number))
+#+NAME: m-call-multiply-by-seven 
+#+BEGIN_SRC emacs-lisp
+  (m-multiply-by-seven 3)
+#+END_SRC
 
-
-	(multiply-by-seven 3)
-	  (defun multiply-by-seven (number)
-	      "
-  Return The NUMBER multiplied by seven.
-  Example:
-	(multiply-by-seven 3) ;21"
-  	     (interactive "p")
-	     (message "Result is %d" (* 7 number)))
-
-
-#+end_src
+#+RESULTS: m-call-multiply-by-seven
+: 21
 
 
 
-#+begin_src emacs-lisp :tangle yes
+*** lArgs Form
+
+
+*** Interactive Fn
+**** rcv num arg
+#+NAME: m-multipy-by-seven-2
+#+BEGIN_SRC emacs-lisp
+    (defun m-multiply-by-seven-1 (number)
+	"
+	  Return The NUMBER multiplied by seven.
+	  Example:
+  		`(multiply-by-seven 3) ;21`"
+       (interactive "p")
+       (message "Result is %d" (* 7 number)))
+       
+#+END_SRC
+
+#+RESULTS: m-multipy-by-seven-2
+: m-multiply-by-seven-1
+
+
+**** rcv region arg
+#+NAME: m-get-region
+#+BEGIN_SRC emacs-lisp 
   (defun get-region (buffer start end)
     (interactive "r")
-    (message "Buffer %s region: %d - %d"， buffer start end))
-  
-#+end_src
+    (message "Buffer %s region: %d - %d" buffer start end))
+#+END_SRC
+
+
+* See Also
+- [[id:b93b7b0f-ac51-4327-ad32-08bd9ffdaf18][elisp-lang-macro]]

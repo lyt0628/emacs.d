@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       38b9b2d2-46a7-4589-92e4-b1abfedf2506
 :END:
-#+title: cpp-std-移动构造函数
+#+title: cpp-std-move_ctor
 #+date: [2024-05-28 二]
 #+last_modified: [2024-07-05 五 21:51]
 

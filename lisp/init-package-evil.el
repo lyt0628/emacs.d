@@ -29,7 +29,8 @@
   (unbind-key "C-d" 'evil-motion-state-map)
   (unbind-key "C-y" 'evil-motion-state-map)
   (unbind-key "C-e" 'evil-motion-state-map)
-  (global-set-key (lyt-kbd-with-extra-modifier-key "v") 'hydra-evil/body)
+
+  (global-set-key (kbd "C-z v") 'hydra-evil/body)
   :bind
   ("S-<up>" . evil-scroll-line-up)
   ("S-<down>" . evil-scroll-line-down)

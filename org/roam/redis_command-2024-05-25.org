@@ -5,20 +5,18 @@
 #+date: [2024-05-25 六]
 #+last_modified: [2024-07-11 四 22:15]
 
-
-
-* Redis 
-** 启动
+* Manage Command 
+** boot
 #+HEADER: :var cfg="/home/lyt0628/soft/redis/my_redis_cfg.conf"
 #+begin_src sh 
    redis-server $cfg
 #+end_src
 
-#+RESULTS:
+
+** shutdown
 
 
-
-
+** benchmark text
 #+begin_src sh
   redis-benchmark
 #+end_src
@@ -26,87 +24,7 @@
 
 
 
-
-
-** 关闭
-
-
-
-* 通用命令
-
-** keys
-#+begin_src sh
-  echo keys * | redis-cli
-#+end_src
-
-#+RESULTS:
-: ERR wrong number of arguments for 'keys' command
-
-
-** exists
-#+HEADER: :var k = "a_key"
-#+begin_src sh
- echo exists $k | redis-cli
-#+end_src
-
-#+RESULTS:
-: 0
-
-
-** tpye
-#+HEADER: :var k = "a_key"
-#+begin_src sh
- echo type $k | redis-cli
-#+end_src
-
-#+RESULTS:
-: none
-
-** del
-
-#+HEADER: :var k = "a_key"
-#+begin_src sh
- echo del $k | redis-cli
-#+end_src
-
-#+RESULTS:
-: 1
-
-** unlink 非阻塞删除
-
-#+HEADER: :var k = "a_key"
-#+begin_src sh
- echo unlink $k | redis-cli
-#+end_src
-
-#+RESULTS:
-: 1
-
-
-** expire
-
-#+HEADER: :var k = "a_key"
-#+begin_src sh
- echo expire $k  10 | redis-cli
-#+end_src
-
-#+RESULTS:
-: 1
-
-
-
-** TTL
-#+HEADER: :var k = "a_key"
-#+begin_src sh
- echo ttl $k  | redis-cli
-#+end_src
-
-#+RESULTS:
-: -2
-
-| -1 | 永不过期 |
-| -2 | 已经过期 |
-
+* DB Command
 
 ** select
 
@@ -130,7 +48,7 @@
 : 0
 
 
-** flushdb 删库
+** flushdb :del db
 
 #+HEADER: :var db = "16"
 #+begin_src sh
@@ -142,7 +60,7 @@
 
 
 
-** flushall 通通撒掉
+** flushall :del all db
 
 #+HEADER: :var db = "16"
 #+begin_src sh
@@ -154,7 +72,77 @@
 
 
 
-* 原子性命令
+
+
+
+* General
+
+** keys
+#+begin_src sh
+  echo keys * | redis-cli
+#+end_src
+
+** exists
+#+HEADER: :var k = "a_key"
+#+begin_src sh
+ echo exists $k | redis-cli
+#+end_src
+
+** del
+
+#+HEADER: :var k = "a_key"
+#+begin_src sh
+ echo del $k | redis-cli
+#+end_src
+
+#+RESULTS:
+: 1
+
+** expire
+
+#+HEADER: :var k = "a_key"
+#+begin_src sh
+ echo expire $k  10 | redis-cli
+#+end_src
+
+#+RESULTS:
+: 1
+
+
+
+** TTL
+#+HEADER: :var k = "a_key"
+#+begin_src sh
+ echo ttl $k  | redis-cli
+#+end_src
+
+#+RESULTS:
+: -2
+
+| -1 |  never|
+| -2 | aleady |
+
+
+
+** tpye
+#+HEADER: :var k = "a_key"
+#+begin_src sh
+ echo type $k | redis-cli
+#+end_src
+
+** unlink :delete-nonblock
+
+#+HEADER: :var k = "a_key"
+#+begin_src sh
+ echo unlink $k | redis-cli
+#+end_src
+
+#+RESULTS:
+: 1
+
+
+
+* Atom command
 
 ** mset
 #+HEADER: :var KVs = "a_key a_value another_key another_value 3k 3v"
@@ -188,8 +176,6 @@
 : 0
 
 
-
-
 ** setex
 #+HEADER: :var k = "a_key"
 #+HEADER: :var v = "a_key"
@@ -208,9 +194,7 @@
 #+end_src
 
 
-
-
-* 字符串命令
+* Str Command
 
 ** set 
 #+HEADER: :var k = "a_key"
@@ -258,9 +242,6 @@
 #+RESULTS:
 : 1
 
-
-
-
 ** getrange
 #+HEADER: :var k = "a_key"
 #+begin_src sh
@@ -285,7 +266,7 @@
 : 7
 
 
-** setrange
+** setrange with expire
 #+HEADER: :var k = "a_key"
 #+HEADER: :var v = "a_key"
 #+HEADER: :var expire = "10"
@@ -299,7 +280,7 @@
 
 
 
-* 数字
+* Num Command
 
 ** inc
 #+HEADER: :var k = "a_num"
@@ -334,7 +315,7 @@
 
 
 
-* 列表
+* list operator
 ** lpush
 #+HEADER: :var k = "a_list"
 #+HEADER: :var Vs ="a b c d"
@@ -464,7 +445,7 @@
 
 
 
-* 集合
+* set oprator
 
 ** sadd
 #+HEADER: :var k = "a_set"
@@ -529,7 +510,7 @@
 : c
 
 
-** 集合运算
+** set oprator
 
 *** sinter
 #+HEADER: :var k1 = "a_set"
@@ -574,7 +555,7 @@
 
 
 
-* 有序集合
+* order-set command
 ** zadd
 #+HEADER: :var k = "a_zset"
 #+HEADER: :var SCORE_VALUEs = "1 a 2 b 3 c 2 d"
@@ -661,7 +642,7 @@
 
 
 
-* Hash
+* Hash Command
 
 ** hset
 
@@ -755,7 +736,7 @@
 
 
 
-* 发布订阅机制
+* publish-subscribe Command
 
 #+HEADER: :var c = "Channel"
 #+begin_src sh
@@ -769,5 +750,4 @@
   echo publish  $msg | redis-cli 
 #+end_src
 
-
-* 事务机制
+* transfacation Command

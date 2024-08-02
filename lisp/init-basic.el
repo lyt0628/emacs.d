@@ -6,13 +6,15 @@
 ;;; Code:
 (require 'init-package-hydra)
 
-(require 'init-package-ivy)
-
 (require 'init-package-undo-tree)
 
 (require 'init-package-evil)
 
+(require '_init-package-ivy)
 
+(require 'init-package-avy)
+
+(require 'init-package-dapmode)
 
 ;command history
 (use-package amx
@@ -52,7 +54,8 @@
 (use-package highlight-symbol
   :ensure t
   :init (highlight-symbol-mode)
-  :bind ("<f3>" . highlight-symbol))
+  :bind
+  ("<f3>" . highlight-symbol))
 
 
 

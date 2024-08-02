@@ -58,23 +58,16 @@
   #define TRUE 1
   #define FALSE 0
 
-
-
   typedef void	Sigfunc(int);	/* for signal handlers */
   #define WAITPID_ANY_CHLD -1
 
   #define IPC_WAIT 0
   #define MSG_ANY_TYPE 0
 
-  #define	SA	struct sockaddr
-
-
-
+  #define SA struct sockaddr
+  
 
 #+END_SRC
-
-
-
 
 
 

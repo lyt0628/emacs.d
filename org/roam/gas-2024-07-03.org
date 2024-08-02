@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       85915050-f74c-4aa4-9425-0a6237cbf064
-:END:
-#+title: gas
-#+date: [2024-07-03 三]
-#+last_modified: [2024-07-03 三 19:31]
-

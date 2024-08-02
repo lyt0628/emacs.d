@@ -5,19 +5,22 @@
 
 ;;; Code:
 
-(require 'init-package-magit)
-
 (require 'init-package-company)
 
 (require 'init-package-yasnippet)
 
+(require 'init-package-magit)
+
 
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode)
-  :config (setq truncate-lines nil))
+  :init
+  (global-flycheck-mode)
+  :config
+  (setq truncate-lines nil))
 
 
+(require 'init-package-lsp)
 
 (use-package lsp-mode
   :ensure t

@@ -15,7 +15,6 @@
 
 (require 'init-keymap-reset)
 
-
 (require 'windmove)
 
 (setq windmove-wrap-around t)
@@ -24,7 +23,15 @@
 (global-set-key (kbd "C-<up>") 'windmove-up)
 (global-set-key (kbd "C-<down>") 'windmove-down)
 
+
 (winner-mode 1)
+
+
+
+
+
+
+
 
 
 

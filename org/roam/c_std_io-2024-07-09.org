@@ -6,7 +6,27 @@
 #+last_modified: [2024-07-09 二 18:49]
 
 
-* Access Mode
-| Mode | Note |
-|------+------|
-|      |      |
+
+
+#+BEGIN_SRC C :noweb yes
+<<stdc>>
+
+int
+main(){
+  FILE* fp;
+  char sStr[1024];
+  
+  fp = fopen("../tmp/aaa.c", "w+");
+  
+  fread(sStr, sizeof(sStr), 1, fp);
+  printf("%s", sStr);
+  sprintf(sStr, "%s", "6667");
+  
+  fwrite(sStr, sizeof(sStr),1, fp);
+
+  fclose(fp);
+}
+
+#+END_SRC
+
+#+RESULTS:

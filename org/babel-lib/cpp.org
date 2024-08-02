@@ -4,17 +4,16 @@
   #include <iostream>
   #include <thread>
   #include <string>
+  #include <fstream>
+  #include <locale>
+  #include <memory>
+  #include <stdexcept>
+
 
   using namespace std;
 
   #include <cassert>
   #include <cstdio>
-  #include <fstream>
-  #include <iostream>
-  #include <locale>
-  #include <memory>
-  #include <stdexcept>
-
 #+END_SRC
 
 
