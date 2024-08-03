@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       7c1a4ee8-42a1-4262-9db8-b7bb9346eccc
+:END:
+#+title: sitemap-asm
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+
+- [[https://www.nasm.us/xdoc/2.16.03/html/nasmdoc0.html][NASM - The Netwide Assembler]] 

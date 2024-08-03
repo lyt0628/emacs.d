@@ -1,0 +1,40 @@
+:PROPERTIES:
+:ID:       477ed045-c2e3-4b8d-ad17-cf33f7b53bcc
+:END:
+#+title: elisp-cons&car&cdr
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+
+* cons
+#+HEADER: :var m-var='("elem" "elem1" "elem2")
+#+begin_src emacs-lisp :tangle yes
+(cons  "elem5" m-var)
+
+(cons  "elem6" m-var )
+#+end_src
+
+#+RESULTS:
+| elem5 | elem | elem1 | elem2 |
+
+
+
+* car
+#+HEADER: :var m-var='("elem" "elem1" "elem2")
+#+begin_src emacs-lisp :tangle yes :noweb yes
+(car m-var)
+#+end_src
+
+#+RESULTS:
+: elem
+
+
+
+* cdr
+#+HEADER: :var m-var='("elem" "elem1" "elem2")
+#+begin_src emacs-lisp :tangle yes :noweb yes
+(cdr m-var)
+#+end_src
+
+#+RESULTS:
+| elem1 | elem2 |

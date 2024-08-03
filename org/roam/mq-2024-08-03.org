@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       bf638221-0017-41d2-9431-1e37bb6db464
+:END:
+#+title: mq
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+* Index
+- [[id:9f398a01-85e7-4342-8273-b8af54c66808][mq-rocketmq]]
+- [[id:6bc2c147-7a11-4a21-b6e3-d5086f062d18][mq-rabbitmq]]

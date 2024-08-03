@@ -1,12 +1,12 @@
 # key: api2_
 # name: api2_
 # --
-* ${1: API Name}
+
+* ${1: API}
 ** Form
 *** ${2: Basic Form}
-    $3
-
+$0
 
 
 * See Also
-- $4
+- 

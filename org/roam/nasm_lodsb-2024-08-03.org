@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       74a1af16-e7a2-420e-bdaf-5cb4668cf529
+:END:
+#+title: nasm-lodsb
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+* rep lodsb
+al = [esi]
+dec ECS every run
+inc esi
+
+
+* See Also
+- [[id:627a3148-9d87-41a7-a93f-741edab1ca53][nasm-stosb&rep]]

@@ -5,3 +5,6 @@
 #+date: [2024-07-05 五]
 #+last_modified: [2024-07-05 五 11:53]
 
+
+* See Also
+- [[id:685f5abc-98e6-4467-9cf9-5a73822129dc][spec-rfc1950_zip]]

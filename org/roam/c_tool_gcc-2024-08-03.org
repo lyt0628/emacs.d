@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       8296a6ce-f73c-44fc-b3c5-1856828c1a9f
+:END:
+#+title: c-tool-gcc
+#+date: [2024-08-03 六]
+#+last_modified:  
+

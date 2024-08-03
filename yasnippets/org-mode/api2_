@@ -1,7 +1,7 @@
 # key: api_
 # name: api_
 # --
-* ${1:API Name}
+* ${1:API}
 
 
 * See Also

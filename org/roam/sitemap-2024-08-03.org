@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       df4524da-3d2d-4ff3-9161-3f6019265947
+:END:
+#+title: sitemap
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+* SPEC
+- [[https://datatracker.ietf.org/][datatracker.ietf.org  Document Search]]
+
+
+
+* Index
+- [[id:192c4f33-63dc-4032-be07-0c5b91bf3fe2][sitemap-c]]
+- [[id:784bba22-2eee-4706-8341-c2c7059fc4c7][sitemap-cpp]]
+- [[id:2357c8b8-4716-411a-8b15-7c4de27af3d8][sitemap-java]]
+- [[id:195558c0-6973-4765-b9e9-105934e2d2ca][sitemap-python]]
+- [[id:c8d8fc12-352e-474a-88f3-b5e4c514f234][sitemap-ruby]]
+- [[id:4b7b30af-e8a6-4058-bcbb-e691cf8afad6][sitemap-lua]]
+- [[id:d743a420-12c3-4d4d-b85d-4ee91bd672b4][sitemap-clojure]]
+- [[id:22ceae51-40a9-4fbd-ba2b-53588fa04654][sitemap-js]]
+- [[id:9108f6ea-d75d-40ad-9c14-b001bf2eae1f][sitemap-cs]]
+- [[id:de7806c3-17d5-402d-aff4-fee15cdfbe3d][sitemap-erlang]]
+- [[id:4fa9270b-3791-4a07-8766-dbff3ea6bebf][sitemap-linux]]
+- [[id:2cbf7bc0-79b6-4500-93ec-16dc2ecfd3c1][sitemap-emacs]]
+- [[id:7c1a4ee8-42a1-4262-9db8-b7bb9346eccc][sitemap-asm]]

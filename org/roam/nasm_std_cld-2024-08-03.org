@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       efe967b5-e7b3-4472-9006-5ff5b3d28842
+:END:
+#+title: nasm-std&cld
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+* STD/CLD
+set DF, Clear DF
+
+* See Also
+- [[id:ec50cd58-f703-411d-a97b-4d51f8764c3d][nasm-scasb&repne]]
+- [[id:0a5e12b5-c7cf-4676-ba1e-8daa6c844d81][nasm-cmpsb&repe]]

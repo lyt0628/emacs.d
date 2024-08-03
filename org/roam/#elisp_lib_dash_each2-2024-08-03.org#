@@ -1,0 +1,37 @@
+:PROPERTIES:
+:ID:       f0c95d99-915a-4da3-a3db-4fae1fcb411b
+:END:
+#+title: elisp-lib-dash-each2
+#+date: [2024-08-03 六]
+#+last_modified:
+
+Each for side effect
+
+#+begin_src emacs-lisp :tangle yes
+(setq m-var '("elem" "elem1" "elem2" "elem3" "elem4"))
+(setq coll '())
+
+
+(-each m-var
+  #'(lambda(s)
+    (push s coll)))
+    
+coll
+#+end_src
+
+#+RESULTS:
+| elem4 | elem3 | elem2 | elem1 | elem |
+
+
+#+begin_src emacs-lisp :tangle yes
+(setq m-var '("elem" "elem1" "elem2" "elem3" "elem4"))
+(setq coll '())
+
+(mapc  #'(lambda(s)
+       (concat s s))
+   m-var)
+#+end_src
+
+#+RESULTS:
+| elem | elem1 | elem2 | elem3 | elem4 |
+

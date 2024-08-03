@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       480ca7c9-2bb0-4d94-be41-47b5a7021f1a
+:END:
+#+title: elisp-mapc
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+
+
+#+begin_src emacs-lisp :tangle yes
+(setq m-var '("elem" "elem1" "elem2" "elem3" "elem4"))
+
+(mapc #'(lambda(s)
+       (concat s s))
+   m-var)
+#+end_src
+
+#+RESULTS:
+| elem | elem1 | elem2 | elem3 | elem4 |
+
+
+* See Also
+- [[id:bf273182-0a93-429b-b3f3-0163334bbaf9][elisp-mapcar]]

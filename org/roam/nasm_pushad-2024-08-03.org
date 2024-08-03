@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       b1e03502-8c15-49ab-ac50-ed468ed0a924
+:END:
+#+title: nasm-pushad
+#+date: [2024-08-03 六]
+#+last_modified:  
+

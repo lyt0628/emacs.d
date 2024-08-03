@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       61de6a4e-9dde-4616-9374-9b5cb131e5e1
+:END:
+#+title: nasm-setl
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+
+* setg <lab>
+<lab> = 1 if ZF = 0 and SF = 1 and OF == 1
+that is, RES < 0 and no overflow
+
+
+* See Also
+- [[id:20a9a2f1-4efb-427b-8147-00523ef88f73][nasm-setg]]
+- [[id:fcde0610-1932-40fd-a6dc-6f9c8bef4998][nasm-sete&setene]]
+- [[id:6d935b5d-d9a9-4676-9aad-3d85cd157864][nasm-setge&setle]]

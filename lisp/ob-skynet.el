@@ -38,7 +38,6 @@
 (require 's)
 (require 'dash)
 (require 'uuidgen)
-(org-assert-version)
 
 (require 'ob)
 (require 'ob-core)

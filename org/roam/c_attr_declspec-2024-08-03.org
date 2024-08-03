@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       cb8910a1-5b2f-4b3d-9370-a3daa61ff0cb
+:END:
+#+title: c-attr-declspec
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+
+* __declspec(naked) <FN Imp> :
+tell compiler that all code(save ctxt, clear arg) made myself
+

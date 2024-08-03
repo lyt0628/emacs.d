@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       edcbf82c-9fc1-4587-8ddd-1885216c5883
+:END:
+#+title: spec-rfc8200_ipv6
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+
+SPEC: [[https://datatracker.ietf.org/doc/rfc8200/][Internet Protocol, Version 6 (IPv6) Specification]]

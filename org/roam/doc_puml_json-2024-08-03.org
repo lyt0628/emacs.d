@@ -1,0 +1,48 @@
+:PROPERTIES:
+:ID:       7dff92e9-9cca-4d3e-bdbc-50946f94282f
+:END:
+#+title: doc-puml-Json
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+
+* Form
+
+#+NAME: Basic-Json-Data
+#+BEGIN_SRC plantuml :file ../tmp/puml-8f964bb3-50f6-11ef-a68f-b48c9d0f4f89.png
+@startjson
+
+{
+"K1": "V1",
+
+"Sub-Blk":
+{
+  "K2": 123
+},
+
+"List":
+[
+{
+"K4": "V4"
+},
+
+{
+"K5": "V5"
+}
+],
+
+"Nil-List": [],
+"Nil-Val": null
+}
+
+@endjson
+#+END_SRC
+
+#+RESULTS: Basic-Json-Data
+[[file:../tmp/puml-8f964bb3-50f6-11ef-a68f-b48c9d0f4f89.png]]
+
+
+
+* Look
+
+

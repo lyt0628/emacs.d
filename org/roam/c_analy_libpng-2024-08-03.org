@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       bc3c97c7-91aa-4225-8ab9-cddc2eb3e35c
+:END:
+#+title: c-analy-libpng
+#+date: [2024-08-03 六]
+#+last_modified:  
+

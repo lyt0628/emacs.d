@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       bddb8f73-9e16-4987-a39f-24cf68228145
+:END:
+#+title: nasm-loop
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+* LOOP <lab>
+- goto <lab>
+- dec ECX per run
+- br if ECX is 0
+
+* See Also
+- 

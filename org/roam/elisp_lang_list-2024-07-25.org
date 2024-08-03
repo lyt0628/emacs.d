@@ -35,3 +35,10 @@
 
 #+RESULTS:
 : 4
+
+
+
+
+* Index
+- [[id:480ca7c9-2bb0-4d94-be41-47b5a7021f1a][elisp-mapc]]
+- [[id:bf273182-0a93-429b-b3f3-0163334bbaf9][elisp-mapcar]]

@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       3e99a525-fa83-40b2-a938-46c069d9a8df
+:END:
+#+title: c-tool-vsc
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+
+
+

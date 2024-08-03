@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       979a1504-6c4c-4cbe-84b3-a1eb72c483ff
+:END:
+#+title: elisp-lib-dash-each
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+
+#+begin_src emacs-lisp :tangle yes
+(setq m-var '("elem" "elem1" "elem2" "elem3" "elem4"))
+(setq coll '())
+
+(--each m-var
+  (push 
+   (format
+    "%d::::%s" it-index it)
+    coll))
+    
+coll
+#+end_src
+
+#+RESULTS:
+| 4::::elem4 | 3::::elem3 | 2::::elem2 | 1::::elem1 | 0::::elem |

@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       43a90522-268e-4d62-b348-633bfbf5809f
+:END:
+#+title: elisp-custom
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+
+#+begin_src emacs-lisp :tangle yes
+(defgroup mygroup ()
+"Customize group for mygroup, test for custom fn."
+  :group 'extensions
+  :group 'lisp
+  :prefix "mygroup-")
+
+#+end_src

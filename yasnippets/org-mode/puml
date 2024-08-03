@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: puml
+# key: puml
+# --
+
+#+NAME: ${1:PUML}
+#+BEGIN_SRC plantuml :file ../tmp/puml-`(uuidgen-1)`.png
+@startuml
+
+$0
+
+@enduml
+#+END_SRC
+

@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       10d236a8-4ce7-4455-826c-f8d4568de1b2
 :END:
-#+title: rocketmq-javasdk-jedis
+#+title: mq-rocketmq-sdk-jedis
 #+filetags: :java:
 #+date: [2024-07-05 五]
 #+last_modified: [2024-07-05 五 21:29]

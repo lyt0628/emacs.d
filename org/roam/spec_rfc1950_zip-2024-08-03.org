@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       685f5abc-98e6-4467-9cf9-5a73822129dc
+:END:
+#+title: spec-rfc1950_zlib
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+SPEC: [[https://datatracker.ietf.org/doc/html/rfc1950][ZLIB Compressed Data Format Specification version 3.3]]

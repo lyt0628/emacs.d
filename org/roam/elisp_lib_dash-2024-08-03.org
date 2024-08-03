@@ -1,0 +1,34 @@
+:PROPERTIES:
+:ID:       80662872-04d5-48e3-a468-71c749efcf7d
+:END:
+#+title: elisp-lib-dash
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+
+
+#+begin_src emacs-lisp 
+(setq m-var "var")
+(setq m-var-1 "var1")
+
+(!cons m-var m-var-1 )
+
+(message "%s-%s" m-var m-var-1)
+
+
+#+end_src
+
+#+RESULTS:
+: var-(var . var1)
+
+
+#+begin_src emacs-lisp :tangle yes
+
+(setq m-var "var")
+(setq m-var-1 "var1")
+
+(message "%s" (cons m-var m-var-1))
+#+end_src
+
+#+RESULTS:
+: (var . var1)

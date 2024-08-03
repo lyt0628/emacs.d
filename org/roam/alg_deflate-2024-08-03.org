@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       4702e389-fef8-48ad-a47e-68c7d6c80edf
+:END:
+#+title: alg-deflate
+#+date: [2024-08-03 六]
+#+last_modified:  
+

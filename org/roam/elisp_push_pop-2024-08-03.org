@@ -1,0 +1,29 @@
+:PROPERTIES:
+:ID:       c34ee932-b39f-4320-b5ca-ce4478468e1c
+:END:
+#+title: elisp-push&pop
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+
+Stack Op on L
+
+#+begin_src emacs-lisp :tangle yes
+(setq m-var '("elem" "elem1" "elem2" "elem3" "elem4"))
+
+(pop m-var)
+#+end_src
+
+#+RESULTS:
+: elem
+
+
+#+begin_src emacs-lisp :tangle yes
+(setq m-var '("elem" "elem1" "elem2" "elem3" "elem4"))
+
+(push  "elem5" m-var)
+#+end_src
+
+#+RESULTS:
+| elem5 | elem | elem1 | elem2 | elem3 | elem4 |
+

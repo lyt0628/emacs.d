@@ -1,0 +1,53 @@
+:PROPERTIES:
+:ID:       0a5e12b5-c7cf-4676-ba1e-8daa6c844d81
+:END:
+#+title: nasm-cmpsb&repe
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+* API
+** *CMPS*
+= cmps byte [edi], byte ptr [esi]
+
+inc edi,esi if DF if 0
+dec edi,esi if DF if 1
+
+*Note*
+- CMPSW/CMPSD
+
+  
+** *repe/repz*
+#+BEGIN_SRC asm :noweb yes
+repe cmpsb
+#+END_SRC
+- rep instor when ecx !=0 and ZF = 1
+- dec ECX every run
+
+
+** Example
+*** strcmp
+#+BEGIN_SRC asm :noweb yes
+
+<<strlen>> ; get len of s1 into ecx
+
+mov edi, s1 ; edi = s1
+mov esi, s2 ; esi = s2
+repe cmpsb ;
+
+;; ZF == 1 && ECX = 0 is s1 == s2
+;; SF =1 if s1 > s2, and vice versa (assume len of s1 >= s2)
+
+xor al, al
+sete al
+cmp al, 1
+jne lb_prnt_not_eq
+cmp ecx, 0
+jne lb_prnt_not_eq
+lb_prnt_eq:
+;; print ascii str s1==s2
+#+END_SRC
+strlen : see [[id:ec50cd58-f703-411d-a97b-4d51f8764c3d][nasm-scasb&repne]]
+sete: see [[id:fcde0610-1932-40fd-a6dc-6f9c8bef4998][nasm-sete&setene]]
+
+* See Also
+- [[id:ec50cd58-f703-411d-a97b-4d51f8764c3d][nasm-scasb&repne]]

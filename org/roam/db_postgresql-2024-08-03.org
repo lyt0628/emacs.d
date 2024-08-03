@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       33c2a845-5980-4a71-942e-06ba65226c56
+:END:
+#+title: db-postgresql
+#+date: [2024-08-03 六]
+#+last_modified:  
+

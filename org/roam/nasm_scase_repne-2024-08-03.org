@@ -14,6 +14,8 @@
 dec EDI if DF is 1
 inc EDI if DF is 0
 
+*Note*
+- SCASW/SCASD
 
 - *REPNE/REPNZ*
   Rep Instor When ECS !=0 and ZF = 0
@@ -21,6 +23,20 @@ inc EDI if DF is 0
 #+BEGIN_SRC asm 
 repnz scasb ; REPNE SCAS BYTE PTR ES:[EDI]
 #+END_SRC
+
+** Example
+*** strlen(str)
+#+BEGIN_SRC asm :noweb yes
+xor al, al ; al = '\0'
+mov edi str ; edi = str
+mov ecx, -1 ; 0xFFFFFFFF
+
+repne scasb
+
+not ecx
+dec ecx
+#+END_SRC 
+
 
 
 * See Also

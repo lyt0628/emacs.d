@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       627a3148-9d87-41a7-a93f-741edab1ca53
+:END:
+#+title: nasm-stosb&rep
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+* STOSB
+= stosb byte ptr [edi]
+=mov byte ptr [edi], al
+inc edi every run
+
+*Note*
+- stosw/stosd
+  
+* REP
+#+BEGIN_SRC asm :noweb yes
+REP stosb
+#+END_SRC
+dec ecx every run
+
+
+* See Also
+- [[id:ec50cd58-f703-411d-a97b-4d51f8764c3d][nasm-scasb&repne]]
+- [[id:0a5e12b5-c7cf-4676-ba1e-8daa6c844d81][nasm-cmpsb&repe]]

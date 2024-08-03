@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       69c8c199-4aa9-42bf-8a09-138b608835f8
+:END:
+#+title: db_
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+* Index
+- [[id:04de60a6-1107-44d3-9b42-15c3837003fd][db-sql]]
+- [[id:58528c55-8541-4541-9307-65b590067181][db-mysql]]
+- [[id:33c2a845-5980-4a71-942e-06ba65226c56][db-postgresql]]
+- [[id:a963d386-ac0a-44ed-bda1-f2b369dbbf88][db-mongo]]
+- [[id:eb27a9da-68ee-4715-9b47-5c90120c8e7c][db-node4j]]

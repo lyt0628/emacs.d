@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       8b9b7bd4-3873-4e2f-8141-4f5c0ab0bfaf
+:END:
+#+title: asm-Related C Attr
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+* Index
+- [[id:cb8910a1-5b2f-4b3d-9370-a3daa61ff0cb][c-attr-declspec]]

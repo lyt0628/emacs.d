@@ -40,5 +40,16 @@
    (expand-file-name "custom.el" lyt-emacs-directory))
 (load custom-file)
 
+
+(when lyt-system-is-linux
+  (setq bookmark-file
+	(expand-file-name "bookmark-linux.el" lyt-emacs-directory)))
+
+(when lyt-system-is-windows
+  (setq bookmark-file
+	(expand-file-name "bookmark-win.el" lyt-emacs-directory)))
+
+
+
 (provide 'init-variables)
 ;;; init-variables.el ends here
