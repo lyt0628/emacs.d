@@ -1,4 +1,4 @@
-:PROPERTIES:
+PROPERTIES:
 :ID:       61d31d49-babb-4317-b9b8-690e129cac8e
 :END:
 #+title: python
@@ -12,3 +12,11 @@ return "666"
 
 #+end_src
 
+
+
+#+BEGIN_SRC python :noweb yes :results output
+print('Hello World')
+#+END_SRC
+
+#+RESULTS:
+: Hello World

@@ -1,0 +1,47 @@
+:PROPERTIES:
+:ID:       b0a21db1-455b-46f7-86e6-24b5f2ebc7e3
+:END:
+#+title: python-ex
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+*Index*
+- [[try-except]]
+- [[try-except-else]]
+- [[pass]]
+
+#+NAME: try-except
+#+BEGIN_SRC python :noweb yes :results output
+try:
+  print(5/0)
+except ZeroDivisionError:
+  print('divided by 0')
+#+END_SRC
+
+#+RESULTS:
+: divided by 0
+
+
+#+NAME: try-except-else
+#+BEGIN_SRC python :noweb yes :results output
+try:
+  print(5/0)
+except ZeroDivisionError:
+  print('divided by 0')
+else:
+  print('ok')
+#+END_SRC
+
+#+RESULTS:
+: divided by 0
+
+#+NAME: pass
+#+BEGIN_SRC python :noweb yes :results output
+try:
+  print(5/0)
+except ZeroDivisionError:
+  pass
+#+END_SRC
+
+#+RESULTS: try-except-else
+

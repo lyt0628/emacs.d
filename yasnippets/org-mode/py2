@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: py2
+# key: py2
+# --
+#+BEGIN_SRC python :noweb yes
+$0
+#+END_SRC

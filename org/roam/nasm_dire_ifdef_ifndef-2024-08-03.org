@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       8b0f7722-6684-4b00-9668-a049bc5321ed
+:END:
+#+title: nasm-dire-ifdef&ifndef
+#+date: [2024-08-03 周六]
+#+last_modified:  
+

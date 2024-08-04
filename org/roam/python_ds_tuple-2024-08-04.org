@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       3b244af8-d6a1-45da-8b74-e9387806cc11
+:END:
+#+title: python-ds-tuple
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+
+
+#+BEGIN_SRC python :noweb yes
+tp = (720, 540)
+
+return tp[0]*tp[1]
+#+END_SRC
+
+#+RESULTS:
+: 388800
+
+
+#+BEGIN_SRC python :noweb yes
+tp = (3,)
+return tp
+#+END_SRC
+
+#+RESULTS:
+| 3 |

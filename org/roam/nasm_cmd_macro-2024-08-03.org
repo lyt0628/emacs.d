@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       69b209ef-155f-4b17-a6d2-6209a6e5a2ab
+:END:
+#+title: nasm-cmd-macro
+#+date: [2024-08-03 周六]
+#+last_modified:  
+
+
+* nasm -d<symbol[=value]>
+like C fg -D
+
+
+- *work as [[id:413e36b2-a242-49a6-977a-3af7155296c3][dire::define]]*
+- -D work the same
+
+
+* nasm -u<symbol>
+undef a macro
+
+- -U work the same

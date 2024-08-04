@@ -1,0 +1,69 @@
+:PROPERTIES:
+:ID:       3780a926-82fa-4f14-b54c-85bc41e722b7
+:END:
+#+title: python
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+* Index
+- [[id:2d9b34cc-4e4f-40f2-a0fc-dff31532044d][python-data type]]
+- [[id:02729e6f-6672-4baf-92f7-b1524c44d71d][python-fn]]
+- [[id:35fb7fa6-f24a-475b-97a7-027e38fe79cf][python-class]]
+- [[id:de889af6-fe42-4582-9d12-d16685cf8747][python-ds]]
+- [[id:ea7dedff-c92c-4a68-bbf0-eb738e7dcc48][python-cons]]
+- [[id:b0a21db1-455b-46f7-86e6-24b5f2ebc7e3][python-ex]]
+- [[id:9e424c44-e660-46e3-b787-644676677c77][python-std-json]]
+- [[id:64008bd8-14cd-4f98-95d4-5c45716ec772][python-std-unittest]]
+  
+- [[id:cf2d8a72-952d-45b6-a3b4-b6ee26fb0aa1][python-example]]
+
+
+#+BEGIN_SRC python :noweb yes
+x, y, z = 1, 2, 3
+
+return (y, z, x)
+#+END_SRC
+
+#+RESULTS:
+| 2 | 3 | 1 |
+
+
+#+BEGIN_SRC python :noweb yes
+# cment
+return 'I have a cment'
+#+END_SRC
+
+#+RESULTS:
+: I have a cment
+
+
+#+BEGIN_SRC python :noweb yes :results output
+import this
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+The Zen of Python, by Tim Peters
+
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren't special enough to break the rules.
+Although practicality beats purity.
+Errors should never pass silently.
+Unless explicitly silenced.
+In the face of ambiguity, refuse the temptation to guess.
+There should be one-- and preferably only one --obvious way to do it.
+Although that way may not be obvious at first unless you're Dutch.
+Now is better than never.
+Although never is often better than *right* now.
+If the implementation is hard to explain, it's a bad idea.
+If the implementation is easy to explain, it may be a good idea.
+Namespaces are one honking great idea -- let's do more of those!
+#+end_example
+
+

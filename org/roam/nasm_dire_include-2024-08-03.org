@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       9a73723a-32b9-4077-b273-264f2f59d599
+:END:
+#+title: nasm-dire-include
+#+date: [2024-08-03 周六]
+#+last_modified:  
+

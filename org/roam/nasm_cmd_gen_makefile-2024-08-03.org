@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       99defdd9-b52c-4dad-848c-4e0cca9905ff
+:END:
+#+title: nasm-cmd-gen makefile
+#+date: [2024-08-03 周六]
+#+last_modified:  
+
+* nasm -<M_fg>  mycode.asm > mycode.dep
+
+|------+----------------------------------------|
+| M_fg | Note                                   |
+|------+----------------------------------------|
+| M    | gen makefile                           |
+|------+----------------------------------------|
+| MG   | gen makefile, assume being Gen-ed file |
+|      | if encouting nonexisting file          |
+|------+----------------------------------------|
+| MF   | spec out-file                          |
+|      | nasm -M  -MF mycode.dep mycode.asm     |
+|------+----------------------------------------|
+| MD   | fn as M & MF                           |
+|      | nasm -MD mycode.dep mycode.asm         |
+|------+----------------------------------------|
+| MT   | use ARG as Makefile::Target,           |
+|      | instead of out filename(default)       |
+|------+----------------------------------------|
+| MP   | Emit PHONY Target                      |
+|------+----------------------------------------|
+| MW   |                                        |
+|------+----------------------------------------|

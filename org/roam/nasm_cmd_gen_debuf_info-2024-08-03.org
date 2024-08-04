@@ -1,0 +1,35 @@
+:PROPERTIES:
+:ID:       3b019fe6-2a51-42eb-b321-ff6c2a4dd89f
+:END:
+#+title: nasm-cmd-gen dbg info
+#+date: [2024-08-03 周六]
+#+last_modified:  
+
+
+* nasm -g -F <dbg_fmt> 
+
+|----+---------------------|
+| fg | Note                |
+|----+---------------------|
+| g  | enable gen dbg info |
+|----+---------------------|
+| F  | spec dbg fmt        |
+|----+---------------------|
+
+|---------+------|
+| dbg fmt | Note |
+|---------+------|
+
+
+* nasm -X <err_fmt> -Z mycode.err
+
+| err_fmt      | Note                                             |
+|--------------+--------------------------------------------------|
+| vc           | filename.asm(65) : error: specific error message |
+|--------------+--------------------------------------------------|
+| gnu(default) | filename.asm:65: error: specific error message   |
+|--------------+--------------------------------------------------|
+
+* nasm -s mycode.asm | less
+snd err info to stdout
+

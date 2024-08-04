@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       413e36b2-a242-49a6-977a-3af7155296c3
+:END:
+#+title: nasm-dire-define
+#+date: [2024-08-03 周六]
+#+last_modified:  
+
+
+#+BEGIN_SRC asm :noweb yes
+%define FOO 100
+%define BAR 
+#+END_SRC

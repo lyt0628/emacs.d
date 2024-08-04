@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       5fa42aa1-d338-4ffd-90d7-d58ecde6819c
+
+* SendMessage(hWnd, uMsg, wparam, lparam)
+
+
+* See Also
+- 

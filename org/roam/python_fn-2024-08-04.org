@@ -1,0 +1,61 @@
+:PROPERTIES:
+:ID:       02729e6f-6672-4baf-92f7-b1524c44d71d
+:END:
+#+title: python-fn
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+
+#+BEGIN_SRC python :noweb yes :results output
+def m_fn():
+  print("hello")
+
+m_fn()
+#+END_SRC
+
+#+RESULTS:
+: hello
+
+
+
+#+BEGIN_SRC python :noweb yes :results output
+def m_fn(user_name):
+  print(f"Hello, {user_name.title()}")
+
+m_fn('lisi')
+#+END_SRC
+
+#+RESULTS:
+: Hello, Lisi
+
+
+#+BEGIN_SRC python :noweb yes :results output
+def m_fn(user_name, subfix):
+  print(f"Hello, {user_name.title()}{subfix}")
+
+m_fn('lisi','!!!')
+m_fn('lisi','?')
+m_fn('?','lisi')
+m_fn(subfix='!!!',user_name='lisi')
+#+END_SRC
+
+#+RESULTS:
+: Hello, Lisi!!!
+: Hello, Lisi?
+: Hello, ?lisi
+: Hello, Lisi!!!
+
+#+BEGIN_SRC python :noweb yes :results output
+def m_fn(user_name, subfix='!'):
+  print(f"Hello, {user_name.title()}{subfix}")
+
+
+m_fn('lisi')
+m_fn('lisi','????')
+
+#+END_SRC
+
+#+RESULTS:
+: Hello, Lisi!
+: Hello, Lisi????
+

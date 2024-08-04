@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       fc5e341e-d723-426a-8919-8e6b4d65bbf9
+:END:
+#+title: winapi-window-GetWindowThreadProcessId()
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+* GetWindowThreadProcess(hwnd, dwPid)
+
+
+* See Also
+- [[id:2f9f2bcf-098b-47c4-93e1-ed9adb1ad75f][winapi-window-FindWindow()]]

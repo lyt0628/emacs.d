@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       2c3144ed-63ef-4fb2-94f1-1b9b442e6935
+:END:
+#+title: winapi-window-Text Setting
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+*Index*
+- [[id:08be6601-660b-46af-aeb9-165c73b26ae3][winapi-window-SetTextAlign()&GetTextAlign()]]
+- [[id:5bf0ea79-0897-41e4-aa65-94e440344a7c][winapi-window-GetTextExtentPoint32()]]
+- [[id:39a0c7ab-4ced-4081-90c2-075768c448f2][winapi-window-GetCharWidth()]]

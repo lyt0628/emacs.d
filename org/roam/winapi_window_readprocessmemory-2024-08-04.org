@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       b920a865-ec16-412d-97c4-57bea8415905
+:END:
+#+title: winapi-window-ReadProcessMemory()
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+
+* ReadProcessMemory(hProc, start:LPCVOID, buf:LPCVOID, buflen:SIZE_T)
+
+
+* See Also
+- [[id:7dd922d3-088e-4709-94db-636af319df33][winapi-OpenProcess()]]

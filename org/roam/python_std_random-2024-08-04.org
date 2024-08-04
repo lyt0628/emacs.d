@@ -1,0 +1,38 @@
+:PROPERTIES:
+:ID:       3b691456-1d1a-4d59-9ed4-2f5bd058d3d8
+:END:
+#+title: python-std-random
+#+date: [2024-08-04 周日]
+#+last_modified:
+
+#+BEGIN_SRC python :noweb yes
+import random
+
+return random.randint(1, 10)
+#+END_SRC
+
+#+RESULTS:
+: 3
+
+#+BEGIN_SRC python :noweb yes
+import random
+return random.randint(1, 1)
+#+END_SRC
+
+#+RESULTS:
+: 1
+
+
+#+NAME: choise
+#+BEGIN_SRC python :noweb yes
+import random
+
+ls  = ['a', 'b', 'c', 'd']
+
+return random.choice(ls)
+#+END_SRC
+
+#+RESULTS: choise
+: d
+
+

@@ -1,0 +1,47 @@
+:PROPERTIES:
+:ID:       c9e9de06-7091-4966-a1f1-c8f2f5d91564
+:END:
+#+title: nasm-cmd-gen source-listing
+#+date: [2024-08-03 周六]
+#+last_modified:  
+
+* nasm -f <format> -l <.lst>
+
+|---------+----------------+----+-------------|
+| Address | Generated Code | -- | Source Code |
+|---------+----------------+----+-------------|
+
+dire:
+[list -] : turn off gening in .lst
+[list +] : turn on gening in .lst
+
+
+* nasm -f <format> -l <.lst> -L <fg>
+
+| fg | Note                             |
+|----+----------------------------------|
+| b  | show builtin macro pkg           |
+|----+----------------------------------|
+| d  | display byte and cnt in Decimal  |
+|----+----------------------------------|
+| e  | Show Pre-proc input              |
+|----+----------------------------------|
+| f  | ignore .nolist                   |
+|----+----------------------------------|
+| m  | show multi-line macro with param |
+|----+----------------------------------|
+| p  |                                  |
+|----+----------------------------------|
+| s  | show single-line macro def       |
+|----+----------------------------------|
+| w  |                                  |
+|----+----------------------------------|
+| +  | enable all lst, except -lw       |
+|----+----------------------------------|
+
+dire:
+#+BEGIN_SRC asm 
+%pragma list option +dm -s
+
+#+END_SRC
+to enable fg d and s, disable s

@@ -1,0 +1,112 @@
+:PROPERTIES:
+:ID:       35fb7fa6-f24a-475b-97a7-027e38fe79cf
+:END:
+#+title: python-class
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+
+#+BEGIN_SRC python :noweb yes
+class Dog:
+  def __init__(self,name,age):
+    """ Init Member """
+    self.name = name
+    self.age = age
+
+  def bark():
+    print(self.name," Ho Ho!!")
+
+    
+m_dog = Dog('bili', 3)
+return m_dog
+#+END_SRC
+
+#+RESULTS:
+: <__main__.main.<locals>.Dog object at 0x00000168F0870F80>
+
+
+#+BEGIN_SRC python :noweb yes :results output
+class Dog:
+  def __init__(self,name,age):
+    """ Init Member """
+    self.name = name
+    self.age = age
+
+  def bark(self):
+    """ Bark HO Ho """
+    print(self.name,": Ho Ho!!", sep='')
+
+    
+m_dog = Dog('bili', 3)
+m_dog.bark()
+print(m_dog.name)
+print(m_dog.age)
+#+END_SRC
+
+#+RESULTS:
+: bili: Ho Ho!!
+: bili
+: 3
+
+
+
+#+BEGIN_SRC python :noweb yes :results output
+class Dog:
+  def __init__(self,name,age):
+    """ Init Member """
+    self.name = name
+    self.age = age
+
+  def bark(self):
+    """ Bark HO Ho """
+    print(self.name,": Ho Ho!!", sep='')
+
+
+class BigDog(Dog):
+  def __init__(self, name,age,size):
+    """ Init Dog"""
+    super().__init__(name,age)
+    self.size = size
+    
+m_dog = BigDog('blliking',3, 48)
+m_dog.bark()
+print(m_dog.name)
+print(m_dog.size)
+#+END_SRC
+
+#+RESULTS:
+: blliking: Ho Ho!!
+: blliking
+: 48
+
+#+BEGIN_SRC python :noweb yes :results output
+class Dog:
+  def __init__(self,name,age):
+    """ Init Member """
+    self.name = name
+    self.age = age
+
+  def bark(self):
+    """ Bark HO Ho """
+    print(self.name,": Ho Ho!!", sep='')
+
+
+class BigDog(Dog):
+  def __init__(self, name,age,size):
+    """ Init Dog"""
+    super().__init__(name,age)
+    self.size = size
+
+  def bark(self):
+    """ Big Bark AO AO"""
+    super().bark()
+    print(self.name, " AO AO!!", sep=':')
+    
+m_dog = BigDog('blliking',3, 48)
+m_dog.bark()
+#+END_SRC
+
+#+RESULTS:
+: blliking: Ho Ho!!
+: blliking: AO AO!!
+
