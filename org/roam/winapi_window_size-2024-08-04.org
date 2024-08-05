@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       c1eabcf1-915d-4390-8dcb-9e960dafbb7f
+:END:
+#+title: winapi-window-SIZE
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+
+
+#+NAME: PUML
+#+BEGIN_SRC plantuml :file ../tmp/puml-339dcc36-5248-11ef-892f-5695158577c5.png
+@startuml
+
+struct tagSize{
+SIZE, PSIZE, LPSIZE
+LONG cx
+LONG cy
+}
+@enduml
+#+END_SRC
+
+

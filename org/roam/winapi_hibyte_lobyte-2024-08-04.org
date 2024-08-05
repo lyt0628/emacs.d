@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       393c48b2-c69a-4d2e-a192-335dcc13dae3
+:END:
+#+title: winapi-HIBYTE&LOBYTE
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+
+
+* API
+** *HI-WORD(w)*
+- 
+
+
+** *LO-WORD(w)*
+
+
+
+* See Also
+

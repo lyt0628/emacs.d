@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       ea7dedff-c92c-4a68-bbf0-eb738e7dcc48
+:END:
+#+title: python-cons
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+
+#+BEGIN_SRC python :noweb yes :eval no
+msg = input("Input msg: ")
+
+return msg
+#+END_SRC

@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       6414923c-30bf-4a8c-a45f-970d9ac08393
+:END:
+#+title: python-num
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+
+#+BEGIN_SRC python :noweb yes
+1 - 2
+1 - 2
+1*2
+1/2
+1**2
+#+END_SRC
+
+
+#+BEGIN_SRC python :noweb yes
+big_num = 14_000_000_000
+
+return big_num
+#+END_SRC
+
+#+RESULTS:
+: 14000000000
+
+
+#+BEGIN_SRC python :noweb yes
+return 0.2+0.1
+#+END_SRC
+
+#+RESULTS:
+: 0.30000000000000004

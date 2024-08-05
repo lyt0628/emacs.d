@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       aefecccd-7299-4fb9-a47f-bb2006da7e1b
+:END:
+#+title: winapi-GetTabbedTextExtent()
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+* GetTabbedTextExtent(hdc, pStr, iSteLen, piTabStopPosition) :[DWORD, 0]
+get text width of spec str,
+\t will count as 8(default) if ARG3 is 0 and ARG4 is NULL
+
+Ret DWORD
+|-----+---+---+------|
+| low | w | h | high |
+|-----+---+---+------|
+
+
+* See Also
+- [[id:48694b96-2e23-493c-a1c2-d0db6c9612a1][winapi-HIWOrD&LOWORD]]

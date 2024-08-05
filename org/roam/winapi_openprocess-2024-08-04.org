@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       7dd922d3-088e-4709-94db-636af319df33
+:END:
+#+title: winapi-OpenProcess()
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+
+* OpenProcess(enumAu, ??, *dwPid) :HANDLE
+
+|--------------------+------|
+| enumAU             | Note |
+|--------------------+------|
+| PROCESS_ALL_ACCESS |      |
+|--------------------+------|
+|                    |      |
+|--------------------+------|
+
+- dwPid is a out param
+  
+* See Also
+- [[id:fc5e341e-d723-426a-8919-8e6b4d65bbf9][winapi-window-GetWindowThreadProcessId()]]

@@ -7,7 +7,7 @@
 
 
 
-* TextOut(hdc, iX, iY, lpStr, iLen)
+* TextOut(hdc, iX, iY, pStr, iSteLen)
 
 
 * See Also

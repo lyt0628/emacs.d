@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       cf2d8a72-952d-45b6-a3b4-b6ee26fb0aa1
+:END:
+#+title: python-example
+#+date: [2024-08-04 周日]
+#+last_modified:  
+

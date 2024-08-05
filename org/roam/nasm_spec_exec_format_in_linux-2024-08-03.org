@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       092da5f8-b273-4d18-a7de-ccde9de36374
+:END:
+#+title: nasm-spec exec format in linux
+#+date: [2024-08-03 周六]
+#+last_modified:  
+
+
+#+BEGIN_SRC sh 
+file nasm
+#+END_SRC
+| Out                          | Note                     |
+|------------------------------+--------------------------|
+| ELF 32-bit LSB exec i386 V1  | use -f elf to gen .obj   |
+|------------------------------+--------------------------|
+| linux/i386 demand-paged exec | use -f aout to gen a.out |
+|------------------------------+--------------------------|

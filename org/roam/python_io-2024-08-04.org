@@ -1,0 +1,115 @@
+:PROPERTIES:
+:ID:       94e5182e-88e5-4028-ba17-604c081f91fe
+:END:
+#+title: python-io
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+All IO of python  is Text-based
+
+*Index*
+- [[with-open]]
+- [[open-close]]
+- [[read]]
+- [[for-f]]
+- [[readlines]]
+- [[write]]
+- [[write-a]]
+
+#+NAME: with-open
+#+BEGIN_SRC python :noweb yes :
+
+with open('python_io-2024-08-04.org') as f:
+  cont = f.read()
+
+return cont
+#+END_SRC
+
+
+#+NAME: open-close
+#+BEGIN_SRC python :noweb yes 
+
+f = open('python_io-2024-08-04.org')
+cont = f.read()
+f.close()
+
+return cont
+#+END_SRC
+
+
+#+NAME: read
+#+BEGIN_SRC python :noweb yes :
+
+with open('python_io-2024-08-04.org') as f:
+  cont = f.read()
+
+return cont.rstrip() # rm EOF
+#+END_SRC
+
+
+#+NAME: for-f
+#+BEGIN_SRC python :noweb yes :results output
+
+with open('python_io-2024-08-04.org') as f:
+  for line in f:
+    print(line, end='')
+    # print(line.rstrip())
+#+END_SRC
+
+#+NAME: readlines
+#+BEGIN_SRC python :noweb yes :results output
+filename = 'python_io-2024-08-04.org'
+with open(filename) as f:
+  lines = f.readlines()
+
+for line in lines:
+  print(line, end='')
+#+END_SRC
+
+
+#+NAME: write
+#+BEGIN_SRC python :noweb yes
+with open('../tmp/a.py','w') as f:
+  f.write('I love prog.\n')
+  f.write('you love prog too.\n')
+
+with open('../tmp/a.py') as f:
+  cont = f.read()
+
+return cont
+#+END_SRC
+
+
+
+#+NAME: write-a
+#+BEGIN_SRC python :noweb yes
+with open('../tmp/a.py','a') as f:
+  f.write('I love prog.\n')
+  f.write('you love prog too.\n')
+
+with open('../tmp/a.py') as f:
+  cont = f.read()
+
+return cont
+#+END_SRC
+
+#+NAME: write-a
+#+BEGIN_SRC python :noweb yes
+filename = '../tmp/a.py'
+try:
+  with open(filename) as f:
+    cont = f.read()
+
+except FileNotFoundError:
+  print(f"file {filename} Not Found")
+
+else:
+  return cont
+#+END_SRC
+
+#+RESULTS: write-a
+: I love prog.
+: you love prog too.
+: I love prog.
+: you love prog too.
+

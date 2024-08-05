@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       48694b96-2e23-493c-a1c2-d0db6c9612a1
+:END:
+#+title: winapi-HIWOrD&LOWORD
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+* API
+** *HI-WORD(dw)*
+- 
+
+
+** *LO-WORD(dw)*
+
+
+
+* See Also

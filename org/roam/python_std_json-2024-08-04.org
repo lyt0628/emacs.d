@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       9e424c44-e660-46e3-b787-644676677c77
+:END:
+#+title: python-std-json
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+*Index*
+
+#+BEGIN_SRC python :noweb yes
+import json
+
+nums = list(range(1, 11))
+
+filename = '../tmp/nums.json'
+with open(filename, 'w') as f:
+  json.dump(nums, f)
+
+
+with open(filename) as f:
+  nums1 = json.load(f)
+
+return nums1
+#+END_SRC
+
+#+RESULTS:
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |

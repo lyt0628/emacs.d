@@ -1,0 +1,84 @@
+:PROPERTIES:
+:ID:       4e628e41-16b7-4187-bc2a-80ae459bc6d1
+:END:
+#+title: python-str
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+*Index*
+- [[title]]
+- [[upper&lower]]
+- [[fmt-str]]
+- [[format]]
+- [[r-strip/l-strip/strip]]
+- [[split]]
+
+* title
+#+BEGIN_SRC python :noweb yes
+name = 'ada lovelace'
+
+return name.title()
+#+END_SRC
+
+#+RESULTS:
+: Ada Lovelace
+
+* upper&lower
+#+BEGIN_SRC python :noweb yes 
+name = 'ada lovelace'
+
+return name.upper() + name.lower()
+#+END_SRC
+
+#+RESULTS:
+: ADA LOVELACEada lovelace
+
+
+* fmt-str
+py >= 3.6
+#+BEGIN_SRC python :noweb yes 
+fst_name = "ada"
+lst_name = "lovelace"
+
+return f'{fst_name} {lst_name}'
+#+END_SRC
+
+#+RESULTS:
+: ada lovelace
+
+** format
+#+BEGIN_SRC python :noweb yes 
+fst_name = "ada"
+lst_name = "lovelace"
+
+return '{} {}'.format(fst_name, lst_name)
+#+END_SRC
+
+#+RESULTS:
+: ada lovelace
+
+
+* r-strip/l-strip/strip
+#+BEGIN_SRC python :noweb yes
+fst_lang = 'python   '
+lst_lang = fst_lang.rstrip()
+
+return f'{lst_lang}{fst_lang}'
+#+END_SRC
+
+#+RESULTS:
+: pythonpython
+
+
+#+NAME: split
+#+BEGIN_SRC python :noweb yes :results output
+st = 'python is best'
+
+print(st.split())
+print(st.split(sep='is'))
+#+END_SRC
+
+#+RESULTS: split
+: ['python', 'is', 'best']
+: ['python ', ' best']
+

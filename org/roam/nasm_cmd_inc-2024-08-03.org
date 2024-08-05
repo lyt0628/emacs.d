@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       af03493a-5197-4741-b68e-896b0056ecdd
+:END:
+#+title: nasm-cmd-inc
+#+date: [2024-08-03 周六]
+#+last_modified:  
+
+* nasm -i <dir_to_inc> mycode.asm
+
+*Note*
+- <dir_to_inc> can set to env NASMENV
+
+
+* nasm -p myinc.inc mycode.asm
+inc spec file
+

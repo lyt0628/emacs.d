@@ -1,0 +1,192 @@
+:PROPERTIES:
+:ID:       a8a641eb-de35-481f-9e12-6041c1816b6c
+:END:
+#+title: python-ds-dist
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+*Index*
+- [[dist]]
+- [[update]]
+- [[del]]
+- [[get]]
+- [[for-dist]]
+- [[items]]
+- [[keys]]
+- [[values]]
+- [[for-KV]]
+- [[sort-keys]]
+
+#+NAME dist
+#+BEGIN_SRC python :noweb yes 
+alien = {
+'color': 'green',
+'hp': 5
+}
+return f'CL:{alien["color"]}\nHP:{"hp"}'
+#+END_SRC
+
+#+RESULTS:
+: CL:green
+: HP:hp
+
+
+#+NAME: update
+#+BEGIN_SRC python :noweb yes 
+alien = {
+'color': 'green',
+'hp': 5
+}
+
+alien['xp'] = 'windows'
+alien['hp'] = 100
+return f'XP: {alien["xp"]}\nHP: {alien["hp"]}'
+#+END_SRC
+
+#+RESULTS:
+: XP: windows
+: HP: 100
+
+#+NAME: del
+#+BEGIN_SRC python :noweb yes 
+alien = {
+'color': 'green',
+'hp': 5
+}
+
+del alien ['color']
+
+return alien
+#+END_SRC
+
+#+RESULTS:
+| hp | : | 5 |
+
+
+#+NAME: get
+#+BEGIN_SRC python :noweb yes
+alien = {
+'color': 'green',
+'hp': 5
+}
+
+return f"COLOR:{alien.get(0)}\nHP:{alien.get('hp')}\nXP:{alien.get('xp', 'windows')}"
+#+END_SRC
+
+#+RESULTS: get
+: COLOR:None
+: HP:5
+: XP:windows
+
+
+#+NAME: for-dist
+#+BEGIN_SRC python :noweb yes :results output
+alien = {
+'color': 'green',
+'hp': 5
+}
+
+
+for k,v in alien.items():
+  print(f"{k} : {v}")
+  
+#+END_SRC
+
+#+RESULTS:
+: color : green
+: hp : 5
+
+
+#+NAME: items
+#+BEGIN_SRC python :noweb yes
+alien = {
+'color': 'green',
+'hp': 5
+}
+return alien.items()
+#+END_SRC
+
+#+RESULTS:
+: dict_items([('color', 'green'), ('hp', 5)])
+
+
+
+#+NAME: keys
+#+BEGIN_SRC python :noweb yes
+alien = {
+'color': 'green',
+'hp': 5
+}
+
+return alien.keys() 
+#+END_SRC
+
+#+RESULTS: items
+: dict_values(['green', 5])
+
+#+RESULTS:
+
+#+NAME: values
+#+BEGIN_SRC python :noweb yes
+alien = {
+'color': 'green',
+'hp': 5
+}
+
+return alien.values() 
+#+END_SRC
+
+#+NAME: for-KV
+#+BEGIN_SRC python :noweb yes :results output
+alien = {
+'color': 'green',
+'hp': 5
+}
+
+for k in alien.keys():
+  print(k)
+
+for v in alien.values():
+  print(v)
+ 
+#+END_SRC
+
+#+RESULTS: for-KV
+: color
+: hp
+: green
+: 5
+
+
+
+
+#+NAME: sort-keys
+#+BEGIN_SRC python :noweb yes 
+alien = {
+'color': 'green',
+'hp': 5
+'ax': 'magic'
+}
+
+return sorted(alien.keys())
+#+END_SRC
+
+#+RESULTS:
+| ax | color | hp |
+
+
+#+NAME: dist-in-ls
+#+BEGIN_SRC python :noweb yes :results output
+alien0 = {'color':'red'}
+alien1 = {'color':'green'}
+alien2 = {'color':'blue'}
+
+aliens = [alien0, alien1, alien2]
+for alien in aliens:
+  print(alien)
+#+END_SRC
+
+#+RESULTS: dist-in-ls
+: {'color': 'red'}
+: {'color': 'green'}
+: {'color': 'blue'}

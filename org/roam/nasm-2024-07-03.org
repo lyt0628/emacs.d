@@ -5,6 +5,8 @@
 #+date: [2024-07-03 三]
 #+last_modified: [2024-07-03 三 19:35]
 
+ORG: [[https://www.nasm.us/xdoc/2.16.03/html/nasmdoc0.html][NASM - The Netwide Assembler]] 
+
 * Index
 
 - [[id:2b932897-e844-4e81-8e11-6762d9d13c1c][nasm-byteorder]]

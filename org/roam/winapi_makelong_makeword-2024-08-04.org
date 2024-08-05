@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       d8f49aa5-cd2c-4bab-bf81-ee44fd5e2bb7
+:END:
+#+title: winapi-MAKELONG&MAKEWORD
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+
+
+* API
+** *MAKELONG(w,w) :DWORD*
+- 
+
+
+** *MAKEWORD(b,b) :WORD*
+
+
+
+* See Also
+
+

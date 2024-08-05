@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       64008bd8-14cd-4f98-95d4-5c45716ec772
+:END:
+#+title: python-std-unittest
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+#+NAME: fmt_name
+#+BEGIN_SRC python :noweb yes
+def fmt_name(fst_name, lst_name):
+  """Format name """
+  full_name = f"{fst_name} {lst_name}"
+  return full_name.title()
+#+END_SRC
+
+#+NAME: text_fmt_name
+#+BEGIN_SRC python :noweb yes
+import unittest
+
+<<fmt_name>>
+
+class FmtNameTestCase(unittest.TestCase):
+  "Test case for fmt_name()"
+  def test_fmt_name(self):
+    name = fmt_name('ali', 'loin')
+    self.assertEqual(name, 'ali loin')
+
+if __name__ == '__main__':
+  unittest.main()
+  
+#+END_SRC
+
+#+RESULTS: text_fmt_name

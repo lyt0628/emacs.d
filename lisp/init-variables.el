@@ -32,7 +32,7 @@
   (defconst lyt-emacs-directory "~/data/emacs.d/"))
 
 (when lyt-system-is-windows
-(defconst lyt-emacs-directory "D:/data/emacs.d/"))
+  (defconst lyt-emacs-directory "D:/data/emacs.d/"))
 
 
 

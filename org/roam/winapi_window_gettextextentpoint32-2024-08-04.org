@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       5bf0ea79-0897-41e4-aa65-94e440344a7c
+:END:
+#+title: winapi-window-GetTextExtentPoint32()
+#+date: [2024-08-04 周日]
+#+last_modified:  
+
+* GetTextExtentPoint32(hdc, pStr,  iStrlen, out_pSize)
+
+
+*Note*
+- Not Contain \t
+* See Also
+- [[id:c1eabcf1-915d-4390-8dcb-9e960dafbb7f][winapi-window-SIZE]]
+- [[id:aefecccd-7299-4fb9-a47f-bb2006da7e1b][winapi-GetTabbedTextExtent()]]
+  
+- [[id:39a0c7ab-4ced-4081-90c2-075768c448f2][winapi-window-GetCharWidth()]]
