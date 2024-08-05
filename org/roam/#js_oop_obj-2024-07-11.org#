@@ -22,7 +22,6 @@ obj.sayHello()
 
 #+RESULTS:
 : Lisi Hello!
-: undefined
 
 
 this.name was translated to obj.name
@@ -37,3 +36,6 @@ let obj = {
 
 obj.sayHello()
 #+END_SRC
+
+#+RESULTS:
+: Hello

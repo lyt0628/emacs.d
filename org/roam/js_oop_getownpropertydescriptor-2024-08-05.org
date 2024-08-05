@@ -1,0 +1,34 @@
+:PROPERTIES:
+:ID:       b161be05-2f53-495f-ad54-171f8a8d1136
+:END:
+#+title: js-oop-getOwnPropertyDescriptor()
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+* Object.getOwnPropertyDescriptor(obj, sProp)
+
+#+BEGIN_SRC js :noweb yes :results output
+let book ={
+year : 2017
+}
+
+dstor = Object.getOwnPropertyDescriptor(book, "year")
+console.log(dstor.value)
+console.log(dstor.configurable)
+console.log(dstor.writable)
+console.log(dstor.enumerable)
+#+END_SRC
+
+#+RESULTS:
+: 2017
+: true
+: true
+: true
+
+
+
+* See Also
+- [[id:aaed7e07-e846-4a1a-b1f2-c6123e78e2f7][js-oop-getOwnPropertyDescriptors()]]
+- [[id:a6a73334-0382-4108-abd6-a187febb51d3][js-oop-defineProperty()]]
+- [[id:b161be05-2f53-495f-ad54-171f8a8d1136][js-oop-getOwnPropertyDescriptor()]]

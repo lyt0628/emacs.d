@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       30fc8fff-944e-445f-ab34-56e4eb00b60b
+:END:
+#+title: js-oop-getOwnPropertySymbols()
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+#+BEGIN_SRC js :noweb yes :results output
+let k = Symbol('key')
+
+let p = {
+  [k] : 'KeyVlaue',
+  name: 'Matt',
+  ['abbb']: 'master'
+}
+
+console.log(Object.getOwnPropertySymbols(p))
+#+END_SRC
+
+#+RESULTS:
+: [ Symbol(key) ]
+
+
+
+* See Also
+- [[id:adef95fd-8937-4502-9b22-54e4978f0fb5][js-oop-keys()]]
+- [[id:e2ef0f23-72bf-4b7d-b26c-de0f96fb1b28][js-oop-getOwnPropertyNames()]]

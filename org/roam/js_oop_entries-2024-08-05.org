@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       efb95735-578a-4761-8358-58d19145f3e1
+:END:
+#+title: js-oop-entries()
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+#+BEGIN_SRC js :noweb yes :results output
+let k = Symbol('key')
+let obj = {
+  foo: 'foo',
+  bar: 'bar',
+  qux: {},
+  [k]: 'A Symbol'
+}
+
+console.log(Object.entries(obj))
+
+console.log(Object.entries(obj)[2][1] === obj.qux)
+#+END_SRC
+
+#+RESULTS:
+: [ [ 'foo', 'foo' ], [ 'bar', 'bar' ], [ 'qux', {} ] ]
+: true
+
+
+
+* See Also
+- [[id:b3e7070f-22ec-4d37-9176-0c85386ea2df][js-oop-values()]]

@@ -1,0 +1,32 @@
+:PROPERTIES:
+:ID:       b3e7070f-22ec-4d37-9176-0c85386ea2df
+:END:
+#+title: js-oop-values()
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+#+BEGIN_SRC js :noweb yes :results output
+let k = Symbol('sym')
+
+let obj = {
+  foo: 'foo',
+  bar: 'bar',
+  qux: {},
+  [k]: 'A Symbol'
+}
+
+console.log(Object.values(obj))
+
+console.log(Object.values(obj)[2] === obj.qux)
+#+END_SRC
+
+#+RESULTS:
+: [ 'foo', 'bar', {} ]
+: true
+
+
+
+* See Also
+- [[id:efb95735-578a-4761-8358-58d19145f3e1][js-oop-entries()]]
+- [[id:adef95fd-8937-4502-9b22-54e4978f0fb5][js-oop-keys()]]

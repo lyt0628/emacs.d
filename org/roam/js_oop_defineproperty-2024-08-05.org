@@ -1,0 +1,84 @@
+:PROPERTIES:
+:ID:       a6a73334-0382-4108-abd6-a187febb51d3
+:END:
+#+title: js-oop-defineProperty()
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+*Index*
+- [[writable]]
+- [[configurable]]
+- [[Note]]
+- [[def-visitor]]
+  
+#+NAME: writable
+#+BEGIN_SRC js :noweb yes :results output
+let obj = {}
+Object.defineProperty(obj, "prop",{
+  writable: false,
+  value: "Big Big Value"
+})
+
+console.log(obj.prop)
+obj.prop = "Little Jump"
+console.log(obj.prop)
+#+END_SRC
+
+#+RESULTS:
+: Big Big Value
+: Big Big Value
+
+
+
+#+NAME: configurable
+#+BEGIN_SRC js :noweb yes :results output
+let obj = {}
+Object.defineProperty(obj, "prop",{
+  configurable: false,
+  value: "Big Big Value"
+})
+
+console.log(obj.prop)
+delete obj.prop
+console.log(obj.prop)
+#+END_SRC
+
+#+RESULTS: configurable
+: Big Big Value
+: Big Big Value
+
+<<Note>>
+- only op on wt-able prop
+- silent default, err in district
+
+
+#+NAME: def-visitor
+#+BEGIN_SRC js :noweb yes :results output
+let book = {
+year_ : 2017,
+edition: 1
+}
+
+Object.defineProperty(book, "year",{
+    get() {
+      return this.year_ // convention private prop
+    },
+    set(newValue){
+      if (newValue > 2014) {
+        this.year_ = newValue
+	this.edition += newValue - 2017
+      }
+    }
+  }
+)
+
+book.year = 2018
+console.log(book.edition)
+#+END_SRC
+
+#+RESULTS: def-visitor
+: 2
+
+
+* See Also
+- [[id:f784abeb-900f-4c13-85f5-f449ee545c20][js-oop-defineProperties()]]

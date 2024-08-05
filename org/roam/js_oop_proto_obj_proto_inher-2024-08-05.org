@@ -1,0 +1,65 @@
+:PROPERTIES:
+:ID:       68fca40a-d901-46df-889e-c68a47421ff3
+:END:
+#+title: js-oop-proto-obj proto inher
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+#+BEGIN_SRC js :noweb yes :results output
+function object(o){
+  function F (){}
+  F.prototype = o
+  return new F()
+}
+
+
+let initObj = {
+  name: 'Matt',
+  colors: ['red', 'orange']
+}
+
+
+let obj1 = object(initObj)
+let obj2 = object(initObj)
+
+obj1.colors.push('black')
+console.log(obj1.colors)
+console.log(obj2.colors)
+
+#+END_SRC
+
+#+RESULTS:
+: [ 'red', 'orange', 'black' ]
+: [ 'red', 'orange', 'black' ]
+
+
+#+BEGIN_SRC js :noweb yes :results output
+let initObj = {
+  name: 'Matt',
+  colors: ['red', 'orange']
+}
+
+
+let obj1 = Object.create(initObj)
+let obj2 = Object.create(initObj)
+
+obj1.colors.push('black')
+console.log(obj1.colors)
+console.log(obj2.colors)
+
+let obj3 = Object.create(initObj, {
+  name: {
+    value: 'Niclas'
+  }
+})
+
+console.log(obj3.name)
+console.log(obj3.colors)
+#+END_SRC
+
+#+RESULTS:
+: [ 'red', 'orange', 'black' ]
+: [ 'red', 'orange', 'black' ]
+: Niclas
+: [ 'red', 'orange', 'black' ]
+

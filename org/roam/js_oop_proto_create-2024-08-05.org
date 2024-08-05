@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       b306a981-c6bb-4f0e-9d1f-b912d8f70fb2
+:END:
+#+title: js-oop-proto-create()
+#+date: [2024-08-05 一]
+#+last_modified:
+
+
+
+#+NAME: create
+#+BEGIN_SRC js :noweb yes :results output
+let p0 = {
+  age: 18
+}
+
+let p = Object.create(p0)
+p.name = 'Matt'
+
+console.log(Object.getPrototypeOf(p) === p0)
+
+console.log(p.name)
+console.log(p.age)
+#+END_SRC
+
+#+RESULTS:
+: true
+: Matt
+: 18
+
+

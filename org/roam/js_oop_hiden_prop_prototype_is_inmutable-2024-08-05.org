@@ -1,0 +1,35 @@
+:PROPERTIES:
+:ID:       ac86c092-c6ea-40b7-8a48-cc897221e761
+:END:
+#+title: js-oop-hiden prop Prototype is inmutable
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+#+BEGIN_SRC js :noweb yes :results output
+function Person() {}
+
+let p = new Person()
+let oldProto = Person.prototype
+
+Person.prototype = {
+  name: 'Niclas'
+}
+
+let p1 = new Person()
+
+console.log(p.name)
+console.log(p.__proto__ === oldProto)
+
+
+console.log(p1.name)
+console.log(p1.__proto__ === oldProto)
+#+END_SRC
+
+#+RESULTS:
+: undefined
+: true
+: Niclas
+: false
+
+

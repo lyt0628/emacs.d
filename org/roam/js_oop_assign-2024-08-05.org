@@ -1,0 +1,121 @@
+:PROPERTIES:
+:ID:       905bf93e-abcb-4581-8e96-56bb746b543d
+:END:
+#+title: js-oop-assign()
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+#+BEGIN_SRC js :noweb yes :results output
+dest = {}
+src = {
+  name: "Lisi",
+  age : 18
+}
+
+res = Object.assign(dest, src)
+
+
+console.log(dest)
+console.log(res)
+console.log(dest === res)
+console.log(dest === src)
+#+END_SRC
+
+#+RESULTS:
+: { name: 'Lisi', age: 18 }
+: { name: 'Lisi', age: 18 }
+: true
+: false
+
+
+#+BEGIN_SRC js :noweb yes :results output
+dest = {}
+
+Object.assign(dest,
+{
+a: "A"
+},
+{
+b: "B"
+})
+
+console.log(dest)
+#+END_SRC
+
+#+RESULTS:
+: { a: 'A', b: 'B' }
+
+
+#+BEGIN_SRC js :noweb yes :results output
+dest = {
+  set a(val){
+    console.log("Invalid setter")
+  } 
+}
+
+src = {
+  get a() {
+    console.log("Invoke")
+    return "foo"
+  }
+}
+
+Object.assign(dest, src)
+
+console.log(dest)
+#+END_SRC
+
+#+RESULTS:
+: Invoke
+: Invalid setter
+: { a: [Setter] }
+
+- get and set cannot be assign
+
+
+
+#+BEGIN_SRC js :noweb yes :results output
+let dest = {}
+
+Object.assign(dest, {
+val: "A"
+},
+{
+val: "B"
+})
+
+console.log(dest)
+#+END_SRC
+
+#+RESULTS:
+: { val: 'B' }
+
+
+#+NAME: assign-is-shallow
+#+BEGIN_SRC js :noweb yes :results output
+let dest = {}
+let src ={ obj: {}}
+Object.assign(dest, src)
+
+console.log(dest.obj === src.obj)
+#+END_SRC
+
+#+RESULTS: assign-is-shallow
+
+
+#+NAME: assign-is-shallow
+#+BEGIN_SRC js :noweb yes :results output
+let dest = {}
+let src ={
+  a: "foo",
+  get b() {
+    throw new Error()
+  }
+}
+
+Object.assign(dest, src)
+
+
+console.log(dest)
+#+END_SRC
+

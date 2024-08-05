@@ -1,0 +1,31 @@
+:PROPERTIES:
+:ID:       653fcb82-53d3-4a69-af2a-61345d83702f
+:END:
+#+title: js-oop-proto-paras iner
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+#+BEGIN_SRC js :noweb yes :results output
+let initObj = {
+  name: 'Matt',
+  colors: ['red', 'orange']
+}
+
+
+function parasCreate(o){
+  let clone = Object.create(o)
+  clone.sayHello = function(){
+    console.log("Hello")
+  }
+  return clone
+}
+
+let obj = parasCreate(initObj)
+obj.sayHello()
+#+END_SRC
+
+#+RESULTS:
+: Hello
+
+

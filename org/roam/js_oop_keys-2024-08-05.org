@@ -1,0 +1,39 @@
+:PROPERTIES:
+:ID:       adef95fd-8937-4502-9b22-54e4978f0fb5
+:END:
+#+title: js-oop-keys()
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+#+BEGIN_SRC js :noweb yes :results output
+function Person() {}
+
+Person.prototype.name = 'Niclas'
+Object.defineProperty(Person.prototype, 'age', {
+  value: 18,
+  enumerable: false
+})
+
+let enumProps = Object.keys(Person.prototype)
+console.log(enumProps)
+console.log(Person.prototype.age)
+
+let p = new Person()
+p.address = 'Ania'
+
+
+enumProps = Object.keys(p)
+console.log(enumProps)
+console.log(p.name)
+#+END_SRC
+
+#+RESULTS:
+: [ 'name' ]
+: 18
+: [ 'address' ]
+: Niclas
+
+
+* See Also
+- [[id:e2ef0f23-72bf-4b7d-b26c-de0f96fb1b28][js-oop-proto-getOwnPropertyNames()]]

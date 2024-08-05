@@ -1,0 +1,40 @@
+:PROPERTIES:
+:ID:       b90b794a-4c64-4c13-b703-78c23cd8672c
+:END:
+#+title: js-oop-Property Order
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+#+BEGIN_SRC js :noweb yes :results output
+let k1 = Symbol('k1')
+let k2 = Symbol('k2')
+let k3 = Symbol('k3')
+
+let obj = {
+  1: 1,
+  first: 'first',
+  [k1]: 'k1',
+  second: 'second',
+  0: 0
+}
+
+obj.fourth = 'fourth'
+obj[k3] = 'k3'
+obj[3] = 3
+obj.third = 'third'
+obj[2] = 2
+obj[k2] = 'k2'
+
+console.log(Object.getOwnPropertyNames(obj))
+console.log(Object.getOwnPropertySymbols(obj))
+#+END_SRC
+
+#+RESULTS:
+: [
+:   '0',      '1',
+:   '2',      '3',
+:   'first',  'second',
+:   'fourth', 'third'
+: ]
+: [ Symbol(k1), Symbol(k3), Symbol(k2) ]
+

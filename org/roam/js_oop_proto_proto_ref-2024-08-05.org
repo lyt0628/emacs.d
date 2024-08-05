@@ -1,0 +1,123 @@
+:PROPERTIES:
+:ID:       ebceadba-c3a0-40b5-86ac-47f286a85298
+:END:
+#+title: js-oop-proto-proto ref
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+
+#+NAME: end-of-proto-end
+#+BEGIN_SRC js :noweb yes :results output
+function Person () {}
+
+console.log(Person.prototype.__proto__ === Object.prototype)
+console.log(Person.prototype.__proto__.constructor === Object)
+console.log(Object.prototype.__proto__ === null)
+console.log(Object.prototype)
+#+END_SRC
+
+
+#+NAME: check-proto
+#+BEGIN_SRC js :noweb yes :results output
+function Person() {}
+
+let p1 = new Person()
+let p2 = new Person()
+
+console.log(p1.__proto__ === Person.prototype)
+console.log(p1.__proto__.constructor === Person)
+console.log(p1 === p2)
+console.log(p1.__proto__ === p2.__proto__)
+#+END_SRC
+
+
+
+
+#+NAME: check-proto-ref
+#+BEGIN_SRC js :noweb yes :results output
+function Person() {}
+
+let p = new Person()
+
+console.log(p instanceof Person)
+console.log(p instanceof Object)
+console.log(Person instanceof Object)
+console.log(Person.prototype instanceof Object)
+#+END_SRC
+
+#+RESULTS:
+: true
+: true
+: true
+: true
+
+
+
+
+#+BEGIN_SRC js :noweb yes :results output
+function SuperType() {
+  this.myname = 'Niclas'
+}
+
+SuperType.prototype.getName = function() {
+  return this.myname
+}
+
+function SubType() {
+  this.age = 18
+}
+
+SubType.prototype = SuperType.prototype
+
+SubType.prototype.getAge = function(){
+  return this.age
+}
+
+let obj = new SubType()
+console.log(obj.getName())
+console.log(obj.getAge())
+console.log(obj.myname)
+console.log(obj.age)
+
+let obj1 = new SuperType()
+
+console.log(obj1.getName())
+console.log(obj1.getAge())
+console.log(obj1.myname)
+console.log(obj1.age)
+
+
+
+console.log(obj instanceof SubType)
+console.log(obj instanceof SuperType)
+console.log(obj instanceof Object)
+
+console.log(SubType.prototype.isPrototypeOf(obj))
+console.log(SuperType.prototype.isPrototypeOf(obj))
+console.log(Object.prototype.isPrototypeOf(obj))
+
+console.log(SuperType.prototype instanceof SuperType)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+undefined
+18
+undefined
+18
+Niclas
+undefined
+Niclas
+undefined
+true
+true
+true
+true
+true
+true
+false
+#+end_example
+
+- mthd can access by all level, but prop define in mthd only access by cur level
+

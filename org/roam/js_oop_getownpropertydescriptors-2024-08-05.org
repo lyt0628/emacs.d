@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       aaed7e07-e846-4a1a-b1f2-c6123e78e2f7
+:END:
+#+title: js-oop-getOwnPropertyDescriptors()
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+* Object.getownPropertyDescriptor(obj) :mpProps
+
+#+BEGIN_SRC js :noweb yes :results output
+let book ={
+year : 2017,
+edition: 1
+}
+
+dstors = Object.getOwnPropertyDescriptors(book)
+console.log(dstors)
+#+END_SRC
+
+#+RESULTS:
+: {
+:   year: { value: 2017, writable: true, enumerable: true, configurable: true },
+:   edition: { value: 1, writable: true, enumerable: true, configurable: true }
+: }
+
+
+
+* See Also
+- [[id:b161be05-2f53-495f-ad54-171f8a8d1136][js-oop-getOwnPropertyDescriptor()]]

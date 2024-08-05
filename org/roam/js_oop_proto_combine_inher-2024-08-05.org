@@ -1,0 +1,57 @@
+:PROPERTIES:
+:ID:       8896fa8e-f0e6-4e22-b96d-9170f02962ff
+:END:
+#+title: js-oop-proto-combine inher
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+
+#+BEGIN_SRC js :noweb yes :results output
+function SuperType(name){
+  // prop
+  this.name = name
+  this.colors = ['red', 'blue', 'orange']
+}
+
+// mthd
+SuperType.prototype.sayName = function(){
+  console.log(this.name)
+}
+
+function SubType(name, age){
+  // ctor inher
+  SuperType.call(this, name)
+  this.age = age
+}
+
+SubType.prototype = new SuperType()
+
+SubType.prototype.sayAge = function(){
+  console.log(this.age)
+}
+
+let obj  = new SubType()
+let obj1  = new SubType()
+
+obj.sayName()
+obj.sayAge()
+
+obj.colors.push('black')
+console.log(obj.colors)
+console.log(obj1.colors)
+
+console.log(obj instanceof SubType)
+console.log(obj instanceof SuperType)
+console.log(obj instanceof Object)
+#+END_SRC
+
+#+RESULTS:
+: undefined
+: undefined
+: [ 'red', 'blue', 'orange', 'black' ]
+: [ 'red', 'blue', 'orange' ]
+: true
+: true
+: true
+

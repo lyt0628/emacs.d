@@ -1,0 +1,87 @@
+:PROPERTIES:
+:ID:       058649a8-576e-435d-9d96-68ca7e7fba72
+:END:
+#+title: js-oop-proto
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+*Index*
+- [[proto-ctor]]
+- [[id:3ef28967-6040-4246-b2d1-cb133ace6948][js-oop-proto-Proto Chaim]]
+- [[id:a19afe4e-07e8-416a-b833-a50d7db1d677][js-oop-proto-isPrototypeOf()&getPrototypeOf()&setPrototypeOf()]]
+- [[id:b306a981-c6bb-4f0e-9d1f-b912d8f70fb2][js-oop-proto-create()]]
+- [[id:4c83c37d-4c48-48f5-b261-87df41a7cb7c][js-oop-proto-Overwrite]]
+- [[id:37a26c18-aef2-4d02-9811-5264fae40ad5][js-oop-proto-hasOwnProperty()]]
+
+
+#+NAME: proto-ctor
+#+BEGIN_SRC js :noweb yes :results output
+function Person(){}
+
+Person.prototype.name = 'Nicolas'
+Person.prototype.age = 200
+Person.prototype.sayHello = function(){
+  console.log("Hello", this.name)
+}
+
+
+let nic = new Person()
+
+console.log(nic.name)
+console.log(nic.age)
+nic.sayHello()
+
+let nic2 = new Person()
+console.log(nic.name == nic2.name)
+console.log(nic === niC2)
+#+END_SRC
+
+
+
+#+NAME: proto-obj
+#+BEGIN_SRC js :noweb yes :results output
+function Person () {}
+
+console.log(typeof Person.prototype)
+console.log(Person.prototype)
+console.log(Person.prototype.constructor === Person)
+#+END_SRC
+
+
+#+NAME: proto-lit
+#+BEGIN_SRC js :noweb yes :results output
+
+function Person(){}
+
+Person.prototype = {
+  name: 'Niclas'
+}
+
+let p =  new Person()
+
+console.log(p instanceof Person)
+console.log(p instanceof Object)
+
+console.log(p.constructor === Person)
+console.log(p.constructor === Object)
+#+END_SRC
+
+#+RESULTS: proto-lit
+
+
+
+#+NAME: proto-lit
+#+BEGIN_SRC js :noweb yes :results output
+
+function Person(){}
+
+Person.prototype = {
+  name: 'Niclas'
+}
+Object.defineProperty(Person.prototype, 'constructor', {
+  value: Person,
+  enumerable: false
+})
+#+END_SRC
+

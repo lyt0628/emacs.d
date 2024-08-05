@@ -1,0 +1,207 @@
+:PROPERTIES:
+:ID:       597f30ff-3993-4837-80f3-0cb7b17879a5
+:END:
+#+title: js-oop-candy
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+*Index*
+- [[prop-value]]
+- [[prop-value2]]
+- [[cnt-prop]]
+- [[cnt-prop2]]
+- [[mthd]]
+- [[cnt-mthd-name]]
+- [[decons]]
+- [[decons2]]
+- [[decons3]]
+- [[decons4]]
+
+  
+#+NAME: prop-value
+#+BEGIN_SRC js :noweb yes :results output
+let name = 'Matt'
+
+let obj = {
+  name
+}
+
+console.log(obj.name)
+#+END_SRC
+
+#+RESULTS:
+: Matt
+
+
+
+#+NAME: prop-value2
+#+BEGIN_SRC js :noweb yes :results output
+function makeHuman(name){
+  return {
+    name
+  }
+}
+
+let obj = makeHuman('Matt')
+
+console.log(obj.name)
+#+END_SRC
+
+#+RESULTS:
+: Matt
+
+
+#+NAME: cnt-prop
+#+BEGIN_SRC js :noweb yes :results output
+propKey = 'name'
+
+let obj = {
+  [propKey] : 'Matt'
+}
+
+console.log(obj.name)
+#+END_SRC
+
+
+#+NAME: cnt-prop2
+#+BEGIN_SRC js :noweb yes :results output
+propKey = 'name'
+
+cnt = 0
+function getUniKey(key){
+  return `${key}_${cnt++}`
+}
+
+let obj = {
+  [getUniKey(propKey)] : 'Matt',
+  [getUniKey(propKey)] : 'Koj',
+  [getUniKey(propKey)] : 'Falisc'
+}
+
+console.log(obj.name_0)
+console.log(obj.name_1)
+console.log(obj.name_2)
+#+END_SRC
+
+#+RESULTS: cnt-prop2
+: Matt
+: Koj
+: Falisc
+
+
+#+NAME: mthd
+#+BEGIN_SRC js :noweb yes :results output
+let obj = {
+  say: function(){
+    console.log("1")
+  },
+  say2(){
+    console.log(2)
+  }
+}
+
+obj.say()
+obj.say2()
+#+END_SRC
+
+#+RESULTS: mthd
+: 1
+: 2
+
+
+
+#+NAME: cnt-mthd-name
+#+BEGIN_SRC js :noweb yes :results output
+mthd_name = 'say'
+mthd_name2 = 'say2'
+
+let obj = {
+  [mthd_name]: function(){
+    console.log("1")
+  },
+  [mthd_name2](){
+    console.log("2")
+  }
+
+}
+
+obj.say()
+obj.say2()
+#+END_SRC
+
+#+RESULTS:
+: 1
+: 2
+
+
+#+NAME: decons
+#+BEGIN_SRC js :noweb yes :results output
+let obj = {
+  name: 'matt',
+  age : 18,
+  address: 'US'
+}
+
+let {name:n, age:a} = obj
+
+console.log(n)
+console.log(a)
+#+END_SRC
+
+#+NAME: decons2
+#+BEGIN_SRC js :noweb yes :results output
+let obj = {
+  name: 'matt',
+  age : 18,
+  address: 'US'
+}
+
+let {name, age } = obj
+
+console.log(name)
+console.log(age)
+#+END_SRC
+
+#+RESULTS: decons2
+: matt
+: 18
+: US
+
+#+NAME: decons3
+#+BEGIN_SRC js :noweb yes :results output
+let obj = {
+  name: 'matt',
+  age : 18,
+  address: 'US'
+}
+
+let {name, age, job='king'} = obj
+
+console.log(name)
+console.log(age)
+console.log(job)
+#+END_SRC
+
+#+RESULTS: decons3
+: matt
+: 18
+: king
+
+
+#+NAME: decons4
+#+BEGIN_SRC js :noweb yes :results output
+let personName, personAge
+
+let obj = {
+  name: 'Matt',
+  age: 18
+}
+
+({name: personName, age: personAge} = obj)
+
+console.log(personName)
+console.log(personAge)
+#+END_SRC
+
+#+RESULTS:
+

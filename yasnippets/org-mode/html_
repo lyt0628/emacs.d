@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: html_
+# key: html_
+# --
+
+#+BEGIN_SRC html :noweb yes
+<body>
+$1
+</body>
+<script>
+$2
+</script>
+#+END_SRC
+

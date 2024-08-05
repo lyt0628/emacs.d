@@ -1,0 +1,46 @@
+:PROPERTIES:
+:ID:       4c83c37d-4c48-48f5-b261-87df41a7cb7c
+:END:
+#+title: js-oop-proto-Overwrite
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+
+#+NAME: overwt
+#+BEGIN_SRC js :noweb yes :results output
+function Person() {}
+Person.prototype.name = 'Nic'
+
+let p = new Person()
+p.name = 'Matt'
+let p1 = new Person()
+
+console.log(p.name)
+console.log(p1.name)
+#+END_SRC
+
+#+RESULTS:
+: Matt
+: Nic
+
+#+NAME: del-overwt
+#+BEGIN_SRC js :noweb yes :results output
+function Person() {}
+Person.prototype.name = 'Nic'
+
+let p = new Person()
+p.name = 'Matt'
+
+console.log(p.name)
+
+delete p.name
+
+console.log(p.name)
+#+END_SRC
+
+#+RESULTS: del-overwt
+: Matt
+: Nic
+
+

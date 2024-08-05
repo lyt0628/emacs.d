@@ -1,0 +1,64 @@
+:PROPERTIES:
+:ID:       a19afe4e-07e8-416a-b833-a50d7db1d677
+:END:
+#+title: js-oop-proto-isPrototypeOf()&getPrototypeOf()&setPrototypeOf()
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+#+NAME: isPrototypeOf
+#+BEGIN_SRC js :noweb yes :results output
+function Person() {}
+
+let p = new Person()
+
+console.log(Person.prototype.isPrototypeOf(p))
+console.log(p.__proto__.isPrototypeOf(p))
+#+END_SRC
+
+#+RESULTS:
+: true
+: true
+
+
+#+NAME: getPrototypeOf
+#+BEGIN_SRC js :noweb yes :results output
+function Person() {}
+
+Person.prototype.name = 'Niclas'
+
+let p = new Person()
+
+
+console.log(Object.getPrototypeOf(p) === Person.prototype)
+console.log(Object.getPrototypeOf(p).name)
+#+END_SRC
+
+#+RESULTS: getPrototypeOf
+: true
+: Niclas
+
+#+BEGIN_SRC js :noweb yes :results output
+let p = {
+  name: 'Matt'
+}
+
+let p0 = {
+  age: 18
+}
+
+console.log(Object.getPrototypeOf(p))
+
+Object.setPrototypeOf(p, p0)
+console.log(Object.getPrototypeOf(p) === p0)
+
+console.log(p.name)
+console.log(p.age)
+#+END_SRC
+
+#+RESULTS:
+: [Object: null prototype] {}
+: true
+: Matt
+: 18
+
+

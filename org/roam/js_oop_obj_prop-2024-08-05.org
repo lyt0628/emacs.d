@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       bcf16c51-4d32-436b-8f26-207ddb4bf038
+:END:
+#+title: js-oop-obj-prop
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+|-----------+--------------------------------------------------------------------|
+| Prop Type | Note                                                               |
+|-----------+--------------------------------------------------------------------|
+| Data Prop | [Cfg-able](default true) : can prop be del, redef, mod, as-visitor |
+|           | [wt-able](default true) : can prop be mod                          |
+|           | [enum-able](default true) : can it by for-in                       |
+|           | [value](default undifine) : actual value                           |
+|           | see also:                                                          |
+|           | [[id:a6a73334-0382-4108-abd6-a187febb51d3][js-oop-defineProperty]]                                              |
+|-----------+--------------------------------------------------------------------|
+| Visitor   | Prop                                                               |
+|           | [cfg-able]                                                         |
+|           | [enum-able]                                                        |
+|           | [get] (default undefine) : fn to get                               |
+|           | [set] (default undefine) : fn to set value                         |
+|           | visitor prop only set by [[id:a6a73334-0382-4108-abd6-a187febb51d3][defineProperty]]                                         |
+|-----------+--------------------------------------------------------------------|
+
+

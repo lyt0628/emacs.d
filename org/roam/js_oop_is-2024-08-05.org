@@ -1,0 +1,62 @@
+:PROPERTIES:
+:ID:       f5bcd216-7ead-47f9-95f2-c9079b7a4c60
+:END:
+#+title: js-oop-is()
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+#+BEGIN_SRC js :noweb yes :results output
+console.log(Object.is(true, 1))
+console.log(Object.is({}, {}))
+console.log(Object.is("2", 2))
+
+
+console.log(Object.is(+0, -0))
+console.log(Object.is(+0, 0))
+console.log(Object.is(0, -0))
+
+console.log(NaN === NaN)
+console.log(isNaN(NaN))
+
+
+console.log(Object.is(+0, -0))
+console.log(Object.is(+0, 0))
+console.log(Object.is(0, -0))
+
+console.log(Object.is(NaN, NaN))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+false
+false
+false
+false
+true
+false
+false
+true
+false
+true
+false
+true
+#+end_example
+
+
+#+BEGIN_SRC js :noweb yes :results output
+function recurIs(v, ...rest){
+  return Object.is(v, rest[0]) && (rest.length < 2 || recurIs(...rest))
+}
+
+console.log(recurIs(1, 1, 1))
+console.log(recurIs(1, 1, 2))
+#+END_SRC
+
+#+RESULTS:
+: true
+: false
+
+
+
+* See Also
+- [[id:4d8c390f-60b1-4153-9e47-3888be8c2527][js-lang-===]]

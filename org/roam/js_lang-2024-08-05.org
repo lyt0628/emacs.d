@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       4d8c390f-60b1-4153-9e47-3888be8c2527
+:END:
+#+title: js-lang-===
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+
+* See Also
+- [[id:f5bcd216-7ead-47f9-95f2-c9079b7a4c60][js-oop-is()]]

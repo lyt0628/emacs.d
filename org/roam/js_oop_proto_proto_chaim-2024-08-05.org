@@ -1,0 +1,68 @@
+:PROPERTIES:
+:ID:       3ef28967-6040-4246-b2d1-cb133ace6948
+:END:
+#+title: js-oop-proto-Proto Chaim(proto inher)
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+
+#+BEGIN_SRC js :noweb yes :results output
+function SuperType() {
+  this.myname = 'Niclas'
+}
+
+SuperType.prototype.getName = function() {
+  return this.myname
+}
+
+function SubType() {
+  this.age = 18
+}
+
+// extend by proto-chaim
+SubType.prototype = new SuperType()
+
+SubType.prototype.getAge = function(){
+  return this.age
+}
+
+let obj = new SubType()
+console.log(obj.getName())
+console.log(obj.getAge())
+console.log(obj.myname)
+console.log(obj.age)
+
+let obj1 = new SuperType()
+
+console.log(obj1.getName())
+// console.log(obj1.getAge())
+console.log(obj1.myname)
+// console.log(obj1.age)
+
+
+console.log(obj instanceof SubType)
+console.log(obj instanceof SuperType)
+console.log(obj instanceof Object)
+
+console.log(SubType.prototype.isPrototypeOf(obj))
+console.log(SuperType.prototype.isPrototypeOf(obj))
+console.log(Object.prototype.isPrototypeOf(obj))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+Niclas
+18
+Niclas
+18
+Niclas
+Niclas
+true
+true
+true
+true
+true
+true
+#+end_example
+

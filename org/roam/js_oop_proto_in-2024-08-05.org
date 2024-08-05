@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       991871ba-46cf-4305-a642-2752d57fd3fb
+:END:
+#+title: js-oop-proto-in
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+#+BEGIN_SRC js :noweb yes :results output
+function Person() {}
+
+Person.prototype.name = 'Niclas'
+
+let p = new Person()
+p.name = 'Matt'
+
+console.log('name' in p)
+
+delete p.name
+console.log('name' in p)
+
+delete Person.prototype.name
+console.log('name' in p)
+#+END_SRC
+
+#+RESULTS:
+: true
+: true
+: false
+
+
+* See Also
+- [[id:37a26c18-aef2-4d02-9811-5264fae40ad5][js-oop-proto-hasOwnProperty()]]

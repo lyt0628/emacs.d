@@ -1,0 +1,62 @@
+:PROPERTIES:
+:ID:       b8a8818f-781b-44e7-92a4-a23332ef7906
+:END:
+#+title: js-oop-proto-ctor inher
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+#+BEGIN_SRC js :noweb yes :results output
+function SuperType(){
+  this.colors = ['red', 'green', 'blue']
+}
+
+function SubType(){
+  // Extend by Call ctor again
+  SuperType.call(this)
+}
+
+let obj = new SubType()
+let obj1 = new SubType()
+
+obj.colors.push('black')
+console.log(obj.colors)
+console.log(obj1.colors)
+
+
+
+console.log(obj instanceof SubType)
+console.log(obj instanceof SuperType)
+console.log(obj instanceof Object)
+
+#+END_SRC
+
+#+RESULTS:
+: [ 'red', 'green', 'blue', 'black' ]
+: [ 'red', 'green', 'blue' ]
+: true
+: false
+: true
+
+
+#+BEGIN_SRC js :noweb yes :results output
+function SuperType(){
+  this.sayHello = function(){
+    console.log('Hello')
+  }
+}
+
+
+function SubType(){
+  // Extend by Call ctor again
+  SuperType.call(this)
+}
+
+let obj = new SubType()
+
+obj.sayHello()
+#+END_SRC
+
+#+RESULTS:
+: Hello
+
