@@ -20,6 +20,7 @@
 (unbind-key "C-k") ; kill-line
 (unbind-key "C-x o") ; other-window
 
+(unbind-key "C-l") ; recenter-top-bottom
 (provide 'init-keymap-reset)
 
 

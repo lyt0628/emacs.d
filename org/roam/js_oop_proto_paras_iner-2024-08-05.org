@@ -25,4 +25,7 @@ let obj = parasCreate(initObj)
 obj.sayHello()
 #+END_SRC
 
+#+RESULTS:
+: Hello
+
 

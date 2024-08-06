@@ -11,9 +11,14 @@
  '(org-src-preserve-indentation nil)
  '(org-src-tab-acts-natively nil)
  '(package-selected-packages
-   '(bookmark-frecency use-package usepackage-hydra clj-refactor cider clojure-mode org-roam-ui org-download org-roam lua-mode lsp-treemacs treemacs-projectile treemacs counsel-projectile projectile dap-mode lsp-ivy lsp-ui lsp-mode flycheck yasnippet-snippets yasnippet company-tabnine company-box company magit pdf-tools rainbow-delimiters highlight-symbol tiny dashboard marginalia which-key amx undo-tree counsel use-package-hydra hydra plantuml-mode ob-latex-as-png graphviz-dot-mode ob-prolog ob-elixir ob-go ob-rust uuidgen all-the-icons evil))
+   '(company-go auto-complete-config go-autocomplete go-mode-load bookmark-frecency use-package usepackage-hydra clj-refactor cider clojure-mode org-roam-ui org-download org-roam lua-mode lsp-treemacs treemacs-projectile treemacs counsel-projectile projectile dap-mode lsp-ivy lsp-ui lsp-mode flycheck yasnippet-snippets yasnippet company-tabnine company-box company magit pdf-tools rainbow-delimiters highlight-symbol tiny dashboard marginalia which-key amx undo-tree counsel use-package-hydra hydra plantuml-mode ob-latex-as-png graphviz-dot-mode ob-prolog ob-elixir ob-go ob-rust uuidgen all-the-icons evil))
  '(safe-local-variable-values
-   '((org-roam-db-location . "/home/lyt0628/data/emacs.d/org/roam/org-roam.db")
+   '((vc-default-patch-addressee . "bug-gnu-emacs@gnu.org")
+     (etags-regen-ignores "test/manual/etags/")
+     (etags-regen-regexp-alist
+      (("c" "objc")
+       "/[ \11]*DEFVAR_[A-Z_ \11(]+\"\\([^\"]+\\)\"/\\1/" "/[ \11]*DEFVAR_[A-Z_ \11(]+\"[^\"]+\",[ \11]\\([A-Za-z0-9_]+\\)/\\1/"))
+     (org-roam-db-location . "/home/lyt0628/data/emacs.d/org/roam/org-roam.db")
      (org-roam-directory . "/home/lyt0628/data/emacs.d/org/roam")))
  '(yas-indent-line 'fixed))
 (custom-set-faces

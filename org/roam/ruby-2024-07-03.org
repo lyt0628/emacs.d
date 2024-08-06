@@ -20,6 +20,12 @@
   #+END_SRC
 
   #+RESULTS:
+  : 3.2
+  : 12
+  : 2
+  : 8
+  : true
+  : false
 
 
 - 2  

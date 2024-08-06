@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       d4b71946-2366-453e-a1c7-dbb0f5a2d04f
+:END:
+#+title: js-oop-reflect-apply
+#+date: [2024-08-06 二]
+#+last_modified:  
+
+
+
+* Reflect.apply(Fn, thisVal, args)
+
+
+* See Also
+- 

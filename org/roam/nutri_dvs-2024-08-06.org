@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       7cc30aba-5ebd-4b70-8096-6056e6e8089e
+:END:
+#+title: nutri-DVs
+#+date: [2024-08-06 二]
+#+last_modified:  
+
+*RDIs*
+vit&elem
+| 
+
+*RDVs*

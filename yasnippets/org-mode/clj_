@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: clj_
+# key: clj_
+# --
+
+#+BEGIN_SRC clojure  :session clj
+$0
+#+END_SRC
+
+

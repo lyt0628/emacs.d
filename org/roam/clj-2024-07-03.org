@@ -9,8 +9,8 @@
 
 
 #+BEGIN_SRC clojure  :session clj
-
+42
 #+END_SRC
 
 #+RESULTS:
-: Please reevaluate when nREPL is connected
+: 42

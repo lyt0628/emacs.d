@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       f6b999f3-3fe1-47df-84c6-f820c3b270d2
+:END:
+#+title: nutri-food replace
+#+date: [2024-08-06 二]
+#+last_modified:  
+
+
+
+|-----+-----+------|
+| ori | now | note |
+|-----+-----+------|
+|     |     |      |
+|-----+-----+------|

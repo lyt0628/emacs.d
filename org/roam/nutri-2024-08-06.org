@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       c7390bc7-b723-4a85-96e2-577f54bcb851
+:END:
+#+title: nutri
+#+date: [2024-08-06 二]
+#+last_modified:  
+
+[[https://ndb.nal.usda.gov/ndb/search/list]]
+
+
+1 kcal = 4.19 kj
+
+
+
+#+NAME: Conv-Kcal-To-KJ
+#+HEADER: :var value=1
+#+BEGIN_SRC  python 
+return val*4.19
+#+END_SRC
+
+
+
+DRIS(elem ref)
+
+EERs(Ene ref)
+

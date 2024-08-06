@@ -6,3 +6,232 @@
 #+date: [2024-07-11 四]
 #+last_modified: [2024-07-11 四 22:14]
 
+
+#+BEGIN_SRC js :noweb yes :results output
+class Person{}
+
+const Anim = class{}
+#+END_SRC
+
+#+RESULTS:
+
+
+#+BEGIN_SRC js :noweb yes :results output
+console.log(FnExp)
+var FnExp = function() {}
+console.log(FnExp)
+
+console.log(FnDecl)
+function FnDecl() {}
+console.log(FnDecl)
+
+console.log(ClsExp)
+var ClsExp = class {}
+console.log(ClsExp)
+
+console.log(ClsDecl)
+class ClsDecl {}
+console.log(ClsDecl)
+
+
+#+END_SRC
+
+#+RESULTS:
+: undefined
+: [Function: FnExp]
+: [Function: FnDecl]
+: [Function: FnDecl]
+: undefined
+: [class ClsExp]
+
+
+#+BEGIN_SRC js :noweb yes :results output
+{
+  function FnDecl() {}
+  class ClsDecl {}
+}
+
+console.log(FnDecl)
+console.log(ClsDecl)
+#+END_SRC
+
+#+RESULTS:
+: [Function: FnDecl]
+
+
+#+BEGIN_SRC js :noweb yes :results output
+class Person{
+  constructor(){}
+
+  foo(){}
+  get bar(){}
+  set baz(val){}
+  static qux() {}
+}
+#+END_SRC
+
+#+RESULTS:
+
+
+
+#+BEGIN_SRC js :noweb yes :results output
+class Anim{
+  constructor(){
+    console.log("Anim ctor")
+    this.color = 'red'
+  }
+}
+
+let cat = new Anim()
+let dog = new Anim
+
+console.log(cat.color)
+console.log(dog)
+#+END_SRC
+
+#+RESULTS:
+: Anim ctor
+: Anim ctor
+: red
+: Anim { color: 'red' }
+
+#+BEGIN_SRC js :noweb yes :results output
+class Person{
+  constructor (name){
+    this.name = name || null
+  }
+}
+
+let p = new Person
+console.log(p.name)
+
+let p1 = new Person('Matt')
+console.log(p1.name)
+#+END_SRC
+
+#+RESULTS:
+: null
+: Matt
+
+
+#+BEGIN_SRC js :noweb yes :results output
+class Person{
+  constructor(overwrite){
+    // this = {}
+  
+    this.name = 'Matt'
+    if(overwrite){
+      return {
+        name : 'Niclas'
+      }
+    }
+
+    // return this 
+  }
+}
+
+let  p = new Person(true)
+console.log(p instanceof Person)
+
+let p1 = new Person
+console.log(p1 instanceof Person)
+
+
+let p2 = Person()
+console.log(p1 instanceof Person)
+
+#+END_SRC
+
+#+RESULTS:
+: false
+: true
+
+#+BEGIN_SRC js :noweb yes :results output
+class Person{}
+
+console.log(Person)
+console.log(typeof Person)
+console.log(Person instanceof Function)
+
+console.log(Person.constructor)
+console.log(Person.prototype)
+console.log(Person.prototype.constructor)
+
+let p = new Person
+console.log(p instanceof Person)
+#+END_SRC
+
+#+RESULTS:
+: [class Person]
+: function
+: true
+: function
+: [Function: Function]
+: {}
+: [class Person]
+: true
+
+
+
+#+BEGIN_SRC js :noweb yes :results output
+function ctor(){
+}
+
+function Cls(){
+  ctor()
+  this.ctor = ctor
+}
+
+let obj = new Cls()
+let obj2 = new obj.ctor()
+
+console.log(obj instanceof Cls)
+console.log(obj instanceof ctor)
+
+console.log(obj2 instanceof ctor)
+#+END_SRC
+
+#+RESULTS:
+: true
+: false
+: true
+
+
+
+#+BEGIN_SRC js :noweb yes :results output
+class Person{
+  constructor (){
+  }
+}
+
+let obj = new Person
+let obj2 = new obj.constructor
+
+let obj3 = new Person.constructor
+
+console.log(obj.constructor === Person)
+console.log(obj instanceof Person)
+console.log(obj instanceof Person.constructor)
+
+console.log(obj2.constructor === Person)
+console.log(obj2 instanceof Person)
+console.log(obj2 instanceof Person.constructor)
+
+console.log(obj3.constructor === Person.constructor)
+console.log(obj3 instanceof Person)
+console.log(obj3 instanceof Person.constructor)
+
+
+#+END_SRC
+
+#+RESULTS:
+: true
+: true
+: false
+: true
+: true
+: false
+: true
+: false
+: true
+

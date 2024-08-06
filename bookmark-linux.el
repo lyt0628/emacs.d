@@ -2,7 +2,13 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("zlib-readme"
+(("launch.json template"
+ (filename . "~/.emacs.d/.extension/vscode/cpptools/extension/package.json")
+ (front-context-string . "  \"name\": \"cppto")
+ (rear-context-string)
+ (position . 3)
+ (last-modified 26289 38786 448485 17000))
+("zlib-readme"
  (filename . "~/dev/clone/zlib/README")
  (front-context-string . "zlib 1.3.1.1 is ")
  (rear-context-string . "ESSION LIBRARY\n\n")
@@ -16,11 +22,11 @@
  (last-modified 26285 51673 810749 223000)
  (annotation . "\nthe README of redis."))
 ("org-capture-last-stored"
- (filename . "~/data/emacs.d/org/roam/sitemap_asm-2024-08-03.org")
+ (filename . "~/data/emacs.d/org/roam/ruby_str-2024-08-06.org")
  (front-context-string)
  (rear-context-string . "ast_modified:  \n")
- (position . 131)
- (last-modified 26285 61268 27446 868000))
+ (position . 128)
+ (last-modified 26289 58953 396383 776000))
 ("elisp-dash"
  (filename . "~/.emacs.d/elpa/dash-20240405.946/dash.el")
  (front-context-string . "(eval-when-compi")

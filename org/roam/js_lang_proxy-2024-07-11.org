@@ -1,8 +1,103 @@
 :PROPERTIES:
 :ID:       230f4439-3115-4a66-a5b3-fc21eec05705
 :END:
-#+title: js-lang-proxy
+#+title: js-oop-proxy
 #+filetags: :js:
 #+date: [2024-07-11 四]
 #+last_modified: [2024-07-11 四 22:14]
+
+
+#+NAME: empty-handler
+#+BEGIN_SRC js :noweb yes :results output
+let target = {
+  id: 1
+}
+
+let handler ={}
+
+let proxy = new Proxy(target, handler)
+
+console.log(proxy.id)
+console.log(proxy.id === target.id)
+
+proxy.id = 2
+console.log(target.id)
+
+console.log(target.hasOwnProperty('id'))
+console.log(proxy.hasOwnProperty('id'))
+
+console.log(proxy.__proto__)
+console.log(target.__proto__)
+
+console.log(proxy === target)
+#+END_SRC
+
+#+RESULTS:
+: 1
+: true
+: 2
+: true
+: true
+: [Object: null prototype] {}
+: [Object: null prototype] {}
+: false
+
+
+
+
+#+BEGIN_SRC js :noweb yes :results output
+
+let target = {
+  id: 1
+}
+
+let handler ={
+  get(){
+    return "get overwrite"
+  }
+}
+
+
+let proxy =  new Proxy(target, handler)
+
+console.log(proxy.id)
+console.log(proxy['id'])
+console.log(Object.create(proxy)['id'])
+#+END_SRC
+
+#+RESULTS:
+: get overwrite
+: get overwrite
+: get overwrite
+
+
+
+
+#+BEGIN_SRC js :noweb yes :results output
+
+let target = {
+  id: 1
+}
+
+let handler ={
+  get(trapTaget, prop, proxyObj){
+    console.log(trapTaget === target)
+    console.log(prop)
+    console.log(proxyObj === proxy)
+    return trapTaget[prop]
+  }
+}
+
+
+let proxy =  new Proxy(target, handler)
+
+console.log(proxy.id)
+#+END_SRC
+
+#+RESULTS:
+: true
+: id
+: true
+: 1
+
 

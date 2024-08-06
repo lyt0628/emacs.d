@@ -1,0 +1,58 @@
+:PROPERTIES:
+:ID:       748e4585-fe76-4a86-85dd-95fadb07a8be
+:END:
+#+title: js-async-setTimeout()
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+#+NAME: setTimeout
+#+BEGIN_SRC js :noweb yes :results output
+function double(delay, value){
+   setTimeout(() => setTimeout(console.log, 0, value*2), delay)
+}
+
+double(1000, 3)
+#+END_SRC
+
+#+RESULTS:
+: 6
+
+
+#+NAME: async-cb
+#+BEGIN_SRC js :noweb yes :results output
+function double(delay,value, cb){
+   setTimeout(() => cb(value*2), delay)
+}
+
+double(1000, 3, (value)=>console.log(value))
+#+END_SRC
+
+#+RESULTS:
+: 6
+
+#+NAME: async-exception
+#+BEGIN_SRC js :noweb yes :results output
+function double(delay,value, suc, fail){
+   setTimeout(() =>{
+     try {
+       if(typeof value != 'number'){
+         throw 'value must be a number'
+       }
+       suc(value*2)
+     } catch (e){
+       fail(e)
+     }
+   }
+   , delay)
+}
+
+const sucCB = (v) => console.log(v)
+const failCB = (e) => console.log(e)
+double(1000, 3, sucCB, failCB)
+double(1000, '3', sucCB, failCB)
+#+END_SRC
+
+#+RESULTS: async-exception
+: 6
+: value must be a number
+

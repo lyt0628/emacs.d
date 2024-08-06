@@ -5,3 +5,10 @@
 #+date: [2024-07-04 四]
 #+last_modified: [2024-07-04 四 15:36]
 
+
+#+BEGIN_SRC go :imports '("fmt" )
+fmt.Print("Hello")
+#+END_SRC
+
+#+RESULTS:
+: Hello

@@ -1,0 +1,75 @@
+:PROPERTIES:
+:ID:       28170442-90cc-4cf9-a3d3-28ab203e8ff7
+:END:
+#+title: js-oop-proxy-reflect
+#+date: [2024-08-06 二]
+#+last_modified:  
+
+
+
+#+BEGIN_SRC js :noweb yes :results output
+
+let target = {
+  id: 1,
+  name: 'Matt',
+  age: '29'
+}
+
+let handler ={
+  get: Reflect.get
+}
+
+
+let proxy =  new Proxy(target, handler)
+
+console.log(proxy.id)
+console.log(proxy.name)
+console.log(proxy.age)
+
+proxy = new Proxy(target, Reflect)
+console.log(proxy.id)
+console.log(proxy.name)
+console.log(proxy.age)
+
+
+#+END_SRC
+
+#+RESULTS:
+: 1
+: Matt
+: 29
+: 1
+: Matt
+: 29
+
+
+#+BEGIN_SRC js :noweb yes :results output
+
+let target = {
+  id: 1,
+  name: 'Matt',
+  age: '29'
+}
+
+let handler ={
+  get(trapTaget, prop, proxyObj) {
+    subfix = ''
+    if(prop == 'name'){
+      subfix = ' * doglas'
+    }
+
+    return Reflect.get(...arguments) + subfix
+  }
+}
+
+
+let proxy =  new Proxy(target, handler)
+
+console.log(proxy.name)
+
+
+#+END_SRC
+
+#+RESULTS:
+: Matt * doglas
+

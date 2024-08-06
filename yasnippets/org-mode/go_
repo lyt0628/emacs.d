@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: go_
+# key: go_
+# --
+
+#+BEGIN_SRC go :imports '("fmt" $1)
+$0
+#+END_SRC

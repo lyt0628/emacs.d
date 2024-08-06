@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       6297c7b9-87dd-4868-a1b1-91cadbb41452
+:END:
+#+title: c-tool-automake
+#+date: [2024-08-06 二]
+#+last_modified:  
+

@@ -1,0 +1,56 @@
+:PROPERTIES:
+:ID:       947c21a5-37e8-4445-8218-3d88c46e9338
+:END:
+#+title: js-oop-proto-paras combine inher
+#+date: [2024-08-05 一]
+#+last_modified:  
+
+
+#+BEGIN_SRC js :noweb yes :results output
+function parasInher(subType, superType){
+  // paras proto
+  let proto = Object.create(superType.prototype)
+
+  proto.constructor = subType
+  subType.prototype = proto
+}
+
+function SuperType(name){
+  this.name = name
+}
+
+SuperType.prototype.sayName = function(){
+  console.log(this.name)
+}
+
+function SubType(name, age){
+  SuperType.call(this, name)
+  this.age = age
+}
+
+parasInher(SubType, SuperType)
+
+SubType.prototype.sayAge = function(){
+  console.log(this.age)
+}
+
+let obj = new SubType('Matt', 18)
+
+obj.sayName()
+obj.sayAge()
+
+console.log(obj instanceof SubType)
+console.log(obj instanceof SuperType)
+console.log(obj instanceof Object)
+
+
+#+END_SRC
+
+#+RESULTS:
+: Matt
+: 18
+: true
+: true
+: true
+
+

@@ -1,0 +1,43 @@
+:PROPERTIES:
+:ID:       29f5365c-9baf-4298-b4f8-755144a51d92
+:END:
+#+title: js-oop-reflect-casc proxy
+#+date: [2024-08-06 二]
+#+last_modified:  
+
+
+#+BEGIN_SRC js :noweb yes :results output
+let target = {
+  id: 666
+}
+
+let handler = {
+  get(){
+    console.log("0")
+    return Reflect.get(...arguments)
+  }
+}
+
+let handler1 = {
+  get(){
+    console.log("1")
+    return Reflect.get(...arguments)
+  }
+}
+
+let proxy = new Proxy(target, handler)
+let proxy1 = new Proxy(proxy, handler1)
+
+console.log(proxy1.id)
+console.log(target.id === proxy1.id)
+#+END_SRC
+
+#+RESULTS:
+: 1
+: 0
+: 666
+: 1
+: 0
+: true
+
+

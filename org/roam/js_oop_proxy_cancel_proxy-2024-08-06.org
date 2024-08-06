@@ -1,0 +1,32 @@
+:PROPERTIES:
+:ID:       75f73805-a37b-4d1f-928c-41e23c249e86
+:END:
+#+title: js-oop-proxy-revocable proxy
+#+date: [2024-08-06 二]
+#+last_modified:
+
+#+BEGIN_SRC js :noweb yes :results output
+let target = {
+  id: 1
+}
+
+let handler ={
+  get() {
+    return 2
+  }
+  
+}
+
+
+let {proxy, revoke} = Proxy.revocable(target, handler)
+console.log(proxy.id)
+
+revoke()
+console.log(proxy.id)
+#+END_SRC
+
+#+RESULTS:
+: 2
+
+
+

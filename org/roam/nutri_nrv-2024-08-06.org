@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       d1f08b82-0b06-43ca-a673-a910793cc8c0
+:END:
+#+title: nutri-NRVs(nutri ref val)
+#+date: [2024-08-06 二]
+#+last_modified:  
+

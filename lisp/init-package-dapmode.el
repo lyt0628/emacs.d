@@ -30,9 +30,6 @@
 (global-set-key (kbd "C-z d") 'hydra-dapmode/body)
 
 
-;;; C
-(require 'dap-gdb-lldb)
-
 
 (provide 'init-package-dapmode)
 

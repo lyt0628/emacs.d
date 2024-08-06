@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       33747680-c095-4d99-adc0-6610e12466bc
+:END:
+#+title: nutri-6elem
+#+date: [2024-08-06 二]
+#+last_modified:  
+
+1. 碳水(more, ene), 谷物，小麦，水果，豆类，糖
+2. 蛋白质(morem, ene)
+3. 脂质(more, ene)
+4. 维生素(less)
+5. 矿生素(less)
+6. 水(more)
+
+
+- phyto 植物素
+- zooch 动物素
