@@ -7,6 +7,15 @@
 #+last_modified: [2024-07-11 四 22:14]
 
 
+*Index*
+- [[id:28170442-90cc-4cf9-a3d3-28ab203e8ff7][js-oop-proxy-reflect]]
+- [[id:75f73805-a37b-4d1f-928c-41e23c249e86][js-oop-proxy-revocable proxy]]
+- [[id:14793e5f-a44c-4061-bc2a-f43daf0979b9][js-oop-proxy-this]]
+- [[id:88b22c59-6ce9-4168-8d96-115d6a73c7b2][js-oop-proxy-inner prop]]
+- [[id:4b2ec3c3-847a-4c39-91d5-a823fe089077][js-oop-proxy-trapper]]
+- [[id:b411a7d3-8aa9-4c7b-a064-83f97fd1e0f2][js-oop-proxy-model]]
+
+  
 #+NAME: empty-handler
 #+BEGIN_SRC js :noweb yes :results output
 let target = {

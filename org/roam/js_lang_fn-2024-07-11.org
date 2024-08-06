@@ -6,3 +6,25 @@
 #+date: [2024-07-11 四]
 #+last_modified: [2024-07-11 四 22:14]
 
+
+#+BEGIN_SRC js :noweb yes :results output
+function add(num1, num2){
+  return num1+num2
+}
+
+const sum = function (num1, num2){
+  return num1 + num2
+}
+
+const plus = new Function("num1", "num2", "return num1 + num2")
+
+console.log(add(1, 2))
+console.log(sum(1, 2))
+console.log(plus(1, 2))
+#+END_SRC
+
+#+RESULTS:
+: 3
+: 3
+: 3
+

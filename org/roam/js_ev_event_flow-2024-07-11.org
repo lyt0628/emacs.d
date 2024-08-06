@@ -6,3 +6,7 @@
 #+date: [2024-07-11 四]
 #+last_modified: [2024-07-11 四 22:14]
 
+* Bubble(better)
+
+
+* Trapper

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       38ebcf73-c3fa-48fc-be55-ab330cabf563
+:END:
+#+title: js-lang-fn-arg
+#+date: [2024-08-07 三]
+#+last_modified:  
+

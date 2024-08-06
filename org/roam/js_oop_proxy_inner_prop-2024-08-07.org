@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       88b22c59-6ce9-4168-8d96-115d6a73c7b2
+:END:
+#+title: js-oop-proxy-inner prop
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+BEGIN_SRC js :noweb yes :results output
+let target = new Date()
+let proxy = new Proxy(target, {})
+
+console.log(proxy instanceof Date)
+
+console.log(target.getDate())
+console.log(proxy.getDate())
+#+END_SRC
+
+#+RESULTS:
+: true
+: 7
+

@@ -1,0 +1,62 @@
+:PROPERTIES:
+:ID:       14793e5f-a44c-4061-bc2a-f43daf0979b9
+:END:
+#+title: js-oop-proxy-this 
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+BEGIN_SRC js :noweb yes :results output
+let target ={
+ isProxy(){
+   return this === proxy
+ }
+}
+
+let proxy = new Proxy(target, {})
+
+console.log(target.isProxy())
+console.log(proxy.isProxy())
+#+END_SRC
+
+#+RESULTS:
+: false
+: true
+
+
+#+BEGIN_SRC js :noweb yes :results output
+let wmp = new WeakMap()
+
+class User{
+  constructor(userId){
+    wmp.set(this, userId)
+  }
+
+  setId(userId){
+    wmp.set(this, userId)
+  }
+  getId(){
+    return wmp.get(this)
+  }
+}
+let target = new User(666)
+console.log(target.getId())
+target.setId(2333)
+console.log(target.getId())
+
+let proxy = new Proxy(target, {})
+console.log(proxy.getId())
+proxy.setId(888)
+console.log(proxy.getId())
+
+console.log(target.getId())
+#+END_SRC
+
+#+RESULTS:
+: 666
+: 2333
+: undefined
+: 888
+: 2333
+
