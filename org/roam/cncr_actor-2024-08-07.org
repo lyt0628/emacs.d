@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       e348d551-78f7-4c02-be82-8e19f9bb8723
+:END:
+#+title: cncr-actor
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+- Actor Model has state that is not shared.
+- actors communicate with other actors using message.
+

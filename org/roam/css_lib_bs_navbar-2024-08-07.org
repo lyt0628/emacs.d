@@ -1,0 +1,99 @@
+:PROPERTIES:
+:ID:       e35401dc-5789-4112-85f3-92869028b824
+:END:
+#+title: css-lib-bs-navbar
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+* Nav 商标
+
+#+BEGIN_SRC html
+  <<html-bs>>
+  
+  <h1>1.Brand</h1>
+
+  <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+      <img src="https://v4.bootcss.com/docs/4.6/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">
+    </a>
+  </nav>
+
+
+#+END_SRC
+
+* 导航栏部分
+#+BEGIN_SRC html
+  <<html-bs>>
+  
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <div class="container">
+	<a class="navbar-brand" href="#">Brand</a>
+
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+	  <span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarNav">
+	  <ul class="navbar-nav">
+	    <li class="nav-item active">
+	      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="#">Features</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="#">Pricing</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link disabled">Disabled</a>
+	    </li>
+	  </ul>
+	</div>
+    </div>
+
+
+  </nav>
+
+#+END_SRC
+
+* 自定义 展开Icon
+#+BEGIN_SRC html :dir workdir
+  <<html-bs>>
+
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+
+
+      <a class="navbar-brand" href="#">
+	<img src="https://v4.bootcss.com/docs/4.6/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">
+      </a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+	<img class="expand-icon" src="../data/images/show-icon.png" alt="">
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+	  <ul class="navbar-nav">
+	    <li class="nav-item active">
+	      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="#">Features</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="#">Pricing</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link disabled">Disabled</a>
+	    </li>
+	  </ul>
+      </div>
+
+
+    </div>
+  </nav>
+#+END_SRC
+

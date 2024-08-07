@@ -1,0 +1,324 @@
+:PROPERTIES:
+:ID:       98b8c68e-403a-4ba8-ae45-418e9ceff8d7
+:END:
+#+title: pyqt-widget-dialog
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+
+
+* 创建 Dialog
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  def window():
+     app = QApplication(sys.argv)
+     w = QWidget()
+     b = QPushButton(w)
+     b.setText("Hello World!")
+     b.move(50,50)
+
+     b.clicked.connect(showdialog)
+  
+     w.setWindowTitle("PyQt Dialog demo")
+     w.show()
+     sys.exit(app.exec())
+
+  def showdialog():
+     d = QDialog()
+     b1 = QPushButton("ok",d)
+     b1.move(50,50)
+     d.setWindowTitle("Dialog")
+     d.setWindowModality(Qt.WindowModality.ApplicationModal)
+     d.exec()
+
+  if __name__ == '__main__':
+     window()
+#+end_src
+
+#+RESULTS:
+
+
+* 继承自Dialog
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+  class MainWindow(QMainWindow):
+      """
+      主窗口类
+      """
+      def __init__(self, parent=None):
+	  super(MainWindow, self).__init__(parent)
+
+	  # 设置主窗口的标题及大小
+	  self.setWindowTitle('主窗口')
+	  self.resize(400, 300)
+
+	  # 创建按钮
+	  self.btn = QPushButton(self)
+	  self.btn.setText('弹出对话框')
+	  self.btn.move(50, 50)
+
+	  self.btn.clicked.connect(self.show_dialog)
+
+      def show_dialog(self):
+	  self.dialog = Dialog()
+	  self.dialog.show()
+	  self.dialog.exec()
+
+  class Dialog(QDialog):
+      """
+      对话框类
+      """
+      def __init__(self, parent=None):
+	  super(Dialog, self).__init__(parent)
+
+	  # 设置对话框的标题及大小
+	  self.setWindowTitle('对话框')
+	  self.resize(200, 200)
+        
+	  # 设置窗口为模态，用户只有关闭弹窗后，才能关闭主界面
+	  self.setWindowModality(Qt.WindowModality.ApplicationModal)
+
+
+  if __name__ == '__main__':
+      app = QApplication(sys.argv)
+      demo = MainWindow()
+      demo.show()
+      sys.exit(app.exec())
+#+end_src
+
+
+
+* 设置 模态
+
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class MainWindow(QMainWindow):
+	  """
+	  主窗口类
+	  """
+	  def __init__(self, parent=None):
+		  super(MainWindow, self).__init__(parent)			#（a）
+		  self.setWindowTitle('主窗口')
+		  self.resize(400, 300)
+		  self.btn = QPushButton(self)
+		  self.btn.setText('弹出对话框')
+		  self.btn.move(150, 150)
+		  self.btn.clicked.connect(self.show_dialog)
+		  #（b）
+	  def show_dialog(self):
+		  self.dialog = Dialog()
+		  self.dialog.show()
+		  self.dialog.exec()
+  # 自定义对话框类
+  class Dialog(QDialog):
+	  """
+	  对话框类
+	  """
+	  def __init__(self, parent=None):
+		  super(Dialog, self).__init__(parent)
+		  # 设置对话框标题及大小
+		  self.setWindowTitle('对话框')
+		  self.resize(200, 200)
+		  # 设置对话框为模态
+		  self.setModal(True)
+  
+  if __name__ == '__main__':
+	  app = QApplication(sys.argv)
+	  m = MainWindow()
+	  m.show()
+	  sys.exit(app.exec())
+#+end_src
+
+
+
+
+* FileDialog
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class MyWidget(QWidget):
+	  def __init__(self, parent=None):
+		  super(MyWidget,self).__init__(parent)
+		  self.setWindowTitle("File Dialog例子")
+		  layout = QVBoxLayout()
+		  self.btn1 = QPushButton("选择图片文件显示")
+		  self.btn1.clicked.connect(self.ImgFile)
+		  layout.addWidget(self.btn1)
+
+		  self.lb = QLabel("")
+		  layout.addWidget(self.lb)
+		  self.btn2 = QPushButton("选择文本文件显示")
+		  self.btn2.clicked.connect(self.TextFile)
+		  layout.addWidget(self.btn2)
+		  self.te = QTextEdit()
+		  layout.addWidget(self.te)
+		  self.setLayout(layout)
+
+
+	  def ImgFile(self):
+		  fname, _tmp =QFileDialog.getOpenFileName(self,'Open file','./',"*.png *.ico")
+		  self.lb.setPixmap(QPixmap(fname))
+  
+	  def TextFile(self):
+		  dlg = QFileDialog()
+		  dlg.setFileMode(QFileDialog.FileMode.AnyFile)
+		  dlg.setFilter(QDir.Filter.Files)
+
+		  if dlg.exec():
+			  fnames=dlg.selectedFiles()
+			  f = open(fnames[0],'r')
+			  with f:
+				  txt=f.read()
+				  self.te.setText(txt)
+
+  if __name__=='__main__':
+		  app = QApplication(sys.argv)
+		  w = MyWidget()
+		  w.show()
+		  sys.exit(app.exec())
+#+end_src
+
+
+
+
+
+
+* 设置字体和颜色
+
+#+begin_src python
+import sys
+<<pyqt>>
+class MyWidget(QWidget):
+    def __init__(self, parent=None):
+        super(MyWidget, self).__init__(parent)
+        self.setWindowTitle("Font Dialog测试")
+        self.setGeometry(300,200,360,200)
+
+        self.btn = QPushButton(self)
+        self.btn.setText("字体颜色\n测试")
+        self.btn.move(260,60); self.btn.resize(60,40)
+        self.btn.clicked.connect(self.getFont)
+        self.te = QTextEdit(self)
+
+    def getFont(self):
+        font, ok = QFontDialog.getFont()
+        if ok:
+            self.te.setFont(font)
+            color = QColorDialog.getColor()
+            self.te.setTextColor(color)
+if __name__=='__main__':
+    app = QApplication(sys.argv)
+    w = MyWidget()
+    w.show()
+    sys.exit(app.exec())
+#+end_src
+
+
+
+
+* InputDialog
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class MyQWidget(QWidget):
+	  def __init__(self, parent=None):
+		  super(MyQWidget, self).__init__(parent)
+		  self.setWindowTitle("Input Dialog测试")
+
+		  self.btn1 = QPushButton("文本测试")
+		  self.btn1.clicked.connect(self.getText)
+		  self.btn2 = QPushButton("选项测试")
+		  self.btn2.clicked.connect(self.getItem)
+		  self.btn3 = QPushButton("整数测试")
+		  self.btn3.clicked.connect(self.getInt)
+		  self.te = QLineEdit()
+
+		  layout = QHBoxLayout()
+		  layout.addWidget(self.btn1)
+		  layout.addWidget(self.btn2)
+		  layout.addWidget(self.btn3)
+		  layout.addWidget(self.te)
+		  self.setLayout(layout)
+
+	  def getText(self):
+		  text, ok = QInputDialog.getText(self, '文本测试', '输入姓名：')
+		  if ok:
+			  self.te.setText(str(text))
+
+	  def getItem(self):
+		  items = ("计算机导论", "C++", "Java", "数据结构")
+		  item, ok = QInputDialog.getItem(self, "选项测试", "课程列表",items, 1,True)
+		  if ok and item:
+			  self.te.setText(item)
+
+	  def getInt(self):
+		  num, ok = QInputDialog.getInt(self, "整数测试", "输入成绩")
+		  if ok:
+			  self.te.setText(str(num))
+
+  if __name__ == '__main__':
+	  app = QApplication(sys.argv)
+	  demo = MyQWidget()
+	  demo.show()
+	  sys.exit(app.exec())
+#+end_src
+
+
+
+* MainWindow 持有窗口
+
+
+
+#+begin_src python
+import sys
+<<pyqt>>
+
+class MainWindow(QMainWindow):
+    """
+    主窗口类
+    """
+
+    def __init__(self, parent=None):
+        super(MainWindow, self).__init__(parent)
+
+        # 设置主窗口的标题及大小
+        self.setWindowTitle('主窗口')
+        self.resize(400, 300)
+
+        # 创建按钮
+        self.btn = QPushButton(self)
+        self.btn.setText('弹出对话框')
+        self.btn.move(50, 50)
+        self.btn.clicked.connect(self.show_dialog)
+
+    def show_dialog(self):
+        self.dialog = QDialog()
+        self.dialog.setModal(True)
+        self.dialog.show()
+        self.dialog.exec()
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    demo = MainWindow()
+    demo.show()
+    sys.exit(app.exec())
+#+end_src
+

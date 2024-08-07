@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       1ab642ce-8e04-485b-985e-6d2f369d0b82
+:END:
+#+title: patt-struct
+#+date: [2024-08-07 三]
+#+last_modified:  
+

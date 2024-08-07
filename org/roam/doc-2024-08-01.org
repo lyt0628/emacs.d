@@ -8,7 +8,8 @@
 * Index
 - [[id:03f6999c-ec46-43c3-91f3-c37b8e4f4144][doc-latex]]
 - [[id:dff0a5a0-0d15-4d18-886c-0f5ef03e8e13][doc-md]]
+- [[id:9968f1d3-6723-4779-be83-7900d26a56b7][doc-dot]]
+- [[id:26fcf2f0-83a5-4586-802e-928287959c7a][doc-puml]]
 - [[id:305ef6ec-7271-4e93-b04f-c003383fe5e1][doc-How to write README]]
 - [[id:33349f2e-6c66-49bb-af13-f8c2f888e975][doc-How to write Note]]
 - [[id:49842037-23c0-4728-93db-133c2f71560a][doc-How to write toturial]]
-- 

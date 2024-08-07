@@ -1,0 +1,134 @@
+:PROPERTIES:
+:ID:       579274a5-35e9-43fc-8eaf-e9016c3563dd
+:END:
+#+title: doc-puml-ucase-style
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* 参与者形状
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml6baaa9cd-3b13-4082-9b66-669d2e3829ed.png
+#+BEGIN_SRC plantuml
+@startuml
+skinparam actorStyle awesome
+
+
+:User: --> (Use)
+"Main Admin" as Admin
+
+"Use the application" as (Use)
+
+Admin --> (Admin the application)
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml.png]]
+
+
+
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml83a2e816-0d05-4e48-b3d6-b900ac00fbdb.png
+#+BEGIN_SRC plantuml
+@startuml
+skinparam actorStyle Hollow
+
+:User: --> (Use)
+"Main Admin" as Admin
+"Use the application" as (Use)
+Admin --> (Admin the application)
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml.png]]
+
+
+* 用例包样式
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml17ca05bb-0068-4a5c-9224-fa4fb53a2bbf.png
+#+BEGIN_SRC plantuml
+@startuml
+left to right direction
+
+
+actor "Food Critic" as fc
+
+rectangle Restaurant {
+  usecase "Eat Food" as UC1
+  usecase "Pay for Food" as UC2
+  usecase "Drink" as UC3
+}
+
+fc --> UC1
+fc --> UC2
+fc --> UC3
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml17ca05bb-0068-4a5c-9224-fa4fb53a2bbf.png]]
+
+
+* 连接器类型
+
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/pumlf5598789-3b1f-4abe-928b-73f4f48bc462.png
+#+BEGIN_SRC plantuml
+@startuml
+(Use case 1) <.. :user:
+(Use case 2) <- :user:
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/pumlf5598789-3b1f-4abe-928b-73f4f48bc462.png]]
+
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/pumlf6710881-d600-4f61-a8ae-a00f2cadf7ef.png
+#+BEGIN_SRC plantuml
+@startuml
+skinparam handwritten true
+
+skinparam usecase {
+  BackgroundColor DarkSeaGreen
+  BorderColor DarkSlateGray
+
+  BackgroundColor<< Main >> YellowGreen
+  BorderColor<< Main >> YellowGreen
+
+  ArrowColor Olive
+
+  ActorBorderColor black
+  ActorFontName Courier
+  ActorBackgroundColor<< Human >> Gold
+}
+
+User << Human >>
+:Main Database: as MySql << Application >>
+
+(Start) << One Shot >>
+(Use the application) as (Use) << Main >>
+
+
+User -> (Start)
+User --> (Use)
+MySql --> (Use)
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/pumlf6710881-d600-4f61-a8ae-a00f2cadf7ef.png]]
+
+

@@ -1,0 +1,46 @@
+:PROPERTIES:
+:ID:       4ef3deb2-3b5a-4382-b259-ea6a21d1e6d2
+:END:
+#+title: pyqt-widget-combox
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class MyWidget(QWidget):
+	  def __init__(self, parent=None):
+		  super(MyWidget, self).__init__(parent)
+		  self.setWindowTitle("ComBox测试")
+		  self.resize(300, 100)
+
+		  self.lb1 = QLabel("选择课程：")
+		  self.lb2 = QLabel(" ")
+		  self.cb = QComboBox()
+		  self.cb.addItem("计算机")
+		  self.cb.addItems(["软件工程","通信工程","人工智能"])
+		  self.cb.currentIndexChanged.connect(self.selectFunc)
+
+		  vlayout = QVBoxLayout()
+		  vlayout.addWidget(self.lb1)
+		  vlayout.addWidget(self.cb)
+		  vlayout.addWidget(self.lb2)
+		  self.setLayout(vlayout)
+
+	  def selectFunc(self,i):
+		  selectItem=self.cb.currentText()
+		  for count in range(self.cb.count()):
+			  if self.cb.itemText(count)==selectItem:
+				  self.lb2.setText("选择"+str(count)+"项: "+selectItem)
+
+  if __name__ =='__main__':
+	  app = QApplication(sys.argv)
+	  w = MyWidget()
+	  w.show()
+	  sys.exit(app.exec())
+#+end_src
+
+
+

@@ -1,0 +1,36 @@
+:PROPERTIES:
+:ID:       47d1eed4-eb25-4549-b14f-af48d1c150c4
+:END:
+#+title: js-3rd-jquery-parents()
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+BEGIN_SRC html  :dir workdir
+    <<style>>
+    <div class="box">
+      box<span>...span</span>
+    </div>
+
+   <<js-jq>>
+   <script>
+      <<behavior>>
+  </script>
+#+END_SRC
+
+#+RESULTS:
+: 正在现有的浏览器会话中打开。
+
+
+#+NAME: behavior
+#+BEGIN_SRC js
+  // 1.监听文档完全解析完成
+   $(function() {
+     if($('div > span').parents('.box').length == 1) {
+       alert('ok');
+     }
+   })
+#+END_SRC
+
+
+

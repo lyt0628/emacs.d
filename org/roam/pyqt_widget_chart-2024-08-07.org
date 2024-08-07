@@ -1,0 +1,411 @@
+:PROPERTIES:
+:ID:       bbcf55f6-44f4-4a8b-871d-27353f6e06ff
+:END:
+#+title: pyqt-widget-chart
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+begin_src python
+import sys
+
+from PyQt6 import QtWidgets  # import PyQt6 before matplotlib
+
+import matplotlib
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
+from matplotlib.figure import Figure
+
+matplotlib.use("QtAgg")
+
+
+class MplCanvas(FigureCanvasQTAgg):
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = fig.add_subplot(111)
+        super().__init__(fig)
+
+
+class MainWindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        # Create the maptlotlib FigureCanvasQTAgg object,
+        # which defines a single set of axes as self.axes.
+        sc = MplCanvas(self, width=5, height=4, dpi=100)
+        sc.axes.plot([0, 1, 2, 3, 4], [10, 1, 20, 3, 40])
+        self.setCentralWidget(sc)
+
+        self.show()
+
+
+app = QtWidgets.QApplication(sys.argv)
+w = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+
+
+
+#+begin_src python
+import sys
+
+from PyQt6 import QtWidgets  # import PyQt6 before matplotlib
+
+import matplotlib
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
+from matplotlib.backends.backend_qtagg import (
+    NavigationToolbar2QT as NavigationToolbar,
+)
+from matplotlib.figure import Figure
+
+
+matplotlib.use("QtAgg")
+
+
+class MplCanvas(FigureCanvasQTAgg):
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = fig.add_subplot(111)
+        super().__init__(fig)
+
+
+class MainWindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        sc = MplCanvas(self, width=5, height=4, dpi=100)
+        sc.axes.plot([0, 1, 2, 3, 4], [10, 1, 20, 3, 40])
+
+        # Create toolbar, passing canvas as first parameter, parent (self, the MainWindow) as second.
+        toolbar = NavigationToolbar(sc, self)
+
+        layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(toolbar)
+        layout.addWidget(sc)
+
+        # Create a placeholder widget to hold our toolbar and canvas.
+        widget = QtWidgets.QWidget()
+        widget.setLayout(layout)
+        self.setCentralWidget(widget)
+
+        self.show()
+
+
+app = QtWidgets.QApplication(sys.argv)
+w = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+
+
+#+begin_src python
+import random
+import sys
+
+from PyQt6 import (
+    QtCore,
+    QtWidgets,
+)  # import PyQt6 before matplotlib
+
+import matplotlib
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
+from matplotlib.figure import Figure
+
+
+matplotlib.use("QtAgg")
+
+
+class MplCanvas(FigureCanvasQTAgg):
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = fig.add_subplot(111)
+        super().__init__(fig)
+
+
+class MainWindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.canvas = MplCanvas(self, width=5, height=4, dpi=100)
+        self.setCentralWidget(self.canvas)
+
+        n_data = 50
+        self.xdata = list(range(n_data))
+        self.ydata = [random.randint(0, 10) for i in range(n_data)]
+        self.update_plot()
+
+        self.show()
+
+        # Setup a timer to trigger the redraw by calling update_plot.
+        self.timer = QtCore.QTimer()
+        self.timer.setInterval(100)
+        self.timer.timeout.connect(self.update_plot)
+        self.timer.start()
+
+    def update_plot(self):
+        # Drop off the first y element, append a new one.
+        self.ydata = self.ydata[1:] + [random.randint(0, 10)]
+        self.canvas.axes.cla()  # Clear the canvas.
+        self.canvas.axes.plot(self.xdata, self.ydata, "r")
+        # Trigger the canvas to update and redraw.
+        self.canvas.draw()
+
+
+app = QtWidgets.QApplication(sys.argv)
+w = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+
+
+
+#+begin_src python
+import random
+import sys
+
+from PyQt6 import (
+    QtCore,
+    QtWidgets,
+)  # import PyQt6 before matplotlib
+
+import matplotlib
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
+from matplotlib.figure import Figure
+
+
+matplotlib.use("QtAgg")
+
+
+class MplCanvas(FigureCanvasQTAgg):
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = fig.add_subplot(111)
+        super().__init__(fig)
+
+
+class MainWindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.canvas = MplCanvas(self, width=5, height=4, dpi=100)
+        self.setCentralWidget(self.canvas)
+
+        n_data = 50
+        self.xdata = list(range(n_data))
+        self.ydata = [random.randint(0, 10) for i in range(n_data)]
+
+        # We need to store a reference to the plotted line
+        # somewhere, so we can apply the new data to it.
+        self._plot_ref = None
+        self.update_plot()
+
+        self.show()
+
+        # Setup a timer to trigger the redraw by calling update_plot.
+        self.timer = QtCore.QTimer()
+        self.timer.setInterval(100)
+        self.timer.timeout.connect(self.update_plot)
+        self.timer.start()
+
+    def update_plot(self):
+        # Drop off the first y element, append a new one.
+        self.ydata = self.ydata[1:] + [random.randint(0, 10)]
+
+        # Note: we no longer need to clear the axis.
+        if self._plot_ref is None:
+            # First time we have no plot reference, so do a normal plot.
+            # .plot returns a list of line <reference>s, as we're
+            # only getting one we can take the first element.
+            plot_refs = self.canvas.axes.plot(
+                self.xdata, self.ydata, "r"
+            )
+            self._plot_ref = plot_refs[0]
+        else:
+            # We have a reference, we can use it to update the data for that line.
+            self._plot_ref.set_ydata(self.ydata)
+
+        # Trigger the canvas to update and redraw.
+        self.canvas.draw()
+
+
+
+app = QtWidgets.QApplication(sys.argv)
+w = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+
+
+#+begin_src python
+import sys
+
+from PyQt6 import (
+    QtCore,
+    QtWidgets,
+)  # import PyQt6 before matplotlib
+
+import matplotlib
+import pandas as pd
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
+from matplotlib.figure import Figure
+
+
+matplotlib.use("QtAgg")
+
+
+class MplCanvas(FigureCanvasQTAgg):
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = fig.add_subplot(111)
+        super().__init__(fig)
+
+
+class MainWindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        # Create the maptlotlib FigureCanvasQTAgg object,
+        # which defines a single set of axes as self.axes.
+        sc = MplCanvas(self, width=5, height=4, dpi=100)
+
+        # Create our pandas DataFrame with some simple
+        # data and headers.
+        df = pd.DataFrame(
+            [
+                [0, 10],
+                [5, 15],
+                [2, 20],
+                [15, 25],
+                [4, 10],
+            ],
+            columns=["A", "B"],
+        )
+
+        # plot the pandas DataFrame, passing in the
+        # matplotlib Canvas axes.
+        df.plot(ax=sc.axes)
+
+        self.setCentralWidget(sc)
+        self.show()
+
+
+app = QtWidgets.QApplication(sys.argv)
+w = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+
+
+#+begin_src python
+import sys
+
+from PyQt6 import (
+    QtCore,
+    QtWidgets,
+)  # import PyQt6 before matplotlib
+
+import matplotlib
+import pandas as pd
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
+from matplotlib.backends.backend_qtagg import (
+    NavigationToolbar2QT as NavigationToolbar,
+)
+from matplotlib.figure import Figure
+
+
+matplotlib.use("QtAgg")
+
+
+class MplCanvas(FigureCanvasQTAgg):
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = fig.add_subplot(111)
+        super().__init__(fig)
+
+
+class MainWindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        # Create the maptlotlib FigureCanvasQTAgg object,
+        # which defines a single set of axes as self.axes.
+        sc = MplCanvas(self, width=5, height=4, dpi=100)
+
+        # Create our pandas DataFrame with some simple
+        # data and headers.
+        df = pd.DataFrame(
+            [
+                [0, 10],
+                [5, 15],
+                [2, 20],
+                [15, 25],
+                [4, 10],
+            ],
+            columns=["A", "B"],
+        )
+
+        # plot the pandas DataFrame, passing in the
+        # matplotlib Canvas axes.
+        df.plot(ax=sc.axes)
+
+        # Create toolbar, passing canvas as first parameter, parent (self, the MainWindow) as second.
+        toolbar = NavigationToolbar(sc, self)
+
+        layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(toolbar)
+        layout.addWidget(sc)
+
+        # Create a placeholder widget to hold our toolbar and canvas.
+        widget = QtWidgets.QWidget()
+        widget.setLayout(layout)
+        self.setCentralWidget(widget)
+        self.show()
+
+
+app = QtWidgets.QApplication(sys.argv)
+w = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+
+
+#+begin_src python
+import sys
+
+from PyQt6 import QtWidgets
+import pyqtgraph as pg  # import PyQtGraph after Qt
+
+
+class MainWindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.graphWidget = pg.PlotWidget()
+        self.setCentralWidget(self.graphWidget)
+
+        hour = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        temperature = [30, 32, 34, 32, 33, 31, 29, 32, 35, 45]
+
+        # plot data: x, y values
+        self.graphWidget.plot(hour, temperature)
+
+
+app = QtWidgets.QApplication(sys.argv)
+main = MainWindow()
+main.show()
+app.exec()
+#+end_src
+

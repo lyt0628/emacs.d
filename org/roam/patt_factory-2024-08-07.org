@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       1865b445-7482-439f-b130-a2cc365f31a7
+:END:
+#+title: patt-factory
+#+date: [2024-08-07 三]
+#+last_modified:  
+

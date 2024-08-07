@@ -1,0 +1,187 @@
+:PROPERTIES:
+:ID:       594aa7bf-75a7-426c-9870-136b5d8ebdfd
+:END:
+#+title: css-lib-bs-container
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+| container-fluid  |   |
+|------------------+---|
+| container        |   |
+|------------------+---|
+| container-fluid  |   |
+|------------------+---|
+| container-<size> |   |
+
+
+#+NAME: css
+#+BEGIN_SRC css
+    div{
+      background-color: pink;
+      height: 40px;
+    }
+#+END_SRC
+
+
+#+BEGIN_SRC html :noweb yes
+  <<html-bs>>
+
+  <style>
+    <<css>>
+  </style>
+
+  <div class="container-fluid">
+     我是 container-fluid 
+  </div>
+
+  <div class="container">
+    我是 container
+  </div>
+
+  <div class="container-lg">
+    我是 container-lg
+  </div>
+#+END_SRC
+
+#+RESULTS:
+
+
+
+
+* 容器网格
+
+#+NAME: css2
+#+BEGIN_SRC css
+  .container{
+    background-color: pink;
+  }
+  .item{
+    height: 40px;
+    border: 1px solid red;
+  }
+#+END_SRC
+
+
+
+#+BEGIN_SRC html :noweb yes
+  <<html-bs>>
+
+  <style>
+    <<css2>>
+  </style>
+
+   <div class="container">
+     <div class="row">
+       <div class="col item">1</div>
+       <div class="col item">2</div>
+       <div class="col item">3</div>
+     </div>
+   </div>
+
+
+   <div class="container">
+
+      <div class="row">
+
+        <div class="col-4 item">1</div>
+        <div class="col-4 item">2</div>
+        <div class="col-4 item">3</div>
+        <div class="col-6 item">4-启用了12列,超出12列就会换行</div>
+      </div>
+   </div>
+
+#+END_SRC
+
+#+RESULTS:
+
+
+
+* 不指定列宽不会换行
+
+#+BEGIN_SRC html
+    <<html-bs>>
+
+  <style>
+    <<css2>>
+  </style>
+
+  
+  <div class="container">
+    <div class="row">
+      <div class="col item">1</div>
+      <div class="col item">2</div>
+      <div class="col item">3</div>
+      <div class="col item">4</div>
+      <div class="col item">5</div>
+      <div class="col item">6</div>
+      <div class="col item">7</div>
+      <div class="col item">8</div>
+      <div class="col item">9</div>
+      <div class="col item">10</div>
+      <div class="col item">11</div>
+      <div class="col item">12</div>
+      <div class="col item">13</div>
+      <div class="col item">13</div>
+      <div class="col item">13</div>
+      <div class="col item">13</div>
+      <div class="col item">13</div>
+      <div class="col item">13</div>
+      <div class="col item">13</div>
+    </div>
+  </div>
+#+END_SRC
+
+#+RESULTS:
+
+
+
+
+
+
+* auto列宽 包裹内容
+
+#+BEGIN_SRC html
+  <<html-bs>>
+
+  <style>
+    <<css2>>
+  </style>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-auto item">auto layout  layout layout </div>
+      <div class="col item">1</div>
+      <div class="col item">2</div>
+      <div class="col item">3</div>
+    </div>
+  </div>
+#+END_SRC
+
+
+
+* 相应式列宽
+
+#+BEGIN_SRC html
+  <<html-bs>>
+
+  <style>
+    <<css2>>
+  </style>
+
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 item">1</div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 item">2</div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 item">3</div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 item">4</div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 item">5</div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 item">6</div>
+
+    </div>
+
+  </div>
+#+END_SRC

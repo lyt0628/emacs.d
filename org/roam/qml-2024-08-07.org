@@ -1,0 +1,297 @@
+:PROPERTIES:
+:ID:       4603c2e2-769e-4307-b00c-dfb9c28acb10
+:END:
+#+title: qml
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+#+call: qml-main(qml="/tmp/orgqml-88a61930-153c-11ef-b77d-02428b372f5e.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-88a61930-153c-11ef-b77d-02428b372f5e.qml
+  <<qml>>
+
+  Window {
+    width: 640
+    height: 480
+    visible: true
+    color: "gray"
+    title: qsTr("Hello world!")
+
+    Text {
+      anchors.centerIn: parent
+      text: qsTr("Hello world!")
+      color: "blue"
+      font.pixelSize: 32
+      }
+
+  }
+#+end_src
+
+
+
+#+call: qml-main(qml="workdir/orgqml-884b67bc-16af-11ef-941f-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle workdir/orgqml-884b67bc-16af-11ef-941f-024236e6a1cc.qml
+  <<qml>>
+
+  <<qml>>
+
+  Window {
+    width: 640
+    height: 480
+    visible: true
+    color: "#0000ff"
+
+    Image {
+      anchors.centerIn: parent
+      source: "icons/bug.png"
+    }
+
+    Rectangle {
+      width: 23*10
+      height: 24*20
+      color: "#121212"
+    }
+
+  }
+
+
+
+
+#+end_src
+
+
+#+call: qml-main(qml="/tmp/orgqml-62d0f907-16b0-11ef-8173-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-62d0f907-16b0-11ef-8173-024236e6a1cc.qml
+  <<qml>>
+
+
+  Window {
+    width: 640
+    height: 480
+    visible: true
+    color: "#eeeeee"
+
+    Button {
+      text: "Quit"
+      style: ButtonStyle {
+	background: Rectangle {
+	  implicitWidth: 70
+	  implicitHeight: 25
+          border.width: control.activeFocus ? 2 : 1
+	}
+      }
+    }
+  }
+
+
+
+
+  #+end_src
+
+
+
+
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-dfefc140-16b0-11ef-a3de-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-dfefc140-16b0-11ef-a3de-024236e6a1cc.qml
+   <<qml>>
+
+   Window {
+     width: 640
+     height: 480
+     visible: true
+     color: "#eeeeee"
+
+     Button {
+       id: openFile
+       text: "Open"
+       anchors.left: parent.left
+       anchors.leftMargin: 6
+       anchors.top: parent.top
+       anchors.topMargin: 6
+
+     }
+
+
+     Button {
+       id: quit
+       text: "Exit"
+       anchors.left: openFile.right
+       anchors.leftMargin: 4
+       anchors.bottom: openFile.bottom
+
+     }
+
+
+  }
+
+
+
+
+  #+end_src
+
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-8747a76d-16b1-11ef-8001-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-8747a76d-16b1-11ef-8001-024236e6a1cc.qml
+    <<qml>>
+
+
+   Window {
+     width: 640
+     height: 480
+     visible: true
+     color: "#eeeeee"
+
+     Button {
+       id: openFile
+       text: "Open"
+       anchors.left: parent.left
+       anchors.leftMargin: 6
+       anchors.top: parent.top
+       anchors.topMargin: 6
+
+     }
+
+
+     Button {
+       id: quit
+       text: "Exit"
+       anchors.left: openFile.right
+       anchors.leftMargin: 4
+       anchors.bottom: openFile.bottom
+
+       z: 10 // real
+       visible: false
+     }
+
+
+  }
+
+
+
+#+end_src
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-195affd4-16b2-11ef-8c37-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-195affd4-16b2-11ef-8c37-024236e6a1cc.qml
+  <<qml>>
+
+
+   Window {
+     width: 640
+     height: 480
+     visible: true
+     color: "#eeeeee"
+
+     Button {
+       id: quit
+       text: "Quit"
+       anchors.left: parent.left
+       anchors.leftMargin: 6
+       anchors.top: parent.top
+       anchors.topMargin: 6
+
+       onClicked: {
+         Qt.quit()
+       }
+
+     }
+
+
+  }
+
+
+  #+end_src
+
+
+
+
+
+
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-6a0c5974-16b2-11ef-9a57-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-6a0c5974-16b2-11ef-9a57-024236e6a1cc.qml
+
+
+  <<qml>>
+
+
+   Window {
+     width: 640
+     height: 480
+     visible: true
+     color: "#eeeeee"
+
+     Text {
+       font.pixelSize: 18
+       font.bold: true
+     }
+  }
+
+
+
+#+end_src
+
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-9f58f0b0-16b2-11ef-9720-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-9f58f0b0-16b2-11ef-9720-024236e6a1cc.qml
+  <<qml>>
+
+
+   Window {
+     width: 640
+     height: 480
+     visible: true
+     color: "#eeeeee"
+
+     Item {
+       width: 100
+       height: 100
+
+       focus: true
+       Keys.enabled: false
+     }
+   }
+
+
+
+
+
+#+end_src
+
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-0b222209-16b3-11ef-9834-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-0b222209-16b3-11ef-9834-024236e6a1cc.qml
+  <<qml>>
+
+
+   Window {
+     width: 640
+     height: 480
+     visible: true
+     color: "#eeeeee"
+
+     MouseArea {
+       anchors.fill: parent
+       onClicked:{Qt.quit()}
+
+     }
+
+    Text {
+      text: qsTr("Hello Qt Quick")
+      anchors.centerIn: parent
+    }
+   }
+
+ 
+ #+end_src

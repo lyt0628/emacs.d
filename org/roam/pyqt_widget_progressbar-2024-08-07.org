@@ -1,0 +1,58 @@
+:PROPERTIES:
+:ID:       42f6abc1-f6ed-49c0-8856-7a064861809e
+:END:
+#+title: pyqt-widget-progressbar
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+begin_src python
+import sys
+<<pyqt>>
+
+class myWidget(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.resize(300, 200)
+        self.pvalue = 0                 # 设置进度条的初始进度
+        self.timer1 = QBasicTimer()     # 创建一个时钟
+
+        # 创建进度条对象
+        self.pgb = QProgressBar(self)
+        self.pgb.move(50, 50)
+        self.pgb.resize(250, 20)
+        # 设置进度条的范围
+        self.pgb.setMinimum(0)
+        self.pgb.setMaximum(100)
+        self.pgb.setValue(self.pvalue)
+
+        self.btn = QPushButton("开始", self)
+        self.btn.move(120, 100)
+        self.btn.clicked.connect(self.clickedFunc)
+        self.show()
+
+    def clickedFunc(self):
+        if self.timer1.isActive():
+            self.timer1.stop()
+            self.btn.setText("开始")
+        else:
+            self.timer1.start(100, self)
+            self.btn.setText("停止")
+
+    def timerEvent(self, e):
+        if self.pvalue == 100:
+            self.timer1.stop()
+        else:
+            self.pvalue += 1
+            self.pgb.setValue(self.pvalue)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    w = myWidget()
+    app.exec()
+#+end_src
+
+

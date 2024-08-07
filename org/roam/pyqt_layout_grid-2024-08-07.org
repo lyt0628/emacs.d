@@ -1,0 +1,193 @@
+:PROPERTIES:
+:ID:       6913bbb6-1a56-4211-a5ce-64392d4d3f4f
+:END:
+#+title: pyqt-layout-grid
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+  class MyWidget(QWidget):
+	  def __init__(self,parent=None):
+		  super(MyWidget, self).__init__(parent)
+		  self.initUI()
+
+	  def initUI(self):
+		  self.setWindowTitle('网格布局测试')
+		  self.move(300, 150)
+		  # (1)
+		  grid = QGridLayout()
+		  self.setLayout(grid)
+		  # (2)
+		  txt=[[ '7' ,'8' , '9' , '/'],
+			   [ '4' ,'5' , '6' , '*'],
+			   [ '1' ,'2' , '3' , '-'],
+			   [ '0' ,'00' ,'.' , '+'],
+			   [ 'C', '<-', ' ' , '=']]
+		  # (3)
+		  for i in range(0,5):
+			  for j in range(0,4):
+				  if txt[i][j]== ' ':
+					  continue
+				  btn = QPushButton(txt[i][j])
+				  grid.addWidget(btn,i,j)
+  if __name__ =="__main__":
+	  app = QApplication(sys.argv)
+	  w = MyWidget()
+	  w.show()
+	  sys.exit(app.exec())
+#+end_src
+
+
+
+
+
+
+* 跨行Cell
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class MyWidget(QWidget):
+	  def __init__(self,parent=None):
+		  super(MyWidget, self).__init__(parent)
+		  self.initUI()
+	  def initUI(self):
+		  self.setWindowTitle('网格布局测试')
+		  self.move(300, 150)
+		  # (1)
+		  grid = QGridLayout()
+		  self.setLayout(grid)
+		  # (2)
+		  txt=[[ '7' ,'8' , '9' , '/'],
+			   [ '4' ,'5' , '6' , '*'],
+			   [ '1' ,'2' , '3' , '-'],
+			   [ '0' ,'.' , ' ' , '+'],
+			   [ 'C' , '=', ' ' , ' ']]
+		  # (3)
+		  for i in range(0,5):
+			  for j in range(0,4):
+				  if txt[i][j]== ' ':
+					  continue
+				  btn = QPushButton(txt[i][j])
+				  if txt[i][j]== '+':
+					  btn.setFixedHeight(60)
+					  grid.addWidget(btn, i, j, 2, 1)
+				  elif txt[i][j]== '=':
+					  grid.addWidget(btn, i, j, 1, 2)
+				  else:
+					  grid.addWidget(btn, i, j )
+  if __name__ =="__main__":
+	  app = QApplication(sys.argv)
+	  w = MyWidget()
+	  w.show()
+	  sys.exit(app.exec())
+#+end_src
+
+
+
+* 嵌套布局
+
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class MyWidget(QWidget):
+      def __init__(self):
+	  super().__init__()
+	  self.setWindowTitle('嵌套布局测试')
+
+	  # 创建外部垂直布局
+	  vlayout_w = QVBoxLayout()
+	  # 创建内部布局：表单布局和水平布局、
+	  hlayout = QHBoxLayout()
+	  flayout = QFormLayout()
+	  # 直接加入Qlabel控件对象到外部垂直布局
+	  vlayout_w.addWidget(QLabel("<b>学生信息输入</b>"), 0, Qt.AlignmentFlag.AlignCenter)
+	  # 创建表单对象
+	  lbNum = QLabel("学号"); leNum = QLineEdit()
+	  lbName = QLabel("姓名"); leName = QLineEdit()
+	  lbBirth = QLabel("出生日期"); leBirth = QLineEdit()
+	  lbSpec = QLabel("专业"); leSpec = QLineEdit()
+	  # 把表单对象加入表单布局
+	  flayout.addRow(lbNum, leNum)
+	  flayout.addRow(lbName, leName)
+	  flayout.addRow(lbBirth, leBirth)
+	  flayout.addRow(lbSpec, leSpec)
+	  # 创建按钮对象加入到水平布局
+	  hlayout.addWidget(QPushButton("确定"))
+	  hlayout.addWidget(QPushButton("取消"))
+	  hlayout.addWidget(QPushButton("清除"))
+
+	  # 创建2个窗口
+	  wf = QWidget()
+	  wh = QWidget()
+	  # 使用2个窗口设置内部布局
+	  wf.setLayout(flayout)
+	  wh.setLayout(hlayout)
+	  # 将2个窗口添加到外部布局中
+	  vlayout_w.addWidget(wf)
+	  vlayout_w.addWidget(wh)
+
+	  # 将自建类窗口设置为外部布局
+	  self.setLayout(vlayout_w)
+
+
+  if __name__ == "__main__":
+      app = QApplication(sys.argv)
+      w = MyWidget()
+      w.show()
+      sys.exit(app.exec())
+#+end_src
+
+
+
+
+
+
+* 嵌套布局2
+#+begin_src python
+  import sys
+  <<pyqt>>
+  class MyWidget(QWidget):
+      def __init__(self):
+	  super().__init__()
+	  self.setWindowTitle('嵌套布局测试')
+	  self.resize(300, 200)
+	  # 创建窗口对象，加入垂直布局中
+	  ww = QWidget(self)
+	  vlayout_ww = QVBoxLayout(ww)
+	  # 创建标签控件对象，加入垂直布局
+	  vlayout = QVBoxLayout()
+	  vlayout.addWidget(QLabel("<b>学生信息输入</b>"), 0, Qt.AlignmentFlag.AlignCenter)
+	  # 创建表单对象，把表单对象加入表单布局
+	  lbNum = QLabel("学号"); leNum = QLineEdit()
+	  lbName = QLabel("姓名"); leName = QLineEdit()
+	  lbBirth = QLabel("出生日期"); leBirth = QLineEdit()
+	  lbSpec = QLabel("专业"); leSpec = QLineEdit()
+	  flayout = QFormLayout()
+	  flayout.addRow(lbNum, leNum)
+	  flayout.addRow(lbName, leName)
+	  flayout.addRow(lbBirth, leBirth)
+	  flayout.addRow(lbSpec, leSpec)
+	  # 创建按钮对象加入到水平布局
+	  hlayout = QHBoxLayout()
+	  hlayout.addWidget(QPushButton("确定"))
+	  hlayout.addWidget(QPushButton("取消"))
+	  hlayout.addWidget(QPushButton("清除"))
+	  # 内部布局添加到外部布局中
+	  vlayout_ww.addLayout(vlayout)
+	  vlayout_ww.addLayout(flayout)
+	  vlayout_ww.addLayout(hlayout)
+  if __name__ == "__main__":
+      app = QApplication(sys.argv)
+      w = MyWidget()
+      w.show()
+      sys.exit(app.exec())
+#+end_src
+
+

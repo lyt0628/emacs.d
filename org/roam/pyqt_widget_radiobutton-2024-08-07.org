@@ -1,0 +1,45 @@
+:PROPERTIES:
+:ID:       00461b6d-5f00-4f0b-b8dc-714ac1070ecd
+:END:
+#+title: pyqt-widget-radiobutton
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+begin_src python
+import sys
+<<pyqt>>
+class MyWidget(QWidget):
+	def __init__(self, parent=None):
+		super(MyWidget, self).__init__(parent)
+		self.setWindowTitle("RadioButton测试")
+
+		self.rb1 = QRadioButton ("南京大学")
+		self.rb1.setChecked(True)
+		self.rb1.toggled.connect(lambda:self.rbFunc(self.rb1))
+
+		self.rb2 = QRadioButton("东南大学")
+		self.rb2.toggled.connect(lambda:self.rbFunc(self.rb2))
+		self.rb3 = QRadioButton("南京师范大学")
+		self.rb3.toggled.connect(lambda:self.rbFunc(self.rb3))
+
+		hLayout = QHBoxLayout()
+		hLayout.addWidget(self.rb1)
+		hLayout.addWidget(self.rb2)
+		hLayout.addWidget(self.rb3)
+		self.setLayout(hLayout)
+
+	def rbFunc(self,rb):
+		if rb.isChecked()==True:
+			print(rb.text())
+
+if __name__=='__main__':
+	app = QApplication(sys.argv)
+	w=MyWidget()
+	w.show()
+	sys.exit(app.exec())
+#+end_src
+
+
+

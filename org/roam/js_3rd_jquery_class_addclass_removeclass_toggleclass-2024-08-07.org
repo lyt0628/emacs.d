@@ -1,0 +1,41 @@
+:PROPERTIES:
+:ID:       f56cd2a2-70e2-4dc9-a3ca-3fb99fe42ed9
+:END:
+#+title: js-3rd-jquery-class()&addClass()&removeClass()&toggleClass()
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+* class 函数
+
+#+BEGIN_SRC js
+    // 1.监听文档完全解析完成
+    $(function() {
+      // 1.添加class
+       $('ul').addClass('list1 list2')
+       $('ul li').addClass(['list1', 'list2'])
+
+      // 2.判断是否存在弄个class
+       console.log($('ul').hasClass('active list') )
+
+      // 3.删除class
+       $('ul').removeClass() // 删除全部
+       $('ul').removeClass('list') // 删除指定的某一个
+
+      // 4.class的切换
+      $('.toggle').click(function() {
+        // $('ul').toggleClass()
+        $('ul').toggleClass('active')
+      })
+     
+
+    })
+#+END_SRC
+
+
+
+
+
+
+

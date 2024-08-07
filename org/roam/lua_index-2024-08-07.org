@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       80b3df48-8d6d-4b9a-bdb2-4632ec2d73ef
+:END:
+#+title: lua-index
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+Before diging in Lua Src, Lua Basic Knowledge is needed.
+More about, see [[id:6610cce8-1390-4ef2-95d8-08047fe66107][lua-note]].
+
+Index:
+- [[id:0a5d05e4-41f7-45eb-9a17-354db3affc59][lua-basic_concept]]

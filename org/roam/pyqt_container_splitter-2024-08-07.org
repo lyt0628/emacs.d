@@ -1,0 +1,50 @@
+:PROPERTIES:
+:ID:       920609fd-3785-432a-89e7-03e367714b80
+:END:
+#+title: pyqt-container-splitter
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class MyWidget(QWidget):
+	  def __init__(self):
+		  super(MyWidget, self).__init__()
+		  self.initUI()
+
+	  def initUI(self):
+		  VLayout = QVBoxLayout(self)
+		  self.setWindowTitle('动态改变控件大小测试')
+		  self.setGeometry(360, 260, 300, 200)
+		  #topleft = QFrame()
+		  #topleft.setFrameShape(QFrame.Shape.StyledPanel)
+		  #bottom = QFrame()
+		  #bottom.setFrameShape(QFrame.Shape.StyledPanel)
+		  #splitter1 = QSplitter(Qt.Orientation.Horizontal)
+		  splitter1 = QSplitter(Qt.Orientation.Vertical)
+
+		  tbn1 = QPushButton("A")
+		  tbn2 = QPushButton("B")
+
+		  splitter1.addWidget(tbn1)
+		  splitter1.addWidget(tbn2)
+
+		  splitter1.setSizes([100, 100])
+		  splitter2 = QSplitter(Qt.Orientation.Horizontal)
+		  splitter2.addWidget(QTextEdit())
+		  splitter2.addWidget(splitter1)
+
+		  VLayout.addWidget(splitter2)
+		  self.setLayout(VLayout)
+  if __name__=='__main__':
+	  app = QApplication(sys.argv)
+	  w = MyWidget()
+	  w.show()
+	  sys.exit(app.exec())
+#+end_src
+
+

@@ -9,4 +9,61 @@
 * Index
 - [[id:06e2edae-3a4e-4a25-bec3-8e7780636a8f][js-ev-event flow]]
 - [[id:74bbd654-4257-47f4-bdd0-084205550e7e][js-ev-event obj]]
-- [[id:91985381-4654-4f61-b26d-2604fc6b8fb4][js-ev-event cb]]
+- [[id:6d42f9c2-d549-4019-9d43-cd38268f952a][js-ev-event property]]
+- [[id:51667ef1-295a-431e-aa8b-5ecf5b529a97][js-ev-event listener]]
+- [[id:4bef86cc-c84e-401e-aca4-1b6750f2dc67][js-ev-ui]]
+- [[id:3c929e17-b103-44a5-81fe-509acf0afdf0][js-ev-focus]]
+- [[id:1d85138b-d4b1-4bcf-a5bc-ebc7022cf45d][js-ev-mouse]]
+- [[id:8d7dd53a-9dd9-4f76-aac1-e8ad9700f5ce][js-ev-wheel]]
+- [[id:321fd8a5-2b80-42e4-9b98-c88b627de60d][js-ev-input]]
+- [[id:38bd51b5-528d-4831-bc37-9dc8bc44c666][js-ev-key]]
+- [[id:14cf7b96-16ec-41b9-8576-17fcde457689][js-ev-composition]]
+- [[id:49a77210-77c2-4952-9c50-a2de5a89cdd9][js-ev-device]]
+- [[id:3fb367a8-272e-4c03-bb95-50b370cb0fe0][js-ev-touch]]
+- [[id:e1783702-27bb-4a89-8bf0-e169324ae71e][js-ev-event mock]]
+
+
+#+BEGIN_SRC html :noweb yes
+<input type="button" value="Click Me"
+  onclick="console.log('Clicked')">
+<input type="button" value="Click Me"
+  onclick="doClick()">
+  
+<input type="button" value="Click Me"
+  onclick="console.log(event.type)">
+<input type="button" value="Click Me"
+  onclick="console.log(this.value)">
+<input type="button" value="Click Me"
+  onclick="console.log(value)">
+
+<script>
+<<1>>
+</script>
+#+END_SRC
+
+#+RESULTS:
+
+#+NAME: 1
+#+BEGIN_SRC js :noweb yes :eval no
+function doClick(){
+  console.log("doclick")
+}
+
+function defaultEventWrapper(){
+  with(document){
+    with(this){
+      // cont
+    }
+  }
+}
+function defaultEventWrapper(){
+  with(document){
+    with(this.form){
+      with(this){
+        // cont
+      }
+    }
+  }
+}
+#+END_SRC
+

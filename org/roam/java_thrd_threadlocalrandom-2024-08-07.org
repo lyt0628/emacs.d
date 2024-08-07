@@ -1,0 +1,68 @@
+:PROPERTIES:
+:ID:       772b88a9-9509-42f3-96ef-81c4b3a6f35a
+:END:
+#+title: java-thrd-ThreadLocalRandom
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+- 由老随机数种子计算新随机数种子时，使用 CAS 保证随机数种子的原子性
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC java
+   <<jdemo>>
+   <<jDemo>>
+     <<jdoDemo>>
+
+  ThreadLocalRandom rand = ThreadLocalRandom.current();
+
+  <<jfor20>>JUtil.log(rand.nextInt(5));<<jend>>
+
+    <<jend>>
+  <<jend>>
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+3
+4
+4
+1
+0
+3
+0
+2
+3
+1
+1
+2
+2
+1
+4
+0
+4
+0
+3
+0
+#+end_example
+
+
+
+
+#+HEADER: :noweb yes
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml.png
+#+BEGIN_SRC plantuml
+@startuml
+<<pumlj-rand>>
+<<pumlj-thrdloclrand>>
+<<pumlj-thrd3>>
+
+
+Random <|-- ThreadLocalRandom
+ThreadLocalRandom -> Thread
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml.png]]
+

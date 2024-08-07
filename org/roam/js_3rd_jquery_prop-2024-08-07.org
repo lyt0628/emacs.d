@@ -1,0 +1,39 @@
+:PROPERTIES:
+:ID:       4a08ad0d-e2e1-4402-9339-1773e3c9351e
+:END:
+#+title: js-3rd-jquery-prop()
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+BEGIN_SRC js
+  $(function(){
+    // 1.获取property属性  ul
+    console.log("%O", document.querySelector('input') )
+
+     console.log($('ul').prop('id') )
+     console.log($('ul').prop('name') )
+
+     console.log($('ul').prop('nodeName') )
+     console.log($('ul').prop('nodeType') )
+
+    // 2.设置property属性  input
+     $('input').prop('disabled', true)
+
+    $('input').prop({
+      disabled: true,
+      placeholder: '请输入用户名',
+      jQuery_liujun_123: '自定义的属性' // 缓存 click  data
+    })
+
+    // 3.删除property属性 input
+    $('input').removeProp('jQuery_liujun_123') // 只能删除 自定义的属性
+
+
+
+  })
+#+END_SRC
+
+
+

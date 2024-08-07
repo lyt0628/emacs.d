@@ -1,0 +1,54 @@
+:PROPERTIES:
+:ID:       bf2cf53b-dcc4-413b-a165-4903b96922d8
+:END:
+#+title: pyqt-qss
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+
+
+#+begin_src python
+  import sys
+
+  <<pyqt>>
+  class myWidget(QWidget):
+      def __init__(self):
+	  super(myWidget, self).__init__()
+	  self.setWindowTitle("样式测试")
+	  pb1 = QPushButton("命令按钮1")
+	  pb2 = QPushButton("命令按钮2")
+	  pb3 = QPushButton("命令按钮3")
+	  lb = QLabel("标签文本")
+
+	  vLay = QVBoxLayout()
+	  vLay.addWidget(pb1)
+	  vLay.addWidget(pb2)
+	  vLay.addWidget(pb3)
+	  vLay.addWidget(lb)
+	  self.setLayout(vLay)
+
+	  lb.setStyleSheet("color:rgb(20,20,255);font-size:24px; \
+	      font-weight:bold;font-family: Courier New;")
+
+  if __name__ == "__main__":
+      app = QApplication(sys.argv)
+      #选择器
+      pbStyle = """
+	  QPushButton {
+	      background-color:red;
+	      fireground-color:blue;
+	      font-family: 黑体;
+	      font-size:16px;
+	  }
+      """
+      w = myWidget()
+      w.setStyleSheet(pbStyle)
+      w.show()
+      sys.exit(app.exec())
+#+end_src
+
+#+RESULTS:
+

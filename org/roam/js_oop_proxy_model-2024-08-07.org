@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       b411a7d3-8aa9-4c7b-a064-83f97fd1e0f2
 :END:
-#+title: js-oop-proxy-model
+#+title: js-oop-proxy-pattern
 #+date: [2024-08-07 三]
 #+last_modified:  
 

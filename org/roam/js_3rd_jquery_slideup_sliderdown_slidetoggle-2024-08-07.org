@@ -1,0 +1,249 @@
+:PROPERTIES:
+:ID:       d65f14da-8ada-442d-847c-99d58bed8d3e
+:END:
+#+title: js-3rd-jquery-slideUp()&sliderDown()&slideToggle()
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+- slideUp()/slideDown() [[id:5547f7ca-6df3-4b0e-986b-ad909636aa71::VF API][VF API]]
+  
+- slideToggle()
+  
+  | 参数   | 描述                        |
+  |-------+----------------------------|
+  | speed | [slow, fast, normal, <ms>] |
+  |-------+----------------------------|
+  | CB    |                            |
+  |-------+----------------------------|
+
+ 
+
+
+
+#+BEGIN_SRC html  :dir workdir
+    <<style>>
+
+    <button class="expand">展开</button>
+    <button class="close">折叠</button>
+    <button class="toggle">切换</button>
+
+    <div class="box">
+      box
+    </div>
+
+
+
+  <<js-jq>>
+  <script>
+    <<behavior>>
+  </script>
+#+END_SRC
+
+
+#+NAME: style
+#+BEGIN_SRC css
+  <style>
+    body{
+      height: 200px;
+    }
+    .box{
+      width: 200px;
+      height: 100px;
+      background-color: pink;
+    }
+  </style>
+#+END_SRC
+
+
+#+NAME: behavior
+#+BEGIN_SRC js
+  $().ready(()=>{
+    $('.expand').click(()=>{
+      $('.box').slideDown(2000)
+    })
+
+    $('.close').click(()=>{
+      $('.box').slideUp(2000)
+    })
+
+
+    $('.toggle').click(()=>{
+      $('.box').slideToggle(2000)
+    })
+
+  })
+#+END_SRC
+
+
+#+NAME: style
+#+BEGIN_SRC css
+  <style>
+    .box{
+      position: fixed;
+      bottom: 0;
+      right: 0;
+    }
+
+    img{
+      vertical-align: bottom;
+    }
+
+    .close{
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+      /* border: 1px solid red; */
+    }
+
+  </style>
+#+END_SRC
+
+
+
+
+
+#+NAME: behavior
+#+BEGIN_SRC js
+  $(function() {
+
+    $('.close').click(function() {
+
+      $('.bottom').animate({height: 0}, 600, function() {
+
+	$('.box').animate({width: 0}, 600, function() {
+	  $('.box').css('display', 'none')
+	})
+
+      })
+    })
+
+  })
+#+END_SRC
+
+
+
+
+#+BEGIN_SRC html
+  <<style>>
+
+  <div class="nav">
+    <div class="nav-bar" >
+      <div class="item active">首页</div>
+      <div class="item">9块9包邮</div>
+      <div class="item">超值大额券</div>
+      <div class="item">降温急救穿搭</div>
+    </div>
+  </div>
+
+  <<js-jq>>
+  <script>
+    <<behavior>>
+  </script>
+#+END_SRC
+
+#+RESULTS:
+: 正在现有的浏览器会话中打开。
+
+
+#+NAME: style
+#+BEGIN_SRC css
+  <style>
+    .nav{
+      background-color: #43240c;
+      color: white;
+    }
+
+    .nav-bar{
+      display: flex;
+      width: 1200px;
+      height: 46px;
+      line-height: 46px;
+      margin: 0 auto;
+    }
+
+    .item{
+      width: 160px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .item.active{
+      background-color: #fee44e;
+      color: #43200c;
+    }
+  </style>
+#+END_SRC
+
+
+
+#+NAME: behavior
+#+BEGIN_SRC js
+  // 1.监听文档完全解析完成
+  $(function() {
+
+    $('.item').on('click', function() {
+      $(this).addClass('active').siblings().removeClass('active')
+    })
+
+    // console.log($('.item:eq(1)').siblings())
+  })
+#+END_SRC
+
+
+#+BEGIN_SRC html
+  <button class="sub">-</button>
+  <span class="counter">0</span>
+  <button class="add">+</button>
+
+  <<js-jq>>
+  <script >
+    <<js-counter>>
+  </script>
+#+END_SRC
+
+#+RESULTS:
+: 正在现有的浏览器会话中打开。
+
+
+#+NAME: js-counter
+#+BEGIN_SRC js
+  var $sub = jQuery('.sub')
+  var $span = jQuery('.counter')
+  var $add = jQuery('.add')
+  var counter = 0
+
+  $sub.on('click', function() {
+    $span.text(--counter)      
+  })
+  $add.on('click', function() {
+    $span.text(++counter)
+  })
+
+#+END_SRC
+
+
+
+
+DOM解析完成后执行回调
+#+NAME: js-counter2
+#+BEGIN_SRC js
+    jQuery(function() {
+
+      var $sub = jQuery('.sub')
+      var $span = jQuery('.counter')
+      var $add = jQuery('.add')
+      
+      var counter = 0
+      $sub.on('click', function() {
+        $span.text(--counter)      
+      })
+      $add.on('click', function() {
+        $span.text(++counter)
+      })
+    })
+#+END_SRC

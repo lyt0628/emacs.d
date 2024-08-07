@@ -1,0 +1,134 @@
+:PROPERTIES:
+:ID:       414cfc7c-e90d-47a6-91c6-70fcca517d6c
+:END:
+#+title: qml-prop-anchors
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-114d5053-16b9-11ef-9b48-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-114d5053-16b9-11ef-9b48-024236e6a1cc.qml
+  <<qml>>
+
+   Window {
+     width: 640
+     height: 480
+     visible: true
+     color: "#eeeeee"
+
+    Rectangle{
+       anchors.fill: parent
+       color: "#333333"
+       opacity: 0.5
+    }
+
+
+
+    Rectangle{
+       anchors.centerIn: parent
+       width: 50
+       height: 50
+       color: "blue"
+       opacity: 0.5
+    }
+
+    Rectangle{
+       anchors.verticalCenter: parent.verticalCenter
+       anchors.horizontalCenter: parent.horizontalCenter
+       width: 50
+       height: 50
+       color: "green"
+       opacity: 0.5
+       z: 1
+       rotation: 45
+    }
+
+
+    Rectangle{
+       anchors.left: parent.left
+       anchors.top: parent.top
+       anchors.leftMargin: 10
+       width: 50
+       height: 50
+       color: "blue"
+    }
+
+
+    Rectangle{
+       anchors.right: parent.right
+       anchors.top: parent.top
+       width: 50
+       height: 50
+       color: "blue"
+    }
+
+
+    Rectangle{
+       anchors.centerIn: parent
+       width: 50
+       height: 50
+       color: "blue"
+    }
+
+
+    Rectangle{
+       anchors.left: parent.left
+       anchors.bottom: parent.bottom
+       width: 50
+       height: 50
+       color: "blue"
+    }
+
+
+    Rectangle{
+       anchors.right: parent.right
+       anchors.bottom: parent.bottom
+       width: 50
+       height: 50
+       color: "blue"
+    }
+
+
+    Rectangle{
+       anchors.left: parent.left
+       anchors.verticalCenter: parent.verticalCenter
+       width: 50
+       height: 50
+       color: "red"
+    }
+
+
+
+  }
+
+  #+end_src
+
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-cc6d5e0b-16b9-11ef-aec4-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-cc6d5e0b-16b9-11ef-aec4-024236e6a1cc.qml
+    <<qml>>
+
+   Window {
+     width: 640
+     height: 480
+     visible: true
+     color: "#eeeeee"
+
+    Rectangle{
+       anchors.left: parent.left
+       anchors.horizontalCenter: parent.horizontalCenter
+       width: 50
+       height: 50
+       color: "red"
+    }
+
+
+
+  }
+
+
+
+#+end_src

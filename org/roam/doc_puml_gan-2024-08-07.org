@@ -1,0 +1,31 @@
+:PROPERTIES:
+:ID:       2f9c5dea-d3eb-4d43-b14e-7a94c09b11d8
+:END:
+#+title: doc-puml-gan
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/pgan3819bfb1-4480-47e0-a7ba-decf812f48b5.png
+#+BEGIN_SRC plantuml
+@startgantt
+[Prototype design] lasts 15 days
+[Test prototype] lasts 10 days
+
+-- All example --
+
+[Task 1 (1 day)] lasts 1 day
+[T2 (5 days)] lasts 5 days
+[T3 (1 week)] lasts 1 week
+[T4 (1 week and 4 days)] lasts 1 week and 4 days
+[T5 (2 weeks)] lasts 2 weeks
+@endgantt
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/pgan3819bfb1-4480-47e0-a7ba-decf812f48b5.png]]
+
+

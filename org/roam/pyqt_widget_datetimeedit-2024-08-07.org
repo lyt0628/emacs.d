@@ -1,0 +1,58 @@
+:PROPERTIES:
+:ID:       985e4dc7-7f42-4bf2-8fcc-c82f22658213
+:END:
+#+title: pyqt-widget-datetimeedit
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class MyWidget(QWidget):
+		  def __init__(self):
+			  super(MyWidget, self).__init__()
+			  self.initUI()
+  
+		  def initUI(self):
+			  self.setWindowTitle('QDateTimeEdit测试')
+			  self.resize(300, 100)
+
+			  vlayout = QVBoxLayout()
+			  self.dateTime = QDateTimeEdit(QDateTime.currentDateTime(),self)
+			  self.dateTime.setDisplayFormat("yyyy-MM-dd HH:mm:ss")
+			  #设置最小日期
+			  self.dateTime.setMinimumDate(QDate.currentDate().addDays(-365))
+			  #设置最大日期
+			  self.dateTime.setMaximumDate(QDate.currentDate().addDays(365))
+			  self.dateTime.setCalendarPopup(True)
+			  self.dateTime.dateChanged.connect(self.changedFunc)
+			  self.dateTime.dateTimeChanged.connect(self.changedFunc)
+			  self.dateTime.timeChanged.connect(self.changedFunc)
+
+			  self.btn = QPushButton("获得日期和时间")
+			  self.btn.clicked.connect(self.clickedFunc)
+
+			  vlayout.addWidget(self.dateTime)
+			  vlayout.addWidget(self.btn)
+			  self.setLayout(vlayout)
+
+		  #日期时间发生改变时执行
+		  def changedFunc(self, dtime):
+			  print(dtime)
+		  #单击按钮执行
+		  def clickedFunc(self):
+			  dateTime = self.dateTime.dateTime()
+			  maxDateTime = self.dateTime.maximumDateTime()
+			  print('日期时间=%s' % str(dateTime))
+			  print('最大日期时间=%s' % str( maxDateTime))
+  if __name__=='__main__':
+		  app = QApplication(sys.argv)
+		  w = MyWidget()
+		  w.show()
+		  sys.exit(app.exec())
+#+end_src
+
+

@@ -1,0 +1,119 @@
+:PROPERTIES:
+:ID:       7d04dccc-3641-4957-9a98-6bf439caed1f
+:END:
+#+title: java-jdk-selector
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+[[id:5eec4dbb-9186-412a-8d59-889c4c1cece2][Reactor]]
+
+#+BEGIN_SRC java :noweb yes
+  <<java>>
+  public class Main {
+      <<createSelector>>
+      <<select_dispatch>>
+      <<handlers>>
+  
+      public static void main(String[] args) throws IOException {
+	  var m = new Main();
+	  m.listen();
+      }
+  }
+
+#+END_SRC
+
+
+
+* 创建 serv 注册 sel 和Accept 事件
+
+#+NAME: createSelector
+#+BEGIN_SRC java
+  private Selector createSelector() throws  IOException{
+      var sel = Selector.open();
+
+      var serv = ServerSocketChannel.open();
+      serv.configureBlocking(false);
+
+      var servSock = serv.socket();
+      var addr = new InetSocketAddress(8080);
+      servSock.bind(addr);
+
+      serv.register(sel, SelectionKey.OP_ACCEPT);
+      return sel;
+  }
+
+  
+#+END_SRC
+
+* Slect 事件， 并进行分发
+
+#+NAME: select_dispatch
+#+BEGIN_SRC java
+  public void listen() throws IOException {
+      var sel = createSelector();
+      while (true){
+	  sel.select();
+	  Set<SelectionKey> skeys =  sel.selectedKeys();
+	  Iterator<SelectionKey> iter = skeys.iterator();
+
+	  while (iter.hasNext()){
+	      var k = iter.next();
+	      iter.remove();
+	      dispatch(k);
+	  }
+
+
+      }
+  }
+
+
+   private void dispatch(SelectionKey  k) throws IOException {
+      if (k.isAcceptable()){
+	      handleAccept(k);
+      }else if (k.isReadable()){
+	      handleRead(k);
+      }else if (k.isWritable()) {
+	      handleWrite(k);
+      }
+   }
+  
+#+END_SRC
+
+* Handlers
+
+#+NAME: handlers
+#+BEGIN_SRC java
+      private void handleRead(SelectionKey k) throws IOException {
+	  var conn = (SocketChannel) k.channel();
+	  var buf = ByteBuffer.allocate(1024);
+	  int len = conn.read(buf);
+	  if(len > 0){
+	      buf.flip();
+	      var msg = new String(buf.array(), 0, len);
+	      if(msg.contains("end")) System.exit(0);
+	      var key = conn.register(k.selector(), SelectionKey.OP_WRITE);
+	      key.attach(msg);
+	  }else {
+	      conn.close();
+	  }
+      }
+
+      private void handleWrite(SelectionKey k) throws IOException {
+	  var conn = (SocketChannel)k.channel();
+	  var msg = (String) k.attachment();
+	  var buf = ByteBuffer.wrap(msg.getBytes());
+	  conn.write(buf);
+	  conn.register(k.selector(), SelectionKey.OP_READ);
+      }
+
+
+      private void handleAccept(SelectionKey k) throws IOException {
+	  var serv = (ServerSocketChannel)k.channel();
+	  var chan = serv.accept();
+	  chan.configureBlocking(false);
+	  chan.register(k.selector(), SelectionKey.OP_READ);
+      }
+
+
+#+END_SRC
+

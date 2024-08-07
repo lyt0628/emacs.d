@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       9968f1d3-6723-4779-be83-7900d26a56b7
+:END:
+#+title: doc-dot
+#+date: [2024-08-07 三]
+#+last_modified:  
+

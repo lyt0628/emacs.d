@@ -1,0 +1,51 @@
+:PROPERTIES:
+:ID:       4a3b775a-7aeb-4562-9f64-fc4e97b31a25
+:END:
+#+title: java-thrd-CountDownLatch
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC java
+  <<jdemo>>
+  <<jDemo>>
+     <<j_-$dcnt10>>
+   public void doSync(CountDownLatch dcnt){
+       try{
+	 <<jsleep1ms>>
+	 JUtil.log("Check Complete...");
+	 dcnt.countDown();
+       }<<jcatch>>
+    }
+
+    <<jdoDemo>>
+	final var demo = <<jnewDemo>>
+
+	var checkRun =
+	<<jrun>>
+	    demo.doSync(dcnt);
+	<<jendrun>>
+
+	<<jfor10>>new Thread(checkRun).start();<<jend>>
+	dcnt.await();
+        JUtil.log("Fire!");
+     <<jend>>
+  <<jend>>
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+Check Complete...
+Check Complete...
+Check Complete...
+Check Complete...
+Check Complete...
+Check Complete...
+Check Complete...
+Check Complete...
+Check Complete...
+Check Complete...
+Fire!
+#+end_example
+

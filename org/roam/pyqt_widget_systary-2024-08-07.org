@@ -1,0 +1,211 @@
+:PROPERTIES:
+:ID:       2aee075e-7da1-4492-a7d2-69e3ad4d523d
+:END:
+#+title: pyqt-widget-systary
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+begin_src python :dir workdir
+ 
+import os
+import sys
+
+from PyQt6.QtGui import QIcon, QAction
+from PyQt6.QtWidgets import (
+    QApplication,
+    QColorDialog,
+    QMenu,
+    QSystemTrayIcon,
+)
+
+
+app = QApplication(sys.argv)
+app.setQuitOnLastWindowClosed(False)
+
+# Create the icon
+icon = QIcon(os.path.join("./icons", "icon.png"))
+
+# Create the tray
+tray = QSystemTrayIcon()
+tray.setIcon(icon)
+tray.setVisible(True)
+
+# Create the menu
+menu = QMenu()
+action = QAction("A menu item")
+menu.addAction(action)
+
+# Add a Quit option to the menu.
+quit = QAction("Quit")
+quit.triggered.connect(app.quit)
+menu.addAction(quit)
+
+# Add the menu to the tray
+tray.setContextMenu(menu)
+
+app.exec()
+#+end_src
+
+#+RESULTS:
+
+
+
+#+begin_src python :dir workdir
+import os
+import sys
+
+from PyQt6.QtGui import QIcon, QAction
+from PyQt6.QtWidgets import (
+    QApplication,
+    QColorDialog,
+    QMenu,
+    QSystemTrayIcon,
+)
+
+
+
+app = QApplication(sys.argv)
+app.setQuitOnLastWindowClosed(False)
+
+# Create the icon
+icon = QIcon(os.path.join("./icons", "color.png"))
+
+clipboard = QApplication.clipboard()
+dialog = QColorDialog()
+
+
+def copy_color_hex():
+    if dialog.exec():
+        color = dialog.currentColor()
+        clipboard.setText(color.name())
+
+
+def copy_color_rgb():
+    if dialog.exec():
+        color = dialog.currentColor()
+        clipboard.setText(
+            "rgb(%d, %d, %d)"
+            % (color.red(), color.green(), color.blue())
+        )
+
+
+def copy_color_hsv():
+    if dialog.exec():
+        color = dialog.currentColor()
+        clipboard.setText(
+            "hsv(%d, %d, %d)"
+            % (color.hue(), color.saturation(), color.value())
+        )
+
+
+# Create the tray
+tray = QSystemTrayIcon()
+tray.setIcon(icon)
+tray.setVisible(True)
+
+# Create the menu
+menu = QMenu()
+action1 = QAction("Hex")
+action1.triggered.connect(copy_color_hex)
+menu.addAction(action1)
+
+action2 = QAction("RGB")
+action2.triggered.connect(copy_color_rgb)
+menu.addAction(action2)
+
+action3 = QAction("HSV")
+action3.triggered.connect(copy_color_hsv)
+menu.addAction(action3)
+
+quit = QAction("Quit")
+quit.triggered.connect(app.quit)
+menu.addAction(quit)
+
+# Add the menu to the tray
+tray.setContextMenu(menu)
+
+app.exec()
+#+end_src
+
+#+RESULTS:
+
+
+#+begin_src python :dir workdir
+import os
+import sys
+
+from PyQt6.QtGui import QIcon, QAction
+from PyQt6.QtWidgets import (
+    QApplication,
+    QMainWindow,
+    QMenu,
+    QSystemTrayIcon,
+    QTextEdit,
+)
+
+basedir = os.path.dirname(__file__)
+
+app = QApplication(sys.argv)
+app.setQuitOnLastWindowClosed(False)
+
+# Create the icon
+icon = QIcon(os.path.join(basedir, "animal-penguin.png"))
+
+
+# Create the tray
+tray = QSystemTrayIcon()
+tray.setIcon(icon)
+tray.setVisible(True)
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.editor = QTextEdit()
+        self.load()  # Load up the text from file.
+
+        menu = self.menuBar()
+        file_menu = menu.addMenu("&File")
+
+        self.reset = QAction("&Reset")
+        self.reset.triggered.connect(self.editor.clear)
+        file_menu.addAction(self.reset)
+
+        self.quit = QAction("&Quit")
+        self.quit.triggered.connect(app.quit)
+        file_menu.addAction(self.quit)
+
+        self.setCentralWidget(self.editor)
+
+        self.setWindowTitle("PenguinNotes")
+
+    def load(self):
+        with open("notes.txt", "r") as f:
+            text = f.read()
+        self.editor.setPlainText(text)
+
+    def save(self):
+        text = self.editor.toPlainText()
+        with open("notes.txt", "w") as f:
+            f.write(text)
+
+    def activate(self, reason):
+        if (
+            reason == QSystemTrayIcon.ActivationReason.Trigger
+        ):  # Icon clicked.
+            self.show()
+
+
+w = MainWindow()
+
+tray.activated.connect(w.activate)
+app.aboutToQuit.connect(w.save)
+
+app.exec()
+#+end_src
+
+#+RESULTS:
+

@@ -1,0 +1,49 @@
+:PROPERTIES:
+:ID:       e5c02aa3-0984-400e-a118-564d31784101
+:END:
+#+title: pyqt-widget-textedit
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+#+begin_src python
+  import sys
+
+  <<pyqt>>
+  class MyWidget(QWidget):
+	  def __init__(self, parent=None):
+		  super(MyWidget, self).__init__(parent)
+		  self.setWindowTitle("QTextEdit测试")
+		  self.resize(300, 270)
+		  self.te = QTextEdit()
+		  self.btn1 = QPushButton ("显示HTML")
+		  self.btn2 = QPushButton ("恢复显示")
+
+		  vlayout = QVBoxLayout()
+		  vlayout.addWidget(self.te)
+		  vlayout.addWidget(self.btn1)
+		  vlayout.addWidget(self.btn2)
+		  self.setLayout(vlayout)
+
+		  self.te.setTextColor(PyQt6.QtGui.QColor(0, 0, 255))
+		  self.te.setPlainText("Python编程\nPyQt6界面编程")
+
+		  self.btn1.clicked.connect(self.btn1Clicked)
+		  self.btn2.clicked.connect(self.btn2Clicked)
+
+	  def btn1Clicked(self):
+		  global tmp
+		  tmp=self.te.toPlainText()
+		  self.te.setHtml("<font color='red' size='6'>C++程序设计<p>Spring Boot应用开发</font>")
+
+	  def btn2Clicked(self):
+		  global tmp
+		  self.te.setPlainText(tmp)
+  if __name__=="__main__":
+	  tmp=''
+	  app = QApplication(sys.argv)
+	  w = MyWidget()
+	  w.show()
+	  sys.exit(app.exec())
+#+end_src
+
+

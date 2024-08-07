@@ -1,0 +1,48 @@
+:PROPERTIES:
+:ID:       eb012b9e-9739-48a0-b0d3-db6bc93a0001
+:END:
+#+title: java-thrd-Condition Var
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC java
+  <<jdemo>>
+  <<jDemo>>
+    <<j_-$relock>>
+    <<j_-$recond>>
+
+   public void doSync(Lock lock, Condition cond){
+       try{
+	 lock.lock();
+	 cond.await();
+	 JUtil.log("I am ongoing again...");
+       }<<jcatch>>
+	finally{ 
+	  lock.unlock();
+       }
+    }
+
+    <<jdoDemo>>
+	final var demo = <<jnewDemo>>
+
+	var lockRun =
+	<<jrun>>
+	    demo.doSync(relock, recond);
+	<<jendrun>>
+
+	new Thread(lockRun).start();
+
+	<<jsleep1ms>>
+
+	relock.lock();
+	recond.signal();
+	relock.unlock();
+     <<jend>>
+  <<jend>>
+#+END_SRC
+
+#+RESULTS:
+: I am ongoing again...

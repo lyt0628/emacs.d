@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       7d4d9046-7466-4b22-aa79-9b6f08965600
 :END:
-#+title: spring
+#+title: java-spring
 #+filetags: :spring:kotlin:java:
 #+date: [2024-06-28 五]
 #+last_modified: [2024-07-05 五 21:36]

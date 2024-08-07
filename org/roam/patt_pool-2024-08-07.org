@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       adce6a8c-d4c2-4f3d-ae09-f4a122df93dc
+:END:
+#+title: patt-pool
+#+date: [2024-08-07 三]
+#+last_modified:  
+

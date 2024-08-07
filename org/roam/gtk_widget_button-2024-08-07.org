@@ -1,0 +1,36 @@
+:PROPERTIES:
+:ID:       fd0f6574-aef0-439b-b3e9-7659c7fbf97d
+:END:
+#+title: gtk-widget-button
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+HEADER: :header-args:   :noweb yes
+#+HEADER: :flags "$(pkg-config --cflags gtk4) "
+#+HEADER: :libs  "$(pkg-config --libs gtk4)"
+#+HEADER: :results silent
+#+BEGIN_SRC C  
+  <<gtk>>
+  <<gtk-print_hello>>
+
+  static void
+  activate (GtkApplication *app,
+	    gpointer        user_data)
+  {
+    GtkWidget *window;
+    GtkWidget *button;
+
+    window = gtk_application_window_new (app);
+
+    button = gtk_button_new_with_label ("Hello World");
+    g_signal_connect (button, "clicked", G_CALLBACK (print_hello), NULL);
+    gtk_window_set_child (GTK_WINDOW (window), button);
+
+    gtk_window_present (GTK_WINDOW (window));
+  }
+
+  <<gtk-main>>
+#+END_SRC
+
+

@@ -1,0 +1,58 @@
+:PROPERTIES:
+:ID:       8ff790ca-e9e5-4ce0-9ad8-f7b58506a3af
+:END:
+#+title: java-jdk-chann
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC java 
+   <<jdemo>>
+   <<jDemo>>
+     <<jdoDemo>>
+
+	var fin = new FileInputStream("/home/lyt0628/aaa.txt");
+	var inchan = fin.getChannel();
+	var fout = new FileOutputStream("/home/lyt0628/bbb.txt");
+	var outchan = fout.getChannel();
+
+	var buf = ByteBuffer.allocate(1024);
+	while(inchan.read(buf)>= 0){
+	    buf.flip();
+	    outchan.write(buf);
+	    buf.clear();
+	}
+
+    <<jend>>
+  <<jend>>
+#+END_SRC
+
+#+RESULTS:
+
+
+	
+#+HEADER: :noweb yes
+#+BEGIN_SRC java 
+   <<jdemo>>
+   <<jDemo>>
+     <<jdoDemo>>
+	var fi = new File("/home/lyt0628/aaa.txt");
+	var fin = new FileInputStream(fi);
+	var inchan = fin.getChannel();
+
+	var fo = new File("/home/lyt0628/bbb.txt");
+	var fout = new FileOutputStream(fo);
+	var outchan = fout.getChannel();
+
+	var len = inchan.transferTo(0, fi.length(), outchan);
+        <<c#>> 或者 outchan.transferFrom(0, fi.length(), inchan)
+	System.out.println(" byte is copied," + len);
+
+    <<jend>>
+  <<jend>>
+#+END_SRC
+
+#+RESULTS:
+:  byte is copied,370
+

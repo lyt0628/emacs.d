@@ -1,0 +1,55 @@
+:PROPERTIES:
+:ID:       89a0bb41-dfb6-409f-bf29-ff6e7b25e65b
+:END:
+#+title: pyqt-widget-drop
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  
+  class myWidget(QWidget):
+      def __init__(self):
+	  super(myWidget, self).__init__()
+	  self.setWindowTitle('Drog和Drop测试')
+	  self.initUI()
+
+      def initUI(self):
+	  fLay = QFormLayout()
+	  fLay.addRow(QLabel("选择文本拖拽到另一文本框"))
+	  self.le1 = myLineEdit(self)
+	  self.le1.setDragEnabled(True)
+	  self.le2 = myLineEdit(self)
+	  self.le2.setDragEnabled(True)
+	  fLay.addRow(QLabel("文本框1:"), self.le1)
+	  fLay.addRow(QLabel("文本框2:"), self.le2)
+	  self.setLayout(fLay)
+
+
+  class myLineEdit(QLineEdit):
+      def __init__(self, parent):
+	  super(myLineEdit, self).__init__(parent)
+	  self.setAcceptDrops(True)
+
+      def dragEnterEvent(self, e):
+	  if e.mimeData().hasText():
+	      e.accept()
+	  else:
+	      e.ignore()
+      def dropEvent(self, e):
+	  txt=e.mimeData().text()
+	  self.setText(txt)
+
+  if __name__ == '__main__':
+      app = QApplication(sys.argv)
+      w = myWidget()
+      w.show()
+      sys.exit(app.exec())
+#+end_src
+
+
+

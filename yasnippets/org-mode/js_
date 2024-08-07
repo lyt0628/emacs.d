@@ -2,10 +2,9 @@
 # name: js_
 # key: js_
 # --
-
-
 #+BEGIN_SRC html :noweb yes
 <script>
+$0
 </script>
 #+END_SRC
 

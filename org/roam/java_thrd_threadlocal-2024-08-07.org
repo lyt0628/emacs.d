@@ -1,0 +1,107 @@
+:PROPERTIES:
+:ID:       55b9d577-ee71-4516-ad18-2e2df275b9d9
+:END:
+#+title: java-thrd-ThreadLocal_
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC java
+   <<jdemo>>
+   <<jDemo>>
+      <<j_-$thrdlocl:s>>
+
+      public void doSync(String s)<<jie>>{
+	 thrdlocl.set(s);
+	 <<jsleep1ms>>
+	 JUtil.log("S:" + s + " >> " + thrdlocl.get());
+
+	 thrdlocl.remove();
+	 JUtil.log("After S:" + s + " >> " + thrdlocl.get());
+      }
+
+     <<jdoDemo>>
+       final var demo = <<jnewDemo>>
+       var RunA =
+       <<jrun>>
+	  try{
+		demo.doSync("A");
+	  }<<jcatch>>
+       <<jendrun>>
+
+       var RunB =
+       <<jrun>>
+	  try{
+		demo.doSync("B");
+	  }<<jcatch>>
+       <<jendrun>>
+
+
+       new Thread(RunA).start();
+       new Thread(RunB).start();
+    <<jend>>
+  <<jend>>
+#+END_SRC
+
+#+RESULTS:
+: S:B >> B
+: S:A >> A
+: After S:B >> null
+: After S:A >> null
+
+
+
+#+HEADER: :noweb yes
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml.png
+#+BEGIN_SRC plantuml
+@startuml
+<<pumlj-thrdlocl>>
+<<pumlj-thrd2>>
+<<pumlj-thrdloclmap2>>
+
+ThreadLocal -> Thread
+Thread --> ThreadLocalMap
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml.png]]
+
+
+* 可继承的ThreadLocal
+
+
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC java
+   <<jdemo>>
+   <<jDemo>>
+     <<j#>>    <<j_-$thrdlocl:s>>
+               <<j_-$thrdlocl:s-inheritable>>
+  
+      public void doSync()<<jie>>{
+	 JUtil.log("S: >> " + thrdlocl.get());
+      }
+
+     <<jdoDemo>>
+       final var demo = <<jnewDemo>>
+       thrdlocl.set("In Main");
+       var Run =
+       <<jrun>>
+	  try{
+		demo.doSync();
+	  }<<jcatch>>
+       <<jendrun>>
+
+
+       new Thread(Run).start();
+    <<jend>>
+  <<jend>>
+#+END_SRC
+
+#+RESULTS:
+: S: >> In Main
+

@@ -1,0 +1,186 @@
+:PROPERTIES:
+:ID:       2b47bd4d-8356-4199-b25b-37eb711fe25c
+:END:
+#+title: js-3rd-jquery-css()
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+* KV ARG 字典参数
+
+
+* KVs ARG 字典参数
+ 
+
+* KV_s ARG =  KVs | KV
+
+
+
+
+#+BEGIN_SRC js
+    $(function() {
+      // 1.获取到元素的width
+      // width: content ;  innerWidth:padding + content; outerWidth: border + padding + content
+      console.log($('ul').width()) // 返回的结果是 number
+
+      // 2.设置ul元素的width
+       $('ul').width(300)  // 直接给style设置一个width
+       $('ul').width('500px')  // 直接给style设置一个width
+
+      // 3. width height  innerWidth innerHeight ......
+
+    })
+#+END_SRC
+
+
+
+
+* css 函数
+
+
+#+BEGIN_SRC js
+       console.log( $('ul').css('width') )  // 返回的结果是 string 带单位 px
+       console.log( $('ul').css(['width', 'height']) )  // 返回的结果是 string 带单位 px 。 {width: '223px', height: '105px'}
+
+      // 2.给ul元元素设置width
+       $('ul').css('width', '450px') // 设置的是一个属性
+      
+       $('ul').css({  // 设置的是多个属性
+         width: 100,
+         height: 100,
+         color: 'red'
+       })
+
+      $('ul li')
+        .css('color', 'green')
+        .odd()
+        .css({
+          color: 'red'
+        })
+#+END_SRC
+
+
+
+* class 函数
+
+#+BEGIN_SRC js
+    // 1.监听文档完全解析完成
+    $(function() {
+      // 1.添加class
+       $('ul').addClass('list1 list2')
+       $('ul li').addClass(['list1', 'list2'])
+
+      // 2.判断是否存在弄个class
+       console.log($('ul').hasClass('active list') )
+
+      // 3.删除class
+       $('ul').removeClass() // 删除全部
+       $('ul').removeClass('list') // 删除指定的某一个
+
+      // 4.class的切换
+      $('.toggle').click(function() {
+        // $('ul').toggleClass()
+        $('ul').toggleClass('active')
+      })
+     
+
+    })
+#+END_SRC
+
+
+
+
+
+
+#+BEGIN_SRC js
+    $(function() {
+      // 1.获取attribute属性  ul
+       console.log($('ul').attr('id'))
+       console.log($('ul').attr('name'))
+
+      // 2.设置 attribute属性 ul
+       $('ul').attr('id', 'box')
+
+       $('ul').attr({   // 设置多个属性
+         id: 'container',
+         class: "panel",
+         name: 'coder'
+       })
+
+      // 3.删除 attribute属性 ul
+       $('ul').removeAttr('id')
+       $('ul').removeAttr('name')
+
+    })
+#+END_SRC
+
+
+
+
+#+BEGIN_SRC js
+  $(function(){
+    // 1.获取property属性  ul
+    console.log("%O", document.querySelector('input') )
+
+     console.log($('ul').prop('id') )
+     console.log($('ul').prop('name') )
+
+     console.log($('ul').prop('nodeName') )
+     console.log($('ul').prop('nodeType') )
+
+    // 2.设置property属性  input
+     $('input').prop('disabled', true)
+
+    $('input').prop({
+      disabled: true,
+      placeholder: '请输入用户名',
+      jQuery_liujun_123: '自定义的属性' // 缓存 click  data
+    })
+
+    // 3.删除property属性 input
+    $('input').removeProp('jQuery_liujun_123') // 只能删除 自定义的属性
+
+
+
+  })
+#+END_SRC
+
+
+
+
+
+* data
+
+#+BEGIN_SRC js
+    $(function() {
+      // 1.获取data属性 ul
+      console.log($('ul').data() )  //  {age: 17, name: 'liujun'}
+      // console.log($('ul').data('age') )
+      
+      // 2.设置data属性 ul
+       $('ul').data('name', 'coder')
+      $('ul').data({  // 调用data()函数只能修改 缓存中的数据
+        name: 'coder',
+        age: '18',
+        height: '1.66'  // 动态添加的data-xx属性
+      })
+
+      // 3.删除data属性
+      // $('ul').removeData('name')  // 只能删除 缓存中的数据
+      $('ul').removeData(['name', 'age', 'height'])  // 只能删除 缓存中的数据
+
+
+      console.log( $('ul').data('name') )
+      console.log("%O", $('ul').get(0) )
+
+
+    })
+#+END_SRC
+
+
+
+
+
+
+

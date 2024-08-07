@@ -1,0 +1,34 @@
+:PROPERTIES:
+:ID:       8eb59be1-ab1a-4413-8f81-85d95378eb75
+:END:
+#+title: lua-gc
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* Intro to GC of lua
+Lua use mark-sweep as major GC strategy.
+Before digging in src of lua,
+we need to konw some basic definition and concept of lua GC.
+
+** State of Lua GC
+| Macro          | Real Value | Description |
+|----------------+------------+-------------|
+| GCSpropagate   |          0 |             |
+| GCSenteratomic |          0 |             |
+
+
+
+#+HEADER: :file /tmp/dot_state_of_lua_gc.png
+#+BEGIN_SRC dot 
+   digraph G {
+    graph[bgcolor=lightblue];
+    a [color=blue; style=filled; fontcolor=green];
+    a -> b [color=red; label=A];
+    edge [color=green]
+    a -> {c; "x.y"};
+  }
+#+END_SRC 
+
+#+RESULTS:
+[[file:/tmp/dot_state_of_lua_gc.png]]

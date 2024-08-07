@@ -5,3 +5,17 @@
 #+date: [2024-08-01 周四]
 #+last_modified:  
 
+
+#+begin_src erlang
+  run() ->
+    pid = spawn(fun ping/0),
+    pid ! self(),
+    receive
+      pong -> ok
+    end.
+
+  ping() ->
+    receive
+      From -> From ! pong
+    end.
+#+end_src

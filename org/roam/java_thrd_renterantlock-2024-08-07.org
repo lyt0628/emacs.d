@@ -1,0 +1,156 @@
+:PROPERTIES:
+:ID:       1ec4e552-cbef-4d17-93a6-5e14c5d201b3
+:END:
+#+title: java-thrd-RenterantLock
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC java
+  <<jdemo>>
+
+  class Demo implements Runnable {
+    public static ReentrantLock lock = new ReentrantLock();
+    public static int i =0;
+    @Override
+    public void run(){
+       for(int j=0;j<10000000; j++){
+	 lock.lock();
+	 try{
+	     i++;
+	  }finally{
+	    lock.unlock();
+	  }
+	}
+      }
+
+     public static void doDemo(String[] args) throws InterruptedException{
+	Demo l1 = new Demo();
+	Thread t1 = new Thread(l1);
+	Thread t2 = new Thread(l1);
+	t1.start();t2.start();
+	t1.join();t2.join();
+	System.out.println(i);
+     }
+  }
+#+END_SRC
+
+#+RESULTS:
+: 20000000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#+HEADER: :noweb yes
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-660779dc-912c-4abd-8a6f-0acbd784740f.png
+#+BEGIN_SRC plantuml
+@startuml
+<<bl-pumlj-Lock>>
+<<bl-pumlj-ReentrantLock>>
+<<bl-pumlj-Sync>>
+
+Lock <|-- ReentrantLock
+ReentrantLock -> Sync : delete all responsibility 
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-660779dc-912c-4abd-8a6f-0acbd784740f.png]]
+
+
+
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-bfe5f9c8-f3d6-4434-83a4-5ec95af11f0a.png
+#+BEGIN_SRC plantuml
+@startuml
+<<bl-pumlj-AbstractQueuedSynchronizer2>>
+
+<<bl-pumlj-Sync>>
+
+AbstractQueuedSynchronizer <|-- Sync
+
+class NonfairSync
+Sync <|-- NonfairSync
+class FairSync
+Sync <|-- FairSync
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-bfe5f9c8-f3d6-4434-83a4-5ec95af11f0a.png]]
+
+
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC java
+  <<jdemo>>
+
+  class Demo implements Runnable {
+    public static ReentrantLock lock = new ReentrantLock();
+    public static int i =0;
+    @Override
+    public void run(){
+       for(int j=0;j<10000000; j++){
+	 lock.lock();
+	 try{
+	     i++;
+	  }finally{
+	    lock.unlock();
+	  }
+	}
+      }
+
+     public static void doDemo(String[] args) throws InterruptedException{
+	Demo l1 = new Demo();
+	Thread t1 = new Thread(l1);
+	Thread t2 = new Thread(l1);
+	t1.start();t2.start();
+	t1.join();t2.join();
+	System.out.println(i);
+     }
+  }
+#+END_SRC
+
+#+RESULTS:
+: 20000000
+

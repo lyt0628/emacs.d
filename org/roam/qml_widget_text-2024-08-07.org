@@ -1,0 +1,40 @@
+:PROPERTIES:
+:ID:       d7a66f8f-abb4-4be2-b2c5-09a7981cbbf8
+:END:
+#+title: qml-widget-Text
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-2af6e9c0-16bc-11ef-a1ae-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-2af6e9c0-16bc-11ef-a1ae-024236e6a1cc.qml
+  <<qml>>
+
+
+   Window {
+     width: 640
+     height: 480
+     visible: true
+     color: "#eeeeee"
+
+    Text{
+       id: text
+       text: qsTr("Hello World Bule Jazz")
+       width: 150
+       font.bold: true
+       font.pixelSize: 24
+       font.underline: true
+       wrapMode: Text.WordWrap
+       anchors.centerIn: parent
+       z: 1
+
+       focus: true
+       Keys.onEscapePressed: text.text = "<font color=\"red\">Hello World Bule Jazz</font>"
+     }
+  }
+
+
+
+
+#+end_src

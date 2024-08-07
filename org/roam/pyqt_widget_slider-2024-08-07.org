@@ -1,0 +1,47 @@
+:PROPERTIES:
+:ID:       ed8a578b-dbb7-4356-ab6f-05c5fb5a7677
+:END:
+#+title: pyqt-widget-slider
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+begin_src python
+import sys
+<<pyqt>>
+class MyWidget(QWidget):
+		def __init__(self, parent=None):
+			super(MyWidget, self).__init__(parent)
+			self.setWindowTitle("QSlider测试")
+			self.resize(300, 100)
+			self.lb=QLabel("Python程序设计")
+			self.lb.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+			self.sl=QSlider(Qt.Orientation.Horizontal)		#创建水平方向滑动条
+			self.sl.setMinimum(0)							#设置最小值
+			self.sl.setMaximum(100)							#设置最大值
+			self.sl.setSingleStep(2)						#步长
+			self.sl.setValue(20)							#设置当前值
+			self.sl.setTickPosition(QSlider.TickPosition.TicksBelow )	#设置刻度在下方
+			self.sl.setTickInterval(10)						#设置刻度间隔
+			self.sl.valueChanged.connect(self.valueFunc )
+
+			vLayout = QVBoxLayout()
+			vLayout.addWidget(self.lb)
+			vLayout.addWidget(self.sl)
+			self.setLayout(vLayout)
+
+		def valueFunc(self):
+			size = self.sl.value()
+			self.lb.setFont(QFont("Arial", size))
+			print('当前值：%s' % size)
+if __name__=='__main__':
+		app = QApplication(sys.argv)
+		w = MyWidget()
+		w.show()
+		sys.exit(app.exec())
+#+end_src
+
+
+

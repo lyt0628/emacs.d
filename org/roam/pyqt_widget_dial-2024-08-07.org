@@ -1,0 +1,46 @@
+:PROPERTIES:
+:ID:       b667ba83-4306-4169-abb5-29bad8bf964c
+:END:
+#+title: pyqt-widget-dial
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+  
+  class DemoDial(QWidget):
+      def __init__(self, parent=None):
+	  super(DemoDial, self).__init__(parent)
+	  self.setWindowTitle('QDial旋钮控件测试')
+	  self.resize(400, 300)
+	  self.initUi()
+      def initUi(self):
+	  self.dial = QDial(self)
+	  self.dial.setRange(0, 100)
+	  self.dial.setNotchesVisible(True)
+	  self.dial.valueChanged.connect(self.onDialValueChanged)
+
+	  self.lb = QLabel('0', self)
+	  self.lb.setAlignment(Qt.AlignmentFlag.AlignCenter)
+	  self.lb.setFont(QFont('Arial Black', 16))
+
+	  vLayout = QVBoxLayout(self)
+	  vLayout.addWidget(self.dial)
+	  vLayout.addWidget(self.lb)
+	  self.setLayout(vLayout)
+
+      def onDialValueChanged(self):
+	  self.lb.setText(str(self.dial.value()))
+
+  if __name__ == '__main__':
+      app = QApplication(sys.argv)
+      w = DemoDial()
+      w.show()
+      sys.exit(app.exec())
+#+end_src
+
+
+

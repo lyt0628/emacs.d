@@ -1,0 +1,98 @@
+:PROPERTIES:
+:ID:       8a7282fb-d55f-42c6-9586-93bfecb40ae9
+:END:
+#+title: pyqt-container-stackedwidget
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+begin_src python
+import sys
+<<pyqt>>
+class myWidget(QWidget):
+    def __init__(self):
+        super(myWidget, self).__init__()
+        self.setGeometry(300, 50, 10, 10)
+        self.setWindowTitle("QStackedWidget测试")
+
+        self.list = QListWidget()
+        self.list.insertItem(0, "基本信息")
+        self.list.insertItem(1, "编程语言")
+        # 列表单击信号绑定槽函数
+        self.list.currentRowChanged.connect(self.display_Win)
+
+        self.w1 = QWidget()
+        self.w2 = QWidget()
+
+        self.w1_UI()
+        self.w2_UI()
+        # 创建堆栈窗口
+        self.stack = QStackedWidget()
+        # 将界面添加到窗口上
+        self.stack.addWidget(self.w1)
+        self.stack.addWidget(self.w2)
+
+        hbox = QHBoxLayout()
+        hbox.addWidget(self.list)
+        hbox.addWidget(self.stack)
+        self.setLayout(hbox)
+
+    def w1_UI(self):
+        fLayout = QFormLayout()
+        self.xm = QLineEdit()
+        fLayout.addRow('姓名: ', self.xm)
+        self.xb1=QRadioButton('男')
+        self.xb2=QRadioButton('女')
+        self.xb1.setChecked(True)
+        hLay = QHBoxLayout()
+        hLay.addWidget(self.xb1)
+        hLay.addWidget(self.xb2)
+        fLayout.addRow('性别: ', hLay)
+        self.csny = QLineEdit()
+        fLayout.addRow('出生年月: ', self.csny)
+        btn = QPushButton("确定")
+        btn.clicked.connect(self.clickedFunc)
+        fLayout.addRow(' ', btn)
+        self.w1.setLayout(fLayout)
+
+    def w2_UI(self):
+        vLay = QVBoxLayout()
+        self.cb1=QCheckBox('C++')
+        self.cb2=QCheckBox('Java')
+        self.cb3=QCheckBox('C#')
+        self.cb1.setChecked(True)
+        vLay.addWidget(self.cb1)
+        vLay.addWidget(self.cb2)
+        vLay.addWidget(self.cb3)
+        self.w2.setLayout(vLay)
+
+    def display_Win(self, index):
+        # 显示当前的堆栈页面
+        self.stack.setCurrentIndex(index)
+
+    def clickedFunc(self):
+        print(self.xm.text())
+        print(self.csny.text())
+
+        if self.xb1.isChecked():
+            print(self.xb1.text())
+        else:
+            print(self.xb2.text())
+
+        if self.cb1.isChecked():
+            print(self.cb1.text())
+        if self.cb2.isChecked():
+            print(self.cb2.text())
+        if self.cb3.isChecked():
+            print(self.cb3.text())
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    w = myWidget()
+    w.show()
+    sys.exit(app.exec())
+#+end_src
+
+
+
+

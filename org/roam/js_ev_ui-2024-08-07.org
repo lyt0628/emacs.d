@@ -1,0 +1,34 @@
+:PROPERTIES:
+:ID:       4bef86cc-c84e-401e-aca4-1b6750f2dc67
+:END:
+#+title: js-ev-ui
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+|--------+--------------------------------------+------|
+| Ev     | When to trig                         | Note |
+|--------+--------------------------------------+------|
+| load   | HTML page loaded                     |      |
+|        | frames of frameset loaded            |      |
+|        | img loaded                           |      |
+|        | object load                          |      |
+|--------+--------------------------------------+------|
+| unload | HTML page unloaded                   |      |
+|        | frames of frameset unloaded          |      |
+|        | object unloaded                      |      |
+|--------+--------------------------------------+------|
+| abort  | object was canceled to load          |      |
+|--------+--------------------------------------+------|
+| error  | JS error happens                     |      |
+|        | img, object, or frame cannot be load |      |
+|--------+--------------------------------------+------|
+| select | char in textarea was selected        |      |
+|--------+--------------------------------------+------|
+| resize | window or frame resized              |      |
+|--------+--------------------------------------+------|
+| scroll |                                      |      |
+|--------+--------------------------------------+------|
+
+

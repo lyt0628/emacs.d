@@ -1,0 +1,43 @@
+:PROPERTIES:
+:ID:       10a84920-56c5-475f-bd9c-8bf28b256513
+:END:
+#+title: qml-widget-Rectangle
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-9312f824-16b4-11ef-90be-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-9312f824-16b4-11ef-90be-024236e6a1cc.qml
+  <<qml>>
+
+
+
+   Window {
+     width: 640
+     height: 480
+     visible: true
+     color: "#eeeeee"
+
+
+    Rectangle{
+       width: 320
+       height: 480
+       color: "blue"
+
+       border.color: "#808080"
+       border.width: 2
+       radius: 12
+    }
+
+    Text {
+      text: qsTr("Hello Qt Quick")
+      color: Qt.rgba(0.8, 0.6, 0.4, 0.6)
+      anchors.centerIn: parent
+    }
+   }
+
+
+
+
+  #+end_src

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       e1783702-27bb-4a89-8bf0-e169324ae71e
+:END:
+#+title: js-ev-event mock
+#+date: [2024-08-07 三]
+#+last_modified:  
+

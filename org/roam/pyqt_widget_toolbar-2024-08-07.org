@@ -1,0 +1,45 @@
+:PROPERTIES:
+:ID:       ab8ac593-efeb-4dfa-8d2b-01da8e06e40b
+:END:
+#+title: pyqt-widget-toolbar
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+#+begin_src python :noweb yes
+import sys
+<<pyqt>>
+class  MainTool( QMainWindow ):
+    def __init__(self, parent=None):
+        super(MainTool, self).__init__(parent)
+        self.setWindowTitle("工具条测试")
+        self.resize(300, 200)
+        
+        tbar = self.addToolBar("mytool")
+        
+        new = QAction(QIcon("./images/new.ico"),"新建", self)
+        tbar.addAction(new)
+        open = QAction(QIcon("./images/open.ico"),"打开", self)
+        tbar.addAction(open)
+        find=QAction(QIcon("./images/find.ico"),"查找", self)
+        tbar.addAction(find)  
+        quit=QAction(QIcon("./images/quit.ico"),"退出", self)
+        tbar.addAction(quit)
+        tbar.actionTriggered[QAction].connect(self.toolBarFunc)
+
+    def toolBarFunc(self,op):
+        print("选择工具按钮",op.text())
+
+if __name__=='__main__':
+    app = QApplication(sys.argv)
+    m = MainTool()
+    m.show()
+    sys.exit(app.exec())
+#+end_src
+
+#+RESULTS:
+
+
+

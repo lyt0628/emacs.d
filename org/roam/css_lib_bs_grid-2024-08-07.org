@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       6a006cd2-ef6c-4562-8a70-bbf8d83ee2e2
+:END:
+#+title: css-lib-bs-reactive
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+BEGIN_SRC html
+  <<html-bs>>
+  
+  <h1 class="d-none d-lg-block">某个元素只在lg(>=992px) 和 xl 屏显示</h1>
+#+END_SRC
+
+#+RESULTS:
+
+
+#+BEGIN_SRC html
+  <<html-bs>>
+  
+  <h1 class="d-block d-lg-none">某个元素只在lg(>=992px) 和 xl 屏隐藏</h1>
+#+END_SRC
+
+
+
+#+BEGIN_SRC html
+  <<html-bs>>
+  
+  <h1 class="d-block d-md-none d-lg-block">某个元素只在 md(>=768px) 屏隐藏；</h1>
+#+END_SRC

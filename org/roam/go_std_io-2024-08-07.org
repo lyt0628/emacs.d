@@ -1,0 +1,117 @@
+:PROPERTIES:
+:ID:       b18f3a12-28bb-4984-a917-8e9050fcded5
+:END:
+#+title: go-std-io
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+* 直接写
+
+文件存储的缺点：
+- 读写并行，并发异常
+- 原子性无法保证
+- 数据暂留在OS的缓冲区，无法即使刷新到磁盘
+ 
+#+BEGIN_SRC go
+  func saveData(path string, data []byte) error {
+    fp, err := os.OpenFile(path, os.O_WRONLY | os.O_TRUNC, 0664)
+    if err != nil {
+      return err
+    }
+    defer fp.Close()
+
+    _, err = fp.Write(data)
+    return err
+  }
+#+END_SRC
+
+#+RESULTS:
+
+
+
+* 写后更新
+ 
+#+BEGIN_SRC go
+  func saveData2(path string, data []byte) error {
+    tmp := os.OpenFile("%s.tmp%d", path, randomInt())
+
+    fp, err := os.OpenFile(tmp, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0664)
+    if err != nil {
+      return err
+    }
+    defer fp.Close()
+
+    _, err = fp.Write(data)
+    if err != nil {
+      os.Remove(tmp)
+      return tmp
+    }
+    os.Rename(tmp, path)
+  }
+#+END_SRC
+
+#+RESULTS:
+
+
+* 刷盘syscall
+
+#+BEGIN_SRC go
+  func saveData3(path string, data []byte) error {
+    tmp := os.OpenFile("%s.tmp%d", path, randomInt())
+
+    fp, err := os.OpenFile(tmp, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0664)
+    if err != nil {
+      return err
+    }
+    defer fp.Close()
+
+    _, err = fp.Write(data)
+    if err != nil {
+      os.Remove(tmp)
+      return tmp
+    }
+    os.Rename(tmp, path)
+
+    err = fp.Sync()
+    if err != nil {
+      os.Remove(tmp)
+      return err
+    } 
+  }
+#+END_SRC
+
+#+RESULTS:
+
+
+
+* Append-onlt Log
+
+
+#+BEGIN_SRC go
+
+  func LogCreate(path string) error {
+    return os.OpenFile(path, os.RDWR | os.CREATE, 0664)
+  }
+
+  func LogAppend(fp *os.File, line string) error {
+    buf := []byte(line)
+    buf = append(buf, '\n')
+    _, err = fp.Write(buf)
+    if err != nil {
+      return err
+    }
+    return fp.Sync()
+  }
+#+END_SRC
+
+* DB 查询分类
+
+- 遍历
+- 点查询（KV查询）
+- 范围查询(索引)
+
+* 数据结构
+- Hashtable
+- B(+) tree
+- LSM tree
+

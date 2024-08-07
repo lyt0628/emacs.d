@@ -1,0 +1,178 @@
+:PROPERTIES:
+:ID:       86bd873e-c65e-4c55-8d93-033f05c42a91
+:END:
+#+title: gtk-css
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+CSS Logic is  encapsulated in GtkStylePrivder Class.
+Including two major Logic:
+- Load Style File
+  - We Can Load Style from Local File.
+    #+NAME: load-css-file
+    #+BEGIN_SRC C
+      GtkStyleProvider *provider;
+      provider = GTK_STYLE_PROVIDER (gtk_css_provider_new ());
+      GFile * css_file = g_file_new_for_path("/tmp/css_accordion.css");
+      gtk_css_provider_load_from_file (GTK_CSS_PROVIDER (provider), css_file);
+    #+END_SRC
+  - We Can Load Style from Resource.
+    #+BEGIN_SRC C
+      gtk_css_provider_load_from_resource (GTK_CSS_PROVIDER (provider),
+                            "/css_accordion/css_accordion.css");
+    #+END_SRC
+- Apply Style to Widget.
+  GTK Widget is hireticy, and we need to apply recure.
+#+NAME: apply_css
+#+BEGIN_SRC C
+    static void
+    apply_css (GtkWidget *widget, GtkStyleProvider *provider)
+    {
+      GtkWidget *child;
+
+      gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
+                                        provider, G_MAXUINT);
+      for (child = gtk_widget_get_first_child (widget);
+	   child != NULL;
+	   child = gtk_widget_get_next_sibling (child))
+	apply_css (child, provider);
+    }
+#+END_SRC
+#+HEADER: :header-args:   :noweb yes
+#+HEADER: :flags "$(pkg-config --cflags gtk4) "
+#+HEADER: :libs  "$(pkg-config --libs gtk4)"
+#+HEADER: :results silent
+#+BEGIN_SRC C
+  <<gtk>>
+  <<apply_css>>
+  GtkWidget *
+  do_demo (GtkWidget *do_widget)
+  {
+    static GtkWidget *window = NULL;
+
+    if (!window)
+      {
+	GtkWidget *container, *child;
+
+	window = gtk_window_new ();
+	gtk_window_set_title (GTK_WINDOW (window), "CSS Accordion");
+	gtk_window_set_transient_for (GTK_WINDOW (window), GTK_WINDOW (do_widget));
+	gtk_window_set_default_size (GTK_WINDOW (window), 600, 300);
+	g_object_add_weak_pointer (G_OBJECT (window), (gpointer *)&window);
+
+	container = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+	gtk_widget_set_halign (container, GTK_ALIGN_CENTER);
+	gtk_widget_set_valign (container, GTK_ALIGN_CENTER);
+	gtk_window_set_child (GTK_WINDOW (window), container);
+
+	child = gtk_button_new_with_label ("This");
+	gtk_box_append (GTK_BOX (container), child);
+
+	child = gtk_button_new_with_label ("Is");
+	gtk_box_append (GTK_BOX (container), child);
+
+	child = gtk_button_new_with_label ("A");
+	gtk_box_append (GTK_BOX (container), child);
+
+	child = gtk_button_new_with_label ("CSS");
+	gtk_box_append (GTK_BOX (container), child);
+
+	child = gtk_button_new_with_label ("Accordion");
+	gtk_box_append (GTK_BOX (container), child);
+
+	child = gtk_button_new_with_label (":-)");
+	gtk_box_append (GTK_BOX (container), child);
+
+	<<load-css-file>>
+	apply_css (window, provider);
+      }
+
+    if (!gtk_widget_get_visible (window))
+      gtk_widget_show (window);
+    else
+      gtk_window_destroy (GTK_WINDOW (window));
+
+    return window;
+  }
+
+  <<gtk-main-demo>>
+#+END_SRC
+
+
+#+HEADER: :tangle /tmp/css_accordion.css
+#+BEGIN_SRC css
+  @import url("/tmp/reset.css");
+
+  * {
+      transition-property: color, background-color, border-color, background-image, padding, border-width;
+      transition-duration: 1s;
+
+      font: 20px Cantarell;
+  }
+
+  window {
+      background: linear-gradient(153deg, #151515, #151515 5px, transparent 5px) 0 0,
+		  linear-gradient(333deg, #151515, #151515 5px, transparent 5px) 10px 5px,
+		  linear-gradient(153deg, #222, #222 5px, transparent 5px) 0 5px,
+		  linear-gradient(333deg, #222, #222 5px, transparent 5px) 10px 10px,
+		  linear-gradient(90deg, #1b1b1b, #1b1b1b 10px, transparent 10px),
+		  linear-gradient(#1d1d1d, #1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+      background-color: #131313;
+      background-size: 20px 20px;
+  }
+
+  button {
+      color: black;
+      background-color: #bbb;
+      border-style: solid;
+      border-width: 2px 0 2px 2px;
+      border-color: #333;
+
+      padding: 12px 4px;
+  }
+
+  button:first-child {
+      border-radius: 5px 0 0 5px;
+  }
+
+  button:last-child {
+      border-radius: 0 5px 5px 0;
+      border-width: 2px;
+  }
+
+  button:hover {
+      padding: 12px 48px;
+      background-color: #4870bc;
+  }
+
+  button *:hover {
+      color: white;
+  }
+
+  button:hover:active,
+  button:active {
+      background-color: #993401;
+  }
+#+END_SRC
+
+
+
+#+HEADER: :tangle /tmp/reset.css
+#+BEGIN_SRC css
+/* @import this colorsheet to get the default values for every property.
+ * This is useful when writing special CSS tests that should not be
+ * inluenced by themes - not even the default ones.
+ * Keep in mind that the output will be very ugly and not look like
+ * anything GTK.
+ * Also, when adding new style properties, please add them here.
+ */
+
+\* {
+  all: unset;
+}
+
+#+END_SRC
+
+
+

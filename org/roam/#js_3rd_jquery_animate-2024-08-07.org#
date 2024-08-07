@@ -1,0 +1,254 @@
+:PROPERTIES:
+:ID:       d35e1c26-623e-4c2d-a682-f06df9a8bda2
+:END:
+#+title: js-3rd-jquery-animate()
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+* VF API
+  | V | 速度 [slow, fast, normal, <ms>] |
+  |---+--------------------------------|
+  | F | 回调函数                         |
+  |---+--------------------------------|
+
+  
+  | 参数   | 描述                        |
+  |-------+----------------------------|
+  | speed | [slow, fast, normal, <ms>] |
+  |-------+----------------------------|
+  | CB    |                            |
+  |-------+----------------------------|
+
+
+
+* TF API
+  | T | 持续时间 [slow, fast, normal, <ms>] |
+  |---+--------------------------------|
+  | F | 回调函数                         |
+  |---+--------------------------------|
+
+
+  | 参数      | 描述                        |
+  |----------+----------------------------|
+  | duration | [slow, fast, normal, <ms>] |
+  |----------+----------------------------|
+  | complete | CB                         |
+  |----------+----------------------------|
+
+
+
+* O_OP API
+  | O  | 对象，样式对象 |
+  |----+-------------|
+  | OP | 可选参数      |
+  |----+-------------|
+
+
+
+  
+  
+Example
+
+- [[id:cc7c6e02-2f05-4f0e-b6d1-767b4af0aa59][隐藏和显示]]
+- [[id:94c54977-0174-4ff5-bc29-1752842ab767][淡入淡出]]
+- [[id:62b49dd6-118b-4781-aacf-6bf7cd9125fa][卷帘效果]]
+
+
+
+
+* animate 函数
+
+
+#+BEGIN_SRC html  :dir workdir
+    <<style>>
+
+    <button class="hide">隐藏</button>
+    <button class="show">显示</button>
+    <button class="toggle">切换</button>
+
+    <div class="box">
+      box
+    </div>
+
+   <<js-jq>>
+   <script>
+      <<show_hide>>
+  </script>
+#+END_SRC
+
+
+#+NAME: style
+#+BEGIN_SRC css
+  <style>
+    body{
+      height: 200px;
+    }
+    .box{
+      width: 200px;
+      height: 100px;
+      background-color: pink;
+    }
+  </style>
+#+END_SRC
+
+
+#+NAME: show_hide
+#+BEGIN_SRC js
+  $(function() {
+      $(".hide").click(function(){
+	 $(".box").animate({
+	    height: 0,
+	    width: 0,
+	    opacity: 0
+	 }, 2000, ()=>{console.log(" Hide Animation completed")})
+      })
+
+      $(".show").click(function(){
+	 $(".box").animate({
+	    height: 100,
+	    width: 200,
+            opacity: 1
+	 }, 2000, ()=>{console.log(" Show Animation completed")})
+      })
+   })
+#+END_SRC
+
+#+NAME: show_hide2
+#+BEGIN_SRC js
+  $(function (){
+       $('.box').animate({
+	 height: 100,
+	 width: 200,
+	 opacity: 1
+       }, 2000, 'swing', function() {
+	 console.log('动画执行完毕之后会回调')
+       })
+
+
+       $('.box').animate({
+	 height: 100,
+	 width: 200,
+	 opacity: 1
+       }, {
+	 duration: 'slow',
+	 complete: function() {
+	   console.log('动画执行完毕之后会回调')
+	 }
+       })
+
+  })
+#+END_SRC
+
+
+
+
+#+NAME: show_hide3
+#+BEGIN_SRC js
+  $(function() {
+       $('.hide').click(function() {
+	 $('.box').animate({
+	   opacity: 0,
+	   height:0,
+	   width: 0
+	 }, 'slow', function() {   // number | 关键之: slow->600 fast->200
+	   console.log('动画执行完成')
+	 })
+       })
+
+       $('.show').click(function() {
+	 $('.box').animate({
+	   opacity: 1,
+	   height: 100,
+	   width: 200
+	 }, 'fast', function() {
+	   console.log('动画执行完成')
+	 })
+       })
+
+       $('.toggle').click(function() {
+	 $('.box').animate({
+	   opacity: 'toggle',
+	   height: 'toggle',
+	   width: 'toggle'
+	 }, 400, function() {
+	   console.log('动画执行完成')
+	 })
+       })
+
+     })
+#+END_SRC
+
+
+* 动画队列
+
+#+BEGIN_SRC js
+  $(function() {
+    var $box = $('.box')
+    $('.start').click(function() {
+  
+      $box.animate({
+	top: 100
+      }, 5000)
+
+      $box.animate({
+	left: 100
+      }, 5000)
+
+      $box.animate({
+	top: 0
+      }, 5000)
+
+      $box.animate({
+	left: 0
+      }, 5000)
+
+    })
+
+    $('.queue').click(function() {
+      console.log( $box.queue() )  // 查看动画队列 fx
+    })
+
+    $('.stop').click(function() {
+      // $box.stop()  // 停止 fx 动画队列( 停止当前执行的动画,还会继续执行动画队列中其它的动画 )
+      // stop(false, false) 默认值
+
+      // $box.stop(true) // 停止所有的动画, 清空了动画队列
+
+      //  $box.stop(true, true) // 清空了动画队列, 立即执行完当前的动画
+
+    })
+
+  })
+#+END_SRC
+
+
+
+
+#+BEGIN_SRC html :dir workdir
+  <<style>>
+
+  <div class="box">
+    <span class="close"></span>
+
+    <div class="top">
+      <img src="../data/images/top.png" alt="">
+    </div>
+
+    <div class="bottom">
+      <img src="../data/images/bottom.png" alt="">
+    </div>
+  </div>
+
+  <<js-jq>>
+  <script>
+    <<behavior>>
+  </script>
+#+END_SRC
+
+#+RESULTS:
+: 正在现有的浏览器会话中打开。
+
+

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       3fb367a8-272e-4c03-bb95-50b370cb0fe0
+:END:
+#+title: js-ev-touch
+#+date: [2024-08-07 三]
+#+last_modified:  
+

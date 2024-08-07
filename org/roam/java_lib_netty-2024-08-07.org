@@ -1,0 +1,140 @@
+:PROPERTIES:
+:ID:       8cfeab9e-52a1-4324-9130-f8865bbb2519
+:END:
+#+title: java-netty
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* 反应器
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC java
+   <<netty>>
+   <<jdemo>>
+
+   <<jDemo>>
+     <<jdoDemo>>
+      var LOG = Logger.getLogger("DiscardServer");
+
+      ServerBootstrap bs = new ServerBootstrap();
+
+      var bossGroup = new NioEventLoopGroup(1);
+      var workerGroup = new NioEventLoopGroup();
+
+	<<c#>> 设置选项
+      bs.group(bossGroup, workerGroup);
+	<<c#>> 指定底层通道类型
+      bs.channel(NioServerSocketChannel.class);
+      bs.localAddress(8080);
+      bs.option(ChannelOption.SO_KEEPALIVE, true);
+      bs.option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
+
+	<<c#>> 装配流水线
+      bs.childHandler(new ChannelInitializer<SocketChannel>() {
+	  @Override
+	  protected void initChannel(SocketChannel ch) throws Exception {
+	      ch.pipeline().addLast(new NettyDiscardHandler());
+	  }
+      });
+
+      var feat = bs.bind().sync();
+      LOG.info("Listening in " + feat.channel().localAddress());
+
+      var closeFeat = feat.channel().closeFuture();
+      closeFeat.sync();
+
+    <<jend>>
+  <<jend>>
+
+#+END_SRC
+
+
+* Handler
+
+#+BEGIN_SRC java
+  class NettyDiscardHandler extends ChannelInboundHandlerAdapter   {
+      @Override
+      public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+	  var LOG = Logger.getLogger("DiscardHandler");
+	  ByteBuf bufin = (ByteBuf) msg;
+      
+	  while (bufin.isReadable()){
+	      LOG.info("recive: "+ (char)bufin.readByte());
+	  }
+      }
+  }
+#+END_SRC
+
+
+* netty 底层通道类型
+
+| NioSocketChannel       | Async, Non-Block TCP Cli    |
+|------------------------+-----------------------------|
+| NioServerSocketChannel | Async, Non-Block TCP Server |
+|------------------------+-----------------------------|
+| NioDatagramChannel     | Async, Non-Block UDP        |
+|------------------------+-----------------------------|
+| NioSctpChannel         | Async Non-Block Sctp Cli    |
+|------------------------+-----------------------------|
+| NioSctpServerChannel   | Async Non-Block Stcp Server |
+
+
+* EventLoop(反应器) 在一个单独的线程，负责一个Selector的轮询
+
+
+
+#+begin_src dot :file /tmp/43f053ae-ad19-4a65-8d8f-db4db9534fdc.png 
+   digraph {
+	rankdir=BT
+	node[shape=box]
+  
+	e [label=Executor,style=filled, color=gray]
+	st[lable=SingleThreadEventExecutor,style=filled, color=gray]
+	stel [label=SingleThreadEventLoop,style=filled, color=gray]
+	nioel [label=NioEventLoop,style=filled, color=gray]
+	t [label=Thread,style=filled, color=lightblue]
+	s [label=Selector,style=filled, color=lightblue]
+
+	nioel -> stel -> st -> e
+	nioel -> s 
+	st -> t
+
+
+  }
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/43f053ae-ad19-4a65-8d8f-db4db9534fdc.png]]
+
+
+
+* Netty dispatch事件为 入站和出站 两种
+
+
+
+#+begin_src dot :file /tmp/43f053ae-ad19-4a65-8d8f-db4db95c.png 
+   digraph {
+	rankdir=BT
+	node[shape=box]
+
+	h [label=ChannelHandler,style=filled, color=lightblue]
+	ih [label=ChannelInboundHandler,style=filled, color=lightblue]
+	oh [label=ChannelOutboundHandler,style=filled, color=lightblue]
+	iha [label=ChannelOutboundHandlerAdapater,style=filled, color=gray]
+	oha [label=ChannelOutboundHandlerAdapaterAdapater,style=filled, color=gray]
+
+	oh -> h
+  	ih -> h
+  	iha -> ih
+  	oha -> oh
+  }
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/43f053ae-ad19-4a65-8d8f-db4db95c.png]]
+
+
+
+
+

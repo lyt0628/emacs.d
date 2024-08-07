@@ -1,0 +1,41 @@
+:PROPERTIES:
+:ID:       581489bf-5cdd-4235-bbe5-3fd0ff6662aa
+:END:
+#+title: qml-widget-window
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-b0172385-16b3-11ef-830d-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-b0172385-16b3-11ef-830d-024236e6a1cc.qml
+  <<qml>>
+
+
+   Window {
+     width: 640
+     height: 480
+     minimumWidth: 300
+     minimumHeight: 100
+     maximumWidth: 700
+     maximumHeight: 500
+
+     visible: true
+     color: "#eeeeee"
+
+     MouseArea {
+       anchors.fill: parent
+       onClicked:{parent.visibility=Window.Maximized}
+
+     }
+
+    Text {
+      text: qsTr("Hello Qt Quick")
+      anchors.centerIn: parent
+    }
+   }
+
+
+
+#+end_src

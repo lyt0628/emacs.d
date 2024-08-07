@@ -1,0 +1,720 @@
+:PROPERTIES:
+:ID:       6c56c8f8-140c-4f3d-b729-885cf2c411fb
+:END:
+#+title: js-3rd-jquery
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+BEGIN_SRC html
+
+  <ul id="list" class="panel">
+    <li class="li-1">li-1</li>
+    <li class="li-2">li-2</li>
+    <li class="li-3">li-3</li>
+    <li class="li-4">li-4</li>
+    <li class="li-5">li-5</li>
+  </ul>
+
+  <button class="cancel">取消事件的监听</button>
+
+  <<js-jq>>
+  <script>
+    <<e3>>
+  </script>
+#+END_SRC
+
+#+RESULTS:
+: 正在现有的浏览器会话中打开。
+
+
+
+* on, click, mouseenter, off, trigger 函数
+#+NAME: e
+#+BEGIN_SRC js
+  $(function() {
+
+    // 监听事件
+    // 1.使用on来监听事件
+    $('ul').on('click', function() {
+      console.log('click1')
+    })
+
+
+    // 2.使用click来监听事件
+    $('ul').click(function() {
+      console.log('click2')
+    })
+
+    // 3.使用mouseenter来监听事件
+    $('ul').mouseenter(function() {
+      console.log('mouseenter')
+    })
+
+
+    // 取消监听事件
+    $('.cancel').click(function() {
+      // $('ul').off() // 取消ul元素上所有的事件
+      // $('ul').off('mouseenter')
+      $('ul').off('click')
+    })
+
+    // 使用程序-自动触发事件
+    // $('ul').trigger('click')  // 模拟用户点击了ul元素
+    $('ul').trigger('mouseenter')
+
+  })
+#+END_SRC
+
+
+* 使用事件命名空间和选择器 部分off
+
+#+NAME: e2
+#+BEGIN_SRC js
+    $(function() {
+     
+      // 1.使用on来监听事件 ( 支持给事件添加命名空间: liujun )
+      $('ul').on('click.liujun', function() {
+        console.log('click1')
+      })
+
+      // 2.使用click来监听事件
+      $('ul').click(function() {
+        console.log('click2')
+      })
+
+      // 取消监听事件
+      $('.cancel').click(function() {
+        $('ul').off('click.liujun')
+      })
+
+      /*
+        1.on 监听的事件支持使用 命名空间
+        2.on 函数支持一个 selector 的参数
+      */
+    //  $('ul').on('click', '字符串类型的选择器', function() {
+
+    //  })
+
+    })
+#+END_SRC
+
+
+
+
+* 事件API中的this指向
+
+#+NAME: e3
+#+BEGIN_SRC js
+    $(function() {
+
+      // $('ul').click(function() {
+      //   console.log("%O", this) // DOM Element -> UL
+      // }) 
+
+      // $('ul').on('click', function() {
+      //   console.log(this) // DOM Element -> UL
+      // })
+
+
+      // $('ul li').click(function() {
+      //   console.log(this) // DOM Element -> UL
+      // })
+
+      // $('ul li').click(function() {
+      //   console.log( $(this) ) // DOM Element 转成 jQuery 对象
+      // })
+      
+      $('ul li').click(() => {
+        console.log(this)
+      })
+
+    })
+#+END_SRC
+
+
+
+* 事件冒泡
+
+#+BEGIN_SRC html
+  <<bubble_style>>
+  
+  <div class="box">
+    div
+    <span class="content">span</span>
+  </div>
+
+
+  <<js-jq>>
+  <script>
+  <<bubble>>
+  </script>
+#+END_SRC
+#+NAME: bubble
+#+BEGIN_SRC js
+    $(function() {
+      $('.content').on('click', function() {
+        console.log('span')
+      })
+      $('.box').on('click', function() {
+        console.log('div')
+      })
+      $('body').on('click', function() {
+        console.log('body')
+      })
+
+
+    })
+#+END_SRC
+
+#+NAME: bubble_style
+#+BEGIN_SRC css
+  <style>
+    .box{
+      width: 200px;
+      height: 200px;
+      background-color: pink;
+    }
+    .content{
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      background-color: green;
+    }
+  </style>
+#+END_SRC
+
+
+
+* 从Jq事件对象拿到DOM事件对象
+
+#+BEGIN_SRC js
+  // 1.监听文档完全解析完成
+  $(function() {
+  
+    $('.box').click(function($event) {
+      console.log($event) // 是jQuery的事件对象
+      console.log($event.originalEvent) // 拿到原生的事件对象
+    })
+
+  })
+#+END_SRC
+
+
+
+
+* 阻止默认事件行为
+
+#+BEGIN_SRC js
+    $(function() {
+
+      $('a').click(function($event) {
+        $event.preventDefault()  // 阻止a元素的默认行为
+        console.log('点击a元素')
+      })
+
+
+      $('.content').click(function($event) {
+        $event.stopPropagation() // 阻止事件的冒泡
+        console.log('span')
+      })
+      
+      $('.box').on('click', function() {
+        console.log('div')
+      })
+      $('body').on('click', function() {
+        console.log('body')
+      })
+
+    })
+#+END_SRC
+
+
+
+* 事件委托
+
+#+BEGIN_SRC js
+    $(function() {
+
+      // 事件的委托
+      // $('ul').on('click', function(event) {
+      //   console.log(event.target)  // DOM Element : ul li  p
+      // })
+
+      // 仅仅监听li中元素的点击事件( 筛选出 可触发事件的 后代元素 )
+      $('ul').on('click', 'li p' , function(event) {
+        console.log(event.target)  // DOM Element : ul li  p
+      })
+
+     // on vs click
+
+    })
+#+END_SRC
+
+
+
+* 常用事件操作
+
+#+BEGIN_SRC js
+  // 1.监听文档完全解析完成
+   $(function() {
+
+     // on('hover', func)
+
+     // 1.hover 底层使用的是: mouseenter or mouseleaver
+     // $('ul').hover(function() {
+     //   console.log('鼠标悬浮在ul')
+     // }, function() {
+     //   console.log('鼠标离开在ul')
+     // })
+
+
+     // 2.监听浏览器resize事件 ( throttle 节流 )
+     // on('resize', func)
+     $(window).resize(function() {
+       console.log('resize')
+     })
+
+
+     // 3.表单事件
+     $('input').focus(function() {
+       console.log('input focus事件')
+     })
+
+     $('input').blur(function() {
+       console.log('input blur事件')
+     })
+
+     // input ( debounce 防抖操作 )
+     $('input').on('input', function() {
+  
+     //  console.log( $('input').val() )
+      console.log( $(this).val() )
+     })
+
+   })
+#+END_SRC
+
+
+
+
+<<1>>
+
+
+
+
+#+BEGIN_SRC html :noweb yes 
+  <<page>>
+
+  <<js-jq>>
+
+  <script>
+   $("body").html("Hello Jquery")
+  </script>
+#+END_SRC
+
+
+
+
+* 监听DOM解析完成事件(DOMContentLoaded 事件)
+
+#+BEGIN_SRC html :noweb yes 
+  <<page>>
+
+  <<js-jq>>
+
+  <script>
+    <<jq-ready>>
+  </script>
+#+END_SRC
+
+#+RESULTS:
+
+
+document 转化为 Jq 对象
+#+NAME: jq-ready
+#+BEGIN_SRC js
+    var $doc =  $(document)
+    $doc.ready(function() {
+     console.log('doc ready')
+    })
+#+END_SRC
+
+级联调用
+
+
+
+#+NAME: jq-ready2
+#+BEGIN_SRC js
+   jQuery('document').ready(function(){
+     console.log('doc ready')
+   })
+#+END_SRC
+
+
+
+默认对象
+#+NAME: jq-ready3
+#+BEGIN_SRC js
+   $().ready(function(){
+     console.log('doc ready')
+   })
+#+END_SRC
+
+
+默认事件
+
+#+NAME: jq-ready4
+#+begin_src js
+   $(function() {
+     console.log('doc ready')
+   })
+#+end_src
+
+
+
+* 监听 onLoad 事件（HTML解析完成）
+#+BEGIN_SRC js
+  $(window).on('load', function() {
+      console.log('图片加载完成')
+   })
+#+END_SRC
+
+
+* 为什么Jq可以使用$全局访问
+#+BEGIN_SRC html :noweb yes 
+  <<page>>
+
+  <<js-jq>>
+
+  <script>
+   <<name2>>
+  </script>
+#+END_SRC
+
+#+NAME: name
+#+BEGIN_SRC js
+  let $ = "I am LYT0628"
+
+  console.log($)  
+  console.log(window.$)
+  jQuery.noConflict()
+  console.log(window.$)
+#+END_SRC
+
+
+#+NAME: name2
+#+BEGIN_SRC js
+  let jQuery = "I am LYT0628"
+
+  console.log(jQuery)  
+  console.log(window.jQuery)
+  const jq = window.jQuery.noConflict(true)
+  console.log(window.JQuery)
+  console.log(jq)
+#+END_SRC
+
+
+
+* jQuery 函数
+#+BEGIN_SRC html
+  <ul>
+    <li class="li-1">li-1</li>
+    <li class="li-2">li-2</li>
+    <li class="li-3">li-3</li>
+    <li class="li-4">li-4</li>
+    <li class="li-5">li-5</li>
+  </ul>
+
+  <<js-jq>>
+  
+  <script>
+   <<calljq4>>
+  </script>
+#+END_SRC
+
+
+
+#+NAME: calljq
+#+BEGIN_SRC js
+  console.log( $('') )
+#+END_SRC
+
+
+选择器
+#+NAME: calljq2
+#+BEGIN_SRC js
+  console.log( $('ul li') )
+#+END_SRC
+
+创建标签
+#+NAME: calljq3
+#+BEGIN_SRC js
+  var $els = jQuery(`
+    <div>我是div</div><p>我是一个p</p>
+  `)
+  $els.appendTo('body')
+  console.log($els)
+
+  document.createElement('div') 
+#+END_SRC
+
+
+
+元素类型
+#+NAME: calljq4
+#+BEGIN_SRC js
+     var bodyEl = document.querySelector('body')
+     console.log($(bodyEl))
+#+END_SRC
+
+
+* Jquery包装对象
+#+BEGIN_SRC html
+  <body></body>
+  <<js-jq>>
+
+  <script>
+   <<jqobj>>
+  </script>
+#+END_SRC
+
+
+#+NAME: jqobj
+#+begin_src js
+  console.log(jQuery('body'))
+  
+  console.log('%O', document.querySelector('body'))
+#+end_src
+
+** JQobj to DOM
+#+NAME: jqobj2dom
+#+BEGIN_SRC js
+    var $ul = jQuery('ul')
+    // 方式一
+     var ulEl = $ul[0]  // 将jQuery对象转成DOM Element
+     console.log('%O', ulEl)
+    // 方式二
+     console.log($ul.get()) // 获取到匹配元素集合中所有的元素 [ul]
+     console.log($ul.get(0)) // 获取到匹配元素集合中某一个元素 ul
+#+END_SRC
+
+
+
+** DOM2Jqobj
+#+NAME: dom2jqobj
+#+BEGIN_SRC js
+     var ulEL = document.querySelector('ul')
+     console.log(ulEL)
+     console.log(jQuery(ulEL)) // 目的：想调用jQuery对象中的方法
+#+END_SRC
+
+
+
+
+
+* JQDemo
+区分
+| 方法类型(JQ符号的不同角色) |   |
+|-----------------------+---|
+| 原型方法                |   |
+|-----------------------+---|
+| JQ这个符号的方法，按      |   |
+| 面向对象的观点就是类方法   |   |
+|-----------------------+---|
+| JQ 作为Callable 的调用  |   |
+
+#+BEGIN_SRC js
+
+  // 立即执行函数（避免与全局变量冲突）
+  ;(function(global, factory) {
+    factory(global)
+  })(window, function(window) {
+
+    function HYjQuery(selector) {
+      return new HYjQuery.fn.init(selector)
+    }
+
+    // 原型方法
+    HYjQuery.prototype = {
+      constructor: HYjQuery,
+      extend: function() {},
+      text: function() {},
+      ready: function() {}
+      // 学习这里的的方法
+  
+    }
+
+    // 类方法
+    HYjQuery.noConflict = function() {}
+    HYjQuery.isArray = function() {}
+    HYjQuery.map = function() {}
+    // 学习这里的类方法
+
+    HYjQuery.fn = HYjQuery.prototype
+
+    // 构造函数（创建jQuery对象）
+    HYjQuery.fn.init = function(selector) { // css selector
+    
+      if(!selector){
+	return this
+      }
+      // 拿到DOM Element源码
+      var el = document.querySelector(selector)
+      this[0] = el
+      this.length = 1
+      return this
+    }
+
+    HYjQuery.fn.init.prototype = HYjQuery.fn
+
+    window.HYjQuery = window.$ = HYjQuery
+
+  })
+#+END_SRC
+
+
+
+* 选择器
+
+#+NAME: jqselector
+#+BEGIN_SRC js
+
+    // 1.基本的选择器
+     console.log( $('.li-1') )
+     console.log( $('#list') )
+
+    // 2.伪元素选择器
+     console.log($('ul li:nth-child(2)'))
+
+    // 3.jQuery额外扩展的选择器
+     document.querySelector('ul li:eq(1)') // 不会生效
+     console.log($('ul li:eq(1)'))
+     console.log($('ul li:first') )
+     console.log($('ul li:last') )
+
+     console.log($('ul li:odd') )
+     console.log($('ul li:even') )
+
+#+END_SRC
+
+
+
+
+* 过滤API
+
+#+NAME: jqfilter
+#+BEGIN_SRC js
+    $(function() {
+
+      // 1.eq()
+       console.log($('ul li:eq(2)') ) // selector
+       console.log( $('ul li').eq(2) ) // API -> 原型上的方法
+
+      // 2.first()  last()
+       console.log( $('ul li').first() )
+       console.log( $('ul li').last() )
+
+      // 3.not()
+       console.log($('ul li').not('.li-1') )
+       console.log($('ul li').not('.li-1, .li-2') )
+
+      // 4. odd()  even()
+       console.log($('ul li').odd() )
+       console.log($('ul li').even() )
+
+      // 5.filter()
+       console.log($('ul li').filter('.li-4') )
+       console.log($('ul li').filter('.li-4, .li-3') )
+
+      // 6.jQuery原型上的方法，大部分支持链式调用
+      var $el = $('ul li')
+                .filter('.li-2, .li-3, .li-4')
+                .eq(1)
+
+      console.log($el)
+
+      // new Promise()
+      //   .then()
+      //   .then()
+      //   .then()
+              
+#+END_SRC
+
+
+
+
+
+* Jq文本get/set
+
+#+BEGIN_SRC js
+   $(function() {
+      // 1.拿到 ul 中所有的文本
+      // console.log( $('ul').text() )
+      console.log( $('ul li').text() )  // 
+
+      // 2.设置 li 中的文本
+     $('ul li').text('我是li')  // 会给匹配元素集合中所有的元素添加文本 （ 设置值：一般是给选中所有元素设置）
+
+    })
+#+END_SRC
+
+
+* JqHTML文本get/set
+
+#+BEGIN_SRC js
+    $(function() {
+      // 1.获取ul元素中的所有 html 内容
+      console.log($('ul li').html() ) // 拿到匹配元素集合中的第一个元素（获取的时候 一般是拿到匹配元素集合中的第一个元素的数据 ）
+
+      // 2.给设置 li 元素设置 html的内容（ 设置 ）
+      $('ul li').html(`
+        <p>我是p元素</p>
+        <span>我是一个span</span>
+      `)
+
+    })
+#+END_SRC
+
+
+
+* 表单val函数操作
+
+
+#+BEGIN_SRC html
+  <input class="user" type="text" placeholder="请求输入用户名">
+  <input class="password" type="text" placeholder="请求输入密码">
+
+  <button class="login">登录</button>
+  <button class="setUserPas">设置用户名密码</button>
+
+  <<js-jq>>
+  <script>
+  
+    <<loginform>>
+  </script>
+#+END_SRC
+
+#+NAME: loginform
+#+BEGIN_SRC js
+    // 1.监听文档完全解析完成
+    $(function() {
+      // 1.获取表单数据
+      // $('.login').on('click', function() {})
+
+      // 简写
+      $('.login').click(function() {
+        console.log( $('.user').val() )
+        console.log( $('.password').val() )
+      })
+
+      // 2.给表单元素设置值
+      $('.setUserPas').click(function() {
+        $('.user').val('coder')
+        $('.password').val('admin')
+      })
+
+
+    })
+#+END_SRC
+

@@ -1,0 +1,53 @@
+:PROPERTIES:
+:ID:       63d7a6c1-9b32-4f73-8464-eb37a8ed82c5
+:END:
+#+title: js-3rd-jquery-one()
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+BEGIN_SRC html  :dir workdir
+    <<style>>
+
+    <div class="box">
+      box
+    </div>
+
+   <<js-jq>>
+   <script>
+      <<behavior>>
+  </script>
+#+END_SRC
+
+#+RESULTS:
+: 正在现有的浏览器会话中打开。
+
+
+
+#+NAME: style
+#+BEGIN_SRC css
+  <style>
+    body{
+      height: 200px;
+    }
+    .box{
+      width: 200px;
+      height: 100px;
+      background-color: pink;
+    }
+  </style>
+#+END_SRC
+
+#+NAME: behavior
+#+BEGIN_SRC js
+   $(function() {
+     $('.box').one('click', function() {
+       alert('show one only')
+    })
+   })
+#+END_SRC
+
+
+
+

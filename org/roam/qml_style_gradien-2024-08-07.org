@@ -1,0 +1,83 @@
+:PROPERTIES:
+:ID:       24a8725b-5626-4e21-a8e5-4a57c9b44c76
+:END:
+#+title: qml-prop-gradient
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-096a3c18-16b5-11ef-830e-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-096a3c18-16b5-11ef-830e-024236e6a1cc.qml
+  <<qml>>
+
+
+   Window {
+     width: 640
+     height: 480
+     visible: true
+     color: "#eeeeee"
+
+
+    Rectangle{
+       width: 320
+       height: 480
+
+
+       gradient: Gradient {
+         GradientStop {position: 0.0; color: "#202020"}
+         GradientStop {position: 0.33; color: "blue"}
+         GradientStop {position: 1.0; color: "#FFFFFF"}
+
+      }
+
+    }
+
+    Text {
+      text: qsTr("Hello Qt Quick")
+      color: Qt.rgba(0.8, 0.6, 0.4, 0.6)
+      anchors.centerIn: parent
+    }
+   }
+
+#+end_src
+
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-7970a3ef-16b5-11ef-9f9f-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-7970a3ef-16b5-11ef-9f9f-024236e6a1cc.qml
+  <<qml>>
+
+
+   Window {
+     width: 640
+     height: 480
+     visible: true
+     color: "#eeeeee"
+
+
+    Rectangle{
+       width: 320
+       height: 480
+       rotation: 90
+
+       gradient: Gradient {
+         GradientStop {position: 0.0; color: "#202020"}
+         GradientStop {position: 0.33; color: "blue"}
+         GradientStop {position: 1.0; color: "#FFFFFF"}
+
+      }
+
+    }
+
+    Text {
+      text: qsTr("Hello Qt Quick")
+      color: Qt.rgba(0.8, 0.6, 0.4, 0.6)
+      anchors.centerIn: parent
+    }
+   }
+
+
+  #+end_src

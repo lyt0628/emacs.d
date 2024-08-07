@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       8d7dd53a-9dd9-4f76-aac1-e8ad9700f5ce
+:END:
+#+title: js-ev-wheel
+#+date: [2024-08-07 三]
+#+last_modified:  
+

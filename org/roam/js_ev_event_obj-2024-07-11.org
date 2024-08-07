@@ -6,3 +6,94 @@
 #+date: [2024-07-11 四]
 #+last_modified: [2024-07-11 四 22:15]
 
+#+BEGIN_SRC html :noweb yes
+<body>
+<input id="mybtn" type="button"
+  value="My Button" >
+</body>
+<script>
+<<1>>
+</script>
+#+END_SRC
+
+#+RESULTS:
+
+
+#+NAME: 1
+#+BEGIN_SRC js :noweb yes :eval no
+function doClick(event){
+  console.log(event.type)
+  console.log(event)
+}
+
+let btn = document.getElementById("mybtn")
+btn.addEventListener('click', doClick)
+#+END_SRC
+
+
+|------------------------+----------------------------------|
+| member                 | Note                             |
+|------------------------+----------------------------------|
+| bubbles                | trige ev in bubbles              |
+|------------------------+----------------------------------|
+| current_target         | elem trap ev                     |
+|------------------------+----------------------------------|
+| target                 | elem trigger ev                  |
+|------------------------+----------------------------------|
+| cancel-able            | can preventDefault() called      |
+|------------------------+----------------------------------|
+| preventDefault()       |                                  |
+|------------------------+----------------------------------|
+| default_prevented      | whenever preventDefault() called |
+|------------------------+----------------------------------|
+| detail                 |                                  |
+|------------------------+----------------------------------|
+| event_pharse           | 1-trap 2-arrive 3-bubbles        |
+|------------------------+----------------------------------|
+| stopImmedPropagation() |                                  |
+|------------------------+----------------------------------|
+| stopPropagation()      |                                  |
+|------------------------+----------------------------------|
+| trusted                | true-gen by browser              |
+|                        | false-gen by JS                  |
+|------------------------+----------------------------------|
+| type                   |                                  |
+|------------------------+----------------------------------|
+| view                   |                                  |
+|------------------------+----------------------------------|
+
+#+BEGIN_SRC html :noweb yes
+<body>
+<input id="mybtn" type="button"
+  value="My Button" >
+</body>
+<script>
+<<2>>
+</script>
+#+END_SRC
+
+#+RESULTS:
+
+
+#+NAME: 2
+#+BEGIN_SRC js :noweb yes :eval no
+function doClick(event){
+  console.log("BTN")
+  console.log(event.currentTarget === this)
+  console.log(event.target === this)
+}
+
+let btn = document.getElementById("mybtn")
+btn.addEventListener('click', doClick)
+
+function doClick2(event){
+  console.log("BODY")
+  console.log(event.currentTarget === document.body)
+  console.log(event.target === btn )
+}
+
+document.body.addEventListener('click', doClick2)
+
+
+#+END_SRC
+

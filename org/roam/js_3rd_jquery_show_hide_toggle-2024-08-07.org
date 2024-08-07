@@ -1,0 +1,79 @@
+:PROPERTIES:
+:ID:       666531ed-3533-405c-9e69-f829cbeb707b
+:END:
+#+title: js-3rd-jquery-show()&hide()&toggle()
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+- show()/hide() [[id:5547f7ca-6df3-4b0e-986b-ad909636aa71::TF API][TF API]]
+-toggle() [[id:5547f7ca-6df3-4b0e-986b-ad909636aa71::TF API][TF API]]
+ 
+
+
+
+#+BEGIN_SRC html  :dir workdir
+    <<style>>
+
+    <button class="hide">隐藏</button>
+    <button class="show">显示</button>
+    <button class="toggle">切换</button>
+
+    <div class="box">
+      box
+    </div>
+
+   <<js-jq>>
+   <script>
+      <<behavior>>
+  </script>
+#+END_SRC
+
+
+
+#+NAME: style
+#+BEGIN_SRC css
+  <style>
+    body{
+      height: 200px;
+    }
+    .box{
+      width: 200px;
+      height: 100px;
+      background-color: pink;
+    }
+  </style>
+#+END_SRC
+
+#+NAME: behavior
+#+BEGIN_SRC js
+  // 1.监听文档完全解析完成
+   $(function() {
+
+     $('.hide').click(function() {
+       $('.box').hide('slow', function() {
+	 console.log('动画执行完成')
+       })
+     })
+
+     $('.show').click(function() {
+       $('.box').show('fast', function() {
+	 console.log('动画执行完成')
+       })
+     })
+
+     $('.toggle').click(function() {
+       // $('.box').toggle(2000)
+       $('.box').toggle({
+	 duration: 3000,
+	 complete: function() {
+	   console.log('动画执行完成')
+	 }
+       })
+     })
+
+   })
+#+END_SRC
+
+
+

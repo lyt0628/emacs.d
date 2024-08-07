@@ -1,0 +1,60 @@
+:PROPERTIES:
+:ID:       337b6c06-cd8d-461f-9810-705ae0c16b14
+:END:
+#+title: java-thrd-sem
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC java
+   <<jdemo>>
+   <<jDemo>>
+      <<j_-$sem5>>
+      public void doSync(Semaphore s)<<jie>>{
+	try{
+	sem.acquire();
+	<<jsleep1ms>>
+	JUtil.log("tid: " + <<thrdid>> + ":" + <<nowms>>);
+	}<<jcatch>>finally {
+	 sem.release();
+	}
+      }
+
+     <<jdoDemo>>
+       final var demo = <<jnewDemo>>
+       var syncRun =
+       <<jrun>>
+	  try{
+		demo.doSync(sem);
+	  }<<jcatch>>
+       <<jendrun>>
+
+       <<jfor20>>new Thread(syncRun).start();<<jend>>
+    <<jend>>
+  <<jend>>
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+tid: 32:1713047082700
+tid: 28:1713047082700
+tid: 30:1713047082700
+tid: 29:1713047082700
+tid: 31:1713047082700
+tid: 35:1713047082823
+tid: 34:1713047082823
+tid: 33:1713047082823
+tid: 37:1713047082823
+tid: 36:1713047082823
+tid: 38:1713047082924
+tid: 39:1713047082925
+tid: 40:1713047082925
+tid: 41:1713047082925
+tid: 42:1713047082926
+tid: 43:1713047083025
+tid: 44:1713047083026
+tid: 45:1713047083027
+tid: 46:1713047083027
+tid: 47:1713047083027
+#+end_example

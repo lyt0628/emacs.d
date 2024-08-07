@@ -1,0 +1,49 @@
+:PROPERTIES:
+:ID:       c753061d-81c8-4d4b-a0fe-03cbc70b12cd
+:END:
+#+title: pyqt-container-mdi
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+#+begin_src python
+  import sys
+
+  <<pyqt>>
+  class MainWindow(QMainWindow):
+      count=0
+      def __init__(self,parent=None):
+	  super(MainWindow, self).__init__(parent)
+	  self.mdi=QMdiArea()                 # 实例化QMDIArea区域
+	  self.setCentralWidget(self.mdi)     # 设置为中间控件
+	  bar=self.menuBar()
+	  file=bar.addMenu('窗口')
+	  file.addAction('新建')
+	  file.addAction('平铺')
+	  file.addAction('级联')
+	  #点击QAction绑定自定义的槽函数
+	  file.triggered[QAction].connect(self.actionFunc)
+	  self.setWindowTitle("MDI测试")
+      def actionFunc(self,fAction):
+	  if fAction.text()=='新建':
+	      MainWindow.count=MainWindow.count+1     # 增加一个子窗口个数
+	      sub=QMdiSubWindow()                     # 实例化多文档界面对象
+	      sub.setWidget(QTextEdit())              # 向sub内添加内部控件
+	      sub.setWindowTitle('子窗口'+str(MainWindow.count))    # 设置子窗口的标题
+	      self.mdi.addSubWindow(sub)              # 将子窗口添加到MDI区域
+	      sub.show()                              # 子窗口显示
+	  if fAction.text()=='级联':
+	      self.mdi.cascadeSubWindows()            # 安排子窗口在Mdi区域级联显示
+	  if fAction.text()=='平铺':
+	      self.mdi.tileSubWindows()                # 安排子窗口在Mdi区域平铺显示
+  if __name__ == '__main__':
+      app=QApplication(sys.argv)
+      demo=MainWindow()
+      demo.show()
+      sys.exit(app.exec())
+#+end_src
+
+
+

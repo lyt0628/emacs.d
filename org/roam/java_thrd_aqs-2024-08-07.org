@@ -1,0 +1,155 @@
+:PROPERTIES:
+:ID:       6229172d-1ff2-4b3b-b6a7-ffed8d115e93
+:END:
+#+title: java-thrd-AQS
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+AQS(AbstractQueuedSynchronizer) is a Helper class for JUC.
+AQS metains a Queue of Threads(FIFO, two-way), which
+is implemented by template method pattern and a design named [[id:86c4fcfe-f6bd-44ab-9c35-8f2110f6b114][CLH_lock]].
+And some Hooks need to be implemented:
+- boolean isHeldExclusively()
+   Reports whether in locked state
+- boolean tryAcquire(int acquires)
+  Acquires the lock
+- boolean tryRelease(int releases)
+  Releases the lock
+- Condition newCondition()
+
+
+
+* Examples
+
+** Mutex
+Mutex if a 0-1 Lock
+
+
+** BooleanLatch
+
+
+
+* JDK Usage
+** ReentrantLock
+
+** CountDownLatch
+
+
+
+* Internal Implement
+** CLH Lock In Synchronizers
+- holding some of the control information about a thread
+  in the predecessor of its node.
+- [2024-04-14 日 02:28]
+
+
+
+AQS(AbstractQueuedSynchronizer) is a Helper class for JUC.
+AQS metains a Queue of Threads(FIFO, two-way), which
+is implemented by template method pattern and a design named [[id:86c4fcfe-f6bd-44ab-9c35-8f2110f6b114][CLH_lock]].
+And some Hooks need to be implemented:
+- boolean isHeldExclusively()
+   Reports whether in locked state
+- boolean tryAcquire(int acquires)
+  Acquires the lock
+- boolean tryRelease(int releases)
+  Releases the lock
+- Condition newCondition()
+
+
+
+* Examples
+
+** Mutex
+Mutex if a 0-1 Lock
+
+
+** BooleanLatch
+
+
+
+* JDK Usage
+** ReentrantLock
+
+** CountDownLatch
+
+
+
+* Internal Implement
+The function of AQS is queue Thread.
+only when not succeed the tryAcquire,
+Thread is put in queue. In a mutex Lock,
+firs tryacquire get the resource and rest are put
+in queue. 
+
+
+** CLH Lock In Synchronizers
+- holding some of the control information about a thread
+  in the predecessor of its node.
+- "status" field in each node keeps track of whether a thread should block.
+- A node is signalled when its predecessor releases.
+- A thread may try to acquire if it is first in the queue.
+- Insertion into a CLH queue requires only a single atomic operation on "tail"
+
+AQS holds two links,
+
+- A Main links holds all Node waiting 
+#+begin_src dot :file /tmp/dot-a7de89f8-8dc5-40a2-b8ab-b83c293b15e4.png
+  digraph G {
+    head -> node1 [label="next"]
+    node1 -> node2[label="next"]
+    node2 -> node3[label="next"]
+    node3 -> tail[label="next"]
+
+    node1  ->  head [label="prev"]
+    node2 -> node1 [label="prev"]
+    node3 -> node2 [label="prev"]
+    tail -> node3 [label="prev"]
+  }
+  #+end_src
+
+  #+RESULTS:
+  [[file:/tmp/dot-a7de89f8-8dc5-40a2-b8ab-b83c293b15e4.png]]
+
+- A Link holded for node waiting in condition
+#+begin_src dot :file /tmp/dot-39e05680-1f6e-43f9-afcb-743129a8d24b.png
+   digraph G{
+    node1 -> node3[label="nextWaiter"]
+    node3 -> tail[label="nextWaiter"]
+    head;node2;
+  } 
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/dot-39e05680-1f6e-43f9-afcb-743129a8d24b.png]]
+  
+
+** Working In Exclusive Mode
+- acquire
+  #+begin_src dot :file /tmp/dot-eff2ef06-6080-4e3b-b2a6-d7f5c43419f5.png
+    digraph G {
+
+    try_acquire -> is_acquire
+    
+    try_acquire -> order_in_queue
+    order_in_queue -> "interrupt_this"
+
+    is_acquire[label="acquired?",shape="diamond"]
+    is_acquire -> "interrupt_this"[label="not"]
+    is_acquire -> "return_to_work"[label="yes"]
+    }
+  #+end_src
+
+  #+RESULTS:
+  [[file:/tmp/dot-eff2ef06-6080-4e3b-b2a6-d7f5c43419f5.png]]
+
+
+** Working In Shared Mode
+
+
+
+** What are AQS exposed by template
+
+
+** What make AQS atomic 

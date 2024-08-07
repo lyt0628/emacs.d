@@ -1,0 +1,52 @@
+:PROPERTIES:
+:ID:       752b5d69-4638-48ae-8447-45176ee61035
+:END:
+#+title: gtk-widget-actionmap
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+HEADER: :header-args:   :noweb yes
+#+HEADER: :flags "$(pkg-config --cflags gtk4) "
+#+HEADER: :libs  "$(pkg-config --libs gtk4)"
+#+HEADER: :results silent
+#+BEGIN_SRC C
+  <<gtk>>
+  static void
+  print_hello (GSimpleAction *action,
+	       GVariant      *parameter,
+	       gpointer       user_data)
+  {
+      g_print ("Hello World\n");
+  }
+
+  static void
+  activate(GtkApplication *app, gpointer user_data){
+     <<gtk-window>>
+
+      GActionEntry entries[] = {
+	  { "print", print_hello, NULL, NULL, NULL }
+      };
+
+      struct {
+	const char *action_and_target;
+	const char *accelerators[2];
+      } accels[] = {
+	{ "app.print", { "<Control>q", NULL } },
+      };
+
+      g_action_map_add_action_entries(G_ACTION_MAP(app),
+				      entries, G_N_ELEMENTS(entries),
+				      app);
+
+      for (int i = 0; i < G_N_ELEMENTS (accels); i++)
+	  gtk_application_set_accels_for_action (app, accels[i].action_and_target,
+						      accels[i].accelerators);
+
+      gtk_window_present(GTK_WINDOW(window));
+  }
+
+  <<gtk-main>>
+#+END_SRC
+
+

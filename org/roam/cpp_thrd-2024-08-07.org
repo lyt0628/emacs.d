@@ -1,0 +1,73 @@
+:PROPERTIES:
+:ID:       96550136-f600-4b84-b2bc-d3306cde0cd9
+:END:
+#+title: cpp-thrd
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* New Thread From Function
+
+
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC C++
+  <<mycpp>>
+  <<cpp-print_hello>>
+
+
+  int main()
+  {
+      std::thread t(print_hello);
+      t.join();
+  }
+
+#+END_SRC
+
+#+RESULTS:
+: Hello C++ World
+
+
+
+* New Thread From Struct 
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC C++
+  <<mycpp>>
+    void do_something(int& i)
+    {
+	++i;
+    }
+
+    struct func
+    {
+	int& i;
+
+	func(int& i_):i(i_){}
+
+	void operator()()
+	{
+	    for(unsigned j=0;j<1000000;++j)
+	    {
+		do_something(i);
+	    }
+	}
+    };
+
+
+    void oops()
+    {
+	int some_local_state=0;
+
+	func my_func(some_local_state);
+	std::thread my_thread(my_func);
+	my_thread.detach();
+    }
+
+    int main()
+    {
+	oops();
+    }
+
+  #+END_SRC
+

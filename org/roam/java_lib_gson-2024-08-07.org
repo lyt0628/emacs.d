@@ -1,0 +1,194 @@
+:PROPERTIES:
+:ID:       7200d24a-c146-4e64-977d-fd866aaf88ea
+:END:
+#+title: java-lib-gson
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* 创建 Gson 对象
+
+#+begin_src java 
+  new Gson();
+  System.out.println(new Gson());
+#+end_src
+
+#+RESULTS:
+: {serializeNulls:false,factories:[Factory[typeHierarchy=com.google.gson.JsonElement,adapter=com.google.gson.internal.bind.TypeAdapters$28@497470ed], com.google.gson.internal.bind.ObjectTypeAdapter$1@63c12fb0, com.google.gson.internal.Excluder@b1a58a3, Factory[type=java.lang.String,adapter=com.google.gson.internal.bind.TypeAdapters$15@6438a396], Factory[type=java.lang.Integer+int,adapter=com.google.gson.internal.bind.TypeAdapters$7@e2144e4], Factory[type=java.lang.Boolean+boolean,adapter=com.google.gson.internal.bind.TypeAdapters$3@6477463f], Factory[type=java.lang.Byte+byte,adapter=com.google.gson.internal.bind.TypeAdapters$5@3d71d552], Factory[type=java.lang.Short+short,adapter=com.google.gson.internal.bind.TypeAdapters$6@1cf4f579], Factory[type=java.lang.Long+long,adapter=com.google.gson.internal.bind.TypeAdapters$11@18769467], Factory[type=java.lang.Double+double,adapter=com.google.gson.Gson$1@46ee7fe8], Factory[type=java.lang.Float+float,adapter=com.google.gson.Gson$2@7506e922], com.google.gson.internal.bind.NumberTypeAdapter$1@4ee285c6, Factory[type=java.util.concurrent.atomic.AtomicInteger,adapter=com.google.gson.TypeAdapter$1@621be5d1], Factory[type=java.util.concurrent.atomic.AtomicBoolean,adapter=com.google.gson.TypeAdapter$1@573fd745], Factory[type=java.util.concurrent.atomic.AtomicLong,adapter=com.google.gson.TypeAdapter$1@15327b79], Factory[type=java.util.concurrent.atomic.AtomicLongArray,adapter=com.google.gson.TypeAdapter$1@4f2410ac], Factory[type=java.util.concurrent.atomic.AtomicIntegerArray,adapter=com.google.gson.TypeAdapter$1@722c41f4], Factory[type=java.lang.Character+char,adapter=com.google.gson.internal.bind.TypeAdapters$14@5b80350b], Factory[type=java.lang.StringBuilder,adapter=com.google.gson.internal.bind.TypeAdapters$19@5d6f64b1], Factory[type=java.lang.StringBuffer,adapter=com.google.gson.internal.bind.TypeAdapters$20@32a1bec0], Factory[type=java.math.BigDecimal,adapter=com.google.gson.internal.bind.TypeAdapters$16@22927a81], Factory[type=java.math.BigInteger,adapter=com.google.gson.internal.bind.TypeAdapters$17@78e03bb5], Factory[type=com.google.gson.internal.LazilyParsedNumber,adapter=com.google.gson.internal.bind.TypeAdapters$18@5e8c92f4], Factory[type=java.net.URL,adapter=com.google.gson.internal.bind.TypeAdapters$21@61e4705b], Factory[type=java.net.URI,adapter=com.google.gson.internal.bind.TypeAdapters$22@50134894], Factory[type=java.util.UUID,adapter=com.google.gson.internal.bind.TypeAdapters$24@2957fcb0], Factory[type=java.util.Currency,adapter=com.google.gson.TypeAdapter$1@1376c05c], Factory[type=java.util.Locale,adapter=com.google.gson.internal.bind.TypeAdapters$27@51521cc1], Factory[typeHierarchy=java.net.InetAddress,adapter=com.google.gson.internal.bind.TypeAdapters$23@1b4fb997], Factory[type=java.util.BitSet,adapter=com.google.gson.TypeAdapter$1@deb6432], com.google.gson.internal.bind.DateTypeAdapter$1@28ba21f3, Factory[type=java.util.Calendar+java.util.GregorianCalendar,adapter=com.google.gson.internal.bind.TypeAdapters$26@694f9431], com.google.gson.internal.sql.SqlTimeTypeAdapter$1@f2a0b8e, com.google.gson.internal.sql.SqlDateTypeAdapter$1@593634ad, com.google.gson.internal.sql.SqlTimestampTypeAdapter$1@20fa23c1, com.google.gson.internal.bind.ArrayTypeAdapter$1@3581c5f3, Factory[type=java.lang.Class,adapter=com.google.gson.TypeAdapter$1@6aa8ceb6], com.google.gson.internal.bind.CollectionTypeAdapterFactory@2530c12, com.google.gson.internal.bind.MapTypeAdapterFactory@73c6c3b2, com.google.gson.internal.bind.JsonAdapterAnnotationTypeAdapterFactory@48533e64, com.google.gson.internal.bind.TypeAdapters$29@64a294a6, com.google.gson.internal.bind.ReflectiveTypeAdapterFactory@7e0b37bc],instanceCreators:{}}
+
+
+#+begin_src java
+  GsonBuilder builder = new GsonBuilder();
+  Gson gson = builder.create();
+
+#+end_src
+
+#+RESULTS:
+
+
+* 准备实体类
+
+#+NAME: Employee
+#+begin_src java
+  @Data
+  @AllArgsConstructor
+  @NoArgsConstructor
+  class Employee {
+	  private int id;
+	  private String firstName;
+	  private String lastName;
+  }
+
+#+end_src
+
+#+RESULTS:
+
+
+* 对象序列化
+
+#+NAME: Lisi
+#+begin_src java :noweb yes
+
+  public class Main{
+    public static void main(String[] args) { 
+      var e = new Employee();
+      e.setId(666);
+      e.setFirstName("Li");
+      e.setLastName("Si");
+
+      var gson = new Gson();
+
+      System.out.println(gson.toJson(e));
+    } 
+  }
+
+  <<Employee>>
+#+end_src
+
+#+RESULTS: Lisi
+
+
+
+* Json转对象
+
+#+begin_src java :noweb yes
+  public class Main{
+
+    public static void main(String[] args) { 
+      String json="{\"id\":666,\"firstName\":\"Li\",\"lastName\":\"Si\"}";
+      var gson = new Gson();
+      System.out.println(gson.fromJson(json, Employee.class));
+    }
+  }
+  <<Employee>>
+#+end_src
+
+#+RESULTS:
+: Employee(id=666, firstName=Li, lastName=Si)
+
+* 格式化输出
+
+#+begin_src java :noweb yes
+  public class Main{
+
+    public static void main(String[] args) { 
+      Gson gson = new GsonBuilder()
+      .setPrettyPrinting()
+      .create();
+
+      Employee employeeObj = new Employee(1, "Li", "Si");
+
+      System.out.println(gson.toJson(employeeObj));
+    }
+  }
+  <<Employee>>
+#+end_src
+
+#+RESULTS:
+: {
+:   "id": 1,
+:   "firstName": "Li",
+:   "lastName": "Si"
+: }
+
+
+
+
+* 数组Json转Array
+
+
+
+#+begin_src java :noweb yes
+	   public class Main{
+
+	     public static void main(String[] args) {
+	       String json = "["+
+   "{"+
+     "\"id\": 1," +
+     "\"firstName\": \"Li\","+
+     "\"lastName\": \"Si\""+
+   "},"+
+     "{"+
+     "\"id\": 2," +
+     "\"firstName\": \"Li\","+
+     "\"lastName\": \"Si\""+
+    "}"+
+  "]";
+
+	       Gson gson = new Gson(); 
+
+	       Employee[] array = gson.fromJson(json, Employee[].class);         
+
+	      for (Employee e : array) {System.out.println(e);}
+	     }
+	 }
+
+	 <<Employee>>
+  #+end_src
+
+  #+RESULTS:
+  : Employee(id=1, firstName=Li, lastName=Si)
+  : Employee(id=2, firstName=Li, lastName=Si)
+
+
+  
+* 数组Json转List(Collection)
+
+ 
+
+#+begin_src java :noweb yes
+	   public class Main{
+
+	     public static void main(String[] args) {
+	       String json = "["+
+   "{"+
+     "\"id\": 1," +
+     "\"firstName\": \"Li\","+
+     "\"lastName\": \"Si\""+
+   "},"+
+     "{"+
+     "\"id\": 2," +
+     "\"firstName\": \"Li\","+
+     "\"lastName\": \"Si\""+
+    "}"+
+  "]";
+
+	       Gson gson = new Gson();
+
+	       Type employeeListType = new TypeToken<ArrayList<Employee>>() {
+	       }.getType();
+
+              ArrayList<Employee> list = gson.fromJson(json, employeeListType);
+
+
+	      for (Employee e : list) {System.out.println(e);}
+	     }
+	 }
+
+	 <<Employee>>
+  #+end_src
+
+  #+RESULTS:
+  : Employee(id=1, firstName=Li, lastName=Si)
+  : Employee(id=2, firstName=Li, lastName=Si)
+

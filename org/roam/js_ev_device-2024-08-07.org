@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       49a77210-77c2-4952-9c50-a2de5a89cdd9
+:END:
+#+title: js-ev-device
+#+date: [2024-08-07 三]
+#+last_modified:  
+

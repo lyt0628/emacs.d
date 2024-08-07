@@ -1,0 +1,50 @@
+:PROPERTIES:
+:ID:       131645a4-67ef-4d8a-af4f-6dd1188f39cf
+:END:
+#+title: pyqt-widget-spinbox
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  
+  class MyWidget(QWidget):
+	  def __init__(self, parent=None):
+		  super(MyWidget, self).__init__(parent)
+		  self.setWindowTitle("SpinBox测试")
+		  self.resize(300, 100)
+
+		  self.lb1 = QLabel("选择或者输入数字:")
+		  self.sb = QSpinBox()
+		  self.sb.valueChanged.connect(self.valueFunc )
+
+		  self.lb2 = QLabel(" ")
+		  self.lb2.setAlignment(Qt.AlignmentFlag.AlignCenter )
+
+		  hLayout = QHBoxLayout()
+		  hLayout.addWidget(self.lb1)
+		  hLayout.addWidget(self.sb)
+
+		  ww = QWidget(self)
+		  vLayout_ww = QVBoxLayout(ww)
+
+		  vLayout_ww.addLayout(hLayout)
+		  vLayout_ww.addWidget(self.lb2)
+
+	  def valueFunc (self):
+		  self.lb2.setText("输入值: "+str(self.sb.value()))
+
+  if __name__=='__main__':
+	  app = QApplication(sys.argv)
+	  ex = MyWidget()
+	  ex.show()
+	  sys.exit(app.exec())
+#+end_src
+
+
+

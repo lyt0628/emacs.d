@@ -1,0 +1,43 @@
+:PROPERTIES:
+:ID:       1f9f98c4-0d2e-4346-a1fe-deea0aff65e5
+:END:
+#+title: pyqt-layout-form
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+  
+  class MyWidget(QWidget):
+		  def __init__(self,parent=None):
+			  super(MyWidget,self).__init__(parent)
+			  self.setWindowTitle("表单布局测试")
+			  self.resize(400, 100)
+
+			  fromlayout = QFormLayout ()
+			  lbNum=QLabel("学号"); leNum = QLineEdit()
+			  lbName=QLabel("姓名"); leName = QLineEdit()
+			  lbBirth=QLabel("出生日期"); leBirth = QLineEdit()
+			  lbSpec=QLabel("专业"); leSpec = QLineEdit()
+
+			  fromlayout.addRow(lbNum,leNum)
+			  fromlayout.addRow(lbName, leName)
+			  fromlayout.addRow(lbBirth, leBirth)
+			  fromlayout.addRow(lbSpec, leSpec)
+
+			  self.setLayout(fromlayout)
+  if __name__ =="__main__":
+	  app = QApplication(sys.argv)
+	  w = MyWidget()
+	  w.show()
+	  sys.exit(app.exec())
+#+end_src
+
+
+

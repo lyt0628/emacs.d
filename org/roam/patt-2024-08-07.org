@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       9cd05195-736d-47b3-b511-5d7b16588760
+:END:
+#+title: patt
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+*Index*
+- [[id:dddc9c07-3fa3-4ebc-9b3b-72ee7f009898][patt-create]]
+- [[id:8e360585-e525-4a1c-92f8-4c5c1b0749c6][patt-behavior]]
+- [[id:1ab642ce-8e04-485b-985e-6d2f369d0b82][patt-struct]]
+- [[id:a99e02cd-5fb7-484d-a047-20ae9cce5d50][patt-optimize]]

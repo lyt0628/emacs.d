@@ -1,0 +1,238 @@
+:PROPERTIES:
+:ID:       7c4104cf-bbdb-4f33-9441-23fbdcc32eea
+:END:
+#+title: doc-puml-seq-style
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* 颜色
+
+#+HEADER: :results file
+#+HEADER: :file ../tmp/puml-b22cd935-dea6-474e-8964-8f2c2dbb3073.png
+#+BEGIN_SRC plantuml
+@startuml
+
+actor Bob #red
+
+' The only difference between actor
+'and participant is the drawing
+
+participant Alice
+participant "I have a really\nlong name" as L #99FF99
+
+/' You can also declare:
+participant L as "I have a really\nlong name" #99FF99
+'/
+
+
+Alice->Bob: Authentication Request
+Bob->Alice: Authentication Response
+Bob->L: Log transaction
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:../tmp/puml-b22cd935-dea6-474e-8964-8f2c2dbb3073.png]]
+
+
+* 样式参数
+
+#+NAME: param-msg_align
+#+HEADER: :results file
+#+HEADER: :file ../tmp/puml-855e5f5b-82ac-4bfb-86e2-fd2b6244f2b0.png
+#+BEGIN_SRC plantuml
+@startuml
+skinparam sequenceMessageAlign right
+Bob -> Alice : Request
+Alice -> Bob : Response
+@enduml
+#+END_SRC
+
+#+RESULTS: param-msg_align
+[[file:../tmp/puml-855e5f5b-82ac-4bfb-86e2-fd2b6244f2b0.png]]
+
+#+RESULTS:
+[[file:/tmp/puml-855e5f5b-82ac-4bfb-86e2-fd2b6244f2b0.png]]
+
+
+
+- 将两个连接的顺序调换以下，再将示例[[param-msg_align]]的连接顺序调换，对比两个区别
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-0e342f8d-56c5-45d1-98bf-2cc68f071a7f.png
+#+BEGIN_SRC plantuml
+@startuml
+skinparam responseMessageBelowArrow true
+Bob -> Alice : hello
+Alice -> Bob : ok
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-0e342f8d-56c5-45d1-98bf-2cc68f071a7f.png]]
+
+
+
+
+* 连接器类型
+
+#+HEADER: :results file
+#+HEADER: :file ../tmp/puml-69abc145-da32-4d95-9f88-57da01b6711f.png
+#+BEGIN_SRC plantuml
+@startuml
+Bob ->x Alice
+Bob -> Alice
+Bob ->> Alice
+
+Bob -\ Alice
+Bob \\- Alice
+Bob //-- Alice
+
+Bob ->o Alice
+Bob o\\-- Alice
+
+Bob <-> Alice
+Bob <->o Alice
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:../tmp/puml-69abc145-da32-4d95-9f88-57da01b6711f.png]]
+
+
+* 样式属性
+
+
+#+HEADER: :results file
+#+HEADER: :file ../tmp/puml-a93e6f0f-a036-41f4-b644-8841b6c7f51a.png
+#+BEGIN_SRC plantuml
+@startuml
+Bob -[#red]> Alice : hello
+Alice -[#0000FF]->Bob : ok
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:../tmp/puml-a93e6f0f-a036-41f4-b644-8841b6c7f51a.png]]
+
+
+* 注释样式
+
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-19120205-db9e-4c42-8c36-2831cd266212.png
+#+BEGIN_SRC plantuml
+@startuml
+participant Alice
+participant Bob
+
+note left of Alice #aqua
+This is displayed
+left of Alice.
+end note
+
+note right of Alice: This is displayed right of Alice.
+note over Alice: This is displayed over Alice.
+note over Alice, Bob #FFAAAA: This is displayed\n over Bob and Alice.
+note over Bob, Alice
+
+This is yet another
+example of
+a long note.
+end note
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-19120205-db9e-4c42-8c36-2831cd266212.png]]
+
+
+
+** 注释形状
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-e9092a75-7a83-4b12-a400-ee3f42f50d49.png
+#+BEGIN_SRC plantuml
+@startuml
+caller -> server : conReq
+
+hnote over caller : 空闲
+
+
+caller <- server : conConf
+
+rnote over server
+"r"是正方形
+"h"是六边形
+endrnote
+
+rnote over server
+多
+行
+文本
+endrnote
+
+hnote over caller
+多
+行
+文本
+endhnote
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-e9092a75-7a83-4b12-a400-ee3f42f50d49.png]]
+
+
+
+** 注释排版
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-18339186-c85b-4eb2-be0a-0e792d46df13.png
+#+BEGIN_SRC plantuml
+@startuml
+
+participant Alice
+participant "The **Famous** Bob" as Bob
+
+Alice -> Bob : hello --there--
+
+... Some ~~long delay~~ ...
+
+
+Bob -> Alice : ok
+
+note left
+This is **bold**
+This is //italics//
+This is ""monospaced""
+This is --stroked--
+This is __underlined__
+This is ~~waved~~
+end note
+
+
+Alice -> Bob : A //well formatted// message
+
+note right of Alice
+This is <back:cadetblue><size:18>displayed</size></back>
+__left of__ Alice.
+end note
+
+note left of Bob
+<u:red>This</u> is <color #118888>displayed</color>
+**<color purple>left of</color> <s:red>Alice</strike> Bob**.
+end note
+
+
+note over Alice, Bob
+<w:#FF33FF>This is hosted</w> by <img sourceforge.jpg>
+end note
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-18339186-c85b-4eb2-be0a-0e792d46df13.png]]
+
+

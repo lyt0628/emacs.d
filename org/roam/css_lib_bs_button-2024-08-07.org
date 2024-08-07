@@ -1,0 +1,38 @@
+:PROPERTIES:
+:ID:       fbb8ac8d-71e3-4655-892d-dd17453af86a
+:END:
+#+title: css-lib-bs-Button
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+| btn         | btn 外观 |
+|-------------+---------|
+| btn-<color> |         |
+|-------------+---------|
+| btn-link    |         |
+|-------------+---------|
+|             |         |
+
+
+#+BEGIN_SRC html :noweb yes
+  <<html-bs>>
+  
+  <div class="btn btn-primary">按钮1</div>
+  <div class="btn btn-warning">按钮2</div>
+  <button class="btn btn-info">按钮3</button>
+
+  <button type="button" class="btn btn-primary">Primary</button>
+  <button type="button" class="btn btn-secondary">Secondary</button>
+  <button type="button" class="btn btn-success">Success</button>
+  <button type="button" class="btn btn-danger">Danger</button>
+  <button type="button" class="btn btn-warning">Warning</button>
+  <button type="button" class="btn btn-info">Info</button>
+  <button type="button" class="btn btn-light">Light</button>
+  <button type="button" class="btn btn-dark">Dark</button>
+
+  <button type="button" class="btn btn-link">Link</button>
+
+#+END_SRC
+
+#+RESULTS:

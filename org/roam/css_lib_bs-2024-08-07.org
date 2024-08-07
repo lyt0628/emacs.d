@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       bd4e08b1-4989-415b-b20b-6033ade1626f
+:END:
+#+title: css-lib-bs
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* Bootstrap Util 部分 的定制是通用可以与其他组件一起使用
+
+#+BEGIN_SRC html  :noweb yes
+  <<html-bs>>
+  
+  <div class="btn btn-cirlce btn-primary">按钮1</div>
+  <div class="btn btn-cirlce btn-warning">按钮2</div>
+  <div class="btn btn-cirlce btn-default">按钮2</div>
+
+#+END_SRC
+

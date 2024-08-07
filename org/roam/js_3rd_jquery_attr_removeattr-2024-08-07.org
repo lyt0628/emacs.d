@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       88dcd7d3-1986-4e19-8b37-d5fc32fa2682
+:END:
+#+title: js-3rd-jquery-attr()&removeAttr()
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+BEGIN_SRC js
+    $(function() {
+      // 1.获取attribute属性  ul
+       console.log($('ul').attr('id'))
+       console.log($('ul').attr('name'))
+
+      // 2.设置 attribute属性 ul
+       $('ul').attr('id', 'box')
+
+       $('ul').attr({   // 设置多个属性
+         id: 'container',
+         class: "panel",
+         name: 'coder'
+       })
+
+      // 3.删除 attribute属性 ul
+       $('ul').removeAttr('id')
+       $('ul').removeAttr('name')
+
+    })
+#+END_SRC
+
+
+
+

@@ -1,0 +1,168 @@
+:PROPERTIES:
+:ID:       1063f26b-df3a-4815-b5bc-6839d55b1ebb
+:END:
+#+title: pyqt-widget-window
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* 获取窗口坐标信息
+
+#+begin_src python :results output
+  <<pyqt>>
+
+  app = QApplication([])
+  w = QWidget()
+
+  #w1=QMainWindow()
+  #w1.setToolButtonStyle()
+  #rect=QRect(260,240,300,200)
+  #w.setGeometry(rect)
+  #w.setGeometry(260,240,300,200)
+
+  w.move(260,240)
+  w.resize(300, 200)
+  w.setWindowTitle("窗口测试")
+
+  w.show()
+
+  print(w.x(),w.y(),w.width(),w.height())
+  print(w.pos(),w.size())
+  print(w.geometry())
+  app.exec()
+
+#+end_src
+
+
+
+* 图标和气泡提示
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class WinForm(QWidget):
+	  def __init__(self):
+		  super().__init__()
+		  self.initUI()
+
+	  def initUI(self):
+		  self.setWindowTitle('图标和气泡提示')
+		  self.setWindowIcon(QIcon('./images/python.ico'))		#（1）
+		  self.setGeometry(300, 300, 400, 200)
+
+		  QToolTip.setFont(QFont('SansSerif', 10))				#（2）
+		  self.setToolTip('这是<b>QWidget</b> 窗口！')
+
+		  btn = QPushButton('按钮', self)							#（3）
+		  btn.setToolTip('这个控件属于 <b>QPushButton</b>类！ ')
+		  btn.move(50, 50)
+		  btn.resize(btn.sizeHint())
+
+		  self.show()
+
+  if __name__ == '__main__':
+	  app = QApplication(sys.argv)
+	  w = WinForm()
+	  sys.exit(app.exec())
+#+end_src
+
+
+* 窗口(widget)形状位置
+
+#+begin_src python :results output
+  import sys
+  <<pyqt>>
+
+  app = QApplication(sys.argv)
+
+  w = QWidget()
+  w.resize(300, 200)
+  w.move(260,240)
+  w.setWindowTitle('PyQt窗口')
+
+  def btnFunc():
+	  print("窗口左上角(x,y)=%d,%d" %(w.x(),w.y()))
+	  print("窗口宽高（w,h)=%d,%d" %(w.width(), w.height()))
+	  print("窗口客户区左上角(x,y)=%d,%d" %(w.geometry().x(), w.geometry().y()))
+
+	  print(w.frameGeometry())
+	  print("窗口内控件(x,y)=%d,%d" %(btn.x(),btn.y()))
+  
+  btn = QPushButton(w)
+  btn.setText("Test Button")
+  btn.move(120, 150)
+  btn.clicked.connect(btnFunc)
+
+  w.show()
+  sys.exit(app.exec())
+#+end_src
+
+
+* 窗口，菜单
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class MainWin(QMainWindow):
+      def __init__(self, parent=None):
+	  super(MainWin, self).__init__(parent)
+	  self.resize(400, 340)
+	  self.setWindowTitle("主窗口测试")
+
+	  myWidget=QWidget(self)
+	  self.setCentralWidget(myWidget)      
+        
+	  self.lb=QLabel("输入文本",myWidget)
+	  self.te=QTextEdit(myWidget) 
+	  self.pb=QPushButton("确认",myWidget)
+        
+	  self.lb.move(40,10)
+	  self.te.move(100,10)         
+	  self.pb.move(200,220)    
+        
+	  mbar=self.menuBar()
+	  file=mbar.addMenu("文件")
+	  file.addAction("新建")
+        
+	  fileOpen = QAction("打开", self)
+	  file.addAction(fileOpen)      
+	  fileSave = QAction("保存", self)
+	  fileSave.setShortcut("Ctrl+S")
+	  file.addAction(fileSave)
+
+	  fileOpen.triggered.connect(self.triggerOpenFile)
+	  fileSave.triggered.connect(self.triggerSaveFile)
+        
+	  tbar = self.addToolBar("mytool")
+	  tbar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+	  new = QAction(QIcon("./images/new.ico"),"新建", self)
+	  open = QAction(QIcon("./images/open.ico"),"打开", self)
+	  tbar.addAction(new)
+	  tbar.addAction(open)
+
+	  tbar.actionTriggered[QAction].connect(self.toolBarFunc)
+        
+	  # tbar.open.actionTriggered.connect(self.triggerOpenFile)
+
+	  self.status = self.statusBar()
+
+      def toolBarFunc(self,op):
+	  if op.text()=="打开":
+	      self.triggerOpenFile()      
+
+      def triggerOpenFile(self):
+	  self.status.showMessage("打开文件xxx.txt", 0)
+
+      def triggerSaveFile(self):
+	  self.status.showMessage("正在保存文件...", 5000)
+
+  if __name__=='__main__':
+      app = QApplication(sys.argv)
+      m = MainWin()
+      m.show()
+      sys.exit(app.exec())
+#+end_src
+
+

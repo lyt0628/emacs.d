@@ -1,0 +1,41 @@
+:PROPERTIES:
+:ID:       de5172e1-1f16-40a8-bc0a-fa3e1e1573b0
+:END:
+#+title: java-thrd-Cycle Barrier
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC java
+  <<jdemo>>
+  <<jDemo>>
+	static private Runnable cb =
+	<<jrun>>
+	    JUtil.log("All work done!");
+	<<jendrun>>
+
+	<<j_-$cycban10cb>>
+
+       public void doSync(CyclicBarrier cycban){
+	 try{
+	   <<jsleep1ms>>
+	   JUtil.log("one work done");
+	   cycban.await();
+	 }<<jcatch>>
+      }
+
+    <<jdoDemo>>
+	final var demo = <<jnewDemo>>
+
+	var workRun =
+	<<jrun>>
+          demo.doSync(cycban);
+	<<jendrun>>
+
+	<<jfor10>>new Thread(workRun).start();<<jend>>
+
+     <<jend>>
+  <<jend>>
+#+END_SRC
+

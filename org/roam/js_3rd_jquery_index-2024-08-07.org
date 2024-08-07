@@ -1,0 +1,41 @@
+:PROPERTIES:
+:ID:       7c75e888-d8de-40f0-afcd-c3ce5c778732
+:END:
+#+title: js-3rd-jquery-index()
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+#+BEGIN_SRC html  :dir workdir
+    <<style>>
+    <ul class="box">
+      <li id="0">1</li>
+      <li id="1">2</li>
+      <li id="2">3</li>
+    </ul>
+
+   <<js-jq>>
+   <script>
+      <<behavior>>
+  </script>
+#+END_SRC
+
+#+RESULTS:
+: 正在现有的浏览器会话中打开。
+
+
+#+NAME: behavior
+#+BEGIN_SRC js
+  // 1.监听文档完全解析完成
+   $(function() {
+     let val = $('li').index($('#2'))
+     alert(val)
+   })
+#+END_SRC
+
+
+
+
+

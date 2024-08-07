@@ -1,0 +1,179 @@
+:PROPERTIES:
+:ID:       4734cdc1-0db0-41bc-90ae-3890bc725f90
+:END:
+#+title: css-lib-bs-toast
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* 绝对定位到右下角显示
+
+
+#+BEGIN_SRC html
+  <<html-bs>>
+
+  <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+	<img src="../data/images/python.ico" class="rounded me-2" alt="...">
+	<strong class="me-auto">Bootstrap</strong>
+	<small>11 mins ago</small>
+	<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+	Hello, world! This is a toast message.
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    let trigger="liveToastBtn"
+    let toastID="liveToast"
+    <<js>>
+  </script>
+#+END_SRC
+
+
+#+NAME: js
+#+HEADER: :var trigger="liveToastBtn"
+#+HEADER: :var toastID="liveToast"
+#+BEGIN_SRC js :noeval yes
+var toastTrigger = document.getElementById(trigger)
+var toastLiveExample = document.getElementById(toastID)
+
+if (toastTrigger) {
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+  toastTrigger.addEventListener('click', () => {
+    toastBootstrap.show()
+  })
+}
+#+END_SRC
+
+
+
+* 默认在原地半透明地显示
+
+#+BEGIN_SRC html
+  <<html-bs>>
+
+  <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+
+
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="../data/images/python.ico" class="rounded me-2" alt="...">
+      <strong class="me-auto">Bootstrap</strong>
+      <small class="text-body-secondary">11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
+
+    <script>
+    <<js>>
+  </script>
+
+#+END_SRC
+
+
+* 包含在 toast-container 可以栈方式显示
+
+#+BEGIN_SRC html
+  <<html-bs>>
+  <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+
+
+  <div  class="toast-container position-static">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+      <img src="../data/images/python.ico" class="rounded me-2" alt="...">
+	<strong class="me-auto">Bootstrap</strong>
+	<small class="text-body-secondary">just now</small>
+	<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+	See? Just like this.
+      </div>
+    </div>
+
+    <div  id="liveToast2" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+      <img src="../data/images/python.ico" class="rounded me-2" alt="...">
+	<strong class="me-auto">Bootstrap</strong>
+	<small class="text-body-secondary">2 seconds ago</small>
+	<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+	Heads up, toasts will stack automatically
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let trigger="liveToastBtn"
+    let toastID="liveToast"
+    <<js>>
+
+    toastID="liveToast2"
+    <<js>>
+  </script>
+
+#+END_SRC
+
+
+* 可以在 toast-body外放一个div个性化
+#+BEGIN_SRC html
+  <<html-bs>>
+  <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+
+
+  <div id="liveToast" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+	Hello, world! This is a toast message.
+      </div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+
+    <script>
+    let trigger="liveToastBtn"
+    let toastID="liveToast"
+    <<js>>
+
+  </script>
+
+
+#+END_SRC
+
+** BS 父子组件大部分外观上是独立的，内部可随意修改
+#+BEGIN_SRC html
+  <<html-bs>>
+  <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+
+
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+      <div class="mt-2 pt-2 border-top">
+	<button type="button" class="btn btn-primary btn-sm">Take action</button>
+	<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Close</button>
+      </div>
+    </div>
+  </div>
+
+
+    <script>
+    let trigger="liveToastBtn"
+    let toastID="liveToast"
+    <<js>>
+
+  </script>
+
+
+#+END_SRC

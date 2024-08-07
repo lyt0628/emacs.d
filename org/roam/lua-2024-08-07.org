@@ -1,0 +1,241 @@
+:PROPERTIES:
+:ID:       92b89b24-5aca-43ba-905c-1402fb827b8f
+:END:
+#+title: lua
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* Fundanmental Concepet Macro of Lua
+** Number
+  Firstly, Lua Define Macro to isolate C(src_c()[#define LUA_INTEGER	int]),
+  and Define Real Lua Type using Macro defined before.
+  After Lua 5.3, A Lua Number can be float or double in c.
+  it is easy to achieved, just using src_C()[#define lua_number LUA_DOURBLE].
+  For Control The Definiton Flow, Som Flat Macro is defined.
+  For example, src_c()[LLONG_MAX] Macro. If the Macro is defined, Lua will define
+  LUA_INTEGER as long long, instead of int.
+  When compile Lua, -D flag in GCC can be used for this aim.
+  All things works as following code.
+  #+BEGIN_SRC C
+    #if defined(LLONG_MAX)		/* { */
+    #define LUA_INTEGER		long long
+    #endif
+  #+END_SRC
+   We List those Definition for looking up.
+   | Macro       | Real Value       | Description                                      |
+   |-------------+------------------+--------------------------------------------------|
+   | LUA_INTEGER | int or long long | If LLONG_MAX is defined, int otherwise long long |
+   |             |                  |                                                  |
+
+
+  
+
+  In [[~/lua/luaconf.h]] some values are defined,
+  aiming to make lua portable to various platform and specific C Vesion.
+ ** Platform
+
+  - Detect The Bits of Platform
+    src_c()[#define LUAI_IS32INT	((UINT_MAX >> 30) >= 3)]
+    If Platform is 32 bits, is value would be greter than 0, that is true in c.
+  - You can select Number length of Lua Number
+    Some Macro is define for this aim.
+    #+BEGIN_SRC C
+      #define LUA_INT_INT		1
+      #define LUA_INT_LONG		2
+      #define LUA_INT_LONGLONG	        3
+      #define LUA_INT_DEFAULT		LUA_INT_LONGLONG
+    #+END_SRC
+  - Indepent from Path of Platform
+    
+
+
+
+
+
+* Macro and Enum Constant for Lua Lang
+** Type System
+The Following Macro serve as Enum for indentity Lua Type.
+#+BEGIN_SRC C
+#define LUA_TNONE		(-1)
+
+#define LUA_TNIL		0
+#define LUA_TBOOLEAN		1
+#define LUA_TLIGHTUSERDATA	2
+#define LUA_TNUMBER		3
+#define LUA_TSTRING		4
+#define LUA_TTABLE		5
+#define LUA_TFUNCTION		6
+#define LUA_TUSERDATA		7
+#define LUA_TTHREAD		8
+
+#define LUA_NUMTYPES		9
+
+#+END_SRC
+
+** For Number
+See following:
+#+BEGIN_SRC C
+  
+typedef LUA_NUMBER lua_Number;
+#+END_SRC
+A LUA_NUMBER is a lua_Number, which is a C Number(Int or other Number Type) As we
+metion before.
+
+
+
+** For Thread
+ | Macro  | Real Value | Description |
+ |--------+------------+-------------|
+ | LUA_OK |          0 |             |
+
+ 
+** For VM
+Lua VM Is based on Stack, like Java, but some Register Entrys are avaliable.
+#+BEGIN_SRC C
+  
+  #define LUA_MINSTACK	20
+
+  #define LUA_RIDX_GLOBALS	2
+  #define LUA_RIDX_MAINTHREAD	3
+  #define LUA_RIDX_LAST		3
+#+END_SRC
+
+** For Function
+
+*** Func Point for calling C Function
+#+BEGIN_SRC C
+typedef int (*lua_CFunction) (lua_State *L);
+#+END_SRC
+It is easer for a interpreter prog lang to call his parent Lnag than a compiled lang.
+Cause Vm is written in c, it can call C Function direclly.
+We use lua_CFunction to define C Function, which accepts a lua_State
+that represents a Lua Thread, and return a int that presents the number of returned
+value.
+
+
+** For IO
+
+IO is mostly used for Read Lua prog, instead of being used as lua library.
+
+
+** For Memmory Allocation
+
+** For GC
+
+
+
+** Major Util
+
+
+
+#+BEGIN_SRC lua :results output
+print("hello world!")
+#+END_SRC 
+
+
+
+
+* Table
+Table is the only Type in Lua.When your call a function in module,
+your can say you use a string to find a function in a table.
+
+#+NAME: wether
+#+BEGIN_SRC lua :results output
+  a_table = {} -- define a table
+  k = "today" -- k is a string that is a object
+  a_table[k] = "is rain." -- key "today" in a_table reference to string "is rain."
+  print("tody")
+  print(a_table[k])
+#+END_SRC 
+
+#+RESULTS:
+: tody 
+: is rain.
+
+
+variable holds reference to table.
+Different variable can holds reference to the same table.
+#+HEADER:  :noweb yes
+#+BEGIN_SRC lua :results output
+  <<wether>>
+  ya_table = a_table
+  print("and tomorrow")
+  print(ya_table[k])
+#+END_SRC 
+
+#+RESULTS:
+: tody
+: is rain.
+: and tomorrow
+: is rain.
+
+Variable is Root of GC. When no variable references to a table
+that will be collected.
+All Global variables are stored in a global table of lua VM.
+
+
+Table can serve as a object.
+
+#+BEGIN_SRC lua :results output
+  <<wether>>
+  print("after tomorrow")
+  print(a_table.today)
+#+END_SRC 
+
+#+RESULTS:
+: tody
+: is rain.
+: after tomorrow
+: is rain.
+
+You always can use a string to look up in a table, making it confusing
+if type of a key is a String.
+
+In lua, 2.0 will be cast to int for shorting memory. eg. 2 == 2.0 will return true
+
+
+
+A Table can be initialized with index and value. in this case, table look like a array.
+#+BEGIN_SRC lua :results output
+  a_table2 ={"Monday", "Tuesday"}
+  print(a_table2[1])
+  print(a_table2[2])
+#+END_SRC 
+Note!! index starts from 1, instead of 0.
+
+
+Your can initialize a table with key-value.
+
+#+BEGIN_SRC lua :results output
+  a_table3 = {Monday="is rain", Tuesday="is sunny"}
+  print(a_table3["Monday"])
+  print(a_table3["tuesday"])
+#+END_SRC 
+
+#+RESULTS:
+: is rain
+: nil
+
+Two initialized method can be used in mix.
+
+
+#+BEGIN_SRC lua :results output
+  a_table4 = {Monday="is rain", Tuesday="is sunny",
+  "a", "b", Sunday="is cloud", "c"}
+
+  print(a_table4["Monday"])
+  print(a_table4[1])
+  print(a_table4["Sunday"])
+  print(a_table4[3])
+#+END_SRC 
+
+#+RESULTS:
+: is rain
+: a
+: is cloud
+: c
+
+
+
+

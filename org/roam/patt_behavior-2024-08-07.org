@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       8e360585-e525-4a1c-92f8-4c5c1b0749c6
+:END:
+#+title: patt-behavior
+#+date: [2024-08-07 三]
+#+last_modified:  
+

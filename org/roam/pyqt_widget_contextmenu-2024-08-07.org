@@ -1,0 +1,63 @@
+:PROPERTIES:
+:ID:       55216181-b3e6-4e1a-b9d5-607aa8a05f1d
+:END:
+#+title: pyqt-widget-contextmenu
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+begin_src python
+import sys
+<<pyqt>>
+class myWidget(QWidget):
+    def __init__(self,parent=None):
+        super(myWidget, self).__init__(parent)
+        self.lb=QLabel("初始文本...",self)
+        self.lb.move(100,160)
+        self.lb.resize(120, 40)
+
+    def contextMenuEvent(self, even):        #重写上下文菜单事件
+        menu=QMenu(self)
+        item1Action=menu.addAction("1#菜单项")
+        item1Action.triggered.connect(self.item1)
+        item2Action=menu.addAction("2#菜单项")
+        item2Action.triggered.connect(self.item2)
+        menu.addSeparator()                 #菜单添加分割线
+        item3Action=menu.addAction("3#菜单项")
+        menu.exec(even.globalPos())         #事件触发在任意位置
+
+    def item1(self):
+        self.lb.setText("选择1#菜单项")
+    def item2(self):
+        self.lb.setText("选择2#菜单项")
+if __name__=='__main__':
+    app=QApplication(sys.argv)
+    w = myWidget()
+    w.show()
+    sys.exit(app.exec())
+#+end_src
+
+
+
+
+#+begin_src python
+import sys
+<<pyqt>>
+class myWidget(QWidget):
+    def __init__(self,parent=None):
+        super(myWidget, self).__init__(parent)
+        # 右键退出菜单
+        aQuit = QAction('退出(&X)', self, shortcut='Ctrl+Q',
+                        triggered=QApplication.instance().quit)
+        self.addAction(aQuit)
+        self.setContextMenuPolicy(Qt.ContextMenuPolicy.ActionsContextMenu)
+
+if __name__=='__main__':
+    app=QApplication(sys.argv)
+    w = myWidget()
+    w.show()
+    sys.exit(app.exec())
+#+end_src
+
+
+

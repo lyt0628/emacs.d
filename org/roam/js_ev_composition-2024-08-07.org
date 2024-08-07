@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       14cf7b96-16ec-41b9-8576-17fcde457689
+:END:
+#+title: js-ev-composition
+#+date: [2024-08-07 三]
+#+last_modified:  
+

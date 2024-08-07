@@ -1,0 +1,121 @@
+:PROPERTIES:
+:ID:       ad0b2890-643e-4575-bfab-c0ce626b5e05
+:END:
+#+title: pyqt-widget-lineedit
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class MyWidget(QWidget):
+	  def __init__(self,parent=None):
+		  super( MyWidget, self).__init__(parent)
+		  self.setWindowTitle("QLineEdit测试")
+
+		  fLayout = QFormLayout()
+		  leBH = QLineEdit(); leXM = QLineEdit()
+		  leMM = QLineEdit(); leCSRQ = QLineEdit()
+		  leGL = QLineEdit(); leJBGZ = QLineEdit()
+		  leIP = QLineEdit(); leCH = QLineEdit()
+
+		  fLayout.addRow("编   号", leBH)
+		  fLayout.addRow("姓   名", leXM)
+		  fLayout.addRow("登录密码", leMM)
+		  fLayout.addRow("出生日期", leCSRQ)
+		  fLayout.addRow("工   龄", leGL)
+		  fLayout.addRow("基本工资", leJBGZ)
+		  fLayout.addRow("本机IP地址", leIP)
+		  fLayout.addRow("车   号", leCH)
+		  self.setLayout(fLayout)
+		  # 编号只能6位
+		  leBH.setPlaceholderText("编号为6位")
+		  leBH.setInputMask("999999")
+		  # 密码输入字符显示圆点，只能是字母和数字组合
+		  leMM.setPlaceholderText("密码是字母数字组合")
+		  leMM.setEchoMode(QLineEdit.EchoMode.Password)
+		  reg=QRegularExpression("[a-zA-Z0-9]+$")
+		  mmValidator = QRegularExpressionValidator(self)
+		  mmValidator.setRegularExpression(reg)
+		  leMM.setValidator(mmValidator)
+		  # 工龄（整型）范围[1, 45]
+		  glIntValidator = QIntValidator(self)
+		  glIntValidator.setRange(1,45)
+		  leGL.setValidator(glIntValidator)
+		  # 基本工资（浮点）范围[0,9999]，2位小数
+		  jbDoubleValidator = QDoubleValidator (self)
+		  jbDoubleValidator.setRange(0.00,9999.99)
+		  jbDoubleValidator.setNotation(QDoubleValidator.Notation.StandardNotation)
+		  jbDoubleValidator.setDecimals(2)
+		  leJBGZ.setValidator(jbDoubleValidator)
+
+		  leCSRQ.setInputMask("9999-00-00")
+		  leIP.setInputMask("000.000.000.000")
+		  leCH.setInputMask("XXXXXXX")
+  if __name__ == "__main__":
+	  app = QApplication(sys.argv)
+	  w = MyWidget()
+	  w.show()
+	  sys.exit(app.exec())
+#+end_src
+
+
+
+
+
+
+#+begin_src python
+import sys
+<<pyqt>>
+class MyWidget(QWidget):
+	def __init__(self, parent=None):
+		super(MyWidget, self).__init__(parent)
+
+		le1 = QLineEdit()
+		le1.setValidator(QIntValidator())
+		le1.setMaxLength(6)
+
+		le2 = QLineEdit()
+		le2.setValidator(QDoubleValidator(0.99, 99.99,2))
+		le2.textChanged.connect(self.textchanged)
+
+		le3 = QLineEdit()
+		le3.setInputMask('+99-0000-00000000')
+
+		le4 = QLineEdit("软件工程")
+		le4.setFont(QFont("黑体",20))
+		le4.setAlignment(Qt.AlignmentFlag.AlignRight)
+		le4.editingFinished.connect(self.enterPress)
+
+		le5 = QLineEdit("2022-07-28")
+		le5.setReadOnly(True)
+
+		self.setWindowTitle("QLineEdit测试")
+		fLayout = QFormLayout()
+		fLayout.addRow("整数（0-6位）",le1)
+		fLayout.addRow("实数（xx.xx)",le2)
+		fLayout.addRow("文本字体字号对右",le3)
+		fLayout.addRow("输入文本",le4)
+		fLayout.addRow("只读文本",le5)
+		self.setLayout(fLayout)
+
+	def  textchanged(self, txt):
+		print("输入："+txt)
+	def  enterPress(self):
+		print("本行输入完成！")
+if __name__ =="__main__":
+	app = QApplication(sys.argv)
+	w = MyWidget()
+	w.show()
+	sys.exit(app.exec())
+#+end_src
+
+#+RESULTS:
+
+
+
+

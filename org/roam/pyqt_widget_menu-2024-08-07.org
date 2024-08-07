@@ -1,0 +1,113 @@
+:PROPERTIES:
+:ID:       06a06739-85eb-400d-a468-81d7fc2ff347
+:END:
+#+title: pyqt-widget-menu
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class MainWin(QMainWindow):
+      def __init__(self, parent=None):
+	  super(MainWin, self).__init__(parent)
+	  self.resize(400, 340)
+	  self.setWindowTitle("主窗口测试")
+
+	  myWidget = QWidget(self)
+	  self.setCentralWidget(myWidget)
+
+	  self.lb = QLabel("输入文本", myWidget)
+	  self.te = QTextEdit(myWidget)
+	  self.pb = QPushButton("确认", myWidget)
+
+	  self.lb.move(40, 10)
+	  self.te.move(100, 10)
+	  self.pb.move(200, 220)
+
+	  mbar = self.menuBar()
+	  file = mbar.addMenu("文件")
+	  file.addAction("新建")
+
+	  fileOpen = QAction("打开", self)
+	  file.addAction(fileOpen)
+	  fileSave = QAction("保存", self)
+	  fileSave.setShortcut("Ctrl+S")
+	  file.addAction(fileSave)
+
+	  fileOpen.triggered.connect(self.triggerOpenFile)
+	  fileSave.triggered.connect(self.triggerSaveFile)
+
+	  tbar = self.addToolBar("mytool")
+	  tbar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon)
+
+	  new = QAction(QIcon("./images/new.ico"), "新建", self)
+	  open = QAction(QIcon("./images/open.ico"), "打开", self)
+	  tbar.addAction(new)
+	  tbar.addAction(open)
+
+	  tbar.actionTriggered[QAction].connect(self.toolBarFunc)
+
+	  # tbar.open.actionTriggered.connect(self.triggerOpenFile)
+
+	  self.status = self.statusBar()
+
+      def toolBarFunc(self, op):
+	  if op.text() == "打开":
+	      self.triggerOpenFile()
+
+      def triggerOpenFile(self):
+	  self.status.showMessage("打开文件xxx.txt", 0)
+
+      def triggerSaveFile(self):
+	  self.status.showMessage("正在保存文件...", 5000)
+
+
+  if __name__ == '__main__':
+      app = QApplication(sys.argv)
+      m = MainWin()
+      m.show()
+      sys.exit(app.exec())
+#+end_src
+
+
+
+
+
+#+begin_src python
+import sys
+<<pyqt>>
+class Menu( QMainWindow ):
+    def __init__(self, parent=None):
+        super(Menu, self).__init__(parent)
+        layout = QHBoxLayout ()
+        bar = self.menuBar()
+        file = bar.addMenu("文件")
+        file.addAction("新建")
+        save = QAction("保持", self)
+        save.setShortcut("Ctrl+S")
+        file.addAction(save)
+        edit = file.addMenu("编辑")
+        edit.addAction("复制")
+        edit.addAction("粘贴")
+        quit = QAction("退出", self)
+        file.addAction(quit)
+        file.triggered[QAction].connect(self.processtrigger)
+        self.setLayout(layout)
+        self.setWindowTitle("测试菜单")
+
+    def processtrigger(self,q):
+        print(q.text()+"is triggered")
+if __name__=='__main__':
+    app = QApplication(sys.argv)
+    md = Menu()
+    md.show()
+    sys.exit(app.exec())
+#+end_src
+
+
+
+

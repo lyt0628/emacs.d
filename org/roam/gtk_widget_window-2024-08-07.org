@@ -1,0 +1,133 @@
+:PROPERTIES:
+:ID:       51254dda-78c1-4170-ac3e-6c8cb9d3cd6f
+:END:
+#+title: gtk-widget-window
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* 创建 ApplicationWindow, 设置App标题 以及其他窗口初始化操作
+
+
+#+HEADER: :header-args:   :noweb yes
+#+HEADER: :flags "$(pkg-config --cflags gtk4) "
+#+HEADER: :libs  "$(pkg-config --libs gtk4)"
+#+HEADER: :results silent
+#+BEGIN_SRC C  
+  <<gtk>>
+  <<gtk-print_hello>>
+
+  static void
+  activate (GtkApplication *app,
+	    gpointer        user_data)
+  {
+    GtkWidget *window;
+    GtkWidget *button;
+
+    window = gtk_application_window_new (app);
+
+    gtk_window_set_title (GTK_WINDOW (window), "My Application");
+    gtk_window_set_default_size (GTK_WINDOW (window), 600, 480);
+
+    button = gtk_button_new_with_label ("Hello World");
+    g_signal_connect (button, "clicked", G_CALLBACK (print_hello), NULL);
+    gtk_window_set_child (GTK_WINDOW (window), button);
+
+    gtk_window_present (GTK_WINDOW (window));
+  }
+
+  <<gtk-main>>
+#+END_SRC
+
+
+
+
+
+* 在窗口中放置Box
+
+
+#+HEADER: :header-args:   :noweb yes
+#+HEADER: :flags "$(pkg-config --cflags gtk4) "
+#+HEADER: :libs  "$(pkg-config --libs gtk4)"
+#+HEADER: :results silent
+#+BEGIN_SRC C  
+  <<gtk>>
+  static void
+  activate (GtkApplication *app,
+	    gpointer        user_data)
+  {
+    GtkWidget *window;
+    GtkWidget *vbox;
+    GtkWidget *button;
+
+    
+
+    window = gtk_application_window_new (app);
+    gtk_window_set_default_size (GTK_WINDOW (window), 600, 480);
+
+    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12); <<c#>> 方向枚举值，Cell间距
+    gtk_window_set_child (GTK_WINDOW (window), vbox);
+
+    for(int i=0; i<12; ++i)
+    {
+      button = gtk_button_new_with_label ("apple");
+      gtk_box_append (GTK_BOX (vbox), button);
+    }
+
+    gtk_window_present (GTK_WINDOW (window));
+  }
+
+  <<gtk-main>>
+#+END_SRC
+
+
+* 将Box 放置于Scrollediew
+
+
+* 在窗口中放置Box
+
+
+#+HEADER: :header-args:   :noweb yes
+#+HEADER: :flags "$(pkg-config --cflags gtk4) "
+#+HEADER: :libs  "$(pkg-config --libs gtk4)"
+#+HEADER: :results silent
+#+BEGIN_SRC C  
+  <<gtk>>
+  static void
+  activate (GtkApplication *app,
+	    gpointer        user_data)
+  {
+    GtkWidget *window;
+    GtkWidget *scrolled;
+    GtkWidget *vbox;
+    GtkWidget *button;
+
+
+
+    window = gtk_application_window_new (app);
+    gtk_window_set_default_size (GTK_WINDOW (window), 600, 480);
+
+    scrolled = gtk_scrolled_window_new (); <<c#>>创建Scrolled
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+	   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC); <<c#>>
+
+    gtk_widget_set_vexpand (scrolled, TRUE);
+    gtk_window_set_child (GTK_WINDOW (window), scrolled);
+
+    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+    gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled), vbox);
+
+
+    for(int i=0; i<12; ++i)
+    {
+      button = gtk_button_new_with_label ("apple");
+      gtk_box_append (GTK_BOX (vbox), button);
+    }
+
+    gtk_window_present (GTK_WINDOW (window));
+  }
+
+  <<gtk-main>>
+#+END_SRC
+
+

@@ -1,0 +1,73 @@
+:PROPERTIES:
+:ID:       ccfabebb-33cd-4b9b-8b5a-686395d02822
+:END:
+#+title: pyqt-widget-clipboard
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+begin_src python
+import os
+import sys
+from PyQt6.QtCore import QMimeData
+from PyQt6.QtWidgets import (QApplication, QDialog, QGridLayout,  QTextEdit, QLineEdit,QLabel, QPushButton)
+from PyQt6.QtGui import QPixmap
+
+class myDialog(QDialog):
+    def __init__(self, parent=None):
+        super(myDialog, self).__init__(parent)
+
+        btnTextCopy = QPushButton("复制文本")
+        btnTextPaste = QPushButton("粘贴文本")
+        btnImageCopy = QPushButton("复制图片")
+        btnImagePaste = QPushButton("粘贴图片")
+
+        self.text1 = QLineEdit("初始文本内容... ")
+        self.text2 = QLineEdit("    ")
+        self.lbImage1 = QLabel()
+        self.lbImage2 = QLabel()
+        self.lbImage1.setPixmap(QPixmap("images/python.jpg"))
+        self.lbImage2.setPixmap(QPixmap("images/荷花.jpg"))
+        glayout = QGridLayout()
+        glayout.addWidget(btnTextCopy, 0, 0)
+        glayout.addWidget(btnTextPaste, 0, 1)
+        glayout.addWidget(btnImageCopy, 1, 0)
+        glayout.addWidget(btnImagePaste, 1, 1)
+
+        glayout.addWidget(self.text1, 2, 0)
+        glayout.addWidget(self.text2, 2, 1)
+
+        glayout.addWidget(self.lbImage1, 3, 0)
+        glayout.addWidget(self.lbImage2, 3, 1)
+        self.setLayout(glayout)
+
+        btnTextCopy.clicked.connect(self.copyText)
+        btnTextPaste.clicked.connect(self.pasteText)
+        btnImageCopy.clicked.connect(self.copyImage)
+        btnImagePaste.clicked.connect(self.pasteImage)
+        self.setWindowTitle("剪切板测试")
+
+    def copyText(self):
+        clipboard = QApplication.clipboard()
+        clipboard.setText(self.text1.text())
+
+    def pasteText(self):
+        clipboard = QApplication.clipboard()
+        self.text2.setText(clipboard.text())
+
+    def copyImage(self):
+        clipboard = QApplication.clipboard()
+        clipboard.setPixmap(QPixmap(self.lbImage1.pixmap()))
+
+    def pasteImage(self):
+        clipboard = QApplication.clipboard()
+        self.lbImage2.setPixmap(clipboard.pixmap())
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    d = myDialog()
+    d.show()
+    sys.exit(app.exec())
+#+end_src
+
+
+

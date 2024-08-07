@@ -1,0 +1,150 @@
+:PROPERTIES:
+:ID:       887e7027-c1d3-4557-acb3-53b420eb468e
+:END:
+#+title: pyqt-widget-label
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* Css
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+  
+  app = QApplication(sys.argv)
+  label = QLabel("<font color=blue size=64><b>程序正在启动...</b></font>")
+ # label.setWindowFlags(Qt.WindowType.SplashScreen | Qt.WindowType.FramelessWindowHint)
+  label.show()
+  app.exec()
+
+#+end_src
+
+
+
+
+* 设置 Platette
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  app = QApplication(sys.argv)
+  w = QWidget()
+  w.setGeometry(260,240,300,200)
+  w.setWindowTitle("颜色测试")
+
+  palette = QPalette()
+  palette.setColor(QPalette.ColorRole.Window, Qt.GlobalColor.red)
+  lb = QLabel("标签测试文本",w)
+  lb.move(100,20)
+  lb.resize(100, 20)
+  lb.setAutoFillBackground(True)
+  lb.setPalette(palette)
+
+  color = QColor(10,50,255)
+  #color = QColor("#0A32ff")
+  #color.setNamedColor('0,2,255')
+  te = QTextEdit(w)
+  te.move(100,60)
+  te.resize(100, 20)
+  te.setTextColor(color)
+  te.setText("文本框测试文本")
+
+  w.show()
+  app.exec()
+
+#+end_src
+
+
+* 设置字体
+
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  app = QApplication(sys.argv)
+  w = QWidget()
+  w.setGeometry(260,240,300,200)
+  w.setWindowTitle("字体测试")
+
+  lb = QLabel("标签测试Text",w)
+  lb.move(60,20)
+  lb.resize(160, 30)
+
+  font=QFont()
+  font.setPointSize(16)
+  font.setFamily('Arial')
+  font.setBold(True)
+  lb.setFont(font)
+
+  #lb.setFont(QFont('Times', 14))
+  #lb.setStyleSheet("color:rgb(20,20,255);font-size:32px; \
+  #    font-weight:bold;font-family: Courier New;")
+
+  w.show()
+  app.exec()
+#+end_src
+
+
+
+
+* HTML
+
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class MyWidget(QWidget):
+      def __init__(self):
+	  super().__init__()
+	  self.setWindowTitle("QLabel测试")
+
+	  label1 = QLabel(self)
+	  label2 = QLabel(self)
+	  label3 = QLabel(self)
+	  label4 = QLabel(self)
+	  # label1：普通文本标签，可用鼠标选择文本内容
+	  label1.setText("初始文本标签")
+	  label1.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
+	  # label2：控制标签文本颜色和背景颜色
+	  label2.setText('<font size="6" color="red">红色3号字文本标签</font>')
+	  label2.setAlignment(Qt.AlignmentFlag.AlignCenter)
+	  label2.setAutoFillBackground(True)
+	  palette = QPalette()
+	  palette.setColor(QPalette.ColorRole.Window, Qt.GlobalColor.white)
+	  label2.setPalette(palette)
+	  #label3：图片标签，单击信号关联槽函数
+	  label3.setToolTip('图片标签...')
+	  label3.setPixmap(QPixmap("images/python.ico"))
+	  label3.linkActivated.connect(self.clickedFunc)
+	  #abel4：超链接标签，滑过标签，执行关联槽函数
+	  label4.setText("<a href='http://www.163.com/'>网易超链接标签</a>")
+	  label4.setAlignment(Qt.AlignmentFlag.AlignRight)
+	  label4.setOpenExternalLinks(True)                   # 打开允许访问超链接
+	  label4.linkHovered.connect(self.hoveredFunc)        # 滑过关联槽函数
+
+	  vbox = QVBoxLayout()
+	  vbox.addWidget(label1)
+	  vbox.addWidget(label2)
+	  vbox.addWidget(label3)
+	  vbox.addStretch()
+	  vbox.addWidget(label4)
+	  self.setLayout(vbox)
+
+      def hoveredFunc(self):
+	  print("鼠标滑过标签4...")
+
+      def clickedFunc(self):
+	  print("鼠标点击标签3...")
+
+  if __name__ == "__main__":
+      app = QApplication(sys.argv)
+      w = MyWidget()
+      w.show()
+      sys.exit(app.exec())
+#+end_src
+

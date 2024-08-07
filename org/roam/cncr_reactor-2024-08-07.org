@@ -1,0 +1,93 @@
+:PROPERTIES:
+:ID:       b3587577-b465-4a38-81c4-8c442ea75de0
+:END:
+#+title: cncr-reactor
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+begin_src dot :file /tmp/cncr-Reactor6a5c92f0-788f-403e-b45e-e53c56969.png
+
+  digraph G{
+    rankdir=LR
+    bgcolor=gray12; color=white
+    node [style=filled, fillcolor=lightblue, shape=box]
+    edge [color=blue]
+    label = "Reactor Pattern"
+
+
+   re [label="Read Event"]
+   we [label="Write Event"]
+   ee [label="Error Event"]
+
+
+   re -> Select
+   we -> Select
+   ee -> Select
+
+    subgraph cluster_main{
+      label="poll"
+      Select -> Dispatch
+    }
+
+  rh [label="Read Handler"]
+  wh [label="Write Handler"]
+  eh [label="Error Handler"]
+
+  Dispatch -> rh
+  Dispatch -> wh
+  Dispatch -> eh
+
+
+  }
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/cncr-Reactor6a5c92f0-788f-403e-b45e-e53c58576969.png]]
+
+
+
+
+
+
+#+begin_src dot :file /tmp/cncr-Reactor6a5c92f0-788f-403e-b45e-e53c58576969.png
+
+  digraph G{
+    rankdir=LR
+    bgcolor=gray12; color=white
+    node [style=filled, fillcolor=lightblue, shape=box]
+    edge [color=blue]
+    label = "Reactor Pattern"
+
+
+    subgraph cluster_event{
+      re [label="Read Event", rank=1]
+       we [label="Write Event", rank=1]
+    }
+
+
+   re -> Select
+   we -> Select
+
+    subgraph cluster_main{
+      label="poll"
+      Select -> Dispatch
+    }
+
+    subgraph cluster_handler{
+
+      rh [label="Read Handler"]
+      wh [label="Write Handler"]
+    }
+
+
+    Dispatch -> rh
+    Dispatch -> wh
+  
+    rh -> we [label="product Write Envent", fontcolor=orange]
+
+  }
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/cncr-Reactor6a5c92f0-788f-403e-b45e-e53c58576969.png]]

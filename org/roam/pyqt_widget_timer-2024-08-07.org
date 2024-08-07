@@ -1,0 +1,136 @@
+:PROPERTIES:
+:ID:       b3981576-6e46-40a3-bc04-2c71618a86a7
+:END:
+#+title: pyqt-widget-timer
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+begin_src python
+import sys
+
+from PyQt6.QtCore import QTimer
+from PyQt6.QtWidgets import QApplication, QDial, QMainWindow
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.dial = QDial()
+        self.dial.setRange(0, 100)
+        self.dial.setValue(0)
+
+        self.timer = QTimer()
+        self.timer.setInterval(10)
+        self.timer.timeout.connect(self.update_dial)
+        self.timer.start()
+
+        self.setCentralWidget(self.dial)
+
+    def update_dial(self):
+        value = self.dial.value()
+        value += 1  # increment
+        if value > 100:
+            value = 0
+        self.dial.setValue(value)
+
+
+app = QApplication(sys.argv)
+w = MainWindow()
+w.show()
+
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+
+
+
+#+begin_src python
+import sys
+
+from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtWidgets import QApplication, QDial, QMainWindow
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.dial = QDial()
+        self.dial.setRange(0, 100)
+        self.dial.setValue(0)
+
+        self.timer = QTimer()
+        self.timer.setInterval(10)
+        self.timer.timeout.connect(self.update_dial)
+        # tag::timertype[]
+        self.timer.setTimerType(Qt.TimerType.PreciseTimer)
+        # end::timertype[]
+        self.timer.start()
+
+        self.setCentralWidget(self.dial)
+
+    def update_dial(self):
+        value = self.dial.value()
+        value += 1  # increment
+        if value > 100:
+            value = 0
+        self.dial.setValue(value)
+
+
+app = QApplication(sys.argv)
+w = MainWindow()
+w.show()
+
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+
+
+#+begin_src python
+import sys
+
+from PyQt6.QtCore import QTimer
+from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.button = QPushButton("Press me!")
+        self.button.setCheckable(True)
+        self.button.setStyleSheet(
+            # Make the check state red so easier to see.
+            "QPushButton:checked { background-color: red; }"
+        )
+
+        self.button.toggled.connect(self.button_checked)
+
+        self.setCentralWidget(self.button)
+
+    def button_checked(self):
+        print("Button checked")
+        QTimer.singleShot(1000, self.uncheck_button)  # <1>
+
+    def uncheck_button(self):
+        print("Button unchecked")
+        self.button.setChecked(False)
+
+
+app = QApplication(sys.argv)
+w = MainWindow()
+w.show()
+
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+

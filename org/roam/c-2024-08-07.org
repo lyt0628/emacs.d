@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       e557baa8-99ae-4a60-b4d9-bf26eb4208be
+:END:
+#+title: c
+#+date: [2024-08-07 三]
+#+last_modified:  
+

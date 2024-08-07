@@ -1,0 +1,69 @@
+:PROPERTIES:
+:ID:       0f922931-9d78-4026-9766-5ed5de5736f2
+:END:
+#+title: java-thrd-ThreadPool
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC java
+  <<jdemo>>
+  <<jDemo>>
+    <<jdoDemo>>
+
+	var infoRun =
+	<<jrun>>
+	  try{
+	    <<jsleep1ms>>
+	    JUtil.log("Now In Thread:" + <<thrdid>> +", Time:"+ <<nowms>>/1000);
+	 }<<jcatch>>
+	<<jendrun>>
+
+	<<j_exec_sched5>>
+	exec.scheduleAtFixedRate(infoRun, 0, 2, TimeUnit.SECONDS);
+       
+	exec.shutdown();
+     <<jend>>
+  <<jend>>
+#+END_SRC
+
+#+RESULTS:
+
+
+
+
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC java
+  <<jdemo>>
+  <<jDemo>>
+    <<jdoDemo>>
+
+	var infoRun =
+	<<jrun>>
+            <<j#>> 线程Id重复说明线程得到重用
+	    JUtil.log("Now In Thread:" + <<thrdid>> +", Time:"+ <<nowms>>);
+	<<jendrun>>
+
+	<<j_exec5>>
+
+	<<jfor10>>exec.submit(infoRun);<<jend>>
+	exec.shutdown();
+     <<jend>>
+  <<jend>>
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+Now In Thread:28, Time:1713078599532
+Now In Thread:30, Time:1713078599532
+Now In Thread:29, Time:1713078599532
+Now In Thread:32, Time:1713078599533
+Now In Thread:31, Time:1713078599532
+Now In Thread:29, Time:1713078599543
+Now In Thread:28, Time:1713078599543
+Now In Thread:32, Time:1713078599543
+Now In Thread:30, Time:1713078599543
+Now In Thread:31, Time:1713078599543
+#+end_example

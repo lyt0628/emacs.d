@@ -1,0 +1,72 @@
+:PROPERTIES:
+:ID:       3134ca15-10a7-495c-b8b8-9a1d7c53056f
+:END:
+#+title: pyqt-container-groupbox
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+begin_src python
+import sys
+from PyQt6.QtWidgets import QApplication, QWidget, QGroupBox, QRadioButton, QHBoxLayout, QVBoxLayout
+
+class MyWidget(QWidget):
+    def __init__(self):
+        super(MyWidget, self).__init__()
+
+        self.rbJSJ = QRadioButton('计算机', self)
+        self.rbRJGC = QRadioButton('软件工程', self)
+        self.rbTXGC = QRadioButton('通信工程', self)
+        self.rbRGZN = QRadioButton('人工智能', self)
+        self.list = [self.rbJSJ, self.rbRJGC, self.rbTXGC, self.rbRGZN]
+        [rb.clicked.connect(self.rbListFunc) for rb in self.list]
+        
+        self.rbNan = QRadioButton('男', self)
+        self.rbNv = QRadioButton('女', self)
+        self.rbNv.toggled.connect(self.rbNxxFunc)
+
+        self.hLayout1 = QHBoxLayout()
+        self.hLayout2 = QHBoxLayout()
+        #self.hLayout = QHBoxLayout()
+        self.vLayout = QVBoxLayout()
+        self.layout_init()
+
+    def layout_init(self):
+        self.hLayout1.addWidget(self.rbNan)
+        self.hLayout1.addWidget(self.rbNv)
+
+        self.hLayout2.addWidget(self.rbJSJ)
+        self.hLayout2.addWidget(self.rbRJGC)
+        self.hLayout2.addWidget(self.rbTXGC)
+        self.hLayout2.addWidget(self.rbRGZN)
+
+        self.gBox1 = QGroupBox('性别', self)
+        self.gBox2 = QGroupBox('专业', self)
+        self.gBox1.setLayout(self.hLayout1)
+        self.gBox2.setLayout(self.hLayout2)
+        self.vLayout.addWidget(self.gBox1)
+        self.vLayout.addWidget(self.gBox2)
+        self.rbNv.setChecked(True)
+        self.rbRGZN.setChecked(True)
+        self.setLayout(self.vLayout)
+
+    def rbListFunc(self):
+        for rb in self.list:
+            if rb.isChecked():
+                print(rb.text())
+    def rbNxxFunc(self):
+        if self.rbNan.isChecked():
+            print("男")
+        else:
+            print("女")
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    w = MyWidget()
+    w.show()
+    sys.exit(app.exec())
+#+end_src
+
+
+

@@ -1,0 +1,89 @@
+:PROPERTIES:
+:ID:       b0c087fd-4d2c-4203-8ac6-012ac3731364
+:END:
+#+title: Java
+#+filetags: :java:
+#+date: [2024-06-28 五]
+#+last_modified: [2024-07-05 五 21:31]
+
+* Index
+
+- [[id:e187d99f-d3b5-4338-a4b6-ff752346abd7][JDK]]
+- [[id:7d4d9046-7466-4b22-aa79-9b6f08965600][spring]]
+
+* See also
+- [[id:eb876ced-b827-45cd-8a1e-b54348d90505][java-analy-rocketmq]]
+
+
+#+begin_src java :classname icu.lyt0628.example
+  System.out.println("666");
+#+end_src
+
+#+RESULTS:
+: 666
+
+
+
+#+begin_src java :results value
+  return "Hello ob-java";
+#+end_src
+
+#+RESULTS:
+: Hello ob-java
+
+
+
+#+begin_src java :results output
+  System.out.println("Hello java");
+#+end_src
+
+#+RESULTS:
+: Hello java
+
+
+
+#+begin_src java :results value list
+  List<String> list = Arrays.asList("a", "b", "c");
+  return list;
+#+end_src
+
+#+RESULTS:
+- a
+- b
+- c
+
+
+
+
+#+begin_src java :results value :imports java.util.Base64
+  byte[] encoded = Base64.getEncoder().encode("Hello Java".getBytes());
+  String decoded = new String(Base64.getDecoder().decode(encoded));
+  
+  return String.format("encoded=%s, decoded= %s", new String(encoded), decoded);
+#+end_src
+
+#+RESULTS:
+: encoded=SGVsbG8gSmF2YQ==, decoded= Hello Java
+
+
+
+#+HEADER: :cmpflag -cp ./lib/gson-2.10.1.jar
+#+HEADER: :cmdline -cp .:./lib/gson-2.10.1.jar
+#+HEADER: :imports com.google.gson.Gson
+#+begin_src java :dir workdir
+  new Gson();
+#+end_src
+
+#+RESULTS:
+
+
+
+
+#+HEADER: :imports com.google.gson.Gson
+#+begin_src java 
+  new Gson();
+  System.out.println(new Gson());
+#+end_src
+
+#+RESULTS:
+: {serializeNulls:false,factories:[Factory[typeHierarchy=com.google.gson.JsonElement,adapter=com.google.gson.internal.bind.TypeAdapters$28@497470ed], com.google.gson.internal.bind.ObjectTypeAdapter$1@63c12fb0, com.google.gson.internal.Excluder@b1a58a3, Factory[type=java.lang.String,adapter=com.google.gson.internal.bind.TypeAdapters$15@6438a396], Factory[type=java.lang.Integer+int,adapter=com.google.gson.internal.bind.TypeAdapters$7@e2144e4], Factory[type=java.lang.Boolean+boolean,adapter=com.google.gson.internal.bind.TypeAdapters$3@6477463f], Factory[type=java.lang.Byte+byte,adapter=com.google.gson.internal.bind.TypeAdapters$5@3d71d552], Factory[type=java.lang.Short+short,adapter=com.google.gson.internal.bind.TypeAdapters$6@1cf4f579], Factory[type=java.lang.Long+long,adapter=com.google.gson.internal.bind.TypeAdapters$11@18769467], Factory[type=java.lang.Double+double,adapter=com.google.gson.Gson$1@46ee7fe8], Factory[type=java.lang.Float+float,adapter=com.google.gson.Gson$2@7506e922], com.google.gson.internal.bind.NumberTypeAdapter$1@4ee285c6, Factory[type=java.util.concurrent.atomic.AtomicInteger,adapter=com.google.gson.TypeAdapter$1@621be5d1], Factory[type=java.util.concurrent.atomic.AtomicBoolean,adapter=com.google.gson.TypeAdapter$1@573fd745], Factory[type=java.util.concurrent.atomic.AtomicLong,adapter=com.google.gson.TypeAdapter$1@15327b79], Factory[type=java.util.concurrent.atomic.AtomicLongArray,adapter=com.google.gson.TypeAdapter$1@4f2410ac], Factory[type=java.util.concurrent.atomic.AtomicIntegerArray,adapter=com.google.gson.TypeAdapter$1@722c41f4], Factory[type=java.lang.Character+char,adapter=com.google.gson.internal.bind.TypeAdapters$14@5b80350b], Factory[type=java.lang.StringBuilder,adapter=com.google.gson.internal.bind.TypeAdapters$19@5d6f64b1], Factory[type=java.lang.StringBuffer,adapter=com.google.gson.internal.bind.TypeAdapters$20@32a1bec0], Factory[type=java.math.BigDecimal,adapter=com.google.gson.internal.bind.TypeAdapters$16@22927a81], Factory[type=java.math.BigInteger,adapter=com.google.gson.internal.bind.TypeAdapters$17@78e03bb5], Factory[type=com.google.gson.internal.LazilyParsedNumber,adapter=com.google.gson.internal.bind.TypeAdapters$18@5e8c92f4], Factory[type=java.net.URL,adapter=com.google.gson.internal.bind.TypeAdapters$21@61e4705b], Factory[type=java.net.URI,adapter=com.google.gson.internal.bind.TypeAdapters$22@50134894], Factory[type=java.util.UUID,adapter=com.google.gson.internal.bind.TypeAdapters$24@2957fcb0], Factory[type=java.util.Currency,adapter=com.google.gson.TypeAdapter$1@1376c05c], Factory[type=java.util.Locale,adapter=com.google.gson.internal.bind.TypeAdapters$27@51521cc1], Factory[typeHierarchy=java.net.InetAddress,adapter=com.google.gson.internal.bind.TypeAdapters$23@1b4fb997], Factory[type=java.util.BitSet,adapter=com.google.gson.TypeAdapter$1@deb6432], com.google.gson.internal.bind.DateTypeAdapter$1@28ba21f3, Factory[type=java.util.Calendar+java.util.GregorianCalendar,adapter=com.google.gson.internal.bind.TypeAdapters$26@694f9431], com.google.gson.internal.sql.SqlTimeTypeAdapter$1@f2a0b8e, com.google.gson.internal.sql.SqlDateTypeAdapter$1@593634ad, com.google.gson.internal.sql.SqlTimestampTypeAdapter$1@20fa23c1, com.google.gson.internal.bind.ArrayTypeAdapter$1@3581c5f3, Factory[type=java.lang.Class,adapter=com.google.gson.TypeAdapter$1@6aa8ceb6], com.google.gson.internal.bind.CollectionTypeAdapterFactory@2530c12, com.google.gson.internal.bind.MapTypeAdapterFactory@73c6c3b2, com.google.gson.internal.bind.JsonAdapterAnnotationTypeAdapterFactory@48533e64, com.google.gson.internal.bind.TypeAdapters$29@64a294a6, com.google.gson.internal.bind.ReflectiveTypeAdapterFactory@7e0b37bc],instanceCreators:{}}

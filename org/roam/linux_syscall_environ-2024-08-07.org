@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       3bfb2020-ae2c-42f3-b594-1ba4d95678be
+:END:
+#+title: linux-syscall-environ
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+BEGIN_SRC C :noweb yes 
+  <<unix>>
+  int main(){
+    for(int i = 0; environ[i]!=NULL; i++)
+      printf("%s\n", environ[i]);
+  }
+#+END_SRC

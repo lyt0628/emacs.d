@@ -1,0 +1,166 @@
+:PROPERTIES:
+:ID:       d7d2785f-4d5c-4d11-b93f-a1d0328dbe24
+:END:
+#+title: qml-widget-Item
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-97ca2294-16b5-11ef-b865-024236e6a1cc.qml")
+
+
+#+begin_src python :noweb yes :tangle /tmp/orgqml-97ca2294-16b5-11ef-b865-024236e6a1cc.qml
+  <<qml>>
+
+
+   Window {
+     width: 640
+     height: 480
+     visible: true
+     color: "#eeeeee"
+
+
+    Rectangle{
+       width: 320
+       height: 480
+       color: "#00FF00"
+
+      Rectangle{
+	x: 20
+	y: 20
+	width: 50
+	height: 50
+	color: "#000080"
+	z: 0.5
+
+	Rectangle{
+	  x: 20
+	  y: 20
+	  width: 50
+	  height: 50
+	  color: "#800000"
+	  z: 0.5
+
+	  opacity: 0.6 // bad!!!
+	}
+
+
+	  Rectangle{ //bad!!!!
+	    x: 20
+	    y: 20
+	    width: 50
+	    height: 50
+
+	    color: "#008000"
+	    z: 0.3
+	  }
+
+
+      }
+
+      Rectangle{
+	x: 150
+	y: 150
+	width: 320
+	height: 480
+
+	color: "#0000CC"
+	z: 1
+	opacity: 0.6
+      }
+
+    }
+
+  }
+
+
+
+
+  #+end_src
+
+
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-b6d4d005-16b6-11ef-9ba1-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-b6d4d005-16b6-11ef-9ba1-024236e6a1cc.qml
+   <<qml>>
+
+  Window {
+    width: 900
+    height: 480
+    visible: true
+    color: "#eeeeee"
+
+  Item{
+   id: group
+   width: 900
+   height: 200
+   clip: true
+
+
+   Rectangle{
+
+      width: 320
+      height: 480
+
+
+      gradient: Gradient {
+	GradientStop {position: 0.0; color: "#202020"}
+	GradientStop {position: 0.33; color: "blue"}
+	GradientStop {position: 1.0; color: "#FFFFFF"}
+
+     }
+
+   }
+
+
+   Rectangle{
+
+      width: 320
+      height: 480
+
+      gradient: Gradient {
+	GradientStop {position: 0.0; color: "#000000"}
+	GradientStop {position: 1.0; color: "#FFFFFF"}
+
+     }
+
+   }
+
+
+   Rectangle{
+      x: 350
+      width: 320
+      height: 480
+
+
+      gradient: Gradient {
+	GradientStop {position: 0.0; color: "#000000"}
+	GradientStop {position: 1.0; color: "#CC0000"}
+
+     }
+
+   }
+
+
+  }
+
+   Text {
+     id: text
+     text: qsTr("Hello Qt Quick")
+     font.pixelSize: 17
+     color: Qt.rgba(0.8, 0.6, 0.4, 1.0)
+     anchors.centerIn: parent
+   }
+
+    Component.onCompleted: {
+       text.text= "Visible Children:" + group.visibleChildren.length + "children: " + group.children.length;
+       for(var i=0; i<group.children.length;i++){
+          text.text = text.text + ":" + group.children[i].x;
+       } 
+  
+  }
+}
+#+end_src

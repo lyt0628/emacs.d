@@ -1,0 +1,47 @@
+:PROPERTIES:
+:ID:       f9bf780b-89a4-4ffe-9697-73e005a4f407
+:END:
+#+title: pyqt-widget-calander
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class MyWidget(QWidget):
+		  def __init__(self):
+			  super(MyWidget, self).__init__()
+			  self.setGeometry(100, 100, 300, 240)
+			  self.setWindowTitle('Calendar测试')
+			  self.initUI()
+
+		  def initUI(self):
+			  self.cal = QCalendarWidget(self)
+			  self.cal.setMinimumDate(QDate(2000,1,1))
+			  self.cal.setMaximumDate(QDate(2100,1,1))
+			  self.cal.setGridVisible(True)
+			  self.cal.move(10, 10)
+			  self.cal.clicked[QtCore.QDate].connect(self.labShow)
+
+			  date = self.cal.selectedDate()
+			  self.lb=QLabel(self)
+			  self.lb.setText(date.toString("yyyy-MM-dd ddd"))
+			  self.lb.move(10, 210)
+
+		  def labShow(self, date):
+			  self.lb.setText(date.toString("yyyy-MM-dd ddd"))
+
+  if __name__=='__main__':
+		  app = QApplication(sys.argv)
+		  w = MyWidget()
+		  w.show()
+		  sys.exit(app.exec())
+#+end_src
+
+

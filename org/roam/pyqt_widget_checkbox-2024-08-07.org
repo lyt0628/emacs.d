@@ -1,0 +1,51 @@
+:PROPERTIES:
+:ID:       93438d8e-6b5f-4583-abb2-de02339cd1ba
+:END:
+#+title: pyqt-widget-checkbox
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class MyWidget(QWidget):
+	  def __init__(self, parent=None):
+		  super(MyWidget, self).__init__(parent)
+		  self.setWindowTitle("CheckBox测试")
+
+		  self.checkBox1=QCheckBox("&1-复选框")
+		  self.checkBox1.setChecked(True)
+		  self.checkBox1.stateChanged.connect(lambda:self.btnstate(self.checkBox1))
+
+		  self.checkBox2 = QCheckBox("&2-复选框")
+		  self.checkBox2.toggled.connect(lambda:self.btnstate(self.checkBox2))
+
+		  self.checkBox3=QCheckBox("&3-复选框")
+		  self.checkBox3.setTristate(True)
+		  self.checkBox3.setCheckState(Qt.CheckState.PartiallyChecked)
+		  self.checkBox3.stateChanged.connect(lambda:self.btnstate(self.checkBox3))
+
+		  hLayout = QHBoxLayout()
+		  hLayout.addWidget(self.checkBox1)
+		  hLayout.addWidget(self.checkBox2)
+		  hLayout.addWidget(self.checkBox3)
+		  self.setLayout(hLayout)
+
+	  def btnstate(self, btn):
+		  print("1-复选框:"+str(self.checkBox1.checkState()))
+		  print("2-复选框:" + str(self.checkBox2.checkState()))
+		  print("3-复选框:" + str(self.checkBox3.checkState()))
+
+  if __name__=='__main__':
+	  app = QApplication(sys.argv)
+	  w = MyWidget()
+	  w.show()
+	  sys.exit(app.exec())
+#+end_src
+
+

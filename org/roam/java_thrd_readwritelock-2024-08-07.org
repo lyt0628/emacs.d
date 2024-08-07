@@ -1,0 +1,57 @@
+:PROPERTIES:
+:ID:       43679ab2-35e7-4dfd-ba8e-3f8dda00b35a
+:END:
+#+title: java-thrd-ReadWriteLock
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC java
+  <<jdemo>>
+
+  <<jDemo>>
+       <<bl-j_-$relock>>
+       <<bl-j_-$rwlock>>
+       private int value; 
+
+       public Object doRead(Lock l) <<jie>>{
+	 try{
+	      l.lock();
+	      <<jsleep1ms>>
+	      return value;
+	 }finally {
+	      l.unlock();
+	 }
+       }
+       public void doWrite(Lock l, int idx)<<jie>>{
+	 try{
+	      l.lock();
+	      <<jsleep1ms>>
+	      value = idx;
+	 }finally {
+	      l.unlock();
+	 }
+       }
+
+  <<jdoDemo>>
+    final var demo = <<jnewDemo>>
+    var readRun =
+    <<jrun>>
+	   try{
+	      JUtil.log(demo.doRead(rlock));
+	   }<<jcatch>>
+    <<jendrun>>
+
+    var writeRun =
+    <<jrun>>
+	  try{
+	    demo.doWrite(wlock, <<jrand0..99>>);
+	  }<<jcatch>>
+    <<jendrun>>
+
+    <<jfor18>>new Thread(readRun).start();<<jend>>
+    <<jfor20>>new Thread(writeRun).start();<<jend>>
+    <<jfor18>>new Thread(readRun).start();<<jend>>
+    <<jend>>
+  <<jend>>
+#+END_SRC

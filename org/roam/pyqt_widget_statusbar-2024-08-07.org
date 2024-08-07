@@ -1,0 +1,40 @@
+:PROPERTIES:
+:ID:       d59e5a02-d6c5-4dd0-9fbe-3c6d098ef7c0
+:END:
+#+title: pyqt-widget-statusbar
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+#+begin_src python
+import sys
+<<pyqt>>
+class MainWin(QMainWindow):
+    def __init__(self, parent=None):
+        super(MainWin, self).__init__(parent)
+        self.setWindowTitle("状态栏测试")
+        mbar = self.menuBar()
+        menu = mbar.addMenu("File")
+        menu.addAction("open")
+        menu.addAction("data")
+        menu.triggered[QAction].connect(self.triggerFunc)
+
+        # self.setCentralWidget(QTextEdit())
+        self.myStatusBar = QStatusBar()
+        self.setStatusBar(self.myStatusBar)
+
+    def triggerFunc(self, op):
+        self.myStatusBar.showMessage(op.text() + "菜单项", 5000)
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    m = MainWin()
+    m.show()
+    sys.exit(app.exec())
+#+end_src
+
+
+

@@ -1,0 +1,51 @@
+:PROPERTIES:
+:ID:       dbb8e248-dd5a-476b-b9fc-d277a391ea43
+:END:
+#+title: java-thrd-atom
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+HEADER: :noweb yes
+#+BEGIN_SRC java
+   <<jdemo>>
+   <<jDemo>>
+      <<j_-$atoml>>
+      public void countzero(Integer[] arr)<<jie>>{
+	 for(int i =0;i< arr.length;i++){
+	 if(arr[i].intValue() == 0)
+	    atoml.incrementAndGet();
+      }
+    }
+
+     <<jdoDemo>>
+       final var demo = <<jnewDemo>>
+       var Run1 =
+       <<jrun>>
+	  try{
+		demo.countzero(new Integer[]{0,1,0,2,5,0});  // 3
+	  }<<jcatch>>
+       <<jendrun>>
+
+       var Run2 =
+       <<jrun>>
+	  try{
+		demo.countzero(new Integer[]{0,1,0,2,0,6,0,8}); //4
+	  }<<jcatch>>
+       <<jendrun>>
+
+
+       Thread t1 = new Thread(Run1);
+       Thread t2 = new Thread(Run2);
+
+       t1.start();t2.start();
+       t1.join();t2.join();
+
+       JUtil.log("Count 0 :  " + atoml.get());
+    <<jend>>
+  <<jend>>
+#+END_SRC
+
+#+RESULTS:
+: Count 0 :  7
+

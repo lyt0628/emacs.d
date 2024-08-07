@@ -1,0 +1,32 @@
+:PROPERTIES:
+:ID:       51667ef1-295a-431e-aa8b-5ecf5b529a97
+:END:
+#+title: js-ev-event listener
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+BEGIN_SRC html :noweb yes
+<body>
+<input id="mybtn" type="button"
+  value="My Button">
+</body>
+<script>
+<<1>>
+</script>
+#+END_SRC
+
+#+RESULTS:
+
+
+#+NAME: 1
+#+BEGIN_SRC js :noweb yes :eval no
+function doClick(){
+  console.log("doclick")
+
+  this.removeEventListener('click',doClick, false)// true-trap, false-bubble(default)
+}
+let btn = document.getElementById('mybtn')
+btn.addEventListener('click', doClick, false) // true-trap, false-bubble(default)
+#+END_SRC
+

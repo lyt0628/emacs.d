@@ -1,0 +1,41 @@
+:PROPERTIES:
+:ID:       08fbf2ce-2426-4d37-bec3-3c1550148f0a
+:END:
+#+title: pyqt-layout-box
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+* 水平布局
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class MyWidget(QWidget):
+      def __init__(self,parent=None):
+	  super(MyWidget,self).__init__(parent)
+	  self.setWindowTitle("水平布局测试")
+
+	  # 创建水平布局
+	  layout = QHBoxLayout()
+	  layout.setSpacing(10)                       #设置控件间距10
+
+	  layout.addWidget( QPushButton("A"),0, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignTop)
+	  layout.addWidget( QPushButton("B"),0, Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignTop)
+	  layout.addWidget( QPushButton("C"))
+
+	  layout.addWidget( QPushButton("D"),0, Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignBottom)
+	  layout.addWidget( QPushButton("E"),0, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignBottom)
+	  self.setLayout(layout)
+
+  if __name__=='__main__':
+		  app = QApplication(sys.argv)
+		  w = MyWidget()
+		  w.show()
+		  sys.exit(app.exec())
+
+#+end_src
+
+

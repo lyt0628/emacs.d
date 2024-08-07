@@ -1,0 +1,32 @@
+:PROPERTIES:
+:ID:       6d42f9c2-d549-4019-9d43-cd38268f952a
+:END:
+#+title: js-ev-event property
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+BEGIN_SRC html :noweb yes
+<body>
+<input id="mybtn" type="button"
+  value="My Button">
+</body>
+<script>
+<<1>>
+</script>
+#+END_SRC
+
+#+RESULTS:
+
+#+NAME: 1
+#+BEGIN_SRC js :noweb yes :eval no
+function doClick(){
+  console.log("Click Me")
+  console.log(this.value)
+  this.onclick = null
+}
+
+let btn = document.getElementById("mybtn")
+btn.onclick = doClick
+#+END_SRC
+

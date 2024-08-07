@@ -1,0 +1,223 @@
+:PROPERTIES:
+:ID:       70e94bba-7f82-43e4-b7a4-b0a3697dc72b
+:END:
+#+title: pyqt-signal
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+* 自定义信号
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class myWidget(QWidget):
+      closeWindow = Signal()
+
+      def __init__(self, parent=None):
+	  super().__init__(parent)
+	  self.setWindowTitle("自定义信号测试")
+	  self.resize(300, 100)
+	  btn = QPushButton("关闭窗口", self)
+	  # 连接内置信号clicked与自定义槽
+	  btn.clicked.connect(self.onClicked)
+	  # 连接自定义信号closeWindow与自定义槽函数onClose
+	  self.closeWindow.connect(self.onClose)
+      # 自定义槽函数
+      def onClicked(self):
+	  # 发送自定义信号
+	  self.closeWindow.emit()
+      # 自定义槽函数
+      def onClose(self):
+	  self.close()
+  if __name__ == "__main__":
+      app = QApplication(sys.argv)
+      w = myWidget()
+      w.show()
+      sys.exit(app.exec())
+#+end_src
+
+
+
+
+
+#+begin_src python
+import sys
+
+from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtWidgets import QApplication, QLineEdit, QMainWindow
+
+
+class MainWindow(QMainWindow):
+    message = pyqtSignal(str)
+
+    def __init__(self):
+        super().__init__()
+
+        self.message.connect(self.my_custom_fn)
+
+        le = QLineEdit("Enter some text")
+        le.textChanged.connect(self.message.emit)  # <1>
+
+        self.setCentralWidget(le)
+
+    def my_custom_fn(self, s):
+        print(s)
+
+
+app = QApplication(sys.argv)
+window = MainWindow()
+window.show()
+app.exec()
+#+end_src
+
+
+
+#+begin_src python
+import sys
+
+from PyQt6.QtWidgets import QApplication, QMainWindow
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        # SIGNAL: The connected function will be called whenever the window
+        # title is changed. The new title will be passed to the function.
+        self.windowTitleChanged.connect(self.on_window_title_changed)
+
+        # SIGNAL: The connected function will be called whenever the window
+        # title is changed. The new title is discarded in the lambda and the
+        # function is called without parameters.
+        self.windowTitleChanged.connect(lambda x: self.my_custom_fn())
+
+        # SIGNAL: The connected function will be called whenever the window
+        # title is changed. The new title is passed to the function
+        # and replaces the default parameter
+        self.windowTitleChanged.connect(lambda x: self.my_custom_fn(x))
+
+        # SIGNAL: The connected function will be called whenever the window
+        # title is changed. The new title is passed to the function
+        # and replaces the default parameter. Extra data is passed from
+        # within the lambda.
+        self.windowTitleChanged.connect(
+            lambda x: self.my_custom_fn(x, 25)
+        )
+
+        # This sets the window title which will trigger all the above signals
+        # sending the new title to the attached functions or lambdas as the
+        # first parameter.
+        self.setWindowTitle("This will trigger all the signals.")
+
+    # SLOT: This accepts a string, e.g. the window title, and prints it
+    def on_window_title_changed(self, s):
+        print(s)
+
+    # SLOT: This has default parameters and can be called without a value
+    def my_custom_fn(self, a="HELLLO!", b=5):
+        print(a, b)
+
+
+app = QApplication(sys.argv)
+
+window = MainWindow()
+window.show()
+app.exec()
+#+end_src
+
+
+
+#+begin_src python
+import sys
+
+from PyQt6.QtWidgets import (
+    QApplication,
+    QHBoxLayout,
+    QLabel,
+    QMainWindow,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        v = QVBoxLayout()
+        h = QHBoxLayout()
+
+        # tag::loop[]
+        for a in range(10):
+            button = QPushButton(str(a))
+            button.clicked.connect(
+                lambda checked, a=a: self.button_clicked(a)
+            )  # <1>
+            h.addWidget(button)
+        # end::loop[]
+
+        v.addLayout(h)
+        self.label = QLabel("")
+        v.addWidget(self.label)
+
+        w = QWidget()
+        w.setLayout(v)
+        self.setCentralWidget(w)
+
+    def button_clicked(self, n):
+        self.label.setText(str(n))
+
+
+app = QApplication(sys.argv)
+
+window = MainWindow()
+window.show()
+app.exec()
+#+end_src
+
+
+#+begin_src python
+import sys
+
+from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtWidgets import QApplication, QMainWindow
+
+
+class MainWindow(QMainWindow):
+
+    message = pyqtSignal(str)  # <1>
+    value = pyqtSignal(int, str, int)  # <2>
+    another = pyqtSignal(list)  # <3>
+    onemore = pyqtSignal(dict)  # <4>
+    anything = pyqtSignal(object)  # <5>
+
+    def __init__(self):
+        super().__init__()
+
+        self.message.connect(self.custom_slot)
+        self.value.connect(self.custom_slot)
+        self.another.connect(self.custom_slot)
+        self.onemore.connect(self.custom_slot)
+        self.anything.connect(self.custom_slot)
+
+        self.message.emit("my message")
+        self.value.emit(23, "abc", 1)
+        self.another.emit([1, 2, 3, 4, 5])
+        self.onemore.emit({"a": 2, "b": 7})
+        self.anything.emit(1223)
+
+    def custom_slot(self, *args):
+        print(args)
+
+
+app = QApplication(sys.argv)
+window = MainWindow()
+window.show()
+
+app.exec()
+#+end_src
+

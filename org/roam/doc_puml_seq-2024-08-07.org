@@ -1,0 +1,461 @@
+:PROPERTIES:
+:ID:       ede64970-1d60-4fff-9392-1066891632c9
+:END:
+#+title: doc-puml-seq
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+* 基本的时序图绘制
+
+#+NAME: 
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-7a291a62-df00-461d-8b82-90553eb3da66.png
+#+BEGIN_SRC plantuml
+@startuml
+
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-7a291a62-df00-461d-8b82-90553eb3da66.png]]
+
+* 参与者元素
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-0658009a-d0ed-48d4-8275-e17b003c299c.png
+#+BEGIN_SRC plantuml 
+@startuml
+
+participant      Participant              as Foo
+actor            Actor                    as Foo1
+boundary         Boundary                 as Foo2
+control          Control                  as Foo3
+entity           Entity                   as Foo4
+database         Database                 as Foo5
+collections      Collections              as Foo6
+queue            Queue                    as Foo7
+Foo -> Foo1 : To actor
+Foo -> Foo2 : To boundary
+Foo -> Foo3 : To control
+Foo -> Foo4 : To entity
+Foo -> Foo5 : To database
+Foo -> Foo6 : To collections
+Foo -> Foo7: To queue
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:/tmp/puml-0658009a-d0ed-48d4-8275-e17b003c299c.png]]
+
+* 顺序控制
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-9cf29aaa-acbf-4c15-866a-7e93201d4725.png
+#+BEGIN_SRC plantuml
+@startuml
+participant Last order 30
+participant Middle order 20
+participant First order 10
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-9cf29aaa-acbf-4c15-866a-7e93201d4725.png]]
+
+
+* 多行标签
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-dbe087f0-13ca-4767-9487-d38baa7ff19f.png
+#+BEGIN_SRC plantuml
+@startuml
+participant Participant [
+=Title
+----
+""打算""
+]
+
+participant Bob
+Participant -> Bob
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-dbe087f0-13ca-4767-9487-d38baa7ff19f.png]]
+
+
+* 自消息
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-8c25dee7-0684-4d3d-8791-5bf34f237389.png
+#+BEGIN_SRC plantuml
+@startuml
+Alice <- Alice: This is a signal to self.\nIt also demonstrates\nmultiline \ntext
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-8c25dee7-0684-4d3d-8791-5bf34f237389.png]]
+
+
+* 自动编号
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-51e95574-e608-4230-be06-27a92d51e925.png
+#+BEGIN_SRC plantuml
+@startuml
+autonumber
+Bob -> Alice : Authentication Request
+Bob <- Alice : Authentication Response
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-51e95574-e608-4230-be06-27a92d51e925.png]]
+
+
+** 编号指定
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-01c0b05b-b548-4bb0-92c5-c10f4d153975.png
+#+BEGIN_SRC plantuml
+@startuml
+autonumber
+Bob -> Alice : Authentication Request
+Bob <- Alice : Authentication Response
+autonumber 15
+Bob -> Alice : Another authentication Request
+Bob <- Alice : Another authentication Response
+autonumber 40 10
+Bob -> Alice : Yet another authentication Request
+Bob <- Alice : Yet another authentication Response
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml.png]]
+
+
+** 指定编号格式
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-50114a66-0da1-41ef-92de-ac045fbfa31e.png
+#+BEGIN_SRC plantuml
+@startuml
+autonumber "<b>[000]"
+Bob -> Alice : Authentication Request
+Bob <- Alice : Authentication Response
+
+autonumber 15 "<b>(<u>##</u>)"
+Bob -> Alice : Another authentication Request
+Bob <- Alice : Another authentication Response
+
+autonumber 40 10 "<font color=red><b>Message 0 "
+Bob -> Alice : Yet another authentication Request
+Bob <- Alice : Yet another authentication Response
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-50114a66-0da1-41ef-92de-ac045fbfa31e.png]]
+
+
+格式是由 Java 的 DecimalFormat 类实现的：(0 表示数字；# 也表示数字，但默认为 0)。
+你也可以用 HTML 标签来制定格式。
+
+** 中断编号
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-ee93c4bd-efe9-4856-90e9-c03f46d4e395.png
+#+BEGIN_SRC plantuml
+@startuml
+
+autonumber 10 10 "<b>[000]"
+Bob -> Alice : Authentication Request
+Bob <- Alice : Authentication Response
+autonumber stop
+
+Bob -> Alice : dummy
+
+autonumber resume "<font color=red><b>Message 0 "
+Bob -> Alice : Yet another authentication Request
+Bob <- Alice : Yet another authentication Response
+autonumber stop
+
+Bob -> Alice : dummy
+
+autonumber resume 1 "<font color=blue><b>Message 0"
+Bob -> Alice : Yet another authentication Request
+Bob <- Alice : Yet another authentication Response
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-ee93c4bd-efe9-4856-90e9-c03f46d4e395.png]]
+
+
+** 多级编号
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-46977635-e9a2-4f57-8d64-8b50721aaa8d.png
+#+BEGIN_SRC plantuml
+@startuml
+autonumber 1.1.1
+Alice -> Bob: Authentication request
+Bob --> Alice: Response
+
+
+autonumber inc A
+'Now we have 2.1.1
+Alice -> Bob: Another authentication request
+Bob --> Alice: Response
+
+
+autonumber inc B
+'Now we have 2.2.1
+Alice -> Bob: Another authentication request
+Bob --> Alice: Response
+
+
+autonumber inc A
+'Now we have 3.1.1
+Alice -> Bob: Another authentication request
+
+autonumber inc B
+'Now we have 3.2.1
+Bob --> Alice: Response
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-46977635-e9a2-4f57-8d64-8b50721aaa8d.png]]
+
+
+
+**  编号占位符
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-a240e21d-d587-4236-bcfd-f1140f8a2c42.png
+#+BEGIN_SRC plantuml
+@startuml
+
+autonumber 10
+Alice -> Bob
+
+note right
+the <U+0025>autonumber<U+0025> works everywhere.
+Here, its value is ** %autonumber% **
+end note
+
+
+Bob --> Alice: //This is the response %autonumber%//
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-a240e21d-d587-4236-bcfd-f1140f8a2c42.png]]
+
+
+
+
+* 标题
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-f10af846-2e87-4b98-9c73-8322c1b781ce.png
+#+BEGIN_SRC plantuml
+@startuml
+header Page Header
+footer Page %page% of %lastpage%
+
+title Example Title
+Alice -> Bob : message 1
+Alice -> Bob : message 2
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-f10af846-2e87-4b98-9c73-8322c1b781ce.png]]
+
+
+* 分页
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-4626b408-be8c-4fb4-b699-7d4bb871ce78.png
+#+BEGIN_SRC plantuml
+@startuml
+Alice -> Bob : message 1
+Alice -> Bob : message 2
+
+newpage
+
+Alice -> Bob : message 3
+Alice -> Bob : message 4
+
+newpage A title for the\nlast page
+
+Alice -> Bob : message 5
+Alice -> Bob : message 6
+@enduml 
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-4626b408-be8c-4fb4-b699-7d4bb871ce78.png]]
+
+
+* 嵌套序列和循环
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-28d67083-d227-41b4-a322-2166a84640e0.png
+#+BEGIN_SRC plantuml
+@startuml
+
+Alice -> Bob: 认证请求
+  alt 成功情况
+    Bob -> Alice: 认证接受
+  else 某种失败情况
+    Bob -> Alice: 认证失败
+
+    group 我自己的标签
+      Alice -> Log : 开始记录攻击日志
+        loop 1000次
+           Alice -> Bob: DNS 攻击
+        end
+      Alice -> Log : 结束记录攻击日志
+    end
+  else 另一种失败
+    Bob -> Alice: 请重复
+  end
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-28d67083-d227-41b4-a322-2166a84640e0.png]]
+
+
+** 指定嵌套序列标题
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-03bf959d-a580-4cd4-947d-2f36d5af234b.png
+#+BEGIN_SRC plantuml
+@startuml
+Alice -> Bob: 认证请求
+Bob -> Alice: 认证失败
+
+group 我自己的标签 [我自己的标签2]
+    Alice -> Log : 开始记录攻击日志
+    loop 1000次
+      Alice -> Bob: DNS攻击
+    end
+    Alice -> Log : 结束记录攻击日志
+end
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-03bf959d-a580-4cd4-947d-2f36d5af234b.png]]
+
+
+* 注释
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-4ce539de-a407-4d01-8405-b0936cae502a.png
+#+BEGIN_SRC plantuml
+@startuml
+Alice->Bob : hello
+note left: this is a first note
+
+
+Bob->Alice : ok
+note right: this is another note
+
+
+Bob->Bob : I am thinking
+
+note left
+a note
+can also be defined
+on several lines
+end note
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-4ce539de-a407-4d01-8405-b0936cae502a.png]]
+
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-50a8db13-6549-4234-ba5e-7acaeb67b9f1.png
+#+BEGIN_SRC plantuml
+@startuml
+note over Alice : Alice的初始状态
+note over Bob : Bob的初始状态
+Bob -> Alice : hello
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-50a8db13-6549-4234-ba5e-7acaeb67b9f1.png]]
+
+
+
+
+** 指定注释范围
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-102c00c4-9372-41e3-a8e9-9b34bf0b955e.png
+#+BEGIN_SRC plantuml
+@startuml
+
+Alice->Bob:m1
+Bob->Charlie:m2
+
+note over Alice, Charlie: 创建跨越所有参与者的备注的旧方法：\n ""note over //FirstPart, LastPart//"".
+note across: 新方法：\n""note across""
+
+Bob->Alice
+hnote across: 跨越所有参与者的备注。
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-102c00c4-9372-41e3-a8e9-9b34bf0b955e.png]]
+
+
+* 分割
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-8ea3e129-be71-4f01-b806-efd084ce95c5.png
+#+BEGIN_SRC plantuml
+@startuml
+== 初始化 ==
+Alice -> Bob: 认证请求
+Bob --> Alice: 认证响应
+== 重复 ==
+Alice -> Bob: 认证请求
+Alice <-- Bob: 认证响应
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-8ea3e129-be71-4f01-b806-efd084ce95c5.png]]
+
+

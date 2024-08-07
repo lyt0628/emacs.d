@@ -1,0 +1,313 @@
+:PROPERTIES:
+:ID:       63fe5ecb-88be-4401-ab37-130883f89fd4
+:END:
+#+title: java-jdk-buffer
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* 数据结构
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-ed9cbf99-20a2-11ef-97fb-b48c9d0f4f89.png
+#+BEGIN_SRC plantuml
+  @startuml
+     class Buffer<T>{
+       buf: T[capacity]
+       position, limit, capacity: n
+     }
+  @enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-ed9cbf99-20a2-11ef-97fb-b48c9d0f4f89.png]]
+
+
+
+* 低级操作
+** new操作, get&set操作
+#+BEGIN_SRC java
+  var buf= IntBuffer.allocate(4);
+
+  System.out.println(buf.position());
+  System.out.println(buf.limit());
+  System.out.println(buf.capacity());
+ 
+  buf.position(1);
+  buf.limit(3);
+  System.out.println(buf.position());
+  System.out.println(buf.limit());
+  System.out.println(buf.capacity());
+   
+#+END_SRC
+
+#+RESULTS:
+: 0
+: 4
+: 4
+: 1
+: 3
+: 4
+
+
+** data get&set操作
+
+#+BEGIN_SRC java
+  var buf= IntBuffer.allocate(4);
+  for (var i = 0; i < buf.capacity() - 1; i++){
+    buf.put(i, 2*i + 1);
+  }
+
+  buf.position(0);
+  buf.limit(buf.capacity());
+  while(buf.remaining() > 0){
+    System.out.println(buf.get());
+  }
+
+#+END_SRC
+
+#+RESULTS:
+: 1
+: 3
+: 5
+: 0
+
+
+
+
+
+
+
+* 高级操作
+
+** data get&set 操作 flip(), iter
+
+#+BEGIN_SRC java
+  var buffer = IntBuffer.allocate(4);
+  for (var i = 0; i < buffer.capacity() - 1; i++){
+    buffer.put( 2*i + 1);
+  }
+
+  buffer.flip();
+  while(buffer.hasRemaining()){
+    System.out.println(buffer.get());
+  }
+  
+#+END_SRC
+
+#+RESULTS:
+: 1
+: 3
+: 5
+
+
+
+** data get&set操作 的 Buffer状态图
+
+| *               | position |
+|-----------------+----------|
+| $               | limit    |
+|-----------------+----------|
+| 最后一个cell的下标 | capacity |
+
+*** allocate()
+
+#+BEGIN_SRC dot :file /tmp/cf093569-7454-4408-9286-97bffcca4659.png
+  digraph G {
+    Buffer [
+      shape = record,
+      label = "0 *| 0  | 0 | 0 | $"
+    ]}
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/cf093569-7454-4408-9286-97bffcca4659.png]]
+
+
+*** put()
+
+#+BEGIN_SRC dot :file /tmp/cf09569-7454-4408-9286-97bffcca465.png
+  digraph G {
+    Buffer [
+      shape = record,
+      label = "1 | 0 *| 0 | 0 |$"
+    ]}
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/cf09569-7454-4408-9286-97bffcca465.png]]
+
+#+BEGIN_SRC dot :file /tmp/cf093569-7454-4408-9286-97bffcsccacca465.png
+  digraph G {
+    Buffer [
+      shape = record,
+      label = "1 | 3 | 0 * | 0 |$"
+    ]}
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/cf093569-7454-4408-9286-97bffcsccacca465.png]]
+
+#+BEGIN_SRC dot :file /tmp/cf093569-7454-4408-9286-97bffcc65.png
+  digraph G {
+    Buffer [
+      shape = record,
+      label = "1 | 3 | 5 | 0 *|$"
+    ]}
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/cf093569-7454-4408-9286-97bffcc65.png]]
+
+
+*** flip()
+
+
+#+BEGIN_SRC dot :file /tmp/cf09369-7454-4408-9286-97bffcca465.png
+  digraph G {
+    Buffer [
+      shape = record,
+      label = "1 *| 3  | 5 |$ 0 "
+    ]}
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/cf09369-7454-4408-9286-97bffcca465.png]]
+
+
+
+*** get()
+
+
+#+BEGIN_SRC dot :file /tmp/cf09369-7454-4408-9286-97bffca5.png
+  digraph G {
+    Buffer [
+      shape = record,
+      label = "1 | 3 * | 5 |$ 0 "
+    ]}
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/cf09369-7454-4408-9286-97bffca5.png]]
+
+
+
+#+BEGIN_SRC dot :file /tmp/cf09369-7454-4408-9286-97bffcca465.png
+  digraph G {
+    Buffer [
+      shape = record,
+      label = "1 | 3  | 5 * |$ 0 "
+    ]}
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/cf09369-7454-4408-9286-97bffcca465.png]]
+
+
+#+BEGIN_SRC dot :file /tmp/cf09369-7454-4408-92-97ascabffcca465.png
+  digraph G {
+    Buffer [
+      shape = record,
+      label = "1 | 3  | 5  |*$ 0 "
+    ]}
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/cf09369-7454-4408-92-97ascabffcca465.png]]
+
+
+
+
+
+
+
+
+** slice 操作
+
+#+BEGIN_SRC java
+   var buf = IntBuffer.allocate(4);
+   for (var i = 0; i < buf.capacity(); i++){
+     buf.put(i);
+   }
+
+  buf.position(1);
+  buf.limit(3);
+  var buf2 = buf.slice();
+
+  while(buf2.hasRemaining()){
+    System.out.println(buf2.get());
+  }
+
+#+END_SRC
+
+#+RESULTS:
+: 1
+: 2
+
+
+
+
+
+
+
+* API
+Buffer<T>
+| 函数                 | 参数        | 返回值             | 说明                     |
+|---------------------+------------+------------------+-------------------------|
+| New                 |            |                  |                         |
+|---------------------+------------+------------------+-------------------------|
+| *allocate           | capacity:n | Buffer           |                         |
+|---------------------+------------+------------------+-------------------------|
+| *wrap               | arr:T      | Buffer           |                         |
+|---------------------+------------+------------------+-------------------------|
+|---------------------+------------+------------------+-------------------------|
+| get&set             |            |                  |                         |
+|---------------------+------------+------------------+-------------------------|
+| capacity            |            | capacity:n       |                         |
+|---------------------+------------+------------------+-------------------------|
+| capacity            | newval:n   |                  |                         |
+|---------------------+------------+------------------+-------------------------|
+| limit               |            | limit:n          |                         |
+|---------------------+------------+------------------+-------------------------|
+| limit               | newval:n   |                  |                         |
+|---------------------+------------+------------------+-------------------------|
+| position            |            | position:n       |                         |
+|---------------------+------------+------------------+-------------------------|
+| position            | newval:n   |                  |                         |
+|---------------------+------------+------------------+-------------------------|
+| remaining           |            | n                |                         |
+|---------------------+------------+------------------+-------------------------|
+|---------------------+------------+------------------+-------------------------|
+| data get&set        |            |                  |                         |
+|---------------------+------------+------------------+-------------------------|
+| get                 | idx:n      | T                |                         |
+|---------------------+------------+------------------+-------------------------|
+| put                 | idx:n      |                  |                         |
+|                     | val:T      |                  |                         |
+|---------------------+------------+------------------+-------------------------|
+|---------------------+------------+------------------+-------------------------|
+| OP                  |            |                  |                         |
+|---------------------+------------+------------------+-------------------------|
+| flip                |            |                  |                         |
+|---------------------+------------+------------------+-------------------------|
+| hasRemaining        |            | bool             |                         |
+|---------------------+------------+------------------+-------------------------|
+| get                 |            |                  |                         |
+|---------------------+------------+------------------+-------------------------|
+| put                 |            |                  |                         |
+|---------------------+------------+------------------+-------------------------|
+| rewind              |            |                  |                         |
+|---------------------+------------+------------------+-------------------------|
+|---------------------+------------+------------------+-------------------------|
+| optimize            |            |                  |                         |
+|---------------------+------------+------------------+-------------------------|
+| asReadOnlyBuffer    |            |                  | ReadOnlyBufferException |
+|---------------------+------------+------------------+-------------------------|
+| *allocateDirect()   |            |                  |                         |
+|---------------------+------------+------------------+-------------------------|
+|---------------------+------------+------------------+-------------------------|
+| Related [[id:db228498-40ae-4a19-861b-64048b6d4183][FileChannel]] |            |                  |                         |
+|---------------------+------------+------------------+-------------------------|
+| map                 |            | MappedByteBuffer |                         |
+
+* 实现类

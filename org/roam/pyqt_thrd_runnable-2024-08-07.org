@@ -1,0 +1,1902 @@
+:PROPERTIES:
+:ID:       49cde4ca-d401-4a2b-abd5-171f0927990c
+:END:
+#+title: pyqt-thrd-runnable
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+begin_src python
+import sys
+import time
+
+from PyQt6.QtCore import QRunnable, QThreadPool, QTimer, pyqtSlot
+from PyQt6.QtWidgets import (
+    QApplication,
+    QLabel,
+    QMainWindow,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
+
+
+class Worker(QRunnable):
+    """
+    Worker thread
+    """
+
+    @pyqtSlot()
+    def run(self):
+        """
+        Your code goes in this method
+        """
+        print("Thread start")
+        time.sleep(5)
+        print("Thread complete")
+
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.threadpool = QThreadPool()
+        print(
+            "Multithreading with maximum %d threads"
+            % self.threadpool.maxThreadCount()
+        )
+        # end::init[]
+        self.counter = 0
+
+        layout = QVBoxLayout()
+
+        self.l = QLabel("Start")
+        b = QPushButton("DANGER!")
+        b.pressed.connect(self.oh_no)
+
+        layout.addWidget(self.l)
+        layout.addWidget(b)
+
+        w = QWidget()
+        w.setLayout(layout)
+
+        self.setCentralWidget(w)
+
+        self.show()
+
+        self.timer = QTimer()
+        self.timer.setInterval(1000)
+        self.timer.timeout.connect(self.recurring_timer)
+        self.timer.start()
+
+    # tag::oh_no[]
+    def oh_no(self):
+        worker = Worker()
+        self.threadpool.start(worker)
+
+    # end::oh_no[]
+
+    def recurring_timer(self):
+        self.counter += 1
+        self.l.setText("Counter: %d" % self.counter)
+
+
+app = QApplication(sys.argv)
+window = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+
+
+#+begin_src python
+import sys
+import time
+
+from PyQt6.QtCore import QRunnable, QThreadPool, QTimer, pyqtSlot
+from PyQt6.QtWidgets import (
+    QApplication,
+    QLabel,
+    QMainWindow,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
+
+
+class Worker(QRunnable):
+    """
+    Worker thread
+
+    :param args: Arguments to make available to the run code
+    :param kwargs: Keywords arguments to make available to the run
+    :code
+    :
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__()
+        self.args = args
+        self.kwargs = kwargs
+
+    @pyqtSlot()
+    def run(self):
+        """
+                Initialize the runner function with passed self.args,
+        self.kwargs.
+        """
+        print(self.args, self.kwargs)
+
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.threadpool = QThreadPool()
+        print(
+            "Multithreading with maximum %d threads"
+            % self.threadpool.maxThreadCount()
+        )
+        # end::init[]
+        self.counter = 0
+
+        layout = QVBoxLayout()
+
+        self.l = QLabel("Start")
+        b = QPushButton("DANGER!")
+        b.pressed.connect(self.oh_no)
+
+        layout.addWidget(self.l)
+        layout.addWidget(b)
+
+        w = QWidget()
+        w.setLayout(layout)
+
+        self.setCentralWidget(w)
+
+        self.show()
+
+        self.timer = QTimer()
+        self.timer.setInterval(1000)
+        self.timer.timeout.connect(self.recurring_timer)
+        self.timer.start()
+
+    # tag::oh_no[]
+    def oh_no(self):
+        worker = Worker("some", "arguments", keywords=2)
+        self.threadpool.start(worker)
+
+    # end::oh_no[]
+
+    def recurring_timer(self):
+        self.counter += 1
+        self.l.setText("Counter: %d" % self.counter)
+
+
+app = QApplication(sys.argv)
+window = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+
+
+#+begin_src python
+import random
+import sys
+import time
+
+from PyQt6.QtCore import (
+    QObject,
+    QRunnable,
+    QThreadPool,
+    QTimer,
+    pyqtSignal,
+    pyqtSlot,
+)
+from PyQt6.QtWidgets import (
+    QApplication,
+    QLabel,
+    QMainWindow,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
+
+
+class WorkerSignals(QObject):
+    """
+    Defines the signals available from a running worker thread.
+
+    Supported signals are:
+
+    finished
+        No data
+
+    error
+        `str` Exception string
+
+    result
+        `dict` data returned from processing
+
+    """
+
+    finished = pyqtSignal()
+    error = pyqtSignal(str)
+    result = pyqtSignal(dict)
+
+
+
+class Worker(QRunnable):
+    """
+    Worker thread
+
+    :param args: Arguments to make available to the run code
+    :param kwargs: Keywords arguments to make available to the run
+    :code
+    :
+    """
+
+    def __init__(self, iterations=5):
+        super().__init__()
+        self.signals = (
+            WorkerSignals()
+        )  # Create an instance of our signals class.
+        self.iterations = iterations
+
+    @pyqtSlot()
+    def run(self):
+        """
+                Initialize the runner function with passed self.args,
+        self.kwargs.
+        """
+        try:
+            for n in range(self.iterations):
+                time.sleep(0.01)
+                v = 5 / (40 - n)
+
+        except Exception as e:
+            self.signals.error.emit(str(e))
+
+        else:
+            self.signals.finished.emit()
+            self.signals.result.emit({"n": n, "value": v})
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.threadpool = QThreadPool()
+        print(
+            "Multithreading with maximum %d threads"
+            % self.threadpool.maxThreadCount()
+        )
+
+        self.counter = 0
+
+        layout = QVBoxLayout()
+
+        self.l = QLabel("Start")
+        b = QPushButton("DANGER!")
+        b.pressed.connect(self.oh_no)
+
+        layout.addWidget(self.l)
+        layout.addWidget(b)
+
+        w = QWidget()
+        w.setLayout(layout)
+
+        self.setCentralWidget(w)
+
+        self.show()
+
+        self.timer = QTimer()
+        self.timer.setInterval(1000)
+        self.timer.timeout.connect(self.recurring_timer)
+        self.timer.start()
+
+    def oh_no(self):
+        worker = Worker(iterations=random.randint(10, 50))
+        worker.signals.result.connect(self.worker_output)
+        worker.signals.finished.connect(self.worker_complete)
+        worker.signals.error.connect(self.worker_error)
+        self.threadpool.start(worker)
+
+    def worker_output(self, s):
+        print("RESULT", s)
+
+    def worker_complete(self):
+        print("THREAD COMPLETE!")
+
+    def worker_error(self, t):
+        print("ERROR: %s" % t)
+
+    def recurring_timer(self):
+        self.counter += 1
+        self.l.setText("Counter: %d" % self.counter)
+
+
+app = QApplication(sys.argv)
+window = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+
+
+
+#+begin_src python
+import sys
+import time
+import traceback
+
+from PyQt6.QtCore import (
+    QObject,
+    QRunnable,
+    QThreadPool,
+    pyqtSignal,
+    pyqtSlot,
+)
+from PyQt6.QtWidgets import QApplication, QMainWindow
+
+
+class WorkerSignals(QObject):
+    pass
+
+
+class Worker(QRunnable):
+    def __init__(self, *args, **kwargs):
+        super().__init__()
+        # Store constructor arguments (re-used for processing)
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+    @pyqtSlot()
+    def run(self):
+        pass
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.show()
+
+
+app = QApplication(sys.argv)
+window = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+
+
+#+begin_src python
+import random
+import sys
+import time
+import uuid
+
+from PyQt6.QtCore import (
+    QObject,
+    QRunnable,
+    QThreadPool,
+    QTimer,
+    pyqtSignal,
+    pyqtSlot,
+)
+from PyQt6.QtWidgets import (
+    QApplication,
+    QMainWindow,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
+import pyqtgraph as pg
+
+
+class WorkerSignals(QObject):
+    """
+    Defines the signals available from a running worker thread.
+
+    data
+        tuple data point (worker_id, x, y)
+    """
+
+    data = pyqtSignal(tuple)  # <1>
+
+
+class Worker(QRunnable):
+    """
+    Worker thread
+
+    Inherits from QRunnable to handle worker thread setup, signals
+    and wrap-up.
+    """
+
+    def __init__(self):
+        super().__init__()
+        self.worker_id = uuid.uuid4().hex  # Unique ID for this worker.
+        self.signals = WorkerSignals()
+
+    @pyqtSlot()
+    def run(self):
+
+        total_n = 1000
+        y2 = random.randint(0, 10)
+        delay = random.random() / 100  # Random delay value.
+        value = 0
+
+        for n in range(total_n):
+            # Dummy calculation, each worker will produce different values,
+            # because of the random y & y2 values.
+            y = random.randint(0, 10)
+            value += n * y2 - n * y
+
+            self.signals.data.emit((self.worker_id, n, value))  # <2>
+            time.sleep(delay)
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.threadpool = QThreadPool()
+
+        self.x = {}  # Keep timepoints.
+        self.y = {}  # Keep data.
+        self.lines = {}  # Keep references to plotted lines, to update.
+
+        layout = QVBoxLayout()
+        self.graphWidget = pg.PlotWidget()
+        self.graphWidget.setBackground("w")
+        layout.addWidget(self.graphWidget)
+
+        button = QPushButton("Create New Worker")
+        button.pressed.connect(self.execute)
+
+        # layout.addWidget(self.progress)
+        layout.addWidget(button)
+
+        w = QWidget()
+        w.setLayout(layout)
+
+        self.setCentralWidget(w)
+
+        self.show()
+
+    def execute(self):
+        worker = Worker()
+        worker.signals.data.connect(self.receive_data)
+
+        # Execute
+        self.threadpool.start(worker)
+
+    def receive_data(self, data):
+        worker_id, x, y = data  # <3>
+
+        if worker_id not in self.lines:
+            self.x[worker_id] = [x]
+            self.y[worker_id] = [y]
+
+            # Generate a random color.
+            pen = pg.mkPen(
+                width=2,
+                color=(
+                    random.randint(100, 255),
+                    random.randint(100, 255),
+                    random.randint(100, 255),
+                ),
+            )
+            self.lines[worker_id] = self.graphWidget.plot(
+                self.x[worker_id], self.y[worker_id], pen=pen
+            )
+            return
+
+        # Update existing plot/data
+        self.x[worker_id].append(x)
+        self.y[worker_id].append(y)
+
+        self.lines[worker_id].setData(
+            self.x[worker_id], self.y[worker_id]
+        )
+
+
+app = QApplication(sys.argv)
+window = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+
+
+#+begin_src python
+import sys
+import time
+import traceback
+
+from PyQt6.QtCore import (
+    QObject,
+    QRunnable,
+    QThreadPool,
+    QTimer,
+    pyqtSignal,
+    pyqtSlot,
+)
+from PyQt6.QtWidgets import (
+    QApplication,
+    QLabel,
+    QMainWindow,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
+
+
+def execute_this_fn():
+    for _ in range(0, 5):
+        time.sleep(1)
+
+    return "Done."
+
+
+class WorkerSignals(QObject):
+    """
+    Defines the signals available from a running worker thread.
+
+    Supported signals are:
+
+    finished
+        No data
+
+    error
+        `tuple` (exctype, value, traceback.format_exc() )
+
+    result
+        `object` data returned from processing, anything
+
+    """
+
+    finished = pyqtSignal()
+    error = pyqtSignal(tuple)
+    result = pyqtSignal(object)
+
+
+class Worker(QRunnable):
+    """
+    Worker thread
+
+    Inherits from QRunnable to handle worker thread setup, signals and wrap-up.
+
+    :param callback: The function callback to run on this worker
+    :thread. Supplied args and
+                     kwargs will be passed through to the runner.
+    :type callback: function
+    :param args: Arguments to pass to the callback function
+    :param kwargs: Keywords to pass to the callback function
+    :
+    """
+
+    def __init__(self, fn, *args, **kwargs):
+        super().__init__()
+        # Store constructor arguments (re-used for processing)
+        self.fn = fn
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+    @pyqtSlot()
+    def run(self):
+        """
+        Initialize the runner function with passed args, kwargs.
+        """
+
+        # Retrieve args/kwargs here; and fire processing using them
+        try:
+            result = self.fn(*self.args, **self.kwargs)
+        except:
+            traceback.print_exc()
+            exctype, value = sys.exc_info()[:2]
+            self.signals.error.emit(
+                (exctype, value, traceback.format_exc())
+            )
+        else:
+            self.signals.result.emit(
+                result
+            )  # Return the result of the processing
+        finally:
+            self.signals.finished.emit()  # Done
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.counter = 0
+
+        layout = QVBoxLayout()
+
+        self.l = QLabel("Start")
+        b = QPushButton("DANGER!")
+        b.pressed.connect(self.oh_no)
+
+        layout.addWidget(self.l)
+        layout.addWidget(b)
+
+        w = QWidget()
+        w.setLayout(layout)
+
+        self.setCentralWidget(w)
+
+        self.show()
+
+        self.threadpool = QThreadPool()
+        print(
+            "Multithreading with maximum %d threads"
+            % self.threadpool.maxThreadCount()
+        )
+
+        self.timer = QTimer()
+        self.timer.setInterval(1000)
+        self.timer.timeout.connect(self.recurring_timer)
+        self.timer.start()
+
+    def print_output(self, s):
+        print(s)
+
+    def thread_complete(self):
+        print("THREAD COMPLETE!")
+
+    def oh_no(self):
+        # Pass the function to execute
+        worker = Worker(
+            execute_this_fn
+        )  # Any other args, kwargs are passed to the run function
+        worker.signals.result.connect(self.print_output)
+        worker.signals.finished.connect(self.thread_complete)
+
+        # Execute
+        self.threadpool.start(worker)
+
+    def recurring_timer(self):
+        self.counter += 1
+        self.l.setText("Counter: %d" % self.counter)
+
+
+app = QApplication(sys.argv)
+window = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+
+
+
+#+begin_src python
+import sys
+import time
+import traceback
+
+from PyQt6.QtCore import (
+    QObject,
+    QRunnable,
+    QThreadPool,
+    QTimer,
+    pyqtSignal,
+    pyqtSlot,
+)
+from PyQt6.QtWidgets import (
+    QApplication,
+    QLabel,
+    QMainWindow,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
+
+
+def execute_this_fn(signals):
+    for n in range(0, 5):
+        time.sleep(1)
+        signals.progress.emit(n * 100 / 4)
+
+    return "Done."
+
+
+class WorkerSignals(QObject):
+    """
+    Defines the signals available from a running worker thread.
+
+    Supported signals are:
+
+    finished
+        No data
+
+    error
+        `tuple` (exctype, value, traceback.format_exc() )
+
+    result
+        `object` data returned from processing, anything
+
+    progress
+        `int` indicating % progress
+
+    """
+
+    finished = pyqtSignal()
+    error = pyqtSignal(tuple)
+    result = pyqtSignal(object)
+    progress = pyqtSignal(int)
+
+
+class Worker(QRunnable):
+    """
+    Worker thread
+
+    Inherits from QRunnable to handle worker thread setup, signals and wrap-up.
+
+    :param callback: The function callback to run on this worker
+    :thread. Supplied args and
+                     kwargs will be passed through to the runner.
+    :type callback: function
+    :param args: Arguments to pass to the callback function
+    :param kwargs: Keywords to pass to the callback function
+    :
+    """
+
+    def __init__(self, fn, *args, **kwargs):
+        super().__init__()
+        # Store constructor arguments (re-used for processing)
+        self.fn = fn
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+        # Add the callback to our kwargs
+        kwargs["signals"] = self.signals
+
+    @pyqtSlot()
+    def run(self):
+        """
+        Initialize the runner function with passed args, kwargs.
+        """
+
+        # Retrieve args/kwargs here; and fire processing using them
+        try:
+            result = self.fn(*self.args, **self.kwargs)
+        except Exception:
+            traceback.print_exc()
+            exctype, value = sys.exc_info()[:2]
+            self.signals.error.emit(
+                (exctype, value, traceback.format_exc())
+            )
+        else:
+            self.signals.result.emit(
+                result
+            )  # Return the result of the processing
+        finally:
+            self.signals.finished.emit()  # Done
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.counter = 0
+
+        layout = QVBoxLayout()
+
+        self.l = QLabel("Start")
+        b = QPushButton("DANGER!")
+        b.pressed.connect(self.oh_no)
+
+        layout.addWidget(self.l)
+        layout.addWidget(b)
+
+        w = QWidget()
+        w.setLayout(layout)
+
+        self.setCentralWidget(w)
+
+        self.show()
+
+        self.threadpool = QThreadPool()
+        print(
+            "Multithreading with maximum %d threads"
+            % self.threadpool.maxThreadCount()
+        )
+
+        self.timer = QTimer()
+        self.timer.setInterval(1000)
+        self.timer.timeout.connect(self.recurring_timer)
+        self.timer.start()
+
+    def progress_fn(self, n):
+        print("%d%% done" % n)
+
+    def print_output(self, s):
+        print(s)
+
+    def thread_complete(self):
+        print("THREAD COMPLETE!")
+
+    def oh_no(self):
+        # Pass the function to execute
+        worker = Worker(
+            execute_this_fn
+        )  # Any other args, kwargs are passed to the run function
+        worker.signals.result.connect(self.print_output)
+        worker.signals.finished.connect(self.thread_complete)
+        worker.signals.progress.connect(self.progress_fn)
+
+        # Execute
+        self.threadpool.start(worker)
+
+    def recurring_timer(self):
+        self.counter += 1
+        self.l.setText("Counter: %d" % self.counter)
+
+
+app = QApplication(sys.argv)
+window = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+
+
+#+begin_src python
+import sys
+
+import requests
+from PyQt6.QtCore import (
+    QObject,
+    QRunnable,
+    QThreadPool,
+    QTimer,
+    pyqtSignal,
+    pyqtSlot,
+)
+from PyQt6.QtWidgets import (
+    QApplication,
+    QLabel,
+    QMainWindow,
+    QPlainTextEdit,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
+
+
+class WorkerSignals(QObject):
+    """
+    Defines the signals available from a running worker thread.
+
+    data
+        tuple of (identifier, data)
+    """
+
+    data = pyqtSignal(tuple)
+
+
+class Worker(QRunnable):
+    """
+    Worker thread
+
+    Inherits from QRunnable to handle worker thread setup, signals
+    and wrap-up.
+
+    :param id: The id for this worker
+    :param url: The url to retrieve
+    """
+
+    def __init__(self, id, url):
+        super().__init__()
+        self.id = id
+        self.url = url
+
+        self.signals = WorkerSignals()
+
+    @pyqtSlot()
+    def run(self):
+        r = requests.get(self.url)
+
+        for line in r.text.splitlines():
+            self.signals.data.emit((self.id, line))
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.urls = [
+            "https://www.pythonguis.com/",
+            "https://www.mfitzp.com/",
+            "https://www.google.com",
+            "https://academy.pythonguis.com/",
+        ]
+
+        layout = QVBoxLayout()
+
+        self.text = QPlainTextEdit()
+        self.text.setReadOnly(True)
+
+        button = QPushButton("GO GET EM!")
+        button.pressed.connect(self.execute)
+
+        layout.addWidget(self.text)
+        layout.addWidget(button)
+
+        w = QWidget()
+        w.setLayout(layout)
+
+        self.setCentralWidget(w)
+
+        self.show()
+
+        self.threadpool = QThreadPool()
+        print(
+            "Multithreading with maximum %d threads"
+            % self.threadpool.maxThreadCount()
+        )
+
+    def execute(self):
+        for n, url in enumerate(self.urls):
+            worker = Worker(n, url)
+            worker.signals.data.connect(self.display_output)
+
+            # Execute
+            self.threadpool.start(worker)
+
+    def display_output(self, data):
+        id, s = data
+        self.text.appendPlainText("WORKER %d: %s" % (id, s))
+
+
+app = QApplication(sys.argv)
+window = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+
+
+
+#+begin_src python
+import random
+import subprocess
+import sys
+import time
+import traceback
+import uuid
+
+from PyQt6.QtCore import (
+    QAbstractListModel,
+    QObject,
+    QRect,
+    QRunnable,
+    Qt,
+    QThreadPool,
+    QTimer,
+    pyqtSignal,
+    pyqtSlot,
+)
+from PyQt6.QtGui import QBrush, QColor, QPen
+from PyQt6.QtWidgets import (
+    QApplication,
+    QListView,
+    QMainWindow,
+    QPlainTextEdit,
+    QProgressBar,
+    QPushButton,
+    QStyledItemDelegate,
+    QVBoxLayout,
+    QWidget,
+)
+
+STATUS_WAITING = "waiting"
+STATUS_RUNNING = "running"
+STATUS_ERROR = "error"
+STATUS_COMPLETE = "complete"
+
+
+STATUS_COLORS = {
+    STATUS_RUNNING: "#33a02c",
+    STATUS_ERROR: "#e31a1c",
+    STATUS_COMPLETE: "#b2df8a",
+}
+
+DEFAULT_STATE = {"progress": 0, "status": STATUS_WAITING}
+
+class WorkerSignals(QObject):
+    """
+    Defines the signals available from a running worker thread.
+
+    Supported signals are:
+
+    finished
+        No data
+
+    error
+        `tuple` (exctype, value, traceback.format_exc() )
+
+    result
+        `object` data returned from processing, anything
+
+    progress
+        `int` indicating % progress
+
+    """
+
+    error = pyqtSignal(str, str)
+    result = pyqtSignal(str, object)  # We can send anything back.
+
+    finished = pyqtSignal(str)
+    progress = pyqtSignal(str, int)
+    status = pyqtSignal(str, str)
+
+
+class Worker(QRunnable):
+    """
+    Worker thread
+
+    Inherits from QRunnable to handle worker thread setup, signals and wrap-up.
+
+    :param args: Arguments to pass for the worker
+    :param kwargs: Keywords to pass for the worker
+
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__()
+
+        # Store constructor arguments (re-used for processing).
+        self.signals = WorkerSignals()
+
+        # Give this job a unique ID.
+        self.job_id = str(uuid.uuid4())
+
+        # The arguments for the worker
+        self.args = args
+        self.kwargs = kwargs
+
+        self.signals.status.emit(self.job_id, STATUS_WAITING)
+
+    @pyqtSlot()
+    def run(self):
+        """
+        Initialize the runner function with passed args, kwargs.
+        """
+
+        self.signals.status.emit(self.job_id, STATUS_RUNNING)
+
+        x, y = self.args
+
+        try:
+
+            value = random.randint(0, 100) * x
+            delay = random.random() / 10
+            result = []
+
+            for n in range(100):
+                # Generate some numbers.
+                value = value / y
+                y -= 1
+
+                # The following will sometimes throw a division by zero error.
+                result.append(value)
+
+                # Pass out the current progress.
+                self.signals.progress.emit(self.job_id, n + 1)
+                time.sleep(delay)
+
+        except Exception as e:
+            print(e)
+            # We swallow the error and continue.
+            self.signals.error.emit(self.job_id, str(e))
+            self.signals.status.emit(self.job_id, STATUS_ERROR)
+
+        else:
+            self.signals.result.emit(self.job_id, result)
+            self.signals.status.emit(self.job_id, STATUS_COMPLETE)
+
+        self.signals.finished.emit(self.job_id)
+
+
+
+
+class WorkerManager(QAbstractListModel):
+    """
+    Manager to handle our worker queues and state.
+    Also functions as a Qt data model for a view
+    displaying progress for each worker.
+
+    """
+
+    _workers = {}
+    _state = {}
+
+    status = pyqtSignal(str)
+
+    def __init__(self):
+        super().__init__()
+
+        # Create a threadpool for our workers.
+        self.threadpool = QThreadPool()
+        # self.threadpool.setMaxThreadCount(1)
+        self.max_threads = self.threadpool.maxThreadCount()
+        print(
+            "Multithreading with maximum %d threads" % self.max_threads
+        )
+
+        self.status_timer = QTimer()
+        self.status_timer.setInterval(100)
+        self.status_timer.timeout.connect(self.notify_status)
+        self.status_timer.start()
+
+    def notify_status(self):
+        n_workers = len(self._workers)
+        running = min(n_workers, self.max_threads)
+        waiting = max(0, n_workers - self.max_threads)
+        self.status.emit(
+            "{} running, {} waiting, {} threads".format(
+                running, waiting, self.max_threads
+            )
+        )
+
+    def enqueue(self, worker):
+        """
+        Enqueue a worker to run (at some point) by passing it to the QThreadPool.
+        """
+        worker.signals.error.connect(self.receive_error)
+        worker.signals.status.connect(self.receive_status)
+        worker.signals.progress.connect(self.receive_progress)
+        worker.signals.finished.connect(self.done)
+
+        self.threadpool.start(worker)
+        self._workers[worker.job_id] = worker
+
+        # Set default status to waiting, 0 progress.
+        self._state[worker.job_id] = DEFAULT_STATE.copy()
+
+        self.layoutChanged.emit()
+
+    def receive_status(self, job_id, status):
+        self._state[job_id]["status"] = status
+        self.layoutChanged.emit()
+
+    def receive_progress(self, job_id, progress):
+        self._state[job_id]["progress"] = progress
+        self.layoutChanged.emit()
+
+    def receive_error(self, job_id, message):
+        print(job_id, message)
+
+    def done(self, job_id):
+        """
+        Task/worker complete. Remove it from the active workers
+        dictionary. We leave it in worker_state, as this is used to
+        to display past/complete workers too.
+        """
+        del self._workers[job_id]
+        self.layoutChanged.emit()
+
+    def cleanup(self):
+        """
+        Remove any complete/failed workers from worker_state.
+        """
+        for job_id, s in list(self._state.items()):
+            if s["status"] in (STATUS_COMPLETE, STATUS_ERROR):
+                del self._state[job_id]
+        self.layoutChanged.emit()
+
+    # Model interface
+    def data(self, index, role):
+        if role == Qt.ItemDataRole.DisplayRole:
+            # See below for the data structure.
+            job_ids = list(self._state.keys())
+            job_id = job_ids[index.row()]
+            return job_id, self._state[job_id]
+
+    def rowCount(self, index):
+        return len(self._state)
+
+
+
+
+class ProgressBarDelegate(QStyledItemDelegate):
+    def paint(self, painter, option, index):
+        # data is our status dict, containing progress, id, status
+        job_id, data = index.model().data(
+            index, Qt.ItemDataRole.DisplayRole
+        )
+        if data["progress"] > 0:
+            color = QColor(STATUS_COLORS[data["status"]])
+
+            brush = QBrush()
+            brush.setColor(color)
+            brush.setStyle(Qt.BrushStyle.SolidPattern)
+
+            width = option.rect.width() * data["progress"] / 100
+
+            rect = QRect(
+                option.rect
+            )  # Copy of the rect, so we can modify.
+            rect.setWidth(int(width))
+
+            painter.fillRect(rect, brush)
+
+        pen = QPen()
+        pen.setColor(Qt.GlobalColor.black)
+        painter.drawText(
+            option.rect, Qt.AlignmentFlag.AlignLeft, job_id
+        )
+
+
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.workers = WorkerManager()
+
+        self.workers.status.connect(self.statusBar().showMessage)
+
+        layout = QVBoxLayout()
+
+        self.progress = QListView()
+        self.progress.setModel(self.workers)
+        delegate = ProgressBarDelegate()
+        self.progress.setItemDelegate(delegate)
+
+        layout.addWidget(self.progress)
+
+        self.text = QPlainTextEdit()
+        self.text.setReadOnly(True)
+
+        start = QPushButton("Start a worker")
+        start.pressed.connect(self.start_worker)
+
+        clear = QPushButton("Clear")
+        clear.pressed.connect(self.workers.cleanup)
+
+        layout.addWidget(self.text)
+        layout.addWidget(start)
+        layout.addWidget(clear)
+
+        w = QWidget()
+        w.setLayout(layout)
+
+        self.setCentralWidget(w)
+
+        self.show()
+
+    # tag::startWorker[]
+    def start_worker(self):
+        x = random.randint(0, 1000)
+        y = random.randint(0, 1000)
+
+        w = Worker(x, y)
+        w.signals.result.connect(self.display_result)
+        w.signals.error.connect(self.display_result)
+
+        self.workers.enqueue(w)
+
+    # end::startWorker[]
+
+    def display_result(self, job_id, data):
+        self.text.appendPlainText("WORKER %s: %s" % (job_id, data))
+
+
+app = QApplication(sys.argv)
+window = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+
+
+
+#+begin_src python
+import random
+import subprocess
+import sys
+import time
+import traceback
+import uuid
+
+from PyQt6.QtCore import (
+    QAbstractListModel,
+    QObject,
+    QRect,
+    QRunnable,
+    Qt,
+    QThreadPool,
+    QTimer,
+    pyqtSignal,
+    pyqtSlot,
+)
+from PyQt6.QtGui import QBrush, QColor, QPen
+from PyQt6.QtWidgets import (
+    QApplication,
+    QListView,
+    QMainWindow,
+    QPlainTextEdit,
+    QProgressBar,
+    QPushButton,
+    QStyle,
+    QStyledItemDelegate,
+    QVBoxLayout,
+    QWidget,
+)
+
+STATUS_WAITING = "waiting"
+STATUS_RUNNING = "running"
+STATUS_ERROR = "error"
+STATUS_COMPLETE = "complete"
+STATUS_STOPPED = "stopped"
+
+STATUS_COLORS = {
+    STATUS_RUNNING: "#33a02c",
+    STATUS_ERROR: "#e31a1c",
+    STATUS_STOPPED: "#cccccc",
+    STATUS_COMPLETE: "#b2df8a",
+}
+
+DEFAULT_STATE = {"progress": 0, "status": STATUS_WAITING}
+
+class WorkerSignals(QObject):
+    """
+    Defines the signals available from a running worker thread.
+
+    Supported signals are:
+
+    finished
+        No data
+
+    error
+        `tuple` (exctype, value, traceback.format_exc() )
+
+    result
+        `object` data returned from processing, anything
+
+    progress
+        `int` indicating % progress
+
+    """
+
+    error = pyqtSignal(str, str)
+    result = pyqtSignal(str, object)  # We can send anything back.
+
+    finished = pyqtSignal(str)
+    progress = pyqtSignal(str, int)
+    status = pyqtSignal(str, str)
+
+
+class WorkerKilledException(Exception):
+    pass
+
+
+class Worker(QRunnable):
+    """
+    Worker thread
+
+    Inherits from QRunnable to handle worker thread setup, signals and wrap-up.
+
+    :param args: Arguments to pass for the worker
+    :param kwargs: Keywords to pass for the worker
+
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__()
+
+        # Store constructor arguments (re-used for processing).
+        self.signals = WorkerSignals()
+
+        # Give this job a unique ID.
+        self.job_id = str(uuid.uuid4())
+
+        # The arguments for the worker
+        self.args = args
+        self.kwargs = kwargs
+
+        self.signals.status.emit(self.job_id, STATUS_WAITING)
+
+        self.is_killed = False
+
+    @pyqtSlot()
+    def run(self):
+        """
+        Initialize the runner function with passed args, kwargs.
+        """
+
+        self.signals.status.emit(self.job_id, STATUS_RUNNING)
+
+        x, y = self.args
+
+        try:
+
+            value = random.randint(0, 100) * x
+            delay = random.random() / 10
+            result = []
+
+            for n in range(100):
+                # Generate some numbers.
+                value = value / y
+                y -= 1
+
+                # The following will sometimes throw a division by zero error.
+                result.append(value)
+
+                # Pass out the current progress.
+                self.signals.progress.emit(self.job_id, n + 1)
+                time.sleep(delay)
+
+                if self.is_killed:
+                    raise WorkerKilledException
+
+        except WorkerKilledException:
+            self.signals.status.emit(self.job_id, STATUS_STOPPED)
+
+        except Exception as e:
+            print(e)
+            # We swallow the error and continue.
+            self.signals.error.emit(self.job_id, str(e))
+            self.signals.status.emit(self.job_id, STATUS_ERROR)
+
+        else:
+            self.signals.result.emit(self.job_id, result)
+            self.signals.status.emit(self.job_id, STATUS_COMPLETE)
+
+        self.signals.finished.emit(self.job_id)
+
+    def kill(self):
+        self.is_killed = True
+
+
+
+
+class WorkerManager(QAbstractListModel):
+    """
+    Manager to handle our worker queues and state.
+    Also functions as a Qt data model for a view
+    displaying progress for each worker.
+
+    """
+
+    _workers = {}
+    _state = {}
+
+    status = pyqtSignal(str)
+
+    def __init__(self):
+        super().__init__()
+
+        # Create a threadpool for our workers.
+        self.threadpool = QThreadPool()
+        # self.threadpool.setMaxThreadCount(1)
+        self.max_threads = self.threadpool.maxThreadCount()
+        print(
+            "Multithreading with maximum %d threads" % self.max_threads
+        )
+
+        self.status_timer = QTimer()
+        self.status_timer.setInterval(100)
+        self.status_timer.timeout.connect(self.notify_status)
+        self.status_timer.start()
+
+    def notify_status(self):
+        n_workers = len(self._workers)
+        running = min(n_workers, self.max_threads)
+        waiting = max(0, n_workers - self.max_threads)
+        self.status.emit(
+            "{} running, {} waiting, {} threads".format(
+                running, waiting, self.max_threads
+            )
+        )
+
+    def enqueue(self, worker):
+        """
+        Enqueue a worker to run (at some point) by passing it to the QThreadPool.
+        """
+        worker.signals.error.connect(self.receive_error)
+        worker.signals.status.connect(self.receive_status)
+        worker.signals.progress.connect(self.receive_progress)
+        worker.signals.finished.connect(self.done)
+
+        self.threadpool.start(worker)
+        self._workers[worker.job_id] = worker
+
+        # Set default status to waiting, 0 progress.
+        self._state[worker.job_id] = DEFAULT_STATE.copy()
+
+        self.layoutChanged.emit()
+
+    def receive_status(self, job_id, status):
+        self._state[job_id]["status"] = status
+        self.layoutChanged.emit()
+
+    def receive_progress(self, job_id, progress):
+        self._state[job_id]["progress"] = progress
+        self.layoutChanged.emit()
+
+    def receive_error(self, job_id, message):
+        print(job_id, message)
+
+    def done(self, job_id):
+        """
+        Task/worker complete. Remove it from the active workers
+        dictionary. We leave it in worker_state, as this is used to
+        to display past/complete workers too.
+        """
+        del self._workers[job_id]
+        self.layoutChanged.emit()
+
+    def cleanup(self):
+        """
+        Remove any complete/failed workers from worker_state.
+        """
+        for job_id, s in list(self._state.items()):
+            if s["status"] in (STATUS_COMPLETE, STATUS_ERROR):
+                del self._state[job_id]
+        self.layoutChanged.emit()
+
+    def kill(self, job_id):
+        if job_id in self._workers:
+            self._workers[job_id].kill()
+
+    # Model interface
+    def data(self, index, role):
+        if role == Qt.ItemDataRole.DisplayRole:
+            # See below for the data structure.
+            job_ids = list(self._state.keys())
+            job_id = job_ids[index.row()]
+            return job_id, self._state[job_id]
+
+    def rowCount(self, index):
+        return len(self._state)
+
+
+
+
+class ProgressBarDelegate(QStyledItemDelegate):
+    def paint(self, painter, option, index):
+        # data is our status dict, containing progress, id, status
+        job_id, data = index.model().data(
+            index, Qt.ItemDataRole.DisplayRole
+        )
+        if data["progress"] > 0:
+            color = QColor(STATUS_COLORS[data["status"]])
+
+            brush = QBrush()
+            brush.setColor(color)
+            brush.setStyle(Qt.BrushStyle.SolidPattern)
+
+            width = option.rect.width() * data["progress"] / 100
+
+            rect = QRect(
+                option.rect
+            )  # Copy of the rect, so we can modify.
+            rect.setWidth(int(width))
+
+            painter.fillRect(rect, brush)
+
+        pen = QPen()
+        pen.setColor(Qt.GlobalColor.black)
+        painter.drawText(
+            option.rect, Qt.AlignmentFlag.AlignLeft, job_id
+        )
+
+        if option.state & QStyle.State_Selected:
+            painter.drawRect(option.rect)
+
+
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.workers = WorkerManager()
+
+        self.workers.status.connect(self.statusBar().showMessage)
+
+        layout = QVBoxLayout()
+
+        self.progress = QListView()
+        self.progress.setModel(self.workers)
+        delegate = ProgressBarDelegate()
+        self.progress.setItemDelegate(delegate)
+
+        layout.addWidget(self.progress)
+
+        self.text = QPlainTextEdit()
+        self.text.setReadOnly(True)
+
+        start = QPushButton("Start a worker")
+        start.pressed.connect(self.start_worker)
+
+        stop = QPushButton("Stop")
+        stop.pressed.connect(self.stop_worker)
+
+        clear = QPushButton("Clear")
+        clear.pressed.connect(self.workers.cleanup)
+
+        layout.addWidget(self.text)
+        layout.addWidget(start)
+        layout.addWidget(stop)
+        layout.addWidget(clear)
+
+        w = QWidget()
+        w.setLayout(layout)
+
+        self.setCentralWidget(w)
+
+        self.show()
+
+    # tag::startWorker[]
+    def start_worker(self):
+        x = random.randint(0, 1000)
+        y = random.randint(0, 1000)
+
+        w = Worker(x, y)
+        w.signals.result.connect(self.display_result)
+        w.signals.error.connect(self.display_result)
+
+        self.workers.enqueue(w)
+
+    # end::startWorker[]
+
+    # tag::stopWorker[]
+    def stop_worker(self):
+        selected = self.progress.selectedIndexes()
+        for idx in selected:
+            job_id, _ = self.workers.data(
+                idx, Qt.ItemDataRole.DisplayRole
+            )
+            self.workers.kill(job_id)
+
+    # end::stopWorker[]
+
+    def display_result(self, job_id, data):
+        self.text.appendPlainText("WORKER %s: %s" % (job_id, data))
+
+
+app = QApplication(sys.argv)
+window = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+
+
+#+begin_src python
+import sys
+import time
+
+from PyQt6.QtCore import (
+    QObject,
+    QRunnable,
+    Qt,
+    QThreadPool,
+    pyqtSignal,
+    pyqtSlot,
+)
+from PyQt6.QtWidgets import (
+    QApplication,
+    QHBoxLayout,
+    QMainWindow,
+    QProgressBar,
+    QPushButton,
+    QWidget,
+)
+
+
+class WorkerKilledException(Exception):
+    pass
+
+
+class WorkerSignals(QObject):
+    progress = pyqtSignal(int)
+
+
+class JobRunner(QRunnable):
+
+    signals = WorkerSignals()
+
+    def __init__(self):
+        super().__init__()
+
+        self.is_paused = False
+        self.is_killed = False
+
+    @pyqtSlot()
+    def run(self):
+        for n in range(100):
+            self.signals.progress.emit(n + 1)
+            time.sleep(0.1)
+
+            while self.is_paused:
+                time.sleep(0)  # <1>
+
+            if self.is_killed:
+                raise WorkerKilledException
+
+    def pause(self):
+        self.is_paused = True
+
+    def resume(self):
+        self.is_paused = False
+
+    def kill(self):
+        self.is_killed = True
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        # Some buttons
+        w = QWidget()
+        l = QHBoxLayout()
+        w.setLayout(l)
+
+        btn_stop = QPushButton("Stop")
+        btn_pause = QPushButton("Pause")
+        btn_resume = QPushButton("Resume")
+
+        l.addWidget(btn_stop)
+        l.addWidget(btn_pause)
+        l.addWidget(btn_resume)
+
+        self.setCentralWidget(w)
+
+        # Create a statusbar.
+        self.status = self.statusBar()
+        self.progress = QProgressBar()
+        self.status.addPermanentWidget(self.progress)
+
+        # Thread runner
+        self.threadpool = QThreadPool()
+
+        # Create a runner
+        self.runner = JobRunner()
+        self.runner.signals.progress.connect(self.update_progress)
+        self.threadpool.start(self.runner)
+
+        btn_stop.pressed.connect(self.runner.kill)
+        btn_pause.pressed.connect(self.runner.pause)
+        btn_resume.pressed.connect(self.runner.resume)
+
+        self.show()
+
+    def update_progress(self, n):
+        self.progress.setValue(n)
+
+
+app = QApplication(sys.argv)
+w = MainWindow()
+app.exec()
+#+end_src
+
+
+
+#+begin_src python :dir workdir
+import subprocess
+import sys
+
+from PyQt6.QtCore import (
+    QObject,
+    QRunnable,
+    QThreadPool,
+    pyqtSignal,
+    pyqtSlot,
+)
+from PyQt6.QtWidgets import (
+    QApplication,
+    QMainWindow,
+    QPlainTextEdit,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
+
+
+class WorkerSignals(QObject):
+    """
+    Defines the signals available from a running worker thread.
+
+    Supported signals are:
+
+    finished: No data
+    result: str
+    """
+
+    result = pyqtSignal(
+        str
+    )  # Send back the output from the process as a string.
+    finished = pyqtSignal()
+
+
+class SubProcessWorker(QRunnable):
+    """
+    ProcessWorker worker thread
+
+    Inherits from QRunnable to handle worker thread setup, signals and wrap-up.
+
+    :param command: command to execute with `subprocess`.
+
+    """
+
+    def __init__(self, command):
+        super().__init__()
+
+        # Store constructor arguments (re-used for processing).
+        self.signals = WorkerSignals()
+
+        # The command to be executed.
+        self.command = command
+
+    @pyqtSlot()
+    def run(self):
+        """
+        Execute the command, returning the result.
+        """
+        output = subprocess.getoutput(self.command)
+        self.signals.result.emit(output)
+        self.signals.finished.emit()
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        # Some buttons
+        layout = QVBoxLayout()
+
+        self.text = QPlainTextEdit()
+        layout.addWidget(self.text)
+
+        btn_run = QPushButton("Execute")
+        btn_run.clicked.connect(self.start)
+
+        layout.addWidget(btn_run)
+
+        w = QWidget()
+        w.setLayout(layout)
+        self.setCentralWidget(w)
+
+        # Thread runner
+        self.threadpool = QThreadPool()
+
+        self.show()
+
+    def start(self):
+        # Create a runner
+        self.runner = SubProcessWorker("python dummy_script.py")
+        self.runner.signals.result.connect(self.result)
+        self.threadpool.start(self.runner)
+
+    def result(self, s):
+        self.text.appendPlainText(s)
+
+
+app = QApplication(sys.argv)
+w = MainWindow()
+app.exec()
+#+end_src
+
+#+RESULTS:
+: None
+

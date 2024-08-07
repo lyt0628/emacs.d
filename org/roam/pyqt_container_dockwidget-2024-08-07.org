@@ -1,0 +1,64 @@
+:PROPERTIES:
+:ID:       01efb805-f3d1-4720-8b9a-3998674cac01
+:END:
+#+title: pyqt-container-dockwidget
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+begin_src python
+import sys
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QPalette, QFont
+from PyQt6.QtWidgets import (QApplication, QMainWindow, QDockWidget, QLabel)
+class mainWidget(QMainWindow):
+    def __init__(self, parent=None):
+        super(mainWidget, self).__init__(parent)
+        self.setWindowTitle('QDockWidget测试')
+        self.resize(480, 360)
+        self.listColors = [Qt.GlobalColor.red, Qt.GlobalColor.lightGray,
+                           Qt.GlobalColor.green, Qt.GlobalColor.blue,
+                           Qt.GlobalColor.cyan, Qt.GlobalColor.magenta]
+        self.initUi()
+
+    def initUi(self):
+        self.takeCentralWidget()            # 移除 CentralWidget
+        self.setDockOptions(self.dockOptions() | QMainWindow.DockOption.AllowTabbedDocks)   # 允许设置成Tab窗口样式
+        self.setDockNestingEnabled(True)    # 启动dock 嵌套
+
+        docks = []
+        for index in range(6):
+            docks.append(self.crateDock(index))
+        self.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, docks[0])   # 将docks[0]停靠在主界面的左边
+        self.splitDockWidget(docks[0], docks[1], Qt.Orientation.Horizontal)  # 将docks[0]和docks[1]水平排列
+        self.splitDockWidget(docks[1], docks[2], Qt.Orientation.Horizontal)  # 将docks[1]和docks[2]水平排列
+        self.splitDockWidget(docks[0], docks[3], Qt.Orientation.Vertical)    # 将docks[0]和docks[3]垂直排列
+        self.splitDockWidget(docks[1], docks[4], Qt.Orientation.Vertical)    # 将docks[1]和docks[4]垂直排列
+        self.splitDockWidget(docks[2], docks[5], Qt.Orientation.Vertical)    # 将docks[2]和docks[5]垂直排列
+
+    def crateDock(self, index):
+        lb = QLabel(self)
+        lb.setFont(QFont(self.font().family(), 24))                         # 设置字号
+        lb.setText(str(index + 1))
+        lb.setAlignment(Qt.AlignmentFlag.AlignCenter)                       # 设置对中标签显示内容
+        lb.setAutoFillBackground(True)
+        palette = QPalette()
+        palette.setColor(QPalette.ColorRole.Window, self.listColors[index])
+        lb.setPalette(palette)                                              # 设置背景颜色
+        lb.resize(160, 90)
+        dock = QDockWidget('dock ' + str(index + 1), self)         # 创建停靠窗口，标题为docki(i=1,2,3,4,5,6)
+        dock.setWidget(lb)                                                  # 标签i放到停靠窗口
+        lb.show()
+        return dock
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    m = mainWidget()
+    m.show()
+    sys.exit(app.exec())
+#+end_src
+
+#+RESULTS:
+
+
+
+

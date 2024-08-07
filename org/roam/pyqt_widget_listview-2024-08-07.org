@@ -1,0 +1,246 @@
+:PROPERTIES:
+:ID:       ea9f21c6-611f-452f-bc7d-68afa53eddae
+:END:
+#+title: pyqt-widget-listview
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* 字符串ListView和Item点击事件
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class myWidget(QWidget):
+	  def __init__(self, parent=None):
+		  super(myWidget, self).__init__(parent)
+
+		  listModel = QStringListModel()
+		  self.list=['C++','Java','C#','Python']
+		  listModel.setStringList(self.list)
+
+		  listView = QListView()
+		  listView.setModel(listModel)
+		  listView.clicked.connect(self.clickedFunc)
+
+		  layout = QVBoxLayout()
+		  layout.addWidget(listView)
+		  self.setLayout(layout)
+
+	  def clickedFunc(self, Index):
+		  QMessageBox.information(self,"ListView","选择:" + self.list[Index.row()])
+
+  if __name__=="__main__":
+	  app = QApplication(sys.argv)
+	  w = myWidget()
+	  w.show()
+	  sys.exit(app.exec())
+#+end_src
+
+
+
+* 字符串ListWidget和Item点击事件
+
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class ListWidget(QListWidget):
+	  def clicked(self,item):
+		  QMessageBox.information(self, "ListWidget", "你选择了: "+item.text())
+
+  if __name__ == '__main__':
+	  app = QApplication(sys.argv)
+	  listWidget  = ListWidget()
+	  listWidget.resize(300,120)
+
+	  listWidget.addItem("Item 1");
+	  listWidget.addItem("Item 2");
+	  listWidget.addItem("Item 3");
+	  listWidget.addItem("Item 4");
+
+	  listWidget.setWindowTitle('QListwidget 例子')
+	  listWidget.itemClicked.connect(listWidget.clicked)
+  
+	  listWidget.show()
+	  sys.exit(app.exec())
+#+end_src
+
+
+
+* 字符串ListView + CRUD (MVC)
+
+#+begin_src python
+  import sys
+  <<pyqt>>
+
+  class myWidget(QWidget):
+      def __init__(self, parent=None):
+	  super(myWidget, self).__init__(parent)
+	  self.setWindowTitle("QListView测试")
+	  self.resize(200,200)
+
+	  self.list = ['C++', 'Java', 'C#', 'Python']
+	  self.mode = QStandardItemModel(4,1)
+  
+	  for i in range(self.mode.rowCount()):
+	      item = QStandardItem(self.list[i])
+	      self.mode.setItem(i,0,item)
+	  self.mode.insertRow(4, QStandardItem("数据结构"))
+
+	  self.listview = QListView()
+	  self.listview.setModel(self.mode )
+
+	  self.le = QLineEdit()
+	  self.addPb = QPushButton("增加项",clicked= self.addItem )
+	  self.delPb = QPushButton("删除项",clicked= self.delItem )
+	  self.sortPb  = QPushButton("项目排序",clicked= self.sortItem )
+
+	  hLayout  = QHBoxLayout()
+	  hLayout.setContentsMargins(0,0,0,0)
+	  hLayout.addWidget(self.addPb)
+	  hLayout.addWidget(self.delPb)
+	  hLayout.addWidget(self.sortPb)
+
+	  self.vLayout = QVBoxLayout(self)
+	  self.vLayout.addWidget(self.listview)
+	  self.vLayout.addWidget(self.le)
+	  self.vLayout.addLayout(hLayout)
+
+
+      def addItem(self):
+	  num = self.mode.rowCount()
+	  s = self.le.text()
+	  if s!= '':
+	      self.mode.appendRow(QStandardItem(s))
+
+      def delItem(self):
+	  num = self.mode.rowCount()
+	  self.mode.removeRow(num-1)
+
+      def sortItem(self):
+	  self.mode.sort(0)
+
+  if __name__ == '__main__':
+      app = QApplication(sys.argv)
+      w = myWidget()
+      w.show()
+      sys.exit(app.exec())
+#+end_src
+
+
+
+
+
+
+#+begin_src python
+  import json
+  import os
+  import sys
+
+  from PyQt6.QtCore import QAbstractListModel, Qt
+  from PyQt6.QtGui import QImage
+  from PyQt6.QtWidgets import QApplication, QMainWindow
+
+
+  
+  from MainWindow import Ui_MainWindow
+
+  basedir = os.path.dirname(__file__)
+
+  tick = QImage(os.path.join(basedir, "tick.png"))
+
+
+  class TodoModel(QAbstractListModel):
+      def __init__(self, todos=None):
+	  super().__init__()
+	  self.todos = todos or []
+
+      def data(self, index, role):
+	  if role == Qt.ItemDataRole.DisplayRole:
+	      status, text = self.todos[index.row()]
+	      return text
+
+	  if role == Qt.ItemDataRole.DecorationRole:
+	      status, text = self.todos[index.row()]
+	      if status:
+		  return tick
+
+      def rowCount(self, index):
+	  return len(self.todos)
+
+
+  class MainWindow(QMainWindow, Ui_MainWindow):
+      def __init__(self):
+	  super().__init__()
+	  self.setupUi(self)
+	  self.model = TodoModel()
+	  self.load()
+	  self.todoView.setModel(self.model)
+	  self.addButton.pressed.connect(self.add)
+	  self.deleteButton.pressed.connect(self.delete)
+	  self.completeButton.pressed.connect(self.complete)
+
+      def add(self):
+	  """
+	  Add an item to our todo list, getting the text from the QLineEdit .todoEdit
+	  and then clearing it.
+	  """
+	  text = self.todoEdit.text()
+	  # Remove whitespace from the ends of the string.
+	  text = text.strip()
+	  if text:  # Don't add empty strings.
+	      # Access the list via the model.
+	      self.model.todos.append((False, text))
+	      # Trigger refresh.
+	      self.model.layoutChanged.emit()
+	      # Empty the input
+	      self.todoEdit.setText("")
+	      self.save()
+
+      def delete(self):
+	  indexes = self.todoView.selectedIndexes()
+	  if indexes:
+	      # Indexes is a single-item list in single-select mode.
+	      index = indexes[0]
+	      # Remove the item and refresh.
+	      del self.model.todos[index.row()]
+	      self.model.layoutChanged.emit()
+	      # Clear the selection (as it is no longer valid).
+	      self.todoView.clearSelection()
+	      self.save()
+
+      def complete(self):
+	  indexes = self.todoView.selectedIndexes()
+	  if indexes:
+	      index = indexes[0]
+	      row = index.row()
+	      status, text = self.model.todos[row]
+	      self.model.todos[row] = (True, text)
+	      # .dataChanged takes top-left and bottom right, which are equal
+	      # for a single selection.
+	      self.model.dataChanged.emit(index, index)
+	      # Clear the selection (as it is no longer valid).
+	      self.todoView.clearSelection()
+	      self.save()
+
+      def load(self):
+	  try:
+	      with open("data.json", "r") as f:
+		  self.model.todos = json.load(f)
+	  except Exception:
+	      pass
+
+      def save(self):
+	  with open("data.json", "w") as f:
+	      data = json.dump(self.model.todos, f)
+
+
+  app = QApplication(sys.argv)
+  window = MainWindow()
+  window.show()
+  app.exec()
+#+end_src
+

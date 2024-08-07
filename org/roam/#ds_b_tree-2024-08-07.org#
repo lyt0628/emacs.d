@@ -1,0 +1,147 @@
+:PROPERTIES:
+:ID:       6d565cbb-aab3-480d-bbf7-b406085ee968
+:END:
+#+title: ds-b tree
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+* 定义数据结构
+
+
+#+NAME: BNode
+#+BEGIN_SRC go
+  type BNode struct {
+    data []byte
+ }
+
+
+  const  (
+     BNODE_NODE = 1
+     BNODE_LEAF = 2
+  )
+
+#+END_SRC
+
+
+
+#+NAME: BTree
+#+BEGIN_SRC go
+  type BTree struct {
+     root uint64
+
+
+     get func(uint64) BNode
+     new func(BNode) uint64
+     del func(uint64)
+  }
+#+END_SRC
+
+#+RESULTS:
+
+
+
+#+NAME: module
+#+BEGIN_SRC go
+  const HEADER = 4
+
+  const BTREE_PAGE_SIZE = 4096  <<c#>> 4k
+  const BTREE_MAX_KEY_SIZE = 1000
+  const BTREE_MAX_VAL_SIZE = 3000
+
+
+  func init() {
+     node1max = HEADER + 8 + 2 + 4 + BTREE_MAX_KEY_SIZE + BTREE_MAX_VAL_SIZE
+     assert(node1max <= BTREE_PAGE_SIZE)
+  }
+#+END_SRC
+
+#+RESULTS: module
+
+
+
+* 字节数组解码操作
+| type | nkeys | pointers  | offsets   | KVs... |
+|    2 |     2 | nkeys * 8 | nekys * 2 | ...    |
+
+A KV
+| klen | vlen | key | val |
+|    2 |    2 | ... | ... |
+
+offsets
+| 2s KV | 3s KV | ... | last KV  | end of Node |
+
+#+NAME: headop
+#+BEGIN_SRC go
+  func (node BNode) btype() uint16 {
+    return binary.LittleEndian.Uint16(node.data) <<c#>> 前两个字节是节点类型
+  }
+
+
+  func (node BNode) nkeys() uint16 {
+    return binary.LittleEndian.Uint16(node.data[2:4]) <<c#>> 然后是有几个key
+  }
+
+
+  func (node BNode) setHeader(btype uint16, nkeys uint16) uint16 {
+     binary.LittleEndian.PutUint16(node.data[0:2]) <<c#>> 设置节点类型
+     binary.LittleEndian.PutUint16(node.data[2:4]) <<c#>> 设置key的数目
+
+  }
+#+END_SRC
+
+
+#+NAME: pointerop
+#+BEGIN_SRC go
+  func (node BNode) getPtr(idx uint16) uint64 {
+    assert(idx <= node.nkeys())
+    pos := HEADER + idx * 8
+    return binary.LittleEndian.Uint64(node.data[pos:]) 
+  }
+
+  func (node BNode) setPtr(idx uint16, value uint64) {
+    assert(idx <= node.nkeys())
+    pos := HEADER + idx * 8
+    return binary.LittleEndian.PutUint64(node.data[pos:], val) 
+  }
+#+END_SRC
+
+
+#+NAME: offsetop
+#+BEGIN_SRC go
+  <<c#>> 因为只是一个用于计算的Util， 与 数据没有直接接触不需要接受者
+  func offsetPos(node BNode, idx uint16) uint16 {
+    assert(1 <=idx && idx <= node.nkeys())
+    return HEADER + 8 * node.nkeys() + 2 * (idx - 1)
+  }
+
+  func (node BNode)getOffset(idx uint16) uint16 {
+    if (idx == 0) {
+       return 0
+    }
+    return binary.LittleEndian.Uint16(offserPos(node, idx))
+  }
+   func (node BNode)setOffser(idx uint16, offset uint16) uint16 {
+    if (idx == 0) {
+       return 0
+    }
+    return binary.LittleEndian.PutUint16(offserPos(node, idx), offset)
+  }
+   
+#+END_SRC
+
+
+
+
+#+BEGIN_SRC go
+
+  <<BNode>>
+  <<BTree>>
+  <<module>>
+  <<headop>>
+  <<pointerop>>
+
+  func main() {
+  }
+#+END_SRC
+
+#+RESULTS:

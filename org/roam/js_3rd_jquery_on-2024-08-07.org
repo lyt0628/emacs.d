@@ -1,0 +1,32 @@
+:PROPERTIES:
+:ID:       685658d8-0dcf-4552-ae25-04614fd6704b
+:END:
+#+title: js-3rd-jquery-on()
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+BEGIN_SRC html
+  <<html-box>>
+  <<js-jq>>
+  <script>
+    <<behavior>>
+  </script>
+#+END_SRC
+
+
+这边使用箭头函数不行
+#+NAME: behavior
+#+BEGIN_SRC js
+  $(function() {
+      $('.box').on({
+	 mouseover: function(){
+	  $(this).css('background',"blue")
+	  }
+     })
+
+  })
+  
+#+END_SRC
+

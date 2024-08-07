@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       7edd0bc4-c025-4e27-9877-16b8a7e5f7f3
+:END:
+#+title: go-std-http
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+HEADER: :tangle ./tmp/go/hellogo.go 
+#+BEGIN_SRC go  
+  import (
+    "fmt"
+    "net/http"
+  )
+
+  func handler(writer http.ResponseWriter, request *http.Request){
+    fmt.Fprint(writer,"Hello GO Web");
+  }
+  func main(){
+    http.HandleFunc("/", handler);
+    http.ListenAndServe(":8080", nil);
+  }
+#+END_SRC
+
+
+

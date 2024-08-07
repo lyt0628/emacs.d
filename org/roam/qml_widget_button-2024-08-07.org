@@ -1,0 +1,72 @@
+:PROPERTIES:
+:ID:       fe22fc0f-aff5-4e54-8dc7-427b65736ae9
+:END:
+#+title: qml-widget-Button
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-33ee78f8-16bd-11ef-a78e-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-33ee78f8-16bd-11ef-a78e-024236e6a1cc.qml
+  <<qml>>
+
+
+   Window {
+     width: 640
+     height: 480
+     visible: true
+     color: "#eeeeee"
+
+
+     Button {
+      text: "Quit"
+      anchors.centerIn: parent
+      onClicked: Qt.quit()
+
+    }
+  }
+
+
+
+
+  #+end_src
+
+
+
+
+
+#+call: qml-main(qml="/tmp/orgqml-a1aca7dd-16bd-11ef-aa28-024236e6a1cc.qml")
+#+begin_src python :noweb yes :tangle /tmp/orgqml-a1aca7dd-16bd-11ef-aa28-024236e6a1cc.qml
+      <<qml>>
+
+
+     Window {
+       width: 640
+       height: 480
+       visible: true
+       color: "#eeeeee"
+
+
+       Button {
+	text: "Quit"
+	anchors.centerIn: parent
+	onClicked: Qt.quit()
+
+	style: ButtonStyle {
+
+	   background: Rectangle {
+             implicitWidth: 70
+             implicitHeight: 25 
+             border.width: control.pressed?2:1 
+             border.color: (control.hovered || control.pressed)?"red":"blue" 
+           }
+
+	}
+
+      }
+    }
+
+
+
+#+end_src

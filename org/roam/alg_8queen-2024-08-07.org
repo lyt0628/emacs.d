@@ -1,0 +1,80 @@
+:PROPERTIES:
+:ID:       9d0d29fb-3161-42be-a0b1-d0e637ea1081
+:END:
+#+title: alg-8queen
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* 八皇后问题
+数据结构： a[n] = c , 表示 皇后在 n 行 c 列
+因为皇后按行的顺序放置， 所以只要传递递归状态--n，已经放置的皇后数目就不会越界
+
+
+#+cation: 8queen
+#+name: 8queen
+#+BEGIN_SRC lua :results output 
+	   N = 8
+
+	   -- 检查（n,c）是否会被攻击
+	   function isplace(a, n, c) 
+	    for i =1, n-1 do -- 对于每一个已经被防止的皇后， 从 i = 1 一直遍历到  i < n - 1 为止
+	      if(a[i] == c ) or -- 同一列
+		(a[i] - i == c - n) or --  对角线
+		(a[i] + i == c + n) then -- 反对角线
+		return false
+	       end
+	     end
+	     return true
+	   end
+
+	   function printsolution (a)
+	     for i = 1, N do
+	       for j = 1, N do
+		 io.write(a[i] == j and "X" or "-", " ")
+	       end
+	       io.write("\n")
+	     end
+	     io.write("\n")
+	 end
+
+	 function addqueen (a, n)
+	   if n > N then
+	     printsolution(a)
+  --[
+	      return true
+  --]
+	   else
+	     for c = 1, N do
+	       if isplace(a, n, c) then
+		 a[n] = c
+
+  --	       addqueen(a, n+1)
+	       -- 这边是深度优先遍历，在这边添加 一个返回状态即可
+  --[
+
+		 ok = addqueen(a, n+1)
+		 if ok then
+		   return ok
+                 end
+  --]
+	       end
+	     end
+	   end
+	  end
+
+	  addqueen({}, 1)
+#+END_SRC
+
+#+RESULTS: 8queen
+: X - - - - - - - 
+: - - - - X - - - 
+: - - - - - - - X 
+: - - - - - X - - 
+: - - X - - - - - 
+: - - - - - - X - 
+: - X - - - - - - 
+: - - - X - - - - 
+: 
+
+

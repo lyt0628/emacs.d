@@ -1,0 +1,100 @@
+:PROPERTIES:
+:ID:       c8a561a1-0316-4827-b26c-ba8dd04c9a73
+:END:
+#+title: java-lib-jedis
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+#+NAME: jedis
+#+begin_src java
+  var jedis = new Jedis("127.0.0.1", 6379);
+#+end_src
+
+
+#+begin_src java
+  <<jedis>>
+  
+  var v = jedis.get("a_key");
+
+  System.out.println(v);
+#+end_src
+
+#+RESULTS:
+: 10
+
+
+
+
+* Key API
+** set
+#+begin_src java
+  <<jedis>>
+
+  jedis.set("k1", "v1");
+  jedis.set("k2", "v2");
+  jedis.set("k3", "v3");
+
+#+end_src
+
+** keys
+
+#+begin_src java
+  <<jedis>>
+
+  Set<String> keys = jedis.keys("*");
+  System.out.println(keys.size());
+
+  for(String key : keys)
+  {
+    System.out.println(key);
+  }
+  
+#+end_src
+
+#+RESULTS:
+#+begin_example
+10
+a_key
+k1
+a_set
+k2
+k3
+3k
+another_key
+a_hash
+a_zset
+a_list
+#+end_example
+
+
+** exists
+#+BEGIN_SRC java
+  <<jedis>>
+  
+  System.out.println(jedis.exists("k1"));
+#+END_SRC
+
+#+RESULTS:
+: true
+
+
+
+* String API
+
+#+begin_src java
+  <<jedis>>
+  jedis.set("k1", "v1");
+  jedis.set("k2", "v2");
+  jedis.set("k3", "v3");
+
+  Set<String> keys = jedis.keys("*");
+  System.out.println(keys.size());
+
+  for(String key : keys)
+  {
+    System.out.println(key);
+  }
+  System.out.println(jedis.exists("k1"));
+#+end_src
+

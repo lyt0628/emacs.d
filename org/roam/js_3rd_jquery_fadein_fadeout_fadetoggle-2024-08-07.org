@@ -1,0 +1,72 @@
+:PROPERTIES:
+:ID:       4b1ce1f8-2495-4213-8db0-fc410328bd95
+:END:
+#+title: js-3rd-jquery-fadeIn()&fadeOut()&fadeToggle()
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+| 参数   | 描述                |
+|-------+--------------------|
+| speed | [slow, fast, <ms>] |
+|-------+--------------------|
+| CB    |                    |
+|-------+--------------------|
+
+
+
+
+
+#+BEGIN_SRC html  :dir workdir
+    <<style>>
+
+    <button class="fadein">淡入</button>
+    <button class="fadeout">淡出</button>
+    <button class="toggle">切换</button>
+
+    <div class="box">
+      box
+    </div>
+
+
+
+  <<js-jq>>
+  <script>
+    <<behavior>>
+  </script>
+#+END_SRC
+
+
+#+NAME: style
+#+BEGIN_SRC css
+  <style>
+    body{
+      height: 200px;
+    }
+    .box{
+      width: 200px;
+      height: 100px;
+      background-color: pink;
+    }
+  </style>
+#+END_SRC
+
+
+#+NAME: behavior
+#+BEGIN_SRC js
+  $().ready(()=>{
+    $('.fadein').click(()=>{
+      $('.box').fadeIn('slow')
+    })
+
+    $('.fadeout').click(()=>{
+      $('.box').fadeOut('slow')
+    })
+    $('.toggle').click(()=>{
+      $('.box').fadeToggle('slow')
+    })
+  })
+#+END_SRC
+
+

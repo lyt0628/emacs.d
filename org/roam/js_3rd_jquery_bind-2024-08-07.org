@@ -1,0 +1,53 @@
+:PROPERTIES:
+:ID:       e0d2eeb7-f891-4e65-b0c8-a0f10bcb21d1
+:END:
+#+title: js-3rd-jquery-bind()
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+
+
+#+BEGIN_SRC html  :dir workdir
+    <<style>>
+  
+    <div class="box">
+      box
+    </div>
+
+   <<js-jq>>
+   <script>
+      <<behavior>>
+  </script>
+#+END_SRC
+
+
+
+#+NAME: style
+#+BEGIN_SRC css
+  <style>
+    body{
+      height: 200px;
+    }
+    .box{
+      width: 200px;
+      height: 100px;
+      background-color: pink;
+    }
+  </style>
+#+END_SRC
+
+#+NAME: behavior
+#+BEGIN_SRC js
+  $(()=>{
+
+    $('.box').bind('click',{
+	msg: "I am LYT\n"
+      },(e)=>{
+      alert(e.data.msg)})
+  })
+#+END_SRC
+
+
+
+
