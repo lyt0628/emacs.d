@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       c7386098-c311-4195-8e9e-a5529ffc09a8
+:END:
+#+title: js-lang-with
+#+date: [2024-08-08 周四]
+#+last_modified:  
+

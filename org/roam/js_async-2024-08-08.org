@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       1457ae38-52b4-433e-8007-b1ecdea15fba
+:END:
+#+title: js-async
+#+date: [2024-08-08 周四]
+#+last_modified:  
+
+
+
+- [[id:748e4585-fe76-4a86-85dd-95fadb07a8be][js-async-setTimeout()]]
+- [[id:1dabf9cb-a59d-4581-b833-09b979d0f34d][js-async-Await]]
+- [[id:ac7a56ae-8a08-4beb-9082-9feda91bbd5f][js-async-Promise]]

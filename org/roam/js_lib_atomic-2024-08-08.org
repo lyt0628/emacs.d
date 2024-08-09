@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       473e5f04-d5c1-4053-9b21-0c539a19aee8
+:END:
+#+title: js-lib-atomic
+#+date: [2024-08-08 周四]
+#+last_modified:  
+

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       09c96258-cb88-49cb-96c6-c5526ed7b866
+:END:
+#+title: js-drop
+#+date: [2024-08-08 周四]
+#+last_modified:  
+

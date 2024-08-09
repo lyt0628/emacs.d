@@ -13,11 +13,18 @@
 - [[id:7f49a54d-d00e-4089-ac17-d9c52e6f139d][js-lib]]
 - [[id:0554b106-aa89-480e-b089-02db918cbea7][js-ds]]
 - [[id:bdbb6b24-df1f-4756-8a26-936c403067d1][js-ev]]
+- [[id:1457ae38-52b4-433e-8007-b1ecdea15fba][js-async]]
 - [[id:66829525-eece-4cf5-8b46-aaffc95c1f3b][js-canvas]]
 - [[id:457282bf-01a2-4262-a878-3f51b6b8e0fb][js-oop]]
+- [[id:b839deab-a094-4af1-ba98-2b341ace270d][js-3rd]]
 
 
-  
-*Async*
-- [[id:1dabf9cb-a59d-4581-b833-09b979d0f34d][js-async-Await]]
-- [[id:ac7a56ae-8a08-4beb-9082-9feda91bbd5f][js-async-Promise]]
+- [[id:5dbe40f3-f377-4454-b2ef-24b1b1ff67e5][js-encode]]
+- [[id:9629e806-03c6-425d-a56b-ac6acb13b704][js-cookie]]
+- [[id:2ce0d4bf-0f2b-45f7-9a1e-a342941a0e67][js-webcomponent]]
+- [[id:74b72417-8375-41fa-af1c-8a4b2262f63e][js-xdm]]
+- [[id:09c96258-cb88-49cb-96c6-c5526ed7b866][js-drop]]
+- [[id:767a7a9e-6ef9-4285-875b-b68ddcc2c211][js-audio&video]]
+- [[id:abb00bd5-b856-4e8b-9335-817102233fe9][js-notification]]
+- [[id:1e5e2524-8986-4e0a-b668-a200c67c712b][js-page visibility]]
+ 

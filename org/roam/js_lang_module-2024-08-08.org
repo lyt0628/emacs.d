@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       ee019e06-063c-484f-a92d-7662ea39b284
+:END:
+#+title: js-lang-module
+#+date: [2024-08-08 周四]
+#+last_modified:  
+

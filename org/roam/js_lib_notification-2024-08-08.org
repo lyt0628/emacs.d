@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       abb00bd5-b856-4e8b-9335-817102233fe9
+:END:
+#+title: js-notification
+#+date: [2024-08-08 周四]
+#+last_modified:  
+

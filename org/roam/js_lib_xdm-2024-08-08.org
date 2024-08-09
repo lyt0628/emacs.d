@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       74b72417-8375-41fa-af1c-8a4b2262f63e
+:END:
+#+title: js-xdm
+#+date: [2024-08-08 周四]
+#+last_modified:  
+

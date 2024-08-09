@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       b839deab-a094-4af1-ba98-2b341ace270d
+:END:
+#+title: js-3rd
+#+date: [2024-08-08 周四]
+#+last_modified:  
+

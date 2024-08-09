@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       d85c813f-74b3-43b5-b689-e4527a7932ec
+:END:
+#+title: js-encode-TextEncoder
+#+date: [2024-08-08 周四]
+#+last_modified:  
+
+
+#+BEGIN_SRC html :noweb yes
+<script>
+<<1>>
+</script>
+#+END_SRC
+
+#+RESULTS:
+
+
+
+#+NAME: 1
+#+BEGIN_SRC js :noweb yes :eval no
+const encoder = new TextEncoder()
+
+#+END_SRC
+
+

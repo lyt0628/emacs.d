@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       43b71ccc-4f57-4009-a1eb-0fbeac9c5e26
+:END:
+#+title: js-lib-file&blob
+#+date: [2024-08-08 周四]
+#+last_modified:  
+

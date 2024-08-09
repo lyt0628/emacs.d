@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       8ce6af7e-4100-4403-8e86-a9ded5fe6efb
+:END:
+#+title: js-lang-exception
+#+date: [2024-08-08 周四]
+#+last_modified:  
+

@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       5dbe40f3-f377-4454-b2ef-24b1b1ff67e5
+:END:
+#+title: js-encode
+#+date: [2024-08-08 周四]
+#+last_modified:  
+
+
+*Index*
+- [[id:d85c813f-74b3-43b5-b689-e4527a7932ec][js-encode-TextEncoder]]
