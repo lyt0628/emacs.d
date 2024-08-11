@@ -3,9 +3,9 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-capture-last-stored"
- (filename . "d:/data/emacs.d/org/roam/js_async-2024-08-08.org")
+ (filename . "d:/data/emacs.d/org/roam/ruby_block-2024-08-11.org")
  (front-context-string)
  (rear-context-string . "ast_modified:  \n")
- (position . 130)
- (last-modified 26292 22561 278184 0))
+ (position . 131)
+ (last-modified 26296 23108 88862 0))
 )

@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       7d6f6ad5-b8ab-4365-8f99-d03781e20cc5
+:END:
+#+title: ruby-lang-block
+#+date: [2024-08-11 周日]
+#+last_modified:  
+
+
+#+BEGIN_SRC ruby :noweb yes :results output
+arr = [1, 2, 3]
+
+arr.each {
+  puts "Hello"
+}
+#+END_SRC
+
+#+RESULTS:
