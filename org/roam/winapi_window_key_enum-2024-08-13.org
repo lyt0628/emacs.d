@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       7e68f383-2637-457c-a48b-ff718c4a2e64
+:END:
+#+title: winapi-window-key enum
+#+date: [2024-08-13 周二]
+#+last_modified:  
+
+
+| MK Enum    | Note |
+|------------+------|
+| MK_LBUTTON |      |
+|------------+------|
+| MK_CONTROL |      |
+|------------+------|

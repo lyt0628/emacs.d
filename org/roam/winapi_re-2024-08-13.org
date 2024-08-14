@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       5751619b-595c-48ed-a780-c1905e7f6fd4
+:END:
+#+title: winapi-RE
+#+date: [2024-08-13 周二]
+#+last_modified:  
+
+
+
+*Index*
+
+- [[id:2f9f2bcf-098b-47c4-93e1-ed9adb1ad75f][winapi-window-FindWindow()]]
+- [[id:7dd922d3-088e-4709-94db-636af319df33][winapi-OpenProcess()]]
+- [[id:fc5e341e-d723-426a-8919-8e6b4d65bbf9][winapi-window-GetWindowThreadProcessId()]]
+- [[id:b920a865-ec16-412d-97c4-57bea8415905][winapi-window-ReadProcessMemory()]]
+- [[id:aff2071f-1d00-416d-8344-a999e3cd5886][winapi-window-SendMessage()&PostMessage()]]

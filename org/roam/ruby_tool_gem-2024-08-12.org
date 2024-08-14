@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       4b46d691-8f11-485a-85ff-32c2d59d3942
+:END:
+#+title: ruby-tool-gem
+#+date: [2024-08-12 周一]
+#+last_modified:  
+
+
+*Index*
+- [[install]]
+
+
+
+#+NAME: install
+#+BEGIN_SRC sh :noweb yes
+ gem install rails -v 7.0.4
+#+END_SRC

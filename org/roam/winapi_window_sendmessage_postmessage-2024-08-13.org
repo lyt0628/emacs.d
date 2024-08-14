@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       aff2071f-1d00-416d-8344-a999e3cd5886
+:END:
+#+title: winapi-window-SendMessage()&PostMessage()
+#+date: [2024-08-13 周二]
+#+last_modified:  
+

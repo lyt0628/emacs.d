@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       5bd98bf1-6fa9-4898-8d03-bf13b011510b
+:END:
+#+title: ruby-tool-gem-gemrc
+#+date: [2024-08-12 周一]
+#+last_modified:  
+
+
+#+BEGIN_SRC sh :noweb yes
+echo "gem: --no-document" >> ~/.gemrc
+#+END_SRC

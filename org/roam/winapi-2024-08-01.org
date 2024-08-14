@@ -10,8 +10,18 @@ UpdateData()
 * Index
 - [[id:b40940eb-dc27-4569-af62-90a4d055cb34][winapi-Name Rule]]
 - [[id:fca8cba2-50b4-40e9-8de4-578a83fdb6aa][winapi-Datatype]]
+- [[id:95fbf591-0eb3-4144-b320-8ca0a241c552][winapi-typedef]]
+- [[id:84b00dc0-9c77-47ed-aec5-ef9a9a897809][winapi-lib-winuser]]
 - [[id:c990f5a8-a43b-4720-9ef4-8afe013b887f][winapi-lib-tchar]]
 
 
 - [[id:60215107-1747-4ce5-9f14-935f3bef5fb1][winapi-window]]
+- [[id:5751619b-595c-48ed-a780-c1905e7f6fd4][winapi-RE]]
 - [[id:44d8813d-34d7-479b-852a-544922ab3294][winapi-Socket API]]
+
+
+
+- [[id:393c48b2-c69a-4d2e-a192-335dcc13dae3][winapi-HIBYTE&LOBYTE]]
+- [[id:48694b96-2e23-493c-a1c2-d0db6c9612a1][winapi-HIWOrD&LOWORD]]
+- [[id:d8f49aa5-cd2c-4bab-bf81-ee44fd5e2bb7][winapi-MAKELONG&MAKEWORD]]
+

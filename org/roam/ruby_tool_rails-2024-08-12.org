@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       edb406d2-9159-4e9d-9b00-2404dfd57f48
+:END:
+#+title: ruby-tool-rails
+#+date: [2024-08-12 周一]
+#+last_modified:  
+
+#+BEGIN_SRC sh :noweb yes
+rails -v
+#+END_SRC
+
+
+#+BEGIN_SRC sh :noweb yes
+rails _7.0.4_ new hello_app --skip-bundle
+#+END_SRC
