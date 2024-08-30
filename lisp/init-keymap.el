@@ -23,6 +23,12 @@
 (global-set-key (kbd "C-<up>") 'windmove-up)
 (global-set-key (kbd "C-<down>") 'windmove-down)
 
+(global-set-key (kbd "C-h") 'windmove-left)
+(global-set-key (kbd "C-l") 'windmove-right)
+(global-set-key (kbd "C-j") 'windmove-up)
+(global-set-key (kbd "C-k") 'windmove-down)
+
+
 
 (winner-mode 1)
 

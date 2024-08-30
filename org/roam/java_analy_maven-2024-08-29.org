@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       cda71074-a2cf-4bc2-931d-a76164a76f6c
+:END:
+#+title: java-analy-maven
+#+date: [2024-08-29 Thu]
+#+last_modified:  
+

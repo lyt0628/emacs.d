@@ -11,7 +11,7 @@
 (use-package avy
   :ensure t
   :bind
-  (("C-j c" . avy-goto-char-timer)))
+  (("C-z f c" . avy-goto-char-timer)))
 
 
 (provide 'init-package-avy)

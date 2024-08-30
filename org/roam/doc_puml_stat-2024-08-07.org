@@ -7,7 +7,7 @@
 
 
 #+HEADER: :results file
-#+HEADER: :file /tmp/puml2dab3e50-9146-48e9-98ab-473fba48eebc.png
+#+HEADER: :file ../tmp/puml2dab3e50-9146-48e9-98ab-473fba48eebc.png
 #+BEGIN_SRC plantuml
 @startuml
 [*] --> State1
@@ -20,7 +20,7 @@ State2 --> [*]
 #+END_SRC
 
 #+RESULTS:
-[[file:/tmp/puml2dab3e50-9146-48e9-98ab-473fba48eebc.png]]
+[[file:../tmp/puml2dab3e50-9146-48e9-98ab-473fba48eebc.png]]
 
 
 

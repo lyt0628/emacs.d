@@ -9,12 +9,9 @@
 #+BEGIN_SRC ruby :noweb yes :results output
 a = "my age is #{18 + 2}"
 puts a
-puts b
+# puts b
 #+END_SRC
 
-#+RESULTS:
-: my age is 20
-: lineno : # $ .
 
 
 #+BEGIN_SRC ruby :noweb yes :results output

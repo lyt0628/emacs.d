@@ -39,7 +39,7 @@
 
 (require 'init-keymap)
 
-(require 'init-kmacro)
+;(require 'init-kmacro)
 
 (eval-when-compile (require 'use-package))
 

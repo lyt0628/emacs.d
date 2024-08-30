@@ -22,11 +22,10 @@
  (last-modified 26285 51673 810749 223000)
  (annotation . "\nthe README of redis."))
 ("org-capture-last-stored"
- (filename . "~/data/emacs.d/org/roam/doc_dot-2024-08-07.org")
+ (filename . "~/data/emacs.d/org/roam/java_analy_maven-2024-08-29.org")
  (front-context-string)
  (rear-context-string . "ast_modified:  \n")
- (position . 127)
- (last-modified 26291 8023 364553 413000))
+ (position . 138))
 ("elisp-dash"
  (filename . "~/.emacs.d/elpa/dash-20240405.946/dash.el")
  (front-context-string . "(eval-when-compi")
