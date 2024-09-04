@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       bb0ade35-ef84-42f1-8582-abfccea78fec
+:END:
+#+title: 日本語ー文法ー久しぶりの再会とあって
+#+filetags: :日本語:
+#+date: [2024-07-02 二]
+#+last_modified: [2024-07-05 五 23:23]
+
+
+
+* <BEn> とあって
+** 例
+- 久しぶりのs再会とあって、彼らは何時間も話していた

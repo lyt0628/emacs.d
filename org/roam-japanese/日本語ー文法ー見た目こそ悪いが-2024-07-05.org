@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       2d6eec59-ae4d-46bb-bd6c-98c2dd5b3be5
+:END:
+#+title: 日本語ー文法ー見た目こそ悪いが
+#+filetags: :日本語:
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 23:23]
+
+* Nこそ（A）が
+** 例
+- 父の料理は見た目こそ悪いが、とてもいい味をしている
+
