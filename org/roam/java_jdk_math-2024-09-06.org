@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       515c5d6b-f99b-44c5-9536-0a309ed936b6
+:END:
+#+title: java-jdk-Math
+#+date: [2024-09-06 周五]
+#+last_modified:  
+

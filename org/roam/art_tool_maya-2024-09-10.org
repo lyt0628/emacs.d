@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       4660dc8d-762a-4ae8-85d0-0f551e0af713
+:END:
+#+title: art-tool-maya
+#+date: [2024-09-10 周二]
+#+last_modified:  
+
+|-------+------|
+| Skill | Note |
+|-------+------|
+|       |      |
+|-------+------|
+

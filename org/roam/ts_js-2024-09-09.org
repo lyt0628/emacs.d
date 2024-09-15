@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       22a9ec7a-6d93-4ac3-a812-4dcd96dce111
+:END:
+#+title: ts-js
+#+date: [2024-09-09 周一]
+#+last_modified:  
+
+
+| Features | Note |
+|----------+------|
+| [[id:478681e7-300c-419e-be30-c74675057830][iterator]] |      |
+|----------+------|

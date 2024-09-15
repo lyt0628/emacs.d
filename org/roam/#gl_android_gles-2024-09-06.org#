@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       1dfc596b-0f89-4a26-b684-d29c479c3c57
+:END:
+#+title: gl-android-GLES
+#+date: [2024-09-06 周五]
+#+last_modified:  
+
+
+| Member       | Params           | Ret  | Note |
+|--------------+------------------+------+------|
+| glViewpost() | x,y,width,height | bool |      |
+|--------------+------------------+------+------|
+
+
+
+* See Also
+- [[id:469935cc-8efd-44db-b1c1-565c7b19210c][gl-APIs]]

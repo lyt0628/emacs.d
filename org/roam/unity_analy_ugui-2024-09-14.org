@@ -1,0 +1,193 @@
+:PROPERTIES:
+:ID:       0e37a9d6-baaf-4ce3-af03-54dff2646213
+:END:
+#+title: unity-analy-ugui
+#+date: [2024-09-14 周六]
+#+last_modified:  
+
+#+NAME: UGUI
+#+BEGIN_SRC plantuml :file ../tmp/puml-ce7879b8-7282-11ef-8d53-04421a00482f.png :cmdline -DPLANTUML_LIMIT_SIZE=100000
+@startuml
+!$v1 = "(eventData : PointerEventData)->nil"
+!$v2 = "(eventData : BaseEventData)->nil"
+
+enum EventHandle {
+ Unused
+ Used
+}
+
+
+interface "IEventSystemHandler" as eh
+
+interface "IPointerEnterHandler" as peh
+peh : OnPointerEnter : $v1
+
+interface "IPointerExitHandler" as pxh
+pxh : OnPointerrExit : $v1
+
+interface "IPointerDownHandler" as pdh
+pdh : OnPointerrDown : $v
+
+interface "IPointerUpHandler" as puh
+puh : OnPointerrUp : $v1
+
+interface "IPointerClickHandler" as pch
+pch : OnPointerrClick : $v1
+
+interface "IBeginDragHandler" as bdh
+pdh : OnBeginDrag : $v1
+
+interface "IInitializePotentialDragHandler" as ipdh
+ipdh : OnInitializePotenialDrag : $v1
+
+interface "IDragHandler" as dh
+dh : OnDrag : $v1
+
+interface "IEndDragHandler" as edh
+edh : OnDrag : $v1
+
+interface "IDropHandler" as drh
+drh : OnDrop : $v1
+
+interface "IScrollHandler" as sh
+sh : OnScroll : $v1
+
+
+eh <|-- peh
+eh <|-- pxh
+eh <|-- pdh
+eh <|-- puh
+eh <|-- pch
+eh <|-- bdh
+eh <|-- ipdh
+eh <|-- dh
+eh <|-- edh
+eh <|-- drh
+eh <|-- sh
+
+interface "IUpdateSelectedHandler" as ush
+ush : OnUpdateSelected : $v2
+
+interface "ISelectedHandler" as selh
+selh : OnSelect : $v2
+
+interface "IDeSelectedHandler" as dselh
+dselh : OnDeSelect : $v2
+
+interface "IMoveHandler" as mh
+mh : OnMove : $v2
+
+interface "ISubmitHandler" as smh
+smh : OnSubmit : $v2
+
+interface "ICancelHandler" as ch
+ch : OnCancel : $v2
+eh <|--- ush
+eh <|--- selh
+eh <|--- dselh
+eh <|--- mh
+eh <|--- smh
+eh <|--- ch
+
+
+class "EventTrigger" as et
+note "EventTrigger is a helper component to handle UI Event,\nand can be added to any gameobject\
+EventTrigger drived from all handler" as n2et
+n2et .. et
+class "TriggerEvent" as te{
+  # drived from UnityEvent<BaseEventData>
+}
+class "Entry" as ent{
+  + eventID : TriggerEventType
+  + callback : TriggerEvent 
+}
+enum TriggerEventType as tet
+
+
+
+
+
+class UIBehaviour
+class "EventSystem" as es
+es : + {static} current : EventSystem 
+es : - system_input_modules : BaseInputModule[]
+es : - current_input_module : BaseInputModule
+es : - send_navigation_events : true
+class BaseInputModule
+
+abstract "AbstractEventData" as aed
+aed : + {abstract} Is_Used() :bool
+aed : # _used : bool
+aed : # Reset()
+aed : # Use()
+
+class "BaseEventData" as bed {
+ + selected_obejct : get;set;
+ + Get_Current_Input_Module(): BaseInputModule
+ - _EventSystem : EventSystem
+}
+note "BaseEventData delegate all impl to member _EventSystem" as n2bed
+n2bed .. bed
+
+class "AxisEventData" as axed {
+  + moveVector : Vector2
+  + moveDir : MoveDirection
+}
+
+class "PointerEventData" as ped {
+  + pointer_Enter : GameObjec 
+  + pointer_press : GameObject
+  + last_press : GameObject 
+  + raw_pointer_press  :  GameObject 
+  + pointer_drag : Gameobject
+  + pointer_current_raycast : RaycastResult
+  + pointer_press_raycast : RaycastResult
+  + hovered : GameObject[]
+  + eligibleForClick : bool
+  + pointer_id : int
+  + position : Vec2
+  + delta : Vec2
+  + press_position : Vec2
+  + click_time : float # for control double-click
+  + click_count : int
+  + scroll_delta ： Vec2
+  + use_drag_threshold : bool
+  + dragging : bool
+  + button : InputButton
+  + ctor (EventSystem)
+  + Is_POinterMoving():bool
+  + is_Scrolling():bool
+  + enter_Event_Camera():Camera
+  + presd_Event_Camera():Carmera
+}
+note "PointerEventData use multiple Fields \
+\nto store targets for diffent event type" as n2ped
+ped . n2ped
+enum "InputButton" as mb {
+  Left = 0
+  Right = 1
+  Middle = 2
+}
+enum "FramePressState" as fps {
+ Pressed
+ Released
+ PressAndRelease
+ NotChanged
+}
+
+abstract "UIBehaviour" as MonoBehaviour{
+  #[asbtract] On_Rect_Transform_Dimensions_Change()
+}
+
+aed <|-- bed
+bed <|-- axed
+bed <|-- ped
+ped --> mb
+
+abstract Graphic
+
+@enduml
+#+END_SRC
+
+#+RESULTS: UGUI
+[[file:../tmp/puml-ce7879b8-7282-11ef-8d53-04421a00482f.png]]

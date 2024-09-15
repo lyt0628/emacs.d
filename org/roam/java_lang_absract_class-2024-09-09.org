@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       421f7a57-e4b9-4f3a-8feb-52db65ac60a0
+:END:
+#+title: java-lang-absract class
+#+date: [2024-09-09 周一]
+#+last_modified:  
+

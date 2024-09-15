@@ -7,7 +7,7 @@
 
 
 * Index
-- [[id:dc022d16-1404-4983-bb9e-56b1eaf8d749][js-ds-Array]]
+- [[id:506a0850-a5ea-4fa5-abd4-c5e8efe45c61][js-lib-Array]]
 - [[id:01385c04-8805-473a-8eb5-a0140ea71882][js-ds-Map]]
 - [[id:e81b2754-320b-4fe1-b4ae-2e1f33579453][js-ds-WeakMap]]
 - [[id:e81b2754-320b-4fe1-b4ae-2e1f33579453][js-ds-WeakMap]]

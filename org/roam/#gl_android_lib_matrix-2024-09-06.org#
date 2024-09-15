@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       daaff378-47a5-4325-96c0-364367c88371
+:END:
+#+title: gl-android-lib-Matrix
+#+date: [2024-09-06 周五]
+#+last_modified:  
+
+
+
+| Function   | Params                            | Ret | Note             |
+|------------+-----------------------------------+-----+------------------|
+| setLookAtM | matrix : out float[]              |     |                  |
+|            | offset : int                      |     |                  |
+|            | cx,cy,cz : carmera coord          |     |                  |
+|            | tx,ty,tz : target coord           |     |                  |
+|            | upx,upy,upz : up direction vector |     |                  |
+|------------+-----------------------------------+-----+------------------|
+| orthoM     | projMatrix : out float[]          |     | cross projection |
+|            | offset : int                      |     |                  |
+|            | left,right,bottom,top             |     |                  |
+|            | near,far                          |     |                  |
+|------------+-----------------------------------+-----+------------------|
+|            |                                   |     |                  |
+|------------+-----------------------------------+-----+------------------|

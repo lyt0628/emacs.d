@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       dd4bbc55-3ccd-47f0-8ddc-e558f88d42f0
+:END:
+#+title: cs-lib-ISerializationCallbackReceiver
+#+date: [2024-09-11 周三]
+#+last_modified:  
+

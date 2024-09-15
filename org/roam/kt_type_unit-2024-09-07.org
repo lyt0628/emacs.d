@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       4183b1e1-cc1a-497a-9e56-8453f470597d
+:END:
+#+title: kt-type-Unit
+#+date: [2024-09-07 周六]
+#+last_modified:  
+

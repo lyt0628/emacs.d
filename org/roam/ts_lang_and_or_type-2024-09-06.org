@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       cbbbe46e-c028-4b12-8c8e-8f3e9bf38321
+:END:
+#+title: ts-lang-and or type
+#+date: [2024-09-06 周五]
+#+last_modified:  
+

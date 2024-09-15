@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       dcdfa46a-16a4-4f99-ad4c-1c36b4cb4821
+:END:
+#+title: tool-jenkins-plugin
+#+date: [2024-09-05 周四]
+#+last_modified:  
+
+
+

@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       74d9cbf1-fcd0-4938-b55e-2c594030630b
+:END:
+#+title: tool-jenkins-params
+#+date: [2024-09-05 周四]
+#+last_modified:  
+
+
+|---------------+-----------------------------------------+------|
+| param type FN | params                                  | Note |
+|---------------+-----------------------------------------+------|
+| boleanParam   | name                                    |      |
+|               | defaultValue                            |      |
+|               | description                             |      |
+|---------------+-----------------------------------------+------|
+| string        | same as above                           |      |
+|---------------+-----------------------------------------+------|
+| text          | same as above                           |      |
+|---------------+-----------------------------------------+------|
+| choice        | name                                    |      |
+|               | choices string of options sparated by , |      |
+|               | description                             |      |
+|---------------+-----------------------------------------+------|
+| password      | same as booleanParam                    |      |
+|---------------+-----------------------------------------+------|
+
+
+- parameters can be access with params object as field

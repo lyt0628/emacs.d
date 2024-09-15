@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       ea6079bb-fd91-4515-935d-91fd61007381
+:END:
+#+title: ts-lang-interface
+#+date: [2024-09-06 周五]
+#+last_modified:  
+

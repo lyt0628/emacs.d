@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       0b049586-d383-40e7-a8c4-ea17aedc4bfa
+:END:
+#+title: cs-lib-Enum
+#+date: [2024-09-13 周五]
+#+last_modified:  
+
+
+| API      | Params             | Ret                | Note |
+|----------+--------------------+--------------------+------|
+| GetNames | typeof(AEnumClass) | entryNames : str[] |      |
+|----------+--------------------+--------------------+------|

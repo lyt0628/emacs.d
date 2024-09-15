@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       a6588864-74cf-4d52-8759-c90e950064a9
+:END:
+#+title: unity-analy-ugui-InputModules
+#+date: [2024-09-14 周六]
+#+last_modified:  
+
+
+#+NAME: InputModules
+#+BEGIN_SRC plantuml :file ../tmp/puml-904b13f6-72b1-11ef-b916-04421a00482f.png
+@startuml
+
+
+class "BaseInput"  as bi
+note "BaseInput is a wrapper for Input for getting just enough Function" as n2bi
+n2bi . bi
+
+@enduml
+#+END_SRC
+
+#+RESULTS: InputModules
+[[file:../tmp/puml-904b13f6-72b1-11ef-b916-04421a00482f.png]]
+
+

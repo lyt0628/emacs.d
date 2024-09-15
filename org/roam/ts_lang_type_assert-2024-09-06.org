@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       6e8aa210-4ee1-4d33-a191-2b1bb2bc5927
+:END:
+#+title: ts-lang-type assert
+#+date: [2024-09-06 周五]
+#+last_modified:  
+

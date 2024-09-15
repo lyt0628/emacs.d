@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       b8edd3e8-7a0a-4040-b287-4fe7bbf454fd
+:END:
+#+title: tool-glob
+#+date: [2024-09-05 周四]
+#+last_modified:  
+

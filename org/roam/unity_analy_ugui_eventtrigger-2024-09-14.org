@@ -1,0 +1,36 @@
+:PROPERTIES:
+:ID:       f1c409a8-3d3b-4fa7-b126-fee790bc2903
+:END:
+#+title: unity-analy-ugui-EventTrigger
+#+date: [2024-09-14 周六]
+#+last_modified:  
+
+
+#+NAME: EventTrigger
+#+BEGIN_SRC plantuml :file ../tmp/puml-b238e7ec-72af-11ef-b15b-04421a00482f.png
+@startuml
+
+
+class "EventTrigger" as et
+note "EventTrigger is a helper component to handle UI Event,\nand can be added to any gameobject\
+EventTrigger drived from all handler" as n2et
+n2et .. et
+class "TriggerEvent" as te{
+  # drived from UnityEvent<BaseEventData>
+}
+class "Entry" as ent{
+  + eventID : TriggerEventType
+  + callback : TriggerEvent 
+}
+enum TriggerEventType as tet
+
+
+ent --> tet
+ent --> te
+et -> ent
+
+
+
+@enduml
+#+END_SRC
+

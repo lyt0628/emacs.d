@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       ecf133bb-a19c-4754-ba47-c57b5e593399
+:END:
+#+title: js-type-Symbol
+#+date: [2024-09-06 周五]
+#+last_modified:  
+

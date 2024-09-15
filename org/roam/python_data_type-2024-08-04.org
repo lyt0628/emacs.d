@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       2d9b34cc-4e4f-40f2-a0fc-dff31532044d
 :END:
-#+title: python-data type
+#+title: python-lang-datatype
 #+date: [2024-08-04 周日]
 #+last_modified:  
 

@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       fb433cb0-d850-4101-9581-cbc89eb0a04c
+:END:
+#+title: tool-jenkins-trigger-upstream
+#+date: [2024-09-05 周四]
+#+last_modified:  
+
+
+
+| param            | value                                | Note |
+|------------------+--------------------------------------+------|
+| upstreamProjects | name of upstream job with sparator , |      |
+|------------------+--------------------------------------+------|
+| threshould       | hudson.model.Result.SUCCESS          |      |
+|                  | .FAILURE                             |      |
+|                  | .AbORTED                             |      |
+|------------------+--------------------------------------+------|

@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       ef7fec03-685a-486e-8f17-56f6118aa912
+:END:
+#+title: keymap-modifier ident style
+#+date: [2024-09-10 周二]
+#+last_modified:  
+
+| Modifier Combo | Note |
+|----------------+------|
+| Ctrl           |      |
+|----------------+------|
+| Shift          |      |
+|----------------+------|
+| Alt            |      |
+|----------------+------|
+| Ctrl+Shift     |      |
+|----------------+------|
+| Ctrl+Alt       |      |
+|----------------+------|
+| Ctrl+Shift+Alt |      |
+|----------------+------|
+
+

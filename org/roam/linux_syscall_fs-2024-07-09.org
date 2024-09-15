@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       31c11eff-bd14-46a7-b63b-e120105684a7
 :END:
-#+title: linux-FS
+#+title: linux-syscall-fs
 #+date: [2024-07-09 二]
 #+last_modified: [2024-07-11 四 08:21]
 

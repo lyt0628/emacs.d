@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       433a6b6d-5f6b-45cb-8e7c-be2182a8300c
+:END:
+#+title: tool-jenkins-plugin-vault
+#+date: [2024-09-05 周四]
+#+last_modified:  
+

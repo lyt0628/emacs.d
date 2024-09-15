@@ -1,119 +1,98 @@
 :PROPERTIES:
 :ID:       1fd0d0e3-932d-4ca6-83da-4751bcc5e533
 :END:
-#+title: linux-Signal
+#+title: linux-syscall-singal
 #+filetags: :signal:
 #+date: [2024-07-05 五]
 #+last_modified: [2024-07-09 二 15:27]
 
-* Index
-*SIG_Sender:*
-- [[id:6e7800e5-78b4-4445-8ecf-497f66d20182][linux-syscall-kill]]
-- [[id:98a6ec36-de59-4c39-bfde-f6e80866d932][linux-syscall-raise]]
-- [[id:42418a83-89e3-433d-81f1-f5bd97e8727a][linux-syscall-abort]]
+
+|-----------+-------------------+------------------------------------------+-----------------------------------------------------------------|
+| API       | Params            | Ret                                      | Note                                                            |
+|-----------+-------------------+------------------------------------------+-----------------------------------------------------------------|
+| kill      | pid               |                                          | when pid = 0, send signal to all proc in current process group  |
+|           | [[id:b2b9afc9-3782-4212-8068-08d92ffddce5][signo]]             | [0,-1[errno=ESRCH:no Proc else no Auth]] | when pid = 1, send signal to all proc except Init_Proc and self |
+|-----------+-------------------+------------------------------------------+-----------------------------------------------------------------|
+| raise     | [[id:b2b9afc9-3782-4212-8068-08d92ffddce5][signo]]             |                                          | send signal to self                                             |
+|-----------+-------------------+------------------------------------------+-----------------------------------------------------------------|
+| abort     |                   |                                          | kill self                                                       |
+|-----------+-------------------+------------------------------------------+-----------------------------------------------------------------|
+| alarm     | second            | remaining                                | in the spec delay, send SIGALARM to self,                       |
+|           |                   |                                          | if second = 0, cancel old alarm                                 |
+|-----------+-------------------+------------------------------------------+-----------------------------------------------------------------|
+| setitimer | type              |                                          | type:                                                           |
+|           | new_itimer*       |                                          | - ITIMER_REAL: Count Real Time, send SIGALARM                   |
+|           | old_itimer* : out |                                          | - ITIMER_REAL: Count CPU Time, send SIGALARM                    |
+|           |                   |                                          | - ITIMER_PROF: Count CPU_Time & Wait_Time, send SIGPROF         |
+|           |                   |                                          |                                                                 |
+|           |                   |                                          | it_value used to spec delay                                     |
+|           |                   |                                          | it_interval to spec interval of every SIGALARM,                 |
+|           |                   |                                          | if it_interval all member is 0, means to no repeat              |
+|-----------+-------------------+------------------------------------------+-----------------------------------------------------------------|
+#+BEGIN_SRC plantuml  :file ../tmp/puml-f3705290-3adb-11ef-b156-0242980bb4f0.png
+  @startuml
+      struct "ittimerval" as timer
+      struct timeval
+
+      timer -> timeval
 
 
-*Timer*
-- [[id:8aa4ebb2-14d3-4639-a5d7-136879a67307][linux-syscall-alarm]]
-- [[id:e4419c80-95ac-4d6a-8ddc-28d231f98404][linux-syscall-setitimer]]
+      timer : it_interval : timeval
+      timer : it_value : timeval
 
-
-*Recv Signal*
-- [[id:196efae2-9fab-4632-8a75-338fcd4f279d][linux-syscall-Catch Signal]]
-- [[id:5eb42053-fce6-42e8-9633-ac724ce260c3][linux-syscall-Signal Mask]]
-
-
-
-* Show All Available Sigals
-
-#+BEGIN_SRC sh :results list
-  kill -l
+      timeval : tv_sec
+      timeval : tv_usec
+  @enduml
 #+END_SRC
 
+#+RESULTS:
+[[file:../tmp/puml-f3705290-3adb-11ef-b156-0242980bb4f0.png]]
 
-| SIGNO    | Note      | Default action                      | Example             |
-|----------+-----------+-------------------------------------+---------------------|
-| 0        |           |                                     |                     |
-|----------+-----------+-------------------------------------+---------------------|
-| HUP      |           | TERM(End Proc)                      |                     |
-|----------+-----------+-------------------------------------+---------------------|
-| INT      |           | TERM                                | C-c in TTY          |
-|----------+-----------+-------------------------------------+---------------------|
-| QUIT     |           | Term                                | C-\ in TTY          |
-|----------+-----------+-------------------------------------+---------------------|
-| ILL      |           | Core(End Proc & generate Core file) | Illegal Instruction |
-|----------+-----------+-------------------------------------+---------------------|
-| TRAP     |           | Core                                | GDB trap command    |
-|----------+-----------+-------------------------------------+---------------------|
-| ABRT     |           | Core                                | call abort()        |
-|----------+-----------+-------------------------------------+---------------------|
-| BUS      |           | Core                                | visit illegal addr  |
-|----------+-----------+-------------------------------------+---------------------|
-| FPE      | math trap | Core                                | 2/0 in c code       |
-|----------+-----------+-------------------------------------+---------------------|
-| KILL     |           | TERM                                |                     |
-|----------+-----------+-------------------------------------+---------------------|
-| USR1     |           |                                     |                     |
-| SEGV     |           |                                     |                     |
-| USR2     |           |                                     |                     |
-| PIPE     |           |                                     |                     |
-| ALRM     |           |                                     |                     |
-| TERM     |           |                                     |                     |
-| 16       |           |                                     |                     |
-| CHLD     |           |                                     |                     |
-| CONT     |           |                                     |                     |
-|----------+-----------+-------------------------------------+---------------------|
-| STOP     |           | Stop(suspend Proc)                  |                     |
-|----------+-----------+-------------------------------------+---------------------|
-| TSTP     |           | Stop                                | C-z in TTY          |
-|----------+-----------+-------------------------------------+---------------------|
-| TTIN     |           |                                     |                     |
-| TTOU     |           |                                     |                     |
-| URG      |           |                                     |                     |
-| XCPU     |           |                                     |                     |
-| XFSZ     |           |                                     |                     |
-| VTALRM   |           |                                     |                     |
-| PROF     |           |                                     |                     |
-| WINCH    |           |                                     |                     |
-| IO       |           |                                     |                     |
-| PWR      |           |                                     |                     |
-| SYS      |           |                                     |                     |
-| 32       |           |                                     |                     |
-| 33       |           |                                     |                     |
-| RTMIN    |           |                                     |                     |
-| RTMIN+1  |           |                                     |                     |
-| RTMIN+2  |           |                                     |                     |
-| RTMIN+3  |           |                                     |                     |
-| RTMIN+4  |           |                                     |                     |
-| RTMIN+5  |           |                                     |                     |
-| RTMIN+6  |           |                                     |                     |
-| RTMIN+7  |           |                                     |                     |
-| RTMIN+8  |           |                                     |                     |
-| RTMIN+9  |           |                                     |                     |
-| RTMIN+10 |           |                                     |                     |
-| RTMIN+11 |           |                                     |                     |
-| RTMIN+12 |           |                                     |                     |
-| RTMIN+13 |           |                                     |                     |
-| RTMIN+14 |           |                                     |                     |
-| RTMIN+15 |           |                                     |                     |
-| RTMAX-14 |           |                                     |                     |
-| RTMAX-13 |           |                                     |                     |
-| RTMAX-12 |           |                                     |                     |
-| RTMAX-11 |           |                                     |                     |
-| RTMAX-10 |           |                                     |                     |
-| RTMAX-9  |           |                                     |                     |
-| RTMAX-8  |           |                                     |                     |
-| RTMAX-7  |           |                                     |                     |
-| RTMAX-6  |           |                                     |                     |
-| RTMAX-5  |           |                                     |                     |
-| RTMAX-4  |           |                                     |                     |
-| RTMAX-3  |           |                                     |                     |
-| RTMAX-2  |           |                                     |                     |
-| RTMAX-1  |           |                                     |                     |
-| RTMAX    |           |                                     |                     |
+|-------------------------+----------------------+---+-----------------------------------|
+| signal : CB register    | [[id:b2b9afc9-3782-4212-8068-08d92ffddce5][signo]]                |   |                                   |
+|                         | CB: (signo:int)->nil |   | SIG_DEF is default signal handler |
+|-------------------------+----------------------+---+-----------------------------------|
+| sigaction : CB register | [[id:b2b9afc9-3782-4212-8068-08d92ffddce5][signo]]                |   |                                   |
+|                         | [[sigaction]]            |   |                                   |
+|                         | old_sigaction ； out |   |                                   |
+|-------------------------+----------------------+---+-----------------------------------|
+#+NAME: sigaction
+#+BEGIN_SRC plantuml :file ../tmp/puml-d73867b2-6df4-11ef-82cd-04421a00482f.png
+@startuml
+struct sigaction {
+sa_handler : (signo:int)->nil
+sa_action : (signo:int, siginfo_t*, void*)->nil
+sa_mast : sigset_t
+sa_flags : int
+sa_restorer : ()->nil
+}
+struct siginfo_t{
 
+}
+@enduml
+#+END_SRC
 
+#+RESULTS: sigaction
+[[file:../tmp/puml-d73867b2-6df4-11ef-82cd-04421a00482f.png]]
 
+|-------------+-------------------+---+-------------------------|
+| sigemptyset | sigset* :out      |   |                         |
+|-------------+-------------------+---+-------------------------|
+| sigaddset   | sigset*           |   |                         |
+|             | [[id:b2b9afc9-3782-4212-8068-08d92ffddce5][signo]]             |   |                         |
+|-------------+-------------------+---+-------------------------|
+| sigismember | sigset*           |   |                         |
+|             | [[id:b2b9afc9-3782-4212-8068-08d92ffddce5][signo]]             |   |                         |
+|-------------+-------------------+---+-------------------------|
+| sigprocmask | op :              |   | set process signal mask |
+|             | - SIG_BLOCK       |   |                         |
+|             | sigset*           |   |                         |
+|             | old_sigset : out  |   |                         |
+|-------------+-------------------+---+-------------------------|
+| sigpending  | ped_sigset* : out |   |                         |
+|-------------+-------------------+---+-------------------------|
 
-* Example
-- [[id:d5afa04e-131a-4bb3-a1bd-0b28777f6086][linux-syscall-example-msleep]]
+- [[id:5eb42053-fce6-42e8-9633-ac724ce260c3][linux-syscall-Signal Mask]]
+
+- All orphan proc will becom child of Init_Proc
+

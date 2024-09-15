@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       6d6638e4-726c-4f80-9de1-5a57c30dfeef
+:END:
+#+title: tool-jenkins-trigger-pollSCM
+#+date: [2024-09-05 周四]
+#+last_modified:  
+
+poll lastest code from repo, run by [[id:f7183f7e-c4ab-4758-b7cb-33285892bb0b][cron expr]] as param

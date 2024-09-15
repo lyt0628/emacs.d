@@ -5,6 +5,41 @@
 #+date: [2024-07-25 周四]
 #+last_modified:  
 
+
+shotcut hsave 2 major Functions
+1. Save Time, and to Improve Workflow
+2. To remember hard operations
+   
+The most impotant function of PS
+is Image Process, that is Tool Panel.
+
+In Variout Tools, Pencil Tool frequently we use.
+in use use Pencil, The State Change
+
+Pencil - Erase - Space - Zoom - color pick
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 In Prefix-style keymap defines some prefix-key
 | Key              | Note                                   |
 |------------------+----------------------------------------|

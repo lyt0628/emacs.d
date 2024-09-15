@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       660efab0-7800-47f8-9581-e76683c7ac1c
+:END:
+#+title: game
+#+date: [2024-09-09 周一]
+#+last_modified:  
+
+- operation
+- action
+- feedback

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       f9ce6e55-257b-43b3-9e36-737ad4375e63
+:END:
+#+title: ts-lang-fn
+#+date: [2024-09-06 周五]
+#+last_modified:  
+

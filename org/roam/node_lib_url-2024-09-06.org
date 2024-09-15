@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       a65b55c8-3560-4a70-a9f6-9dac60fafc73
+:END:
+#+title: node-lib-url
+#+date: [2024-09-06 周五]
+#+last_modified:  
+
+
+
+| Member  | Params  | Ret | Note |
+|---------+---------+-----+------|
+| parse() | url:str | [[id:a65b55c8-3560-4a70-a9f6-9dac60fafc73][URL]] |      |
+|---------+---------+-----+------|
+

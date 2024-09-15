@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       17986f50-ec2b-4fb5-9076-5d79ba57fb21
+:END:
+#+title: patt-decorator
+#+date: [2024-09-12 周四]
+#+last_modified:  
+

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       8bf96294-bc68-4bbc-b282-290e1ab5b1c9
+:END:
+#+title: gl-lang
+#+date: [2024-09-05 周四]
+#+last_modified:  
+

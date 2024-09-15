@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       2459138c-3f8d-4c97-8df1-6bbec9c0a625
+:END:
+#+title: spec-rfc1945_http1.0-StatusCode
+#+date: [2024-09-06 周五]
+#+last_modified:  
+

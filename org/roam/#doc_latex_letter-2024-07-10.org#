@@ -1,0 +1,72 @@
+:PROPERTIES:
+:ID:       39b5e89c-287d-4b99-a353-9b77375bbe9d
+:END:
+#+title: doc-latex-letter
+#+date: [2024-07-10 三]
+#+last_modified: [2024-07-10 三 21:27]
+
+
+
+* Letter accent Mark
+
+#+BEGIN_SRC latex-as-png :file ../tmp/tex-6217e3c0-a06c-4e79-baf7-98388c90e84c.png
+  \'o
+  \~o
+  \=o
+  \v{o}
+  \H{o}
+  \c{o}
+  \d{o}
+
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/tex-6217e3c0-a06c-4e79-baf7-98388c90e84c.png]]
+
+
+
+* Greek Letter in formual
+#+BEGIN_SRC latex-as-png :file ../tmp/tex-581ab3eb-6203-4c4c-ad2d-a4038c081445.png
+  $ \alpha \beta $	
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/tex-581ab3eb-6203-4c4c-ad2d-a4038c081445.png]]
+
+
+* Other Letter
+#+BEGIN_SRC latex-as-png :file /tmp/-tex-8fe46de5-0832-4e82-ad3d-7a32b792c64c.png
+  \AA
+  \aa
+  \AE
+  \ae
+  \OE
+  \oe
+  \SS
+  \ss
+  \IJ
+  \ij
+  \L
+  \l
+  \O
+  \o
+  \i
+  \j
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/-tex-8fe46de5-0832-4e82-ad3d-7a32b792c64c.png]]
+
+
+
+* Use babel preamble translate English ABC to Greek ABC
+#+BEGIN_SRC latex-as-png :file /tmp/tex-b96808fd-b95c-4218-ae4c-975db577d0d4.png :
+ \textgreek{abcde} 
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/tex-b96808fd-b95c-4218-ae4c-975db577d0d4.png]]
+
+
+
+

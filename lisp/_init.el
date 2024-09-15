@@ -12,7 +12,7 @@
   (message "Your Emacs is old, and some functionality in this config will be disabled. Please upgrade if possible."))
 
 (when (string= system-type "windows-nt")
-  (add-to-list 'load-path "D:/data/emacs.d/lisp"))
+  (add-to-list 'load-path "e:/emacs.d/lisp"))
 
 (when (string= system-type "gnu/linux")
   (add-to-list 'load-path "~/data/emacs.d/lisp"))

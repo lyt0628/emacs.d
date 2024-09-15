@@ -1,21 +1,23 @@
 :PROPERTIES:
 :ID:       1dfe2307-d996-42b6-abf1-1eb7ce4fdfc3
 :END:
-#+title: linux-Thread
+#+title: linux-syscall-thread
 #+date: [2024-07-09 二]
 #+last_modified: [2024-07-09 二 15:27]
 
 
-* Index
-- [[id:da31679b-c5d2-4aa0-97df-c57183e9de05][linux-syscall-pthread_create]]
-- [[id:daacaba8-2fd1-402f-958c-b5ca9461237b][linux-syscall-pthread_exit]]
-- [[id:5327bb34-c405-402a-855f-b7fea1f854f3][linux-syscall-pthread_cancel]]
-- [[id:5e131fbe-f580-442e-ae80-4bfe5fffd0b0][linux-syscall-pthread_join]]
-- [[id:bde1a1c2-e7ec-4d3a-b2d7-678adc385cc9][linux-syscall-pthread_detach]]
-
-
-*Thread Attr*
--
+| Method         | Params | Ret | Note |
+|----------------+--------+-----+------|
+| pthread_create |        |     |      |
+|----------------+--------+-----+------|
+| pthread_exit   |        |     |      |
+|----------------+--------+-----+------|
+| pthread_cancel |        |     |      |
+|----------------+--------+-----+------|
+| pthread_join   |        |     |      |
+|----------------+--------+-----+------|
+| pthread_detach |        |     |      |
+|----------------+--------+-----+------|
 
 
 

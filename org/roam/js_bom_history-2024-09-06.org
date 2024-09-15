@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       adc1c647-d222-4970-95e3-1e9961b2c31b
+:END:
+#+title: js-bom-history
+#+date: [2024-09-06 周五]
+#+last_modified:  
+

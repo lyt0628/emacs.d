@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       08a18a21-5d11-46fb-aee0-3c213abda401
+:END:
+#+title: rust
+#+date: [2024-09-07 周六]
+#+last_modified:  
+

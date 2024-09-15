@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       04a24adb-d48a-4bd5-b9e9-ec6accb93835
+:END:
+#+title: ts-lang-typeof instanceof
+#+date: [2024-09-06 周五]
+#+last_modified:  
+
+typeof match basic type
+
+instanceof match by constructor, and can match custom type

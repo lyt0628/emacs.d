@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       0acffe46-9b45-4ea9-b310-bc3c35e2febd
+:END:
+#+title: kt-lang-expr statement
+#+date: [2024-09-07 周六]
+#+last_modified:  
+
+
+All Statement in kt is Expr, that is some thing must be returned in all Statements
+

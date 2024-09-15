@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       18b5da92-0c99-4063-9388-07f26ed97188
 :END:
-#+title: linux-socket
+#+title: linux-syscall-socket
 #+filetags: :c:socket:
 #+date: [2024-07-05 五]
 #+last_modified: [2024-07-11 四 08:57]

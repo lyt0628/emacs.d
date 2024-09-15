@@ -1,12 +1,12 @@
 :PROPERTIES:
 :ID:       8226bb44-68bf-42f7-917b-f532e9bd26aa
 :END:
-#+title: color_
+#+title: color
 #+date: [2024-07-19 周五]
 #+last_modified:  
 
 
-
+|-------+--------+------|
 | Color | RGB    | Note |
 |-------+--------+------|
 |       | FFE4E5 |      |

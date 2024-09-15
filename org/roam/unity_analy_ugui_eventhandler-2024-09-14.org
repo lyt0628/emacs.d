@@ -1,0 +1,98 @@
+:PROPERTIES:
+:ID:       ba448d1a-fe98-414e-a796-1399219ccd56
+:END:
+#+title: unity-analy-ugui-EventHandler
+#+date: [2024-09-14 周六]
+#+last_modified:  
+
+#+NAME: EventHandler
+#+HEADER: :eval no
+#+BEGIN_SRC plantuml :file ../tmp/puml-d18e6342-72af-11ef-9012-04421a00482f.png
+@startuml
+
+!$v1 = "(eventData : PointerEventData)->nil"
+!$v2 = "(eventData : BaseEventData)->nil"
+
+enum EventHandle {
+ Unused
+ Used
+}
+
+
+interface "IEventSystemHandler" as eh
+
+interface "IPointerEnterHandler" as peh
+peh : OnPointerEnter : $v1
+
+interface "IPointerExitHandler" as pxh
+pxh : OnPointerrExit : $v1
+
+interface "IPointerDownHandler" as pdh
+pdh : OnPointerrDown : $v
+
+interface "IPointerUpHandler" as puh
+puh : OnPointerrUp : $v1
+
+interface "IPointerClickHandler" as pch
+pch : OnPointerrClick : $v1
+
+interface "IBeginDragHandler" as bdh
+pdh : OnBeginDrag : $v1
+
+interface "IInitializePotentialDragHandler" as ipdh
+ipdh : OnInitializePotenialDrag : $v1
+
+interface "IDragHandler" as dh
+dh : OnDrag : $v1
+
+interface "IEndDragHandler" as edh
+edh : OnDrag : $v1
+
+interface "IDropHandler" as drh
+drh : OnDrop : $v1
+
+interface "IScrollHandler" as sh
+sh : OnScroll : $v1
+
+
+eh <|-- peh
+eh <|-- pxh
+eh <|-- pdh
+eh <|-- puh
+eh <|-- pch
+eh <|-- bdh
+eh <|-- ipdh
+eh <|-- dh
+eh <|-- edh
+eh <|-- drh
+eh <|-- sh
+
+interface "IUpdateSelectedHandler" as ush
+ush : OnUpdateSelected : $v2
+
+interface "ISelectedHandler" as selh
+selh : OnSelect : $v2
+
+interface "IDeSelectedHandler" as dselh
+dselh : OnDeSelect : $v2
+
+interface "IMoveHandler" as mh
+mh : OnMove : $v2
+
+interface "ISubmitHandler" as smh
+smh : OnSubmit : $v2
+
+interface "ICancelHandler" as ch
+ch : OnCancel : $v2
+eh <|--- ush
+eh <|--- selh
+eh <|--- dselh
+eh <|--- mh
+eh <|--- smh
+eh <|--- ch
+
+@enduml
+#+END_SRC
+
+
+

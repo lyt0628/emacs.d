@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       e6301c3a-c28a-4a5c-bbe6-40c969f79cc5
+:END:
+#+title: c-std_
+#+date: [2024-09-08 周日]
+#+last_modified:  
+
+*Index*
+- [[id:e93908b9-972f-4171-ac2e-b3a466398543][c-std-str]]
+- [[id:435b3ff5-668d-45eb-8cbb-286e35e0f491][c-std-io]]
+- [[id:20cb717b-2f6f-43a2-af38-c1ef5e82cbba][c-std-bool]]

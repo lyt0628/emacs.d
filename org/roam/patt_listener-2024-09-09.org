@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       790c5fa2-52c6-4906-adc8-7b5b1067929e
+:END:
+#+title: patt-listener
+#+date: [2024-09-09 周一]
+#+last_modified:  
+

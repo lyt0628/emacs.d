@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       02468878-654f-44da-aff7-950db38a7c69
+:END:
+#+title: android-ev
+#+date: [2024-09-06 周五]
+#+last_modified:  
+
+
+| CB           | Params      | Ret | Note |
+|--------------+-------------+-----+------|
+| omTouchEvent | MotionEvent |     |      |
+|--------------+-------------+-----+------|

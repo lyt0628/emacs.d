@@ -1,0 +1,34 @@
+:PROPERTIES:
+:ID:       26fcf2f0-83a5-4586-802e-928287959c7a
+:END:
+#+title: doc-puml
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+
+
+#+BEGIN_SRC plantuml :file ../tmp/puml-aaavvv.png
+@startuml
+
+struct tagABC{
+ABC, NP-ABC, LP-ABC
+}
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:../tmp/puml-aaavvv.png]]
+
+
+
+#+NAME: PUML
+#+BEGIN_SRC plantuml :file ../tmp/puml-6fd4c1b2-50f6-11ef-83e1-b48c9d0f4f89.png
+@startuml
+
+@enduml
+#+END_SRC
+
+#+RESULTS: PUML
+[[file:../tmp/puml-6fd4c1b2-50f6-11ef-83e1-b48c9d0f4f89.png]]
+

@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       ec1cf6a9-0c9e-4cf1-974f-a325206f3075
+:END:
+#+title: patt-class obj
+#+date: [2024-09-11 周三]
+#+last_modified:  
+
+
+combinate class and class Object, store class metadata to the class obj
+instead of Ineritation chaim.

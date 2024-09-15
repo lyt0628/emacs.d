@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       05d5bff2-1ce8-4e46-bab6-a9a41af4228f
+:END:
+#+title: cs-lib-Global
+#+date: [2024-09-11 周三]
+#+last_modified:  
+

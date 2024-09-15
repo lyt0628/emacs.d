@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       b1ef8a9c-2bc3-4bf8-b0b3-20d3f21f796d
+:END:
+#+title: linux-syscall-sem<proc>
+#+date: [2024-07-09 二]
+#+last_modified: [2024-07-09 二 18:41]
+
+* API
+-
+
+
+#+NAME: sem
+#+BEGIN_SRC plantuml :file ../tmp/puml-d24108e8-6dba-11ef-91e8-04421a00482f.png
+@startuml
+
+struct sem
+
+@enduml
+#+END_SRC
+
+#+RESULTS: sem
+[[file:../tmp/puml-d24108e8-6dba-11ef-91e8-04421a00482f.png]]
+
+
+

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       2dfadaac-89d2-407f-b047-1d58db5cfd59
+:END:
+#+title: art-tool-blender-bone controller
+#+date: [2024-09-12 周四]
+#+last_modified:  
+

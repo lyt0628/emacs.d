@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       b3bb5867-151f-4d2c-8013-1ff1ef16555a
+:END:
+#+title: c-lang_
+#+date: [2024-09-08 周日]
+#+last_modified:  
+

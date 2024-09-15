@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       c9e8fc7a-40f7-4bca-930d-06d2f2d89f5b
+:END:
+#+title: gl-lang-modifier
+#+date: [2024-09-05 周四]
+#+last_modified:  
+
+| modifier  | Note                                 |
+|-----------+--------------------------------------|
+| attribute | diff in vertex, assigned by ctl lang |
+|-----------+--------------------------------------|
+| uniform   | same in a single shader process      |
+|-----------+--------------------------------------|
+| varying   | convert to frag step by vertex step  |
+|-----------+--------------------------------------|
+| const     |                                      |
+|-----------+--------------------------------------|

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       5ca6bf55-c84a-41ac-a6db-a6b04b90d881
+:END:
+#+title: ts-lang-general
+#+date: [2024-09-06 周五]
+#+last_modified:  
+

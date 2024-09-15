@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       4ae69f12-bfd9-43bc-bf7a-00ba1fdc5136
+:END:
+#+title: alg-slided window
+#+date: [2024-09-07 周六]
+#+last_modified:  
+

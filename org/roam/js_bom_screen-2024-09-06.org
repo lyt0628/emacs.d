@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       79077cd6-0967-4d5c-8344-a67b1d05bec9
+:END:
+#+title: js-bom-screen
+#+date: [2024-09-06 周五]
+#+last_modified:  
+

@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       d4a18eb1-c373-4cbb-bc56-5a404323ce62
+:END:
+#+title: cs-type-EventHandler
+#+date: [2024-09-09 周一]
+#+last_modified:  
+
+delegate EventHandler : (sender:Object, e: EventArgs)->nil

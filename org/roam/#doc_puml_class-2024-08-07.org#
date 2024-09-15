@@ -1,0 +1,246 @@
+:PROPERTIES:
+:ID:       a055637c-a737-4870-b15a-d7697d096d5c
+:END:
+#+title: doc-puml-class
+#+date: [2024-08-07 三]
+#+last_modified:  
+
+
+* 类型声明
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/7842c83f-dd13-41a4-8c06-190a1dff4fd0.png
+#+BEGIN_SRC plantuml
+@startuml
+abstract  abstract
+abstract class  "abstract class"
+annotation  annotation
+circle circle 
+() circle_short_form
+class class  
+class class_stereo <<stereotype>>
+diamond diamond
+<>  diamond_short_form
+entity entity
+enum enum
+exception exception
+interface interface
+metaclass metaclass
+protocol protocol
+stereotype stereotype
+struct struct
+@enduml
+
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/7842c83f-dd13-41a4-8c06-190a1dff4fd0.png]]
+
+
+* 连接器类型
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/d719dce4-70f1-4318-8b37-b582bbe6efd9.png
+#+BEGIN_SRC plantuml
+@startuml
+Class01 <|-- Class02
+Class03 *-- Class04
+Class05 o-- Class06
+Class07 .. Class08
+Class09 -- Class10
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/d719dce4-70f1-4318-8b37-b582bbe6efd9.png]]
+
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-c9f67150-4bd6-40f8-8748-3a1c7621a4f2.png
+#+BEGIN_SRC plantuml
+@startuml
+Class21 #-- Class22
+Class23 x-- Class24
+Class25 }-- Class26
+Class27 +-- Class28
+Class29 ^-- Class30
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-c9f67150-4bd6-40f8-8748-3a1c7621a4f2.png]]
+
+
+* 标签
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-7ad09b3f-83c2-429f-b995-94c6a0ec402f.png
+#+BEGIN_SRC plantuml
+@startuml
+类01 "1" *-- "many" 类02 : 包含
+类03 o-- 类04 : 聚合
+类05 --> "1" 类06
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-7ad09b3f-83c2-429f-b995-94c6a0ec402f.png]]
+
+** 作用方向
+
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml.png
+#+BEGIN_SRC plantuml
+@startuml
+class 汽车
+发动机 - 汽车 : 驱动 >
+汽车 *- 轮子 : 拥有 4 >
+汽车 -- 人 : < 所属
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml.png]]
+
+
+** 别名
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-0daf2293-140a-49de-bce9-96b415b4c716.png
+#+BEGIN_SRC plantuml
+@startuml
+class "This is my class" as class1
+class class2 as "It works this way too"
+class2 *-- "foo/dummy" : use
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-0daf2293-140a-49de-bce9-96b415b4c716.png]]
+
+* 删除
+
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-20c9ff8d-bdc2-4f4f-91db-3f0c878a1848.png
+#+BEGIN_SRC plantuml
+@startuml
+class $C1
+class $C2 $C2
+class "$C2" as dollarC2
+remove $C1
+remove $C2
+remove dollarC2
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-20c9ff8d-bdc2-4f4f-91db-3f0c878a1848.png]]
+
+
+* 属性声明
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-fdbc646b-df23-4c8b-adad-f7d64acf02b6.png
+#+BEGIN_SRC plantuml
+@startuml
+Object <|-- ArrayList
+
+Object : equals()
+
+ArrayList : Object[] elementData
+ArrayList : size()
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-fdbc646b-df23-4c8b-adad-f7d64acf02b6.png]]
+
+
+** 花括号样式
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-e56d12ec-3766-4ae5-9ec1-f5bbb6142b60.png
+#+BEGIN_SRC plantuml
+@startuml
+class Dummy {
+  String data
+  void methods()
+}
+class Flight {
+  flightNumber : Integer
+  departureTime : Date
+}
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-e56d12ec-3766-4ae5-9ec1-f5bbb6142b60.png]]
+
+
+** 类型指定
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/9046d510-db2e-49b9-b389-afb7fbde687b.png
+#+BEGIN_SRC plantuml
+@startuml
+class Dummy {
+{field} A field (despite parentheses)
+{method} Some method
+}
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/9046d510-db2e-49b9-b389-afb7fbde687b.png]]
+
+
+* 可见性
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-6dcae2c0-5485-4736-b27e-cff4036eebe8.png
+#+BEGIN_SRC plantuml
+@startuml
+class Dummy {
+-field1
+#field2
+~method1()
++method2()
+}
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-6dcae2c0-5485-4736-b27e-cff4036eebe8.png]]
+
+
+
+
+#+HEADER: :results file
+#+HEADER: :file /tmp/puml-0d114960-92aa-482a-b1d6-d1a3a967462e.png
+#+BEGIN_SRC plantuml
+@startuml
+skinparam classAttributeIconSize 0
+class Dummy {
+-field1
+#field2
+~method1()
++method2()
+}
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-0d114960-92aa-482a-b1d6-d1a3a967462e.png]]
+

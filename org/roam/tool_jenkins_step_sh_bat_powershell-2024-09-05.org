@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       a420cf74-edf3-49c0-b5c7-565906fb44c0
+:END:
+#+title: tool-jenkins-step-sh bat powershell
+#+date: [2024-09-05 周四]
+#+last_modified:  
+

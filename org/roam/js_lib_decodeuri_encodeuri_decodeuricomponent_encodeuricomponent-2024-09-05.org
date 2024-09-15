@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       59f59778-eb32-40bb-8862-3d34107f80d3
+:END:
+#+title: js-lib-decodeURI encodeURI decodeURIComponent encodeURIComponent 
+#+date: [2024-09-05 周四]
+#+last_modified:  
+
+
+
+| Function           | Params | Ret | Node |
+|--------------------+--------+-----+------|
+| decodeURI          |        |     |      |
+|--------------------+--------+-----+------|
+| encodeURI          |        |     |      |
+|--------------------+--------+-----+------|
+| decodeURIComponent |        |     |      |
+|--------------------+--------+-----+------|
+| encodeURIComponent |        |     |      |
+|--------------------+--------+-----+------|

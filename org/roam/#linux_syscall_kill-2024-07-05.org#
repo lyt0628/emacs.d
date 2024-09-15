@@ -1,0 +1,48 @@
+:PROPERTIES:
+:ID:       6e7800e5-78b4-4445-8ecf-497f66d20182
+:END:
+#+title: linux-syscall-kill
+#+filetags: :signal:
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 23:23]
+
+
+
+** Kill send Signal to any Proc
+#+BEGIN_SRC C :noweb yes
+  #include <unistd.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <signal.h>
+
+  int main()
+  {
+	pid_t pid;
+
+	pid = fork();
+	if(pid > 0){ <</>> Now  Proc
+		while(1){ <</>> If Parent Dead, parent of Child whill be Init_Proc
+			printf("Now:   My Pid is %d, My Parent one is %d\n", getpid(), getppid());
+		}
+	}
+	else if(pid == 0){ <</>> Child Proc
+		printf("Child: My Pid is %d, My Parent one is %d\n", getpid(), getppid());
+
+		kill(getppid(), SIGKILL); <</>>  
+		<</>> kill(0, SIGKILL); Send Signal to the same Proc_Group_Members
+		<</>> kill(-1, SIGKILL); Send Signal to All Proc except Init_Proc And Self
+
+  
+		printf("Killed");
+	}
+	else { <</>> Fail
+		perror("Error: fork failed");
+	}
+
+	return 0;
+  }
+#+END_SRC
+
+#+RESULTS:
+
+

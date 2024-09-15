@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       aa966a00-c24e-4254-8e1e-ba34cd680601
+:END:
+#+title: linux-analy-makefile
+#+date: [2024-09-07 周六]
+#+last_modified:  
+

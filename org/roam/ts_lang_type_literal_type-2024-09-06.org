@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       4e7418a0-110d-4e82-bdf9-1cd54d1f054b
+:END:
+#+title: ts-lang-type-literal type
+#+date: [2024-09-06 周五]
+#+last_modified:  
+

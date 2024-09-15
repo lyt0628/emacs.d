@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       f7183f7e-c4ab-4758-b7cb-33285892bb0b
+:END:
+#+title: tool-jenkins-trigger-cron
+#+date: [2024-09-05 周四]
+#+last_modified:  
+
+
+extend basic [[id:e18dc8a3-9cd1-4cc2-9c01-c4a22d9465bf][cron expr]], with simple symbols.
+- @hourly : H * * * *, resembly @yearly @annually @monthly

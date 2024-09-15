@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       0e40fb07-5fd0-48ef-ad8c-2ad920b1f41f
+:END:
+#+title: unity-editor-AssetDatabase
+#+date: [2024-09-13 周五]
+#+last_modified:  
+
+
+|--------------------+------------+-----+------|
+| API                | Params     | Ret | Note |
+|--------------------+------------+-----+------|
+| AssetPathToGUID()  |            |     |      |
+|--------------------+------------+-----+------|
+| GetAssetPath()     | [[id:587f5d44-cc7f-4ed0-a83f-788b4c3c3fc1][GameObject]] |     |      |
+|--------------------+------------+-----+------|
+| LoadAssetAtPath<T> | path       |     |      |
+|--------------------+------------+-----+------|

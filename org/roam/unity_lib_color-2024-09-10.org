@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       5a0d18be-8e81-4666-bd28-269a88fe5c8b
+:END:
+#+title: unity-type-Color
+#+date: [2024-09-10 周二]
+#+last_modified:  
+
+
+|--------+---------------+-----+------|
+| Member | Params/Type   | Ret | Note |
+|--------+---------------+-----+------|
+| ctor   | r,g,b : float |     |      |
+|--------+---------------+-----+------|

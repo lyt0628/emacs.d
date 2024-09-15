@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       16840de0-f1f3-40ee-a6ea-66a0783e6438
+:END:
+#+title: ts-lang-type infer rule
+#+date: [2024-09-06 周五]
+#+last_modified:  
+
+objs have same member is the same type

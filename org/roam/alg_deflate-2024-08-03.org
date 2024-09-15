@@ -5,3 +5,7 @@
 #+date: [2024-08-03 六]
 #+last_modified:  
 
+- SPEC: [[ftp://ds.internic.net/rfc/rfc1951.txt]]
+
+
+deflate is a updated version of [[id:9592022b-d6b0-4cd3-a797-041736d9faae][lz77]]

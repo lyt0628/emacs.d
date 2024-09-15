@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       f279824f-f9dc-4b36-9463-3bebc0740bc4
+:END:
+#+title: game-saerda
+#+date: [2024-09-09 周一]
+#+last_modified:  
+
+#+BEGIN_SRC dot :file ../tmp/dot-a8de4c9a-2c6f-41ad-9bb0-a8d96854d820.jpg
+digraph G{
+ a [label="Idle"]
+ b [label="Move"]
+ a->b->a
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:../tmp/dot-a8de4c9a-2c6f-41ad-9bb0-a8d96854d820.jpg]]

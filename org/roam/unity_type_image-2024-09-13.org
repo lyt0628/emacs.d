@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       c04824fa-9857-4b24-a054-abae3d80265a
+:END:
+#+title: unity-type-Image
+#+date: [2024-09-13 周五]
+#+last_modified:  
+
+| Member        | Params | Ret | Note |
+|---------------+--------+-----+------|
+| raycastTarget | bool   |     |      |

@@ -1,0 +1,85 @@
+:PROPERTIES:
+:ID:       8891f8fb-2504-4775-80a3-d8d7c8b4ef74
+:END:
+#+title: c-tool-makefile-fn-string
+#+date: [2024-09-07 周六]
+#+last_modified:  
+
+*Index*
+- [[subst]]
+- [[patsubst]]
+- [[var:pattern]]
+- [[var:suffix]]
+- [[strip]]
+- [[findstring]]
+- [[filter]]
+- [[filter-out]]
+- [[sort]]
+- [[word]]
+- [[wordlist]]
+- [[words]]
+- [[firstword]]
+- [[lastword]]
+  
+|------------------------------------+--------------------------------------------|
+| Function                           | note                                       |
+|------------------------------------+--------------------------------------------|
+| $(<<subst>> old,new,text)          |                                            |
+|------------------------------------+--------------------------------------------|
+| $(<<patsubst>> pattern, new, text) |                                            |
+|                                    | sparated by space                          |
+|                                    | every part wiil be handled                 |
+|                                    | - % act as wildcard in pat                 |
+|                                    | - % act as ref to matched str in text      |
+|                                    | - espercially % as pattern means match all |
+|------------------------------------+--------------------------------------------|
+| $(<<var:pattern>>=replacement)     | A Simple Expr for patsubs                  |
+|                                    | $(patsubst pattern,replacement,$(var)      |
+|------------------------------------+--------------------------------------------|
+| $(<<var:suffix>>=replacement)      | A Simple Expr for patsubs                  |
+|                                    | $(patsubst %suffix,%replacement,$(var))    |
+|------------------------------------+--------------------------------------------|
+| $(<<strip>> string)                | remove leading whitespace                  |
+|------------------------------------+--------------------------------------------|
+| $(<<findstring>> item,text)        | find item in text and return item          |
+|------------------------------------+--------------------------------------------|
+#+BEGIN_SRC makefile :noweb yes
+$(findstring a,a b c) # a
+$(findstring a,b c) # <empty>
+#+END_SRC
+| $(<<filter>> pattern...,text) | find pattern in text, operating on all single Word |
+|                               | matched item will be return                        |
+|                               |                                                    |
+|-------------------------------+----------------------------------------------------|
+#+BEGIN_SRC makefile :noweb yes
+sources := foo.c bar.c baz.s ugh.h
+foo: $(sources)
+cc $(filter %.c %.s,$(sources)) -o # *.h will be removed
+#+END_SRC
+|-----------------------------------+-------------------------------------------------|
+| $(<<filter-out>> pattern...,text) | opposite to filter, no-matched will be remained |
+|-----------------------------------+-------------------------------------------------|
+#+BEGIN_SRC makefile :noweb yes
+objects=main1.o foo.o main2.o bar.o
+mains=main1.o main2.o
+$(filter-out $(mains),$(objects)
+#+END_SRC
+|---------------------------+-------------------------------------------|
+| $(<<sort>> list)          | - sort Ws in list                         |
+|                           | - remove dups                             |
+|                           | - sparared item by a single space         |
+|---------------------------+-------------------------------------------|
+| $(<<word>> n,text)        | - get n-th word in text                   |
+|                           | - n starts from 1                         |
+|                           | - bigger than len of Words will get empty |
+|---------------------------+-------------------------------------------|
+| $(<<wordlist>> s,e,text)  | get words in text with condition          |
+|                           | - first one index is s                    |
+|                           | - last one index is e                     |
+|---------------------------+-------------------------------------------|
+| $(<<words>> text)         | get the word count in text                |
+|---------------------------+-------------------------------------------|
+| $(<<firstword>> names...) | eq to $(word 1,text)                      |
+|---------------------------+-------------------------------------------|
+| $(<<lastword>> names...)  | eq to $(word $(words text),text)          |
+|---------------------------+-------------------------------------------|

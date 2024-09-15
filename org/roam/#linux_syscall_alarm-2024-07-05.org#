@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       8aa4ebb2-14d3-4639-a5d7-136879a67307
+:END:
+#+title: linux-syscall-alarm
+#+filetags: :signal:
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-05 五 23:23]
+
+
+
+* Alarm to dead by time
+
+#+BEGIN_SRC C :noweb yes
+  #include <unistd.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <signal.h>
+
+  int main()
+  {
+
+	alarm(1); <<</>> 
+	</>> recv  to die after 1s
+
+	int max = 50;
+	while(max--)
+		printf("I will die\n");
+  	<</>> alarm(0); cancal alarm
+
+	return 0;
+  }
+#+END_SRC
+

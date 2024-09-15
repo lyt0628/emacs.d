@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       a963d386-ac0a-44ed-bda1-f2b369dbbf88
+:END:
+#+title: db-mongo
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+
+
+#+BEGIN_SRC mongo :noweb yes :db test
+
+#+END_SRC
+
+#+RESULTS:

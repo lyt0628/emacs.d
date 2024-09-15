@@ -1,0 +1,43 @@
+:PROPERTIES:
+:ID:       e4419c80-95ac-4d6a-8ddc-28d231f98404
+:END:
+#+title: linux-syscall-setitimer
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-08 一 11:04]
+
+* setitimer to get accurate and repeatable alarm
+#+BEGIN_SRC C :noweb yes
+  #include <unistd.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <sys/time.h>
+  #include <errno.h>
+  
+
+  int main()
+  {
+	struct itimerval itimer, old_itimer;
+
+	<</>> Delay
+	itimer.it_value.tv_sec = 1;
+	itimer.it_value.tv_usec = 0;
+
+	<</>> No Repeat
+	itimer.it_interval.tv_sec = 0;
+	itimer.it_interval.tv_usec = 0;
+
+	setitimer(ITIMER_REAL, &itimer, &old_itimer); <</>>[0,-1[errno]]
+	<</->>
+		
+		
+		
+	<<-/>>
+
+	return 0;
+  }
+#+END_SRC
+
+#+RESULTS:
+
+
+

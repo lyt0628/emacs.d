@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       e54a496f-be58-46f0-a8b8-a64406788a3c
+:END:
+#+title: js-type-String
+#+date: [2024-09-06 周五]
+#+last_modified:  
+

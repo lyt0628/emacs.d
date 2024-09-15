@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       c8396297-11f3-4bc1-ae4c-2413e047e41e
+:END:
+#+title: java-fp
+#+date: [2024-09-09 周一]
+#+last_modified:  
+

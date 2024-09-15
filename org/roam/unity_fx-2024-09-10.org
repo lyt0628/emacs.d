@@ -1,0 +1,35 @@
+:PROPERTIES:
+:ID:       8da9e751-8b31-46f7-ac90-4e195545ae1f
+:END:
+#+title: unity-fx
+#+date: [2024-09-10 周二]
+#+last_modified:  
+
+*Index*
+- [[id:0897d1e2-457b-4965-865a-535fac858cfc][unity-fx-naming_rule]]
+- [[id:e8babcc3-e977-42d1-bc32-a83b3a5421fa][unity-fx-color combo]]
+- [[id:6362681c-65ba-426e-9979-b4b54fd3f37a][unity-fx-binding point]]
+- [[id:492eb7aa-421b-4414-a31d-aaf8542b02d9][unity-fx-TrailRenderer]]
+- [[id:a25321aa-8fde-4e31-9f48-3d92b2830d40][unity-fx-LineRenderer]]
+  
+|--------------+-----------------------|
+| Point        | Note                  |
+|--------------+-----------------------|
+| image format | png/tga               |
+|--------------+-----------------------|
+| image size   | 2^nX2^m               |
+|              | max 512x512 for Phone |
+|--------------+-----------------------|
+|              |                       |
+|--------------+-----------------------|
+
+
+
+Model have 3 parts
+|-----------------+---|
+| Mesh            |   |
+|-----------------+---|
+| Materail      |   |
+|-----------------+---|
+| Spine Animation |   |
+|-----------------+---|

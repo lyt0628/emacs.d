@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       196efae2-9fab-4632-8a75-338fcd4f279d
+:END:
+#+title: linux-syscall-Catch Signal
+#+date: [2024-07-08 一]
+#+last_modified: [2024-07-08 一 16:52]
+
+
+#+BEGIN_SRC plantuml :results file :file /tmp/puml-08e8750e-3d05-11ef-bb18-0242e2b9ec23.png
+  @startuml
+	  struct sigaction{
+		 void(* sa_handler)(int);
+		 void(* sa_action)(int, siginfo_t*, void*);
+		 sigset_t sa_mask;
+		 int sa_flag;
+		 void(* sa_restorer)(void);
+	  }
+
+
+
+
+  @enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:/tmp/puml-08e8750e-3d05-11ef-bb18-0242e2b9ec23.png]]

@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       0a7bbc1e-b75b-4a9d-9e88-9cbc51724242
+:END:
+#+title: cs-lib-Random
+#+date: [2024-09-10 周二]
+#+last_modified:  
+
+
+|---------+-----------------+-----+------|
+| Member  | Params/Type     | Ret | Note |
+|---------+-----------------+-----+------|
+| Range() | start,end:float |     |      |
+|---------+-----------------+-----+------|

@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       df2c1349-ef35-44fd-9edd-64a418515880
+:END:
+#+title: game-maliao
+#+date: [2024-09-09 周一]
+#+last_modified:  
+
+#+begin_src dot  :file ../tmp/dot-d60e1a2f-5483-4e8a-a884-0c4d4a845931.jpg
+digraph G {
+a [label="Idle"]
+b [label="Move"]
+c [label="Dash"]
+d [label="suddently stop"]
+a->b
+b->c
+c->a
+c->d
+d->b
+}
+#+end_src
+
+#+RESULTS:
+[[file:../tmp/dot-d60e1a2f-5483-4e8a-a884-0c4d4a845931.jpg]]
+

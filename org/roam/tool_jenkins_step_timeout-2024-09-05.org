@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       b8e04fa6-63c1-411b-b346-b18d0da4eed2
+:END:
+#+title: tool-jenkins-step-timeout
+#+date: [2024-09-05 周四]
+#+last_modified:  
+
+| params | value                  | Node |
+|--------+------------------------+------|
+| time   |                        |      |
+|--------+------------------------+------|
+| unit   | str, ops: 'HOUR'       |      |
+|--------+------------------------+------|
+| block  | block to run sub-steps |      |

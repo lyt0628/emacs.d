@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       f547cb19-afd1-4e41-b5ba-0f47444ffd40
+:END:
+#+title: tool-jenkins-step-script
+#+date: [2024-09-05 周四]
+#+last_modified:  
+

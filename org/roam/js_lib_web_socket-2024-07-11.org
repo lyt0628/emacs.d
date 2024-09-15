@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       3414af38-b6fa-4370-a377-c6fb5ecdf81f
 :END:
-#+title: js-lib-web socket
+#+title: js-websocket
 #+filetags: :js:
 #+date: [2024-07-11 四]
 #+last_modified: [2024-07-11 四 22:14]

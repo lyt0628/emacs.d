@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       1944d3b6-a267-4c5d-bf7e-b47018eb9ae0
+:END:
+#+title: linux-syscall-typedef
+#+date: [2024-09-08 周日]
+#+last_modified:  
+
+
+
+|------+----------+-----+------|
+| Type | Ref Type | API | Note |
+|------+----------+-----+------|
+|      |          |     |      |
+|------+----------+-----+------|

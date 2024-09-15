@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       fff60def-e0bd-4f2b-9dcc-ba304a891154
+:END:
+#+title: unity-type-ControllerColliderHit
+#+date: [2024-09-10 周二]
+#+last_modified:  
+
+
+
+|---------------+-------------+-----+------|
+| Member        | Params/Type | Ret | Note |
+|---------------+-------------+-----+------|
+| normal        |             |     |      |
+|---------------+-------------+-----+------|
+| collider      | [[id:a318fae3-f335-4ced-bb4f-b999b33b22f4][Colloder]]            |     |      |
+|---------------+-------------+-----+------|
+| moveDirection |             |     |      |
+|---------------+-------------+-----+------|

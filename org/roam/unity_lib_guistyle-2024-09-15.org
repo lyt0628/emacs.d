@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       5ba27536-5f48-456c-b13d-9fffbc74e540
+:END:
+#+title: unity-lib-GUIStyle
+#+date: [2024-09-15 周日]
+#+last_modified:  
+
+
+|-----------+-------------+-----+----------------|
+| Member    | Params/Type | Ret | Note           |
+|-----------+-------------+-----+----------------|
+| fontsize  | int         |     |                |
+|-----------+-------------+-----+----------------|
+| alignment | TextAnchor  |     | <<TextAnchor>> |
+|           |             |     | .MiddcleCenter |
+|-----------+-------------+-----+----------------|

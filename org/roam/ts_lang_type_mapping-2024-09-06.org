@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       67b15315-3ae2-4485-b83b-f8f7b28526f2
+:END:
+#+title: ts-lang-type mapping
+#+date: [2024-09-06 周五]
+#+last_modified:  
+
+
+#+BEGIN_SRC typescript :noweb yes
+type Readonly<T> = {
+  readonly [P in keyof T] : T[P]
+}
+#+END_SRC

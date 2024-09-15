@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       e890313c-c50b-408a-9080-569dc45142ef
 :END:
-#+title: js-lib-fetch
+#+title: js-fetch
 #+filetags: :js:
 #+date: [2024-07-11 四]
 #+last_modified: [2024-07-11 四 22:14]

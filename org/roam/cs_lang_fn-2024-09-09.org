@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       f229bf46-a750-4ee5-8ce0-f6ad875bc1a7
+:END:
+#+title: cs-lang-fn
+#+date: [2024-09-09 周一]
+#+last_modified:  
+
+|---------------------------------------+--------------------------------------------------------------------------------|
+| Features                              | Note                                                                           |
+|---------------------------------------+--------------------------------------------------------------------------------|
+| [] overload                           | use this as FN name can overload operator []                                   |
+|---------------------------------------+--------------------------------------------------------------------------------|
+| delegate modifier for FN declaration  | - like Java8 FN Interface, can refer to a FN, see also [[id:c8396297-11f3-4bc1-ae4c-2413e047e41e][java-jdk-fp]]             |
+|                                       | - delegate method can emit fnname, awaly use as rhv                            |
+|                                       | - delegate Fn can be instanced, and can be call to invoke FN that was refer to |
+|                                       | - Delegate Obj can refer to multi FN, using +=/-= to add or remove spec FN     |
+|---------------------------------------+--------------------------------------------------------------------------------|
+| event modifier for Delegate Obj field | - make Delegate Obj can only be accessed by this                               |
+|                                       | - .Net provide [[id:d4a18eb1-c373-4cbb-bc56-5a404323ce62][EventHandler]] to impl [[id:790c5fa2-52c6-4906-adc8-7b5b1067929e][listener pattern]]                           |
+|---------------------------------------+--------------------------------------------------------------------------------|

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       5dd9b0cc-4bb9-4a0b-9cf6-a5ab666870f1
+:END:
+#+title: patt-component
+#+date: [2024-09-11 周三]
+#+last_modified:  
+

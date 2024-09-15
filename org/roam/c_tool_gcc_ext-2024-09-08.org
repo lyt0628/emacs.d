@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       5d10c1a6-dd4e-4585-abcb-11dd8fdb6e5a
+:END:
+#+title: c-tool-gcc-ext
+#+date: [2024-09-08 周日]
+#+last_modified:  
+

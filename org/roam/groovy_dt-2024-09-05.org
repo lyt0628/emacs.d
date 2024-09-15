@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       2195a988-93fc-4aef-b654-c7b66e7b9654
+:END:
+#+title: groovy-dt
+#+date: [2024-09-05 周四]
+#+last_modified:  
+
+
+| Type   | Node |
+|--------+------|
+| string |      |
+|--------+------|

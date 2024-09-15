@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       464cf997-a290-40cd-aada-f5bf0a699de2
+:END:
+#+title: tools
+#+date: [2024-09-04 周三]
+#+last_modified:  
+
+
+*Index*

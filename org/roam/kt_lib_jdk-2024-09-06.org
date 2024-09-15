@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       b62e6ecc-3d10-44ae-a077-30841e2acbe2
+:END:
+#+title: kt-lib-jdk
+#+date: [2024-09-06 周五]
+#+last_modified:  
+

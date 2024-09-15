@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       22934316-632a-4872-af8a-93cdd05dc388
 :END:
-#+title: js-lib-xml
+#+title: js-xml
 #+filetags: :js:
 #+date: [2024-07-11 四]
 #+last_modified: [2024-07-11 四 22:14]

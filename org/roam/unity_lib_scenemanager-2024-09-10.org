@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       28054fbf-09d1-485d-9246-ac8ef5739f04
+:END:
+#+title: unity-lib-SceneManager
+#+date: [2024-09-10 周二]
+#+last_modified:  
+
+
+|-------------+----------------+-----+------|
+| Member      | Params/Type    | Ret | Note |
+|-------------+----------------+-----+------|
+| LoadScene() | scene_name:str |     |      |
+|-------------+----------------+-----+------|

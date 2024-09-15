@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       7f1b86d9-f392-43c0-aacb-86687de5ce11
+:END:
+#+title: linux-analy
+#+date: [2024-09-07 周六]
+#+last_modified:  
+

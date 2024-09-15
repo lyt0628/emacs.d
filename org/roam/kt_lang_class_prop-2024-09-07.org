@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       3a4b0721-da5d-41dd-9913-dbf3919493b8
+:END:
+#+title: kt-lang-class-prop
+#+date: [2024-09-07 周六]
+#+last_modified:  
+

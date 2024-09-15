@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       4702e389-fef8-48ad-a47e-68c7d6c80edf
+:END:
+#+title: alg-deflate
+#+date: [2024-08-03 六]
+#+last_modified:  
+
+- SPEC: [[ftp://ds.internic.net/rfc/rfc1951.txt]]
+
+
+deflate is a updated version of [[id:9592022b-d6b0-4cd3-a797-041736d9faae][lz77]], and use
+
+
+
+* Some Definition
+  | Symbol         | Value | Note                                               |
+  |----------------+-------+----------------------------------------------------|
+  | NIL            |     0 | to mark end of Hash Chains                         |
+  |----------------+-------+----------------------------------------------------|
+  | TOO_FAR        |  4096 | the limit of length of slided window               |
+  |----------------+-------+----------------------------------------------------|
+  | MIN_LOOK-AHEAD |       | the least length of slided window                  |
+  |                |       | slided window must expand  when less than the one, |
+  |                |       | or reach end of text                               |
+  |----------------+-------+----------------------------------------------------|
+  |                |       |                                                    |
+
+

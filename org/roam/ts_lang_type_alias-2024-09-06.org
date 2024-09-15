@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       9e372236-405a-4795-a487-9cfc996b98f7
+:END:
+#+title: ts-lang-type alias
+#+date: [2024-09-06 周五]
+#+last_modified:  
+
+
+type newname = oldtype

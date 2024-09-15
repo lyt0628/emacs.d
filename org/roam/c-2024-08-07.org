@@ -5,3 +5,9 @@
 #+date: [2024-08-07 三]
 #+last_modified:  
 
+*Index*
+- [[id:b3bb5867-151f-4d2c-8013-1ff1ef16555a][c-lang]]
+- [[id:e6301c3a-c28a-4a5c-bbe6-40c969f79cc5][c-std_]]
+- [[id:07d272c8-e6c2-44c2-bdfd-5d0ec6ccfaed][c-tool]]
+  
+- [[id:8a5001be-3e49-4d09-b2e8-0480ac024cda][c-lib-zlib]]

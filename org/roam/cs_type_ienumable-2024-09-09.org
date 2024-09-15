@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       94a050f1-8d23-4e58-b787-ddb9f9afdeb5
+:END:
+#+title: cs-type-IEnumable
+#+date: [2024-09-09 周一]
+#+last_modified:  
+
+
+#+BEGIN_SRC plantuml :file ../tmp/puml-cb0f9358-6e57-11ef-a98a-04421a00482f.png
+@startuml
+interface IEnumrable {
+  GetEnumrator() : IEnumrator 
+}
+
+interface IEnumrator {
+  Current()
+  MoveNext()
+  Reset()
+}
+
+IEnumrable -> IEnumrator 
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:../tmp/puml-cb0f9358-6e57-11ef-a98a-04421a00482f.png]]
+
+

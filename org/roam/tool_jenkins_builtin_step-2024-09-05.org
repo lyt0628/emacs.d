@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       2390e1ec-3d00-418e-8937-faa6284ae6e8
+:END:
+#+title: tool-jenkins-step
+#+date: [2024-09-05 周四]
+#+last_modified:  
+
+
+
+|-------------+--------+---------------------------------------------|
+| Step        | Params | Note                                        |
+|-------------+--------+---------------------------------------------|
+| deleteDir() |        |                                             |
+|-------------+--------+---------------------------------------------|
+| dir()       |        | run subcmds in block with spec path context |
+|-------------+--------+---------------------------------------------|
+
+*Index*
+- [[id:f547cb19-afd1-4e41-b5ba-0f47444ffd40][tool-jenkins-step-script]]
+- [[id:91704644-39a1-4161-bd7b-0519955cbdc7][tool-jenkins-step-build]]
+- [[id:fa9fe45d-6a9d-4f35-8e9b-aa2a3911a83f][tool-jenkins-step-input]]
+- [[id:b8e04fa6-63c1-411b-b346-b18d0da4eed2][tool-jenkins-step-timeout]]
+- [[id:a420cf74-edf3-49c0-b5c7-565906fb44c0][tool-jenkins-step-sh bat powershell]]

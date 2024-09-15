@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       2f8c5038-e946-438b-ac9d-e07f1f12ebcb
+:END:
+#+title: unity-analy-ugui-Raycaster
+#+date: [2024-09-14 周六]
+#+last_modified:  
+
+#+NAME: Raycaster
+#+BEGIN_SRC plantuml :file ../tmp/puml-4b8f2c20-72b1-11ef-9096-04421a00482f.png
+@startuml
+
+abstract BaseRaycaster {
+
+}
+
+@enduml
+#+END_SRC
+
+#+RESULTS: Raycaster
+[[file:../tmp/puml-4b8f2c20-72b1-11ef-9096-04421a00482f.png]]
+

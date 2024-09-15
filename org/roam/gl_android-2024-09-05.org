@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       754f7c5e-70b8-4dca-9303-4487e82e3078
+:END:
+#+title: gl-android
+#+date: [2024-09-05 周四]
+#+last_modified:  
+
+
+GL ES API provided in GLSurfaceView Class, combined with Customable
+Inner Class GLSurfaceView.Render.
+Three abstract method needs to be impled
+|------------------+------------------+---------------------------------------------|
+| Method           | Params           | Note                                        |
+|------------------+------------------+---------------------------------------------|
+| onDrawFrame      | gl:GL10          | major method to draw and provide Gl context |
+|                  | width,height:int |                                             |
+|------------------+------------------+---------------------------------------------|
+| onSurfaceCreated |                  | init scene method                           |
+|------------------+------------------+---------------------------------------------|
+| onSurfaceChanged |                  | CB when size changed                        |
+|------------------+------------------+---------------------------------------------|

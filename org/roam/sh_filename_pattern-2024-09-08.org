@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       b8aaedb5-8363-47f9-a21b-048193636213
+:END:
+#+title: sh-filename pattern
+#+date: [2024-09-08 周日]
+#+last_modified:  
+

@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       3e29c5eb-08ba-4ad2-bf9a-053c4f02f681
+:END:
+#+title: unity-fx-SkinedMeshRenderer
+#+date: [2024-09-11 周三]
+#+last_modified:  
+
+Renderer to Render Mesh Based on Amature
+
+|---------------------------+--------+----------------------|
+| Property                  | Type   | Note                 |
+|---------------------------+--------+----------------------|
+| mesh/sharedMesh           | Mesh   | the mesh to render   |
+|---------------------------+--------+----------------------|
+| bones                     | Bone[] | bones skin attach to |
+|---------------------------+--------+----------------------|
+|                           |        |                      |
+|---------------------------+--------+----------------------|
+| Inheritate from  [[id:15b97b15-9f0c-4a0d-81d5-8522f4db79a7][Renderer]] |        |                      |
+|---------------------------+--------+----------------------|

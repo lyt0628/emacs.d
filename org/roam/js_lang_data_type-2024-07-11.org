@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       132d774d-7d0b-43bc-b899-6a2dbfa21640
 :END:
-#+title: js-lang-data type
+#+title: js-lang-type
 #+filetags: :js:
 #+date: [2024-07-11 四]
 #+last_modified: [2024-07-11 四 22:14]

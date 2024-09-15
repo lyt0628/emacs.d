@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       048504bf-4c4a-4766-bafd-4889a21a9070
-:END:
-#+title: js-lang-ref type
-#+filetags: :js:
-#+date: [2024-07-11 四]
-#+last_modified: [2024-07-11 四 22:14]
-

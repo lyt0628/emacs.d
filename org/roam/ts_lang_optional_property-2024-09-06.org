@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       1f4796f4-abbe-4838-a457-d912dca5bafe
+:END:
+#+title: ts-lang-property
+#+date: [2024-09-06 周五]
+#+last_modified:  
+
+|-----------+------------------------+------|
+| Feature   | Example                | Note |
+|-----------+------------------------+------|
+| Optional  | name ?: 'Matt'         |      |
+|-----------+------------------------+------|
+| read only | readonly name : 'Matt' |      |
+|-----------+------------------------+------|

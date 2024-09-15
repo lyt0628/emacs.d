@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       517af48d-6031-46b4-9e91-6e31dcaa07bd
+:END:
+#+title: ts-lang-keyof
+#+date: [2024-09-06 周五]
+#+last_modified:  
+

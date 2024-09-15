@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       fa9fe45d-6a9d-4f35-8e9b-aa2a3911a83f
+:END:
+#+title: tool-jenkins-step-input
+#+date: [2024-09-05 周四]
+#+last_modified:  
+
+| params             | value                                                      | Note                            |
+|--------------------+------------------------------------------------------------+---------------------------------|
+| message            | str                                                        |                                 |
+|--------------------+------------------------------------------------------------+---------------------------------|
+| ok                 | spec text of comfirm                                       |                                 |
+|--------------------+------------------------------------------------------------+---------------------------------|
+| parameters         | list of custom params, see [[id:74d9cbf1-fcd0-4938-b55e-2c594030630b][tool-jenkins-params]]          |                                 |
+|--------------------+------------------------------------------------------------+---------------------------------|
+| submitter          | str, auth for useId or groupId with spator ,               | op                              |
+|--------------------+------------------------------------------------------------+---------------------------------|
+| submitterParameter | str, var name  to store real username who op on this input | can be get by RET_map[var name] |
+
+
+- return single value of map(var name => value), needs call as Fn so input should be put in script block

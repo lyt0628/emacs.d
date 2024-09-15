@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       9592022b-d6b0-4cd3-a797-041736d9faae
+:END:
+#+title: alg-deflate-lz77
+#+date: [2024-09-07 周六]
+#+last_modified:  
+
+
+1z77 find the longest duplicated str in text(using slided window),
+the next one will be expressed in the form
+| old matched one           | other text   | new matched one     |
+|---------------------------+--------------+---------------------|
+| start <---------distance- | -----------> | <---length--------> |
+Truple (start, distance, length) will replace the old matched one.
+the room of old one saved.
+

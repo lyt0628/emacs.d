@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       75f60d1a-2da3-45b5-ba0f-4ed661c3e2ab
-:END:
-#+title: linux-syscall-dup2
-#+date: [2024-07-09 二]
-#+last_modified: [2024-07-09 二 15:06]
-

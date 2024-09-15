@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       1730024a-4280-4b14-bfad-b35bfe4cb5ce
+:END:
+#+title: tool-jenkins-analy-maven
+#+date: [2024-09-05 周四]
+#+last_modified:  
+

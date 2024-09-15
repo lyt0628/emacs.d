@@ -1,0 +1,69 @@
+:PROPERTIES:
+:ID:       491bb247-a035-4f38-a37a-7286a0752fe8
+:END:
+#+title: tool-jenkins
+#+date: [2024-09-04 周三]
+#+last_modified:  
+
+
+|-------------+-------+------|
+| Instruction | value | Note |
+|-------------+-------+------|
+| agent       | any   |      |
+|             |       |      |
+|-------------+-------+------|
+| tools       |       |      |
+|-------------+-------+------|
+| environment |       |      |
+|-------------+-------+------|
+| input       |       |      |
+|-------------+-------+------|
+| options     |       |      |
+|-------------+-------+------|
+| parallel    |       |      |
+|-------------+-------+------|
+| parameters  |       |      |
+|-------------+-------+------|
+| triggers    |       |      |
+|-------------+-------+------|
+| when        |       |      |
+|-------------+-------+------|
+| stages      |       |      |
+|-------------+-------+------|
+| stage       |       |      |
+|-------------+-------+------|
+
+|---------+--------------+------|
+| Command | value        | Note |
+|---------+--------------+------|
+| echo    |              |      |
+|---------+--------------+------|
+| script  | groovy block |      |
+|---------+--------------+------|
+
+*Index*
+- [[id:64ecf854-813e-4707-ac0a-acd1a07d24ef][tool-jenkins-when]]
+- [[id:c47a9b35-8079-4dab-b052-b533394108e5][tool-jenkins-env]]
+- [[id:74d9cbf1-fcd0-4938-b55e-2c594030630b][tool-jenkins-params]]
+- [[id:b47576f1-31cf-49ab-a43c-ad5133a3fd3a][tool-jenkins-trigger]]
+- [[id:2390e1ec-3d00-418e-8937-faa6284ae6e8][tool-jenkins-step]]
+
+- [[id:dcdfa46a-16a4-4f99-ad4c-1c36b4cb4821][tool-jenkins-plugin]]
+- [[id:46d145f2-2de1-4991-a7cc-2b9978d1dec9][tool-jenkins-credential]]
+
+
+#+BEGIN_SRC Jenkinsfile :noweb yes
+pipeline {
+  agent any
+
+  tools{
+     maven "mvn-3.9.9"
+  }
+
+  stages{
+    stage('build'){
+      <build commandss>
+    }
+  }
+}
+#+END_SRC

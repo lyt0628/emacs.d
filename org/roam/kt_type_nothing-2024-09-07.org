@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       80da5728-e5b7-449c-a8f1-496f45eadcec
+:END:
+#+title: kt-type-Nothing
+#+date: [2024-09-07 周六]
+#+last_modified:  
+

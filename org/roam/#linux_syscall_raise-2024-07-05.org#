@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       98a6ec36-de59-4c39-bfde-f6e80866d932
+:END:
+#+title: linux-syscall-raise
+#+filetags: :signal:
+#+date: [2024-07-05 五]
+#+last_modified: [2024-07-08 一 01:25]
+
+** raise send Signal to self
+
+#+BEGIN_SRC C :noweb yes
+  #include <unistd.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <signal.h>
+
+  int main()
+  {
+  	
+	raise(SIGKILL); <</>> 
+	return 0;
+  }
+#+END_SRC
+
+

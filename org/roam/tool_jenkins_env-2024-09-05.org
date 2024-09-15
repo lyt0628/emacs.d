@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       c47a9b35-8079-4dab-b052-b533394108e5
+:END:
+#+title: tool-jenkins-env
+#+date: [2024-09-05 周四]
+#+last_modified:  
+
+
+| name         | value | note |
+|--------------+-------+------|
+| JOB_NAME     |       |      |
+|--------------+-------+------|
+| BuILD-NUMBER |       |      |

@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       e18dc8a3-9cd1-4cc2-9c01-c4a22d9465bf
+:END:
+#+title: tool-cron
+#+date: [2024-09-05 周四]
+#+last_modified:  
+
+* min hour day_of_mouth mouth day_of_week
+  - int
+  - * match all
+  - start-end/x close range with step X
+  - A,B,C... : list all values using column
+
+#+BEGIN_SRC cron :noweb yes
+
+#+END_SRC

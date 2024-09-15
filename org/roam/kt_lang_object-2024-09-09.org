@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       072da237-013c-4187-87e6-76c08e00961a
+:END:
+#+title: kt-lang-Object
+#+date: [2024-09-09 周一]
+#+last_modified:  
+

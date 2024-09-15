@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       b524b5f6-ca75-4eb7-9b55-04a3410240bb
+:END:
+#+title: c-tool-makefile-control flow
+#+date: [2024-09-07 周六]
+#+last_modified:  
+
+Statement Body needs TAB as beginning
+
+| Statement    | Params | Ret | Note |
+|--------------+--------+-----+------|
+| ifeq...endif |        |     |      |
+|--------------+--------+-----+------|
+| if           |        |     |      |

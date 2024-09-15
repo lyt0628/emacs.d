@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       a167f598-bfa6-4ea2-b6a4-6cbff94710f0
+:END:
+#+title: dx
+#+date: [2024-09-10 周二]
+#+last_modified:  
+

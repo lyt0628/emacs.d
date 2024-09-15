@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       dec1f906-140c-46cf-b693-5b6bce6da535
+:END:
+#+title: kt-lang-fn
+#+date: [2024-09-07 周六]
+#+last_modified:  
+

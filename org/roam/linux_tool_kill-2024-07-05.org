@@ -23,3 +23,11 @@ kill -15 $pid
 
 #+RESULTS:
 
+
+* Show All Available Sigals
+
+#+BEGIN_SRC sh :results list
+  kill -l
+#+END_SRC
+
+

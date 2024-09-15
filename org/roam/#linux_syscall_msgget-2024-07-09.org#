@@ -1,0 +1,62 @@
+:PROPERTIES:
+:ID:       b21863b0-8c98-45eb-a3f6-0a8113c1eef9
+:END:
+#+title: linux-syscall-msgq
+#+date: [2024-07-09 二]
+#+last_modified: [2024-07-09 二 18:36]
+* Example
+
+  
+#+NAME: mymsg
+#+BEGIN_SRC C
+  #define MSG_SIZE 1024
+  typedef struct mymsg{
+    long int msg_type;
+    char cont[MSG_SIZE];
+  }mymsg;
+#+END_SRC
+
+
+#+BEGIN_SRC C :noweb yes :tangle ./tmp/sndmsg.c
+  <<linux>>
+  <<m_def>>
+
+
+  <<mymsg>>
+
+
+  int main(){
+
+    int msgid;
+    mymsg msg;
+    long int type_send = 1;
+
+    m_bool running = TRUE;
+    char buf[BUFSIZ];
+
+    msgid = msgget((key_t)1234, 0666 | IPC_CREAT);
+
+
+    while (running) {
+
+      printf("Input message:    ");
+
+      fgets(buf, BUFSIZ, stdin);
+
+      msg.msg_type = type_send;
+      strcpy(msg.cont, buf);
+
+      msgsnd(msgid, (void *)&msg, MSG_SIZE, IPC_WAIT);
+
+
+      if(strncmp(buf, "end", 3) == 0)
+	  running = FALSE;
+    }
+
+    msgctl(msgid, IPC_RMID, 0);
+  }
+#+END_SRC
+
+#+RESULTS:
+: 0
+

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       9592022b-d6b0-4cd3-a797-041736d9faae
+:END:
+#+title: alg-deflate-lz77
+#+date: [2024-09-07 周六]
+#+last_modified:  
+

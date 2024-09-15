@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       014ba8d2-bfd0-4dd8-a3e8-87cf74befc00
+:END:
+#+title: groovy-str
+#+date: [2024-09-05 周四]
+#+last_modified:  
+

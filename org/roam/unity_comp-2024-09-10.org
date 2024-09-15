@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       37a77d7e-d70c-4691-927b-de20fa55cf9f
+:END:
+#+title: unity-comp
+#+date: [2024-09-10 周二]
+#+last_modified:  
+
+
+
+*Index*
+- [[id:16349a9d-a9f1-4fdd-a49f-a481e563f1ed][unity-comp-Transform]]
+- [[id:af4be987-9997-44fe-a9d9-35e5ab263428][unity-comp-MonoBehavior]]
+- [[id:6452441b-5338-4df3-8a9e-77197aaf0fdd][unity-comp-Carmera]]
+- [[id:caa42074-9a11-4857-8339-52775669dcb1][unity-comp-SpriteRenderer]]
+- [[id:5329a73f-8994-44d1-a304-810c06c26fca][unity-comp-Rigbody]]
+- [[id:a318fae3-f335-4ced-bb4f-b999b33b22f4][unity-comp-Colloder]]
+- [[id:f98c013c-4e92-4df6-a021-dfa3bef02d05][unity-comp-Canvas]]
+- [[id:5dcf8267-6eeb-4686-9f4d-1845285a41d8][unity-comp-Animator]]

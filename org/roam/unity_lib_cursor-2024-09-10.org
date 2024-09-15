@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       d7acdc17-5ec5-464d-b166-53ecb765d97e
+:END:
+#+title: unity-lib-Cursor
+#+date: [2024-09-10 周二]
+#+last_modified:  
+
+
+|-----------+--------------------+-----+----------------|
+| Member    | Params/Type        | Ret | Note           |
+|-----------+--------------------+-----+----------------|
+| lockState | Enum CrsorLockMode |     | CursorLockMode |
+|           |                    |     | .Locked        |
+|-----------+--------------------+-----+----------------|
+| visible   | bool               |     |                |
+|-----------+--------------------+-----+----------------|

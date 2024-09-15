@@ -1,0 +1,88 @@
+:PROPERTIES:
+:ID:       a8623075-861c-4fb7-b718-94aff046d16d
+:END:
+#+title: unity-analy-ugui-EventData
+#+date: [2024-09-14 周六]
+#+last_modified:  
+
+#+NAME: EventData
+#+BEGIN_SRC plantuml :file ../tmp/puml-02e57ff2-72b0-11ef-a750-04421a00482f.png
+@startuml
+
+
+abstract "AbstractEventData" as aed
+aed : + {abstract} Is_Used() :bool
+aed : # _used : bool
+aed : # Reset()
+aed : # Use()
+
+class "BaseEventData" as bed {
+ + selected_obejct : get;set;
+ + Get_Current_Input_Module(): BaseInputModule
+ - _EventSystem : EventSystem
+}
+note "BaseEventData delegate all impl to member _EventSystem" as n2bed
+n2bed .. bed
+
+class "AxisEventData" as axed {
+  + moveVector : Vector2
+  + moveDir : MoveDirection
+}
+
+class "PointerEventData" as ped {
+  + pointer_Enter : GameObjec 
+  + pointer_press : GameObject
+  + last_press : GameObject 
+  + raw_pointer_press  :  GameObject 
+  + pointer_drag : Gameobject
+  + pointer_current_raycast : RaycastResult
+  + pointer_press_raycast : RaycastResult
+  + hovered : GameObject[]
+  + eligibleForClick : bool
+  + pointer_id : int
+  + position : Vec2
+  + delta : Vec2
+  + press_position : Vec2
+  + click_time : float # for control double-click
+  + click_count : int
+  + scroll_delta ： Vec2
+  + use_drag_threshold : bool
+  + dragging : bool
+  + button : InputButton
+  + ctor (EventSystem)
+  + Is_POinterMoving():bool
+  + is_Scrolling():bool
+  + enter_Event_Camera():Camera
+  + presd_Event_Camera():Carmera
+}
+note "PointerEventData use multiple Fields \
+\nto store targets for diffent event type" as n2ped
+ped . n2ped
+enum "InputButton" as mb {
+  Left = 0
+  Right = 1
+  Middle = 2
+}
+enum "FramePressState" as fps {
+ Pressed
+ Released
+ PressAndRelease
+ NotChanged
+}
+
+aed <|-- bed
+bed <|-- axed
+bed <|-- ped
+ped --> mb
+ped --> fps
+
+
+@enduml
+#+END_SRC
+
+#+RESULTS: EventData
+[[file:../tmp/puml-02e57ff2-72b0-11ef-a750-04421a00482f.png]]
+
+
+
+

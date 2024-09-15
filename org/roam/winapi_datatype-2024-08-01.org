@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       fca8cba2-50b4-40e9-8de4-578a83fdb6aa
 :END:
-#+title: winapi-Datatype
+#+title: winapi-datatype
 #+date: [2024-08-01 周四]
 #+last_modified:  
 

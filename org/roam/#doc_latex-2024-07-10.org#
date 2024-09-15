@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       03f6999c-ec46-43c3-91f3-c37b8e4f4144
+:END:
+#+title: doc-latex
+#+date: [2024-07-10 三]
+#+last_modified: [2024-07-10 三 21:25]
+
+
+* Index
+- [[id:10b7c41c-c45f-4c74-928c-ad849ded99bd][doc-latex-formula]]
+- [[id:2e0bee63-db5e-4e60-8080-be82333d0228][doc-latex-mark]]
+- [[id:39b5e89c-287d-4b99-a353-9b77375bbe9d][doc-latex-letter]]
+- [[id:9963cf7a-76b1-4d91-9b0f-89cfa8f49ae9][doc-latex-chart]]
+
+
+#+BEGIN_SRC latex-as-png :file  ../tmp/tex-c528b5c8-c027-40f2-b0a2-e8abbb1de0d6.png
+  \[
+  	a^2 + b^2 = c^2
+  \]
+#+END_SRC
+

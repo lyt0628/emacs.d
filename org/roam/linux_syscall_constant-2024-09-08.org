@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       ea638cdd-8571-4163-a457-9a5782e0429b
+:END:
+#+title: linux-syscall-constant
+#+date: [2024-09-08 周日]
+#+last_modified:  
+
+
+| Symbol       | Value | Note |
+|--------------+-------+------|
+| EXIT_SUCCESS |       |      |
+|--------------+-------+------|
+| EXIT_FAILURE |       |      |
+|--------------+-------+------|
+|              |       |      |
+|--------------+-------+------|

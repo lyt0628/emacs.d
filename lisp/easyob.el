@@ -40,5 +40,11 @@
 
 (easyob-define "666")
 
+(shell-command "echo 666")
+
+(async-shell-command "echo 666")
+
+(async-shell-command "dir")
+
 (provide 'easyob)
 ;;; easyob.el ends here

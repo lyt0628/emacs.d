@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       23c29606-53c2-42f6-92c1-237a5f343ba2
+:END:
+#+title: spec-rfc1945_http1.0-Headers
+#+date: [2024-09-06 周五]
+#+last_modified:  
+
+
+| Entry                       | Value                                | Note |
+|-----------------------------+--------------------------------------+------|
+| Content-Type                | MIME type                            |      |
+|                             | application/x-www-frm-urlencoded     |      |
+|                             | multipart/form-data                  |      |
+| Access-Control-Allow-Origin | * : Allow Any process in any Machine |      |
+|-----------------------------+--------------------------------------+------|

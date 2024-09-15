@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       b47576f1-31cf-49ab-a43c-ad5133a3fd3a
+:END:
+#+title: tool-jenkins-trigger_
+#+date: [2024-09-05 周四]
+#+last_modified:  
+
+*Index*
+- [[id:f7183f7e-c4ab-4758-b7cb-33285892bb0b][tool-jenkins-trigger-cron]]
+- [[id:6d6638e4-726c-4f80-9de1-5a57c30dfeef][tool-jenkins-trigger-pollSCM]]
+- [[id:fb433cb0-d850-4101-9581-cbc89eb0a04c][tool-jenkins-trigger-upstream]]

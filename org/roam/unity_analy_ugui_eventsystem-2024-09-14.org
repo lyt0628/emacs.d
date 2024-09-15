@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       1a022e79-54bf-4b96-8df7-e370739de25a
+:END:
+#+title: unity-analy-ugui-EventSystem
+#+date: [2024-09-14 周六]
+#+last_modified:  
+
+
+#+NAME: UGUI
+#+BEGIN_SRC plantuml :file ../tmp/puml-ce7879b8-7282-11ef-8d53-04421a00482f.png :cmdline -DPLANTUML_LIMIT_SIZE=100000
+@startuml
+
+class "EventSystem" as es
+es : + {static} current : EventSystem 
+es : - system_input_modules : BaseInputModule[]
+es : - current_input_module : BaseInputModule
+es : - send_navigation_events : true
+class BaseInputModule
+
+
+abstract "UIBehaviour" as uib{
+  #[asbtract] On_Rect_Transform_Dimensions_Change()
+}
+
+
+@enduml
+#+END_SRC
+
+#+RESULTS: UGUI
+[[file:../tmp/puml-ce7879b8-7282-11ef-8d53-04421a00482f.png]]
+
+
+
