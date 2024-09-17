@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       3c332e1a-8d05-4c64-8d4b-c8d8b9d83f6e
+:END:
+#+title: pwsh-hyperv
+#+date: [2024-09-17 周二]
+#+last_modified:  
+
+
+#+NAME: Get Avaliable Net Adapter
+#+BEGIN_SRC powshell 
+Get-NetAdapter
+#+END_SRC
+
+#+NAME: Create a Hyper-v outter Switch
+#+BEGIN_SRC powshell
+New-VMSwitch -Name <vm-switch name> -NetAdapterName <netadapter name>
+#+END_SRC
+
+
+
+#+NAME: Create a Hyper-v inner Switch
+#+BEGIN_SRC powshell
+New-VMSwitch -Name <vm-switch name> -SwitchType <Internal | External>
+#+END_SRC
+
+- outter switch cann connet to internet, while inner switch cannot do it.

@@ -56,3 +56,30 @@
 |-------------------------------+-------------------------------------------------------------------------------------------------|
 | Tool_Lhand                    |                                                                                                 |
 |-------------------------------+-------------------------------------------------------------------------------------------------|
+
+#+NAME: Deformed Bones Archiravy
+#+BEGIN_SRC plantuml :file ../tmp/puml-3a4170d8-7340-11ef-8008-04421a00482f.png
+@startmindmap
+
++ Root
+++ Spine0
++++ Pelvis
+++++ Thight
++++++ Shank
+++++++ Foot
++++++++ Toe
+++++++ Heal
++++ Spine1-4
+++++ Neck
++++++ Head
+++++ Clavide
++++++ UpperArm
+++++++ Forearm
++++++++ Hand
+++++++++ Finger
+@endmindmap
+#+END_SRC
+
+#+RESULTS: Bone Archiravy
+[[file:../tmp/puml-3a4170d8-7340-11ef-8008-04421a00482f.png]]
+

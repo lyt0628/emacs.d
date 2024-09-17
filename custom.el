@@ -11,7 +11,7 @@
  '(org-src-preserve-indentation nil)
  '(org-src-tab-acts-natively nil)
  '(package-selected-packages
-   '(csharp-mode ob-mongo typescript-mode ob-typescript ob-kotlin Jenkinsfile-mode jenkinsfile-mode fish-mode avy company-go auto-complete-config go-autocomplete go-mode-load bookmark-frecency use-package usepackage-hydra clj-refactor cider clojure-mode org-roam-ui org-download org-roam lua-mode lsp-treemacs treemacs-projectile treemacs counsel-projectile projectile dap-mode lsp-ivy lsp-ui lsp-mode flycheck yasnippet-snippets yasnippet company-tabnine company-box company magit pdf-tools rainbow-delimiters highlight-symbol tiny dashboard marginalia which-key amx undo-tree counsel use-package-hydra hydra plantuml-mode ob-latex-as-png graphviz-dot-mode ob-prolog ob-elixir ob-go ob-rust uuidgen all-the-icons evil))
+   '(toml-mode powershell csharp-mode ob-mongo typescript-mode ob-typescript ob-kotlin Jenkinsfile-mode jenkinsfile-mode fish-mode avy company-go auto-complete-config go-autocomplete go-mode-load bookmark-frecency use-package usepackage-hydra clj-refactor cider clojure-mode org-roam-ui org-download org-roam lua-mode lsp-treemacs treemacs-projectile treemacs counsel-projectile projectile dap-mode lsp-ivy lsp-ui lsp-mode flycheck yasnippet-snippets yasnippet company-tabnine company-box company magit pdf-tools rainbow-delimiters highlight-symbol tiny dashboard marginalia which-key amx undo-tree counsel use-package-hydra hydra plantuml-mode ob-latex-as-png graphviz-dot-mode ob-prolog ob-elixir ob-go ob-rust uuidgen all-the-icons evil))
  '(safe-local-variable-values
    '((org-roam-db-location . "e:/emacs.d/org/roam-japanese/org-roam.db")
      (org-roam-directory . "e:/emacs.d/org/roam-japanese")

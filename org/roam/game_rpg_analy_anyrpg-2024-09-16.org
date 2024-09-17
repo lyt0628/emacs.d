@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       1afdc9df-f77f-490f-a967-ab48b81f8389
+:END:
+#+title: game-rpg-analy-AnyRPG
+#+date: [2024-09-16 周一]
+#+last_modified:  
+

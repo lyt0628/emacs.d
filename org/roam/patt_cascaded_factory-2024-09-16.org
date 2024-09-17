@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       c560ad4e-a894-439f-b567-f0b0971786a7
+:END:
+#+title: patt-cascaded factory
+#+date: [2024-09-16 周一]
+#+last_modified:  
+

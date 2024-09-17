@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       80bdb825-6bf0-4910-99ae-d9e986f413e6
+:END:
+#+title: unity-ugui-Mask
+#+date: [2024-09-17 周二]
+#+last_modified:  
+
+|-----------------+--------+-----+----------------------|
+| Member          | Params | Ret | Note                 |
+|-----------------+--------+-----+----------------------|
+| showMaskGraphic | bool   |     | whether showing self |
+|-----------------+--------+-----+----------------------|

@@ -7,17 +7,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 #+NAME: PUML
 #+BEGIN_SRC plantuml :file ../tmp/puml-25c6807c-71aa-11ef-9dde-04421a00482f.png
 @startuml

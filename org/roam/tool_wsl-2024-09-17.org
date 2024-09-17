@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       67eca9a9-63f8-4c74-a5b5-48f48873d4d1
+:END:
+#+title: tool-wsl
+#+date: [2024-09-17 周二]
+#+last_modified:  
+
+#+NAME: WSL VM Config /etc/wsl.conf
+#+BEGIN_SRC toml
+[network]
+hostname=suse
+generateResolvConf=false
+#+END_SRC

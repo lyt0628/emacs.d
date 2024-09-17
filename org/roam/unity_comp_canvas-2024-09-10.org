@@ -43,4 +43,4 @@
 |------------------------------+-------------+-----+-----------------------------|
 
 Canvas Cowork with
-- [[id:d1b4cee1-4fef-482d-9001-b15a3d494057][unity-lib-CanvasScaler]] 
+- [[id:d1b4cee1-4fef-482d-9001-b15a3d494057][unity-ugui-CanvasScaler]] 

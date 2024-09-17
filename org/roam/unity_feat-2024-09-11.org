@@ -6,17 +6,49 @@
 #+last_modified:  
 
 
-
-#+NAME: Avatar
-#+BEGIN_SRC plantuml :file ../tmp/puml-9eea5c8e-6ff8-11ef-a781-04421a00482f.png
+#+NAME: Messager
+#+BEGIN_SRC plantuml :file ../tmp/puml-2558cc5c-7403-11ef-b9ef-04421a00482f.png
 @startuml
 
-interface "IBoardcast" as bc
-interface "IMsg" as msg
-interface "IMsgData" as md
+class "Messager" as msgr {
++ [static] Boardcast()
++ [static] Add_Listent()
++ [static] Remove_Listener()
+}
 
-bc -> msg
-msg --> md
+interface "IMessage" as msg {}
+class "SingleArgMessage<T>" as 1msg
+class "DoubleArgMessage<T>" as 2msg
+
+msgr -> msg
+msg <|-- 1msg
+msg <|-- 2msg
+@enduml
+#+END_SRC
+
+#+RESULTS: Messager
+[[file:../tmp/puml-2558cc5c-7403-11ef-b9ef-04421a00482f.png]]
+
+
+
+#+NAME: Patt
+#+BEGIN_SRC plantuml :file ../tmp/puml-abf428b0-7403-11ef-8a11-04421a00482f.png
+@startuml
+
+interface Singleton
+interface Clonable
+
+@enduml
+#+END_SRC
+
+#+RESULTS: Patt
+[[file:../tmp/puml-abf428b0-7403-11ef-8a11-04421a00482f.png]]
+
+
+
+#+NAME: CombatSystem
+#+BEGIN_SRC plantuml :file ../tmp/puml-9eea5c8e-6ff8-11ef-a781-04421a00482f.png
+@startuml
 
 
 interface "ICombatable" as cb
@@ -28,40 +60,42 @@ interface "IAttack" as att
 interface "IAttackable" as atk
 interface "IInjurable" as inj
 
-interface "IBuff" as buf
 interface "IWeapon" as w
+interface "IEquipable" as eq
+interface "IBuff" as buf
 interface "ISkill" as k
 
 atk --> att
 inj --> att
 
-cs -o cb
+cs  o- cb
 cb <|-- cbtor
 
 atk <|-- cbtor
 inj <|-- cbtor
 
 
-w --> buf
-
-interface "IEquipable" as eq
 interface "ISkilled" as sk
-eq --> w
+eq <|-- w
 sk --> k
-abstract "AEquipableCombater" as ecbtor
+interface "IBuffable" as buffable
+abstract "ABuffedCombater" as ecbtor
 abstract "ACombater" as acbtor
 
 cbtor <|-- ecbtor
-eq <|-- ecbtor
+buffable <|- ecbtor
 ecbtor <|-- acbtor
-sk <|-- acbtor
+acbtor -> sk
+buf <- buffable
+w -|> buf
 
 interface "ICombaterWapper" as cbw
-cbw -> cbtor
+cbtor <- cbw 
 @enduml
 #+END_SRC
 
-#+RESULTS: Avatar
+#+RESULTS: CombatSystem
 [[file:../tmp/puml-9eea5c8e-6ff8-11ef-a781-04421a00482f.png]]
+
 
 

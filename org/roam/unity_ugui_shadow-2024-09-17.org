@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       1d5001c1-ae8e-44df-978d-229efd057f69
+:END:
+#+title: unity-ugui-Shadow
+#+date: [2024-09-17 周二]
+#+last_modified:  
+
+|-----------------+--------+-----+------|
+| Member          | Params | Ret | Note |
+|-----------------+--------+-----+------|
+| effectColor     | [[id:5a0d18be-8e81-4666-bd28-269a88fe5c8b][Color]]  |     |      |
+|-----------------+--------+-----+------|
+| effectDistance  | vec2   |     |      |
+|-----------------+--------+-----+------|
+| useGraphicAlpha | bool   |     |      |
+|-----------------+--------+-----+------|
