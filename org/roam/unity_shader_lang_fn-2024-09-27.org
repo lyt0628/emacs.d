@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       296a31eb-984a-45dd-9248-043c83021f26
+:END:
+#+title: unity-shader-lang-fn
+#+date: [2024-09-27 周五]
+#+last_modified:  
+
+|------------------------------------------------------------+---------------------------------------------------------------------------------------------------------|
+| Feat                                                       | Note                                                                                                    |
+|------------------------------------------------------------+---------------------------------------------------------------------------------------------------------|
+| semantic annotation                                        | set semantic annotaion, telling compiler your varabile is the standard shader builtin varialbe.         |
+|                                                            | and compiler will automaticly assign or get value to or from the varialbe                               |
+|                                                            | see also: [[id:0524012c-9e06-4003-8a53-e532ac62de96][unity-shader-lang-semantic]]                                                                    |
+|------------------------------------------------------------+---------------------------------------------------------------------------------------------------------|
+| in/out modifier                                            | declaretion form arguments.                                                                             |
+|                                                            | out modifier make a form argments same as return value. all value assign, get, or convented by compiler |
+|------------------------------------------------------------+---------------------------------------------------------------------------------------------------------|
+| FN is declared in Pass can can access all variabls in Pass |                                                                                                         |
+|------------------------------------------------------------+---------------------------------------------------------------------------------------------------------|

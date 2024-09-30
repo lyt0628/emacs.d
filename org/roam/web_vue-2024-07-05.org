@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       afef0c75-ef40-49f0-9a30-b29d7613447d
 :END:
-#+title: web-vue
+#+title: js-3rd-vue
 #+date: [2024-07-05 五]
 #+last_modified: [2024-07-05 五 13:15]
 

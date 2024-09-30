@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       d6568860-b903-4916-85a0-8fdf120ef230
+:END:
+#+title: unity-comp-PhysicMaterial
+#+date: [2024-09-30 周一]
+#+last_modified:  
+

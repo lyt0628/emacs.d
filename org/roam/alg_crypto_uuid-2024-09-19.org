@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       411a123d-37a8-4011-ba18-106507d5dc14
+:END:
+#+title: alg-crypto-uuid
+#+date: [2024-09-19 周四]
+#+last_modified:  
+

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       34c7e9c3-643d-4063-8b5c-6932e0a4a413
+:END:
+#+title: game-combat-How to compute Damage
+#+date: [2024-09-27 周五]
+#+last_modified:  
+

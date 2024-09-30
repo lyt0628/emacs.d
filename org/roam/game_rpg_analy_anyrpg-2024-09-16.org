@@ -5,3 +5,64 @@
 #+date: [2024-09-16 周一]
 #+last_modified:  
 
+#+NAME: Simplfied Classes Graph
+#+BEGIN_SRC plantuml :file ../tmp/puml-3920b2f4-7683-11ef-a56a-04421a00482f.png
+@startuml
+
+class "Equipment" as equi {
+
+}
+
+class "Weapon" as weap {
+
+}
+
+class "Item" as item {
+
+}
+
+item <|-- equi
+equi <|-- weap
+
+
+@enduml
+#+END_SRC
+
+#+RESULTS: PUML
+[[file:../tmp/puml-3920b2f4-7683-11ef-a56a-04421a00482f.png]]
+
+
+
+#+NAME: Classes Graph
+#+BEGIN_SRC plantuml :file ../tmp/puml-fd42c9ec-7683-11ef-9a3f-04421a00482f.png
+@startuml
+
+class "Item" as item {
+- stack_size =1
+# item_quality = ""
+# random_item_quality = false
+# dynamic_level = false
+# freeze_drop_level = false
+# drop_level = 1
+# level_cap = 0
+- item_level =1
+# use_level =1
+- currency_name = ""
+# dynamic_currency_amout = true
+# price_per_level = 10
+- base_price = 0
+- qunique_item = false
+- character_class_requirement_list : List<string>
+- real_character_class_requirement_list : List<CharacterClass>
+# real_item_quality : ItemQuality
+- currency : Currency
+# currency_converter : CurrencyConverter
+
+}
+
+@enduml
+#+END_SRC
+
+#+RESULTS: Classes Graph
+[[file:../tmp/puml-fd42c9ec-7683-11ef-9a3f-04421a00482f.png]]
+

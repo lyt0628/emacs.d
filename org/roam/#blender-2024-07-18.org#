@@ -1,0 +1,71 @@
+:PROPERTIES:
+:ID:       3aa0184e-8ef4-45d6-91c3-a73d68817c74
+:END:
+#+title: art-tool-blender
+#+date: [2024-07-18 周四]
+#+last_modified:  
+
+
+
+
+
+|-----------------+-----------------------------------------------|
+| Skill           | Note                                          |
+|-----------------+-----------------------------------------------|
+| Water and magma | shuffle UV point of Texturem and linerly move |
+|-----------------+-----------------------------------------------|
+|                 |                                               |
+|-----------------+-----------------------------------------------|
+
+
+
+
+
+
+|----------------------+---------------------|
+| Amature Nameing Rule | Note                |
+|----------------------+---------------------|
+| Spine                | For  amature itself |
+|----------------------+---------------------|
+| Pelvis               | For Bone Of hip     |
+|----------------------+---------------------|
+| shin                 | For Bone of Thank   |
+|----------------------+---------------------|
+|                      |                     |
+|----------------------+---------------------|
+
+
+
+
+
+#+NAME: Blender Roadmap
+#+BEGIN_SRC plantuml :file ../tmp/puml-a8be94c9-c273-45bb-aff8-9a18b56bb467.png
+  + Blender
+  ++ Model
+  +++ m, S-d, ., numpad
+  +++ a,,Alt+MLB, l, C-l, C-+,C--
+  +++ G/R/S, Axis, Op-Center
+  +++ Thrink Editing
+  +++ Subdivision ,C-r, i
+  +++ polygon: [C+MRB], [C+MLB]
+  +++ Sharp Edge, Crease
+  ++ UV&Tex
+  +++ Seaming Edge
+  +++ Img Texture
+  +++ Pating In PS
+  ++ Amature
+  +++ heairacy Bones, [Obj>Bone>Ctrl+p]
+  +++ Affecting & Pole Bone
+  +++ Wight Paiting
+  +++ Post in Guesture Mode
+  ++ Sculpt
+  -- Shading
+  --- 
+  -- Anim
+  --- Path Anim [Obj>Path Curve>Ctrl+p>Follow Path]
+  -- Rending
+#+END_SRC
+
+#+RESULTS: Blender Roadmap
+[[file:../tmp/puml-a8be94c9-c273-45bb-aff8-9a18b56bb467.png]]
+

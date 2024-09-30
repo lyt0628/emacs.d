@@ -1,0 +1,29 @@
+:PROPERTIES:
+:ID:       c8f776fd-9940-4aef-9478-552c1ab26d28
+:END:
+#+title: gl-light
+#+date: [2024-09-25 周三]
+#+last_modified:  
+
+
+|---------------------------------+------------------------------------------------------------------------------------------------------------------|
+| Point                           | Note                                                                                                             |
+|---------------------------------+------------------------------------------------------------------------------------------------------------------|
+| ADS                             | A : ambient, that is envrionmental light                                                                         |
+|                                 | D : Diffuse, that is fixed color of a object                                                                     |
+|                                 | S : specular, that is high light os a object, depent on view point                                               |
+|---------------------------------+------------------------------------------------------------------------------------------------------------------|
+| fators to addect observed image | 1. Light ADS attributes                                                                                          |
+|                                 | 2. Object ADS attributes                                                                                         |
+|                                 | 3. Reflection Angle                                                                                              |
+|                                 | 4. View Angle                                                                                                    |
+|                                 | 5. Matelity, mostly affect S value                                                                               |
+|---------------------------------+------------------------------------------------------------------------------------------------------------------|
+| Light Type                      | 1. ambient : RGBA                                                                                                |
+|                                 | 2. Point : ADS + Diection                                                                                        |
+|                                 | 3. Directinal : ADS + Position + Factor(attenuation)                                                             |
+|                                 | 4. Spot : ADS+ origion + Diection + Factor(sita:angle of spot, fai:angle of light-vector from origion to object) |
+|                                 | usualy we use vector Dot computation to replace angle                                                            |
+|---------------------------------+------------------------------------------------------------------------------------------------------------------|
+|                                 |                                                                                                                  |
+|---------------------------------+------------------------------------------------------------------------------------------------------------------|

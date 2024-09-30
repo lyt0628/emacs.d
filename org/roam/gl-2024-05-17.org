@@ -8,6 +8,17 @@
 #+last_modified: [2024-07-06 六 02:24]
 
 
+
+|------------------+--------------------------------------------------------------------|
+| ModelMatrix      | The Transform Object do ti trave on The World                      |
+|------------------+--------------------------------------------------------------------|
+| ViewMatrix       | Move "Camera" to adjust viewpoint to see Object,                   |
+|                  | In OpenGl Camera in origin, and see to nagative z axes.            |
+|                  | we move object to adjust viewpoint, becouse we cannot move carmera |
+|------------------+--------------------------------------------------------------------|
+| projectionMatrix | poject the object into near plane(that is where screen is in)      |
+|------------------+--------------------------------------------------------------------|
+
 * See also
 - [[id:9c5b5a45-2198-4a88-8036-44a9de04c864][gl-Clear Color Buffer]]
 - [[id:bf3d1be9-7bdc-40c7-b9a2-4f974c3f5324][gl-example-cube]]

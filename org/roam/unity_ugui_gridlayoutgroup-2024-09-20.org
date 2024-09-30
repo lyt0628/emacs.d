@@ -1,0 +1,29 @@
+:PROPERTIES:
+:ID:       3bfd5d93-b37e-4079-a63f-1d5817d7a9a2
+:END:
+#+title: unity-ugui-GridLayoutGroup
+#+date: [2024-09-20 周五]
+#+last_modified:  
+
+
+| Member         | params/Type | Ret | Note                |
+|----------------+-------------+-----+---------------------|
+| padding        | Vector4     |     |                     |
+|----------------+-------------+-----+---------------------|
+| spacing        | Vector2     |     |                     |
+|----------------+-------------+-----+---------------------|
+| startCprmer    | enum        |     | <<StartCorner>>     |
+|                |             |     | - UpperLeft         |
+|                |             |     | - Lower Right       |
+|----------------+-------------+-----+---------------------|
+| startAxis      | enum        |     | <<StartAxis>>       |
+|                |             |     | - Horizontal        |
+|                |             |     | - Vertocal          |
+|----------------+-------------+-----+---------------------|
+| ChildAlignment |             |     |                     |
+|----------------+-------------+-----+---------------------|
+| Constraint     | enum        |     | <<Grid Constraint>> |
+|                |             |     | - FixColumnCount    |
+|                |             |     | - FixRowCount       |
+|                |             |     | - Flexible          |
+|----------------+-------------+-----+---------------------|

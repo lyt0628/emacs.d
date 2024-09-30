@@ -7,6 +7,48 @@
 
 
 
+
+
+#+NAME: Item
+#+BEGIN_SRC plantuml :file ../tmp/puml-b475ee7c-7da1-11ef-b45c-04421a00482f.png
+@startuml
+
+interface IItem {
+}
+
+interface IItemModel{
+
+}
+
+interface IWeapon
+
+
+IItem -> IItemModel
+
+
+IItem <|-- IWeapon
+
+
+@enduml
+#+END_SRC
+
+#+RESULTS: Item
+[[file:../tmp/puml-b475ee7c-7da1-11ef-b45c-04421a00482f.png]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #+NAME: PUML
 #+BEGIN_SRC plantuml :file ../tmp/puml-25c6807c-71aa-11ef-9dde-04421a00482f.png
 @startuml

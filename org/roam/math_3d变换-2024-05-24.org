@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       ca1b0727-9b62-4298-9af6-e07543bf922e
 :END:
-#+title: math-3D Transform
+#+title: math-linear-3D Transform
 #+date: [2024-05-24 五]
 #+last_modified: [2024-07-06 六 23:29]
 

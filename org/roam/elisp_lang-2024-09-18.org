@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       d121542d-d660-458b-ba79-f8f7521c59aa
+:END:
+#+title: elisp-lang
+#+date: [2024-09-18 周三]
+#+last_modified:  
+

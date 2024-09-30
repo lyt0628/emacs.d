@@ -1,0 +1,25 @@
+:PROPERTIES:
+:ID:       51f7bff3-eb48-4074-b0cf-1486c2886854
+:END:
+#+title: game-combat-How to detect a Hit
+#+date: [2024-09-27 周五]
+#+last_modified:  
+
+In 3D space, some methods can be used to detec Hit
+1. Colider Box
+  we can bind a collider(trigger) to a weapon or a punch,  when they find a collider entering the area, they find the tag of other object, if they catch a ENEMY tag and is controlled by
+  combat system, attack it.
+  the problem is the area to accpet attack  must be a bound, is diffecut to change the area.
+  and you cannot know what part of ohter injured, the function of collider box just to detect whether collision happen.(in Unity other gameobject will convented to you)
+  or mybe you can use a series of collider to all special hitable part, and a bigger collider to a whole object.
+2. Sphere raycast
+   you can easy change the diraction of the sphere
+3. fix hit point
+   you can make multile attack in a attack action.
+   
+
+
+When you attacking, you punch must know you are attacking, then they can attack on enemy.
+you can spec other is a hitable object or send attack message to anyone you hit.
+
+

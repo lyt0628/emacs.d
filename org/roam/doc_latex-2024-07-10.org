@@ -13,7 +13,8 @@
 - [[id:9963cf7a-76b1-4d91-9b0f-89cfa8f49ae9][doc-latex-chart]]
 
 
-#+BEGIN_SRC latex-as-png :file  /tmp/tex-c528b5c8-c027-40f2-b0a2-e8abbb1de0d6.png
+
+#+BEGIN_SRC latex-as-png :file  ../tmp/latex-c528b5c8-c027-40f2-b0a2-e8abbb1de0d6.png
   \[
   	a^2 + b^2 = c^2
   \]

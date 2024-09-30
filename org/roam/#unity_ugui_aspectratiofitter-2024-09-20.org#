@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       c7a58b43-d90d-444a-8199-7eedc27359b4
+:END:
+#+title: unity-ugui-AspectRatioFitter
+#+date: [2024-09-20 周五]
+#+last_modified:  
+
+|--------------+--------+-----+-------------------------|
+| Member       | Params | Ret | Note                    |
+|--------------+--------+-----+-------------------------|
+| aspectMode   |        |     | <<Aspect Mode>>         |
+|              |        |     | - None                  |
+|              |        |     | - Width Controls Height |
+|              |        |     | - Height Controls Width |
+|              |        |     | - Fit In Parent         |
+|              |        |     | - Envelop Parent        |
+|--------------+--------+-----+-------------------------|
+| Aspect Ratio | float  |     | width/height ratio      |
+|              |        |     |                         |
+|--------------+--------+-----+-------------------------|

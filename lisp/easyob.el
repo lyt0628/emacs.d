@@ -31,7 +31,21 @@
 ;;; Requirements:
 
 ;;; Code:
+(require 's)
 
+(defmacro easyob-def (name  commnad  args)
+  (list 'async-shell-command
+	(s-join  " "  `(,commnad ,args))
+	(concat "*" (symbol-name name) "*")
+	(s-concat "*" (symbol-name name) "Error !!!*")))
+
+
+(sequencep echo)
+
+(easyob-def echo "echo" "666")
+
+(macroexp--expand-all
+ '(easyob-def "echo" "echo" "666"))
 
 (defmacro easyob-define (msg)
   "MSG."

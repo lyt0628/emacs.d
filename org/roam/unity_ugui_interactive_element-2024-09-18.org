@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       d134e84b-0f87-49b4-858b-0ad54bc2d22d
+:END:
+#+title: unity-ugui-Interactive
+#+date: [2024-09-18 周三]
+#+last_modified:  
+
+|--------------+------+---+--------------------------------------------------|
+| Memebr       |      |   | Note                                             |
+|--------------+------+---+--------------------------------------------------|
+| status       |      |   | <<UI Status>>                                    |
+|              |      |   | - Normal                                         |
+|              |      |   | - Highlight                                      |
+|              |      |   | - Pressed                                        |
+|              |      |   | - Disabled                                       |
+|--------------+------+---+--------------------------------------------------|
+| interactable | bool |   | if false, element is disabed,                    |
+|              |      |   | notice [[id:bff08cda-88cf-4bdf-a3f9-c77b759cfd03][EventTrigger]] is not a part of Interactive |
+|--------------+------+---+--------------------------------------------------|
+| Transition   | enum |   | <<Transition>>                                   |
+|              |      |   | - ColorHine                                      |
+|              |      |   | - SpriteSwrap                                    |
+|              |      |   | - Animation                                      |
+|--------------+------+---+--------------------------------------------------|

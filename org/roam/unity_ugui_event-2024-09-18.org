@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       ecffb0e2-c6ce-4d41-9034-85ea7dc6e2bc
+:END:
+#+title: unity-ugui-Event
+#+date: [2024-09-18 周三]
+#+last_modified:  
+
+|---------------+----+---+------|
+| Memebr        |    |   | Note |
+|---------------+----+---+------|
+| AddListener() | cb |   |      |
+|---------------+----+---+------|

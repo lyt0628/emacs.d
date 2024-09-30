@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       a5d47562-305c-42e6-83d7-99d6bf88bf45
+:END:
+#+title: game-ui
+#+date: [2024-09-28 周六]
+#+last_modified:  
+

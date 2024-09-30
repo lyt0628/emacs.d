@@ -1,0 +1,43 @@
+:PROPERTIES:
+:ID:       8db122e5-333c-4ebf-8372-e744da13a0c9
+:END:
+#+title: math-linear-equation
+#+date: [2024-09-18 周三]
+#+last_modified:  
+
+
+
+#+NAME: Equation
+#+BEGIN_SRC plantuml :file ../tmp/puml-2ef3a86a-7564-11ef-b147-04421a00482f.png
+@startmindmap
++ Equation
+
+
+++ How to slove a Equation ?
++++ Elementary Transform
+++++ 1. Multiply a row with a factor, and add it to another row
+++++ 2. Multiply a row with a factor
+++++ 3. Swap 2 rows
++++ Matrix Form
+++++ Elementary Row Transform
+++++ Echelon Matrix
++++++ Simpfized Echelon Matrix
+
+
+++ When A Equation group has answers ?
+@endmindmap
+#+END_SRC
+
+#+RESULTS: Equation
+[[file:../tmp/puml-2ef3a86a-7564-11ef-b147-04421a00482f.png]]
+
+
+
+#+NAME: PS
+|-------------------------------------------------+------|
+| Question                                        | Note |
+|-------------------------------------------------+------|
+| Whether all Equation groups have Echelon Form ? |      |
+|-------------------------------------------------+------|
+| Whether all Echelon Matrix can be Simplfized ?  |      |
+|-------------------------------------------------+------|

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       8cd233d2-9bd4-4a6f-b1c3-f209f432d246
+:END:
+#+title: elisp-lib-ob
+#+date: [2024-09-18 周三]
+#+last_modified:  
+

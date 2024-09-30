@@ -1,12 +1,17 @@
 :PROPERTIES:
 :ID:       a318fae3-f335-4ced-bb4f-b999b33b22f4
 :END:
-#+title: unity-comp-Colloder
+#+title: unity-comp-Collider
 #+date: [2024-09-10 周二]
 #+last_modified:  
 
 *Index*
 - [[BoxCollider]]
+- SphereCollider
+- CapsuleCollider
+- MeshCollider
+- WheelCollider
+- [[id:cd77767e-6df3-47fb-859c-45f5628aaad6][Terrian Collider]]
 
 
 |-----------+-------------+-----+------|

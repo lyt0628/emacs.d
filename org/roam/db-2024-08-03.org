@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       69c8c199-4aa9-42bf-8a09-138b608835f8
 :END:
-#+title: db_
+#+title: db
 #+date: [2024-08-03 六]
 #+last_modified:  
 
@@ -11,3 +11,11 @@
 - [[id:33c2a845-5980-4a71-942e-06ba65226c56][db-postgresql]]
 - [[id:a963d386-ac0a-44ed-bda1-f2b369dbbf88][db-mongo]]
 - [[id:eb27a9da-68ee-4715-9b47-5c90120c8e7c][db-node4j]]
+
+
+* Principle to design tables
+1. A Table record has a unique Record
+2. All Fields must dependent on Key
+3. Field in table cannot dependent on other field
+4. 
+5. 

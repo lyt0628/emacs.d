@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       8ad7a49e-8601-4087-ae38-f218afc27481
+:END:
+#+title: art-tool-blender-api
+#+date: [2024-09-29 周日]
+#+last_modified:  
+
+
+
+Blender provides some module for user to create addon.
+#+NAME:
+| Mudules   | Note |
+|-----------+------|
+| bpy.data  |      |
+|-----------+------|
+| bpy.types |      |
+|-----------+------|
+|           |      |
+|-----------+------|

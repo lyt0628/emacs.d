@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       57dc7c67-27ca-4358-96f7-2b5109318787
 :END:
-#+title: math-2D Transform
+#+title: math-linear-2D Transform
 #+date: [2024-07-06 六]
 #+last_modified: [2024-07-07 日 00:57]
 
@@ -9,4 +9,4 @@
 
 
 * See also
-- [[id:ca1b0727-9b62-4298-9af6-e07543bf922e][math-3D Transform]]
+- [[id:ca1b0727-9b62-4298-9af6-e07543bf922e][math-linear-3D Transform]]

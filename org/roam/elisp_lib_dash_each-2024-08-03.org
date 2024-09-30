@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       979a1504-6c4c-4cbe-84b3-a1eb72c483ff
 :END:
-#+title: elisp-lib-dash-each
+#+title: elisp-3rd-dash-each
 #+date: [2024-08-03 六]
 #+last_modified:  
 

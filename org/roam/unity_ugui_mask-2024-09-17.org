@@ -5,6 +5,7 @@
 #+date: [2024-09-17 周二]
 #+last_modified:  
 
+- Mask need to work together with [[id:c04824fa-9857-4b24-a054-abae3d80265a][Image]] in same Gameobject to provide show area
 |-----------------+--------+-----+----------------------|
 | Member          | Params | Ret | Note                 |
 |-----------------+--------+-----+----------------------|

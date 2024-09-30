@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       a8a641eb-de35-481f-9e12-6041c1816b6c
 :END:
-#+title: python-ds-dist
+#+title: py-ds-dist
 #+date: [2024-08-04 周日]
 #+last_modified:  
 

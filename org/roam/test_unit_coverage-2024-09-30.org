@@ -1,0 +1,97 @@
+:PROPERTIES:
+:ID:       058635e0-c4a0-40ff-9d33-c9c01fecc4e9
+:END:
+#+title: test-unit-coverage
+#+date: [2024-09-30 周一]
+#+last_modified:  
+
+* Index
+  
+|-----------------------------+-------------------------------------------------------------------------------------------------------------+------------------------------------------|
+| Type                        | Mean                                                                                                        | Note                                     |
+|-----------------------------+-------------------------------------------------------------------------------------------------------------+------------------------------------------|
+| [[Statement Coverage]]          | the test cases run with all statements                                                                      |                                          |
+|-----------------------------+-------------------------------------------------------------------------------------------------------------+------------------------------------------|
+| [[decision coverage]]           | the test cases run with all dicision(that is a if-expression, including logic )                             |                                          |
+|-----------------------------+-------------------------------------------------------------------------------------------------------------+------------------------------------------|
+| [[Condition Coverage]]          | the test cases run with all conditions in all decision(each condition joined by logic should be saw singly) |                                          |
+|-----------------------------+-------------------------------------------------------------------------------------------------------------+------------------------------------------|
+| [[Dicision-Condition Coverage]] | meet the requirements of both dicision coverage and condition coverage                                      | note for short circuit operators(and or) |
+|-----------------------------+-------------------------------------------------------------------------------------------------------------+------------------------------------------|
+| [[Condition Combo Coverage]]    | the test cases run with all condition combos in all decision                                                |                                          |
+|-----------------------------+-------------------------------------------------------------------------------------------------------------+------------------------------------------|
+| [[MC/DC Coverage]]              | pre-requirements: meet the dicision-condition coverage.                                                     |                                          |
+|                             | fix other condision to make the value of rest condition can change the dicison sperately                    |                                          |
+|-----------------------------+-------------------------------------------------------------------------------------------------------------+------------------------------------------|
+| [[Path Coverage]]               | the test cases run with all path                                                                            |                                          |
+|-----------------------------+-------------------------------------------------------------------------------------------------------------+------------------------------------------|
+
+
+* Statement Coverage
+
+
+
+
+* Decision Coverage
+
+  
+
+* Condition Coverage
+
+
+
+* Dicision-Condition Coverage
+
+  
+* Condition Combo Coverage
+
+
+* MC/DC Coverage
+
+
+* Path Coverage
+
+  
+#+begin_src dot :eval no :file ../tmp/dot-4a120cc9-9815-4413-a01d-6a82cc7e5640.png
+digraph {
+beg [label="Beggin"]
+end [label="End"]
+
+c1 [label="headphones <=0 || shells <=0 || protectors <=0"]
+c2_1 [label="total < 1000"]
+c2_2 [label="total < 1800"]
+
+r1 [label="return  -1f;"]
+
+r2 [label="return salary;"]
+
+p1 [label="total = headphones * 80 + shells * 10 + protectors * 8;"]
+p2_1 [label="salary = total * 0.1f;"]
+p2_2 [label="salary = 1000 * 0.1f + (total - 1000) * 0.15f;"]
+p2_3 [label="salary = 1000 * 0.1f + 800 * 0.15f + (total - 1800) *0.2f;"]
+
+beg -> c1 
+c1 -> r1 [label="Y"]
+r1 -> end
+
+c1 -> p1 [label="N"]
+
+p1 -> c2_1 
+
+c2_1 -> P2_1  [label="Y"]
+p2_1 -> r2
+
+c2_1 -> c2_2 [label="N"]
+
+
+c2_2 -> p2_2 [label="Y"]
+p2_2 -> r2
+
+c2_2 -> p2_3 [label="N"]
+p2_3 -> r2
+
+r2 -> end
+
+}
+#+end_src
+

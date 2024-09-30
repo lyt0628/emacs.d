@@ -8,18 +8,31 @@
 
 
 
+#+NAME: Basic
+#+BEGIN_SRC plantuml :file ../tmp/puml-a8c9f530-756a-11ef-b066-04421a00482f.png
+@startuml
++ Context
+
+@enduml
+#+END_SRC
 
 
-#+HEADER: :results file
-#+HEADER: :file /tmp/puml-70727f03-3522-11ef-9b58-b48c9d0f4f89.png
-#+BEGIN_SRC plantuml
-  @startmindmap
-  + Spring
-  @endmindmap
-  #+END_SRC
-
-  #+RESULTS:
-  [[file:/tmp/puml-70727f03-3522-11ef-9b58-b48c9d0f4f89.png]]]]
+#+NAME: IOC
+|------+------|
+| Feat | Note |
+|------+------|
+|      |      |
+|------+------|
+|      |      |
+|------+------|
 
 
-  
+#+NAME: AOP
+|------+------|
+| Feat | Note |
+|------+------|
+|      |      |
+|------+------|
+|      |      |
+|------+------|
+

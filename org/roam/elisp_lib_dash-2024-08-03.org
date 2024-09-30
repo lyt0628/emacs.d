@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       80662872-04d5-48e3-a468-71c749efcf7d
 :END:
-#+title: elisp-lib-dash
+#+title: elisp-3rd-dash
 #+date: [2024-08-03 六]
 #+last_modified:  
 

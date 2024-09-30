@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       f7fdf8ff-2f4f-49f7-80f3-8bd47938918d
+:END:
+#+title: unity-ugui-LayoutController
+#+date: [2024-09-20 周五]
+#+last_modified:  
+
+
+| Member        | Params | Ret | Note            |
+|---------------+--------+-----+-----------------|
+| HorizontalFit |        |     | - Uncontrained  |
+|               |        |     | - MinSize       |
+|               |        |     | - PreferredSize |
+|---------------+--------+-----+-----------------|
+| verticalFit   |        |     |                 |

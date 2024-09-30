@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       b3418137-25a7-4f2a-ad07-c4103f6b1ba4
+:END:
+#+title: art-tool-blender-api-data
+#+date: [2024-09-29 周日]
+#+last_modified:  
+
+
+
+#+NAME: sub modules
+| bpy_coolection   | Element Type          | Ret | Note                                                                |
+|------------------+-----------------------+-----+---------------------------------------------------------------------|
+| data.armatures   |                       |     | data wrapped in catagoried module, they all is a bpy_collection     |
+|------------------+-----------------------+-----+---------------------------------------------------------------------|
+| data.curves      |                       |     |                                                                     |
+|------------------+-----------------------+-----+---------------------------------------------------------------------|
+| data.collections | [[id:8e6bf1a4-206c-457b-af55-f1127486db27][Collection]]            |     | access for scene object collections in outliner                     |
+|                  |                       |     | only in a scene object scene, can a object be viewed in 3d viewport |
+|------------------+-----------------------+-----+---------------------------------------------------------------------|
+| objects          | [[id:603a47d5-e2cd-49ec-bd54-2447c84fc3b4][bpy_collection]]        |     | all the objects in the actived scene                                |
+|------------------+-----------------------+-----+---------------------------------------------------------------------|
+| objects.new()    | name:string           |     |                                                                     |
+|                  | object_data:datablock |     | if object_data is None, the new ojbect is a pure axes               |
+|------------------+-----------------------+-----+---------------------------------------------------------------------|
+| objects.remove() | object_data           |     |                                                                     |
+|------------------+-----------------------+-----+---------------------------------------------------------------------|
+
+

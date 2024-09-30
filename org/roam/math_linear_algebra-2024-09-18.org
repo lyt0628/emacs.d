@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       ffa11d2e-0220-48f5-9792-d39d1e908f94
+:END:
+#+title: math-linear
+#+date: [2024-09-18 周三]
+#+last_modified:  
+

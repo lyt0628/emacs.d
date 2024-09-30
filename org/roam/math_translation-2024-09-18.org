@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       30d918c2-3a2b-4750-ab0a-a9c864851b2b
+:END:
+#+title: math-english
+#+date: [2024-09-18 周三]
+#+last_modified:  
+
+
+| Phase          | Chinese        |
+|----------------+----------------|
+| Echelon Matrix | 阶梯型矩阵     |
+|----------------+----------------|
+| Elementary     | 初等的, 基本的 |
+|----------------+----------------|

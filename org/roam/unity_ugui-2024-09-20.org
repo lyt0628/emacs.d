@@ -1,0 +1,38 @@
+:PROPERTIES:
+:ID:       a353d398-0ad3-4e36-a791-e6db6a34b6a1
+:END:
+#+title: unity-ugui
+#+date: [2024-09-20 周五]
+#+last_modified:  
+
+* Index
+  ** Basic UI Element
+  - [[id:c04824fa-9857-4b24-a054-abae3d80265a][unity-ugui-Image]]
+  - [[id:fbc3df10-2e24-4595-b0f6-4f0c4baceb5e][unity-ugui-RawImage]]
+  - [[id:1fe0b789-bc74-4d67-a282-a90b92a18cc1][unity-ugui-Text(Legacy)]]
+  - [[id:80bdb825-6bf0-4910-99ae-d9e986f413e6][unity-ugui-Mask]]
+  - [[id:1d5001c1-ae8e-44df-978d-229efd057f69][unity-ugui-Shadow]]
+  - [[id:ee0d5b3a-4431-4bd9-a496-50a50cf1e605][unity-ugui-Outline]]
+  - [[id:760ed04c-9a02-4282-af9f-aed30524303e][unity-ugui-PositionAsUV1]]
+
+    
+  ** Interactive
+  - [[id:d134e84b-0f87-49b4-858b-0ad54bc2d22d][unity-ugui-Interactive]]
+  - [[id:ecffb0e2-c6ce-4d41-9034-85ea7dc6e2bc][unity-ugui-Event]]
+  - [[id:ccab8f80-170a-4783-9700-f9dccb9767bc][unity-ugui-EventSystem]]
+  - [[id:04992431-88ae-432f-9c40-34b15038657b][unity-ugui-Button]]
+  - [[id:8ed27360-6e03-4b67-8905-86ccca1b11b5][unity-ugui-Toggle]]
+  - [[id:1f2d68d8-2020-44e7-99f4-aabd5c2efec1][unity-ugui-ToggleGroup]]
+  - [[id:74c0d44d-bef5-4973-919d-786eeb9e9411][unity-ugui-Slider]]
+  - [[id:cd752901-eb92-4bcc-9bc4-dfc4e8991be6][unity-ugui-Scrollbar]]
+  - [[id:ef22912e-3da9-4041-85bb-bd538683fca5][unity-ugui-ScrollRect ScrollView]]
+  - [[id:a20ef3a2-4ea1-4eae-aa0c-c0bcc2bdb0d2][unity-ugui-InputField(Legacy)]]
+  - [[id:07e17219-a7b6-432d-bd7d-0da83046dd3a][unity-ugui-navi]]
+
+
+  ** Layout
+  - [[id:fd91351f-a93e-47c3-acfd-d699b5be5cbd][unity-ugui-LayoutElement]]
+  - [[id:efdf90bc-5c04-409c-ab9f-9157ac9233cd][unity-ugui-ContetnSizeFilter]]
+  - [[id:c7a58b43-d90d-444a-8199-7eedc27359b4][unity-ugui-AspectRatioFitter]]
+  - [[id:bbb2eeac-848e-4bdd-ad4a-2f0a2eef79e7][unity-ugui-HorizontaolLayoutgroup]]
+  - [[id:3bfd5d93-b37e-4079-a63f-1d5817d7a9a2][unity-ugui-GridLayoutGroup]]
