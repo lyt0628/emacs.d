@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       59033a37-7660-492a-9649-cbeb412859c4
+:END:
+#+title: linux-tool-chkconfig
+#+date: [2024-10-06 周日]
+#+last_modified:  
+
+
+chkconfig <prog> on/off
+
+| Service  | Note                       |
+|----------+----------------------------|
+| iptables | set off set close firewall |
+|----------+----------------------------|
+|          |                            |

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       1320d34e-2842-430c-b11a-8795e3397434
+:END:
+#+title: tool-ansible
+#+date: [2024-10-01 周二]
+#+last_modified:  
+

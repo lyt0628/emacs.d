@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       7bfab41a-bcde-494b-b5be-8ad19923ef0b
+:END:
+#+title: pwsh-firewall
+#+date: [2024-10-01 周二]
+#+last_modified:  
+
+ New-NetFirewallRule -DisplayName "WSL" -Direction Inbound -InterfaceAlias "vEthernet (WSL)" -Action Allow

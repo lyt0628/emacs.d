@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       83fd5991-958c-474e-be0c-9a635feec7b8
+:END:
+#+title: gl-light-lambert
+#+date: [2024-10-03 周四]
+#+last_modified:  
+

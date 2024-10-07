@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       d7d083a6-2f85-4598-9b57-0e22e71a72e4
+:END:
+#+title: linux-tool-lsb_release
+#+date: [2024-10-01 周二]
+#+last_modified:  
+
+ lsb_release -a 

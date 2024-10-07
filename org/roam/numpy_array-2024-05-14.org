@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       4d9b3418-9d32-4aaa-908d-c0f669339e74
 :END:
-#+title: numpy-array
+#+title: py-lib-numpy-array
 #+date: [2024-05-14 二]
 #+last_modified: [2024-05-14 二 22:42]
 

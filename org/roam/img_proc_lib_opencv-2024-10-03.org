@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       c71e3fee-75d6-44a7-81fb-de0a54b563e2
+:END:
+#+title: img-proc-lib-opencv
+#+date: [2024-10-03 周四]
+#+last_modified:  
+

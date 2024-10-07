@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       202ef4b8-8340-4333-8de2-6de8e2bda6f4
+:END:
+#+title: tool-es
+#+date: [2024-10-06 周日]
+#+last_modified:  
+

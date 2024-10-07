@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       69dd502e-142e-4eba-b877-6a599176d792
+:END:
+#+title: math-linear-determinant
+#+date: [2024-10-03 周四]
+#+last_modified:  
+

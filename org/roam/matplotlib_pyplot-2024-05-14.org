@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       d91d42e2-b753-4932-ae5a-30facff051b7
 :END:
-#+title: matplotlib-pyplot
+#+title: py-lib-matplot-pyplot
 #+date: [2024-05-14 二]
 #+last_modified: [2024-05-16 四 17:16]
 

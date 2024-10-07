@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       6381eed2-07dc-4f65-a3df-92f0a2abff8e
+:END:
+#+title: linux-tool-service
+#+date: [2024-10-06 周日]
+#+last_modified:  
+
+
+#+NAME: normal service
+|----------+----------|
+| Service  | Note     |
+|----------+----------|
+| iptables | firewall |
+|----------+----------|

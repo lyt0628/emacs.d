@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       968e4daf-6d3a-4034-adb9-21092acf0e65
+:END:
+#+title: tool-hadoop-japi-fs-FileStatus
+#+date: [2024-10-07 周一]
+#+last_modified:  
+

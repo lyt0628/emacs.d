@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       06c9de5d-96be-4360-a22c-52255b5a4088
+:END:
+#+title: tool-hadoop-hdfs
+#+date: [2024-10-06 周日]
+#+last_modified:  
+
+
+|----------------------------------------------------------+------|
+| Point                                                    | Note |
+|----------------------------------------------------------+------|
+| hdfs work as a unix-vfs, user, group like unix           |      |
+|----------------------------------------------------------+------|
+| super user is the user`process that start namenode       |      |
+|----------------------------------------------------------+------|
+| default, the user of hdfs is the user of current process |      |
+|----------------------------------------------------------+------|

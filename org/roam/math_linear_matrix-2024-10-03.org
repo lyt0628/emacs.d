@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       e5327220-e0ab-4b67-8dfc-447f1ab1c30f
+:END:
+#+title: math-linear-matrix
+#+date: [2024-10-03 周四]
+#+last_modified:  
+

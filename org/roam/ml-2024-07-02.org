@@ -1,12 +1,12 @@
 :PROPERTIES:
 :ID:       711afbd0-b37a-4cc4-a1c1-725a3ec21abc
 :END:
-#+title: ml_
+#+title: ml
 #+date: [2024-07-02 二]
 #+last_modified: [2024-07-02 二 16:13]
 
 
 
 * See also
-- [[id:278da5ad-30ab-4125-832b-12559fc5eba7][tensorflow_]]
-- [[id:ca56685d-f8e9-4714-aec6-2bbc0ee59eb4][pytorch_]]
+- [[id:278da5ad-30ab-4125-832b-12559fc5eba7][tensorflow]]
+- [[id:ca56685d-f8e9-4714-aec6-2bbc0ee59eb4][pytorch]]

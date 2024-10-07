@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       6b783ce3-0d9a-4472-a870-c12f272e8cf2
+:END:
+#+title: tool-zk
+#+date: [2024-10-06 周日]
+#+last_modified:  
+

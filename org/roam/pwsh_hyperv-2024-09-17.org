@@ -24,3 +24,9 @@ New-VMSwitch -Name <vm-switch name> -SwitchType <Internal | External>
 #+END_SRC
 
 - outter switch cann connet to internet, while inner switch cannot do it.
+
+
+#+NAME: switch off or on hyperv
+#+BEGIN_SRC powshell :noweb yes
+bcdedit /set hypervisorlaunchtype [off/auto]
+#+END_SRC

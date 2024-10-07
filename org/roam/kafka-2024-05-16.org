@@ -2,7 +2,7 @@
 :ID:       ecafcced-922d-4d7b-9fe8-2e98fc8a22ad
 :header-args:sh: :dir /home/lyt0628/soft/Kafka/kafka_2.13-3.7.0
 :END:
-#+title: kafka
+#+title: mq-kafka
 #+filetags: :mq:
 #+date: [2024-05-16 四]
 #+last_modified: [2024-07-05 五 21:36]

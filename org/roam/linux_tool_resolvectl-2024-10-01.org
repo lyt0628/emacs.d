@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       be6234b7-8237-45ae-8be5-f02e4bbe3d51
+:END:
+#+title: linux-tool-resolvectl
+#+date: [2024-10-01 周二]
+#+last_modified:  
+
+|   |   |   |
+|  |   |   |

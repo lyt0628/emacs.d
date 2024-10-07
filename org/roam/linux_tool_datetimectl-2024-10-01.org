@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       1f89c782-7899-4e9e-aa99-d1eb072a64e6
+:END:
+#+title: linux-tool-datetimectl
+#+date: [2024-10-01 周二]
+#+last_modified:  
+

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       61c0ce50-46ef-4bf5-941a-a0edf6a5c084
+:END:
+#+title: tool-hadoop-mapreduce
+#+date: [2024-10-07 周一]
+#+last_modified:  
+

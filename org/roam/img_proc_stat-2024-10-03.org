@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       972ec599-fab4-4227-9908-0a6c9cb7c10f
+:END:
+#+title: img-proc-stat
+#+date: [2024-10-03 周四]
+#+last_modified:  
+

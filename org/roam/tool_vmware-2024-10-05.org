@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       93f145dc-aec3-4cdf-b25e-ab4733d58797
+:END:
+#+title: tool-vmware
+#+date: [2024-10-05 周六]
+#+last_modified:  
+
+
+ls shared_dir
+vmware-hgfsclient
+
+
+apped into /etc/fstab
+.host:/<shared_dir> /mnt/hgfs/<mnt point> fuse.vmhgfs-fuse allow_other,defaults 0 0
+
+and reboot

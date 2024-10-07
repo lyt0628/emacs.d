@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       e21c20a4-df08-44cd-a657-7ae34be8c75a
+:END:
+#+title: tool-flink
+#+date: [2024-10-06 周日]
+#+last_modified:  
+

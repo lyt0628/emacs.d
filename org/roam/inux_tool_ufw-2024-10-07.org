@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       0d11247d-edc9-4375-ab4d-6c66170c89f0
+:END:
+#+title: inux-tool-ufw
+#+date: [2024-10-07 周一]
+#+last_modified:  
+
+sudo ufw disable

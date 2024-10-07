@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       3dc5b2a5-0b30-4d53-a7ff-1e219a36207d
+:END:
+#+title: js-tool-gulp
+#+date: [2024-10-06 周日]
+#+last_modified:  
+

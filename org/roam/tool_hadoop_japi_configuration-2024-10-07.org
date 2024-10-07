@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       a4fcee28-b492-4000-a8e4-9d62b730acd8
+:END:
+#+title: tool-hadoop-japi-Configuration
+#+date: [2024-10-07 周一]
+#+last_modified:  
+

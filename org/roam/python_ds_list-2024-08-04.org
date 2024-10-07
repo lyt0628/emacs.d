@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       0f75c689-ce6d-42fb-9d45-524f825fc40d
 :END:
-#+title: python-ds-list
+#+title: py-ds-list
 #+date: [2024-08-04 周日]
 #+last_modified:  
 

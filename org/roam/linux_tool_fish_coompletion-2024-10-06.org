@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       cdd77478-7e92-4fa7-9400-09c994774465
+:END:
+#+title: linux-tool-fish-coompletion
+#+date: [2024-10-06 周日]
+#+last_modified:  
+

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       f4ed7b80-0652-4d19-8018-bb5832164c7c
+:END:
+#+title: img-proc-conv
+#+date: [2024-10-03 周四]
+#+last_modified:  
+

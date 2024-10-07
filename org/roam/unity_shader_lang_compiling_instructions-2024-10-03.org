@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       33ebf229-1974-447d-9d06-8fb817910001
+:END:
+#+title: unity-shader-lang-compiling instructions
+#+date: [2024-10-03 周四]
+#+last_modified:  
+

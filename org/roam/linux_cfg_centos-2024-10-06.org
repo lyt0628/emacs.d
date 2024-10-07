@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       7d499735-b32b-4e4b-a59f-b0978233c312
+:END:
+#+title: linux-cfg-centos
+#+date: [2024-10-06 周日]
+#+last_modified:  
+
+
+| Conf                                      | Note             |
+|-------------------------------------------+------------------|
+| /etc/sysconfig/etcwork-scripts/ifcfg-eth0 | Ip Setting       |
+|-------------------------------------------+------------------|
+| /etc/sysconfgi/network                    | Hostname setting |
+|-------------------------------------------+------------------|
+|                                           |                  |

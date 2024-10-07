@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       278da5ad-30ab-4125-832b-12559fc5eba7
 :END:
-#+title: tensorflow
+#+title: ml-tensorflow
 #+date: [2024-07-02 二]
 #+last_modified: [2024-07-05 五 21:37]
 

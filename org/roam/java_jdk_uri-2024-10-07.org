@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       cce6efac-6da5-4a18-b2fb-5b8b90806714
+:END:
+#+title: java-jdk-URI
+#+date: [2024-10-07 周一]
+#+last_modified:  
+

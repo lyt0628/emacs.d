@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       f373b582-4f1c-4f4a-b5c7-409947bea61e
+:END:
+#+title: img-proc-edge
+#+date: [2024-10-03 周四]
+#+last_modified:  
+

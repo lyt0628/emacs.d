@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       dd60a694-6faa-4828-a4d6-cf14b2f6bd08
+:END:
+#+title: tool-hadoop-japi-fs-FSDataIOStream
+#+date: [2024-10-07 周一]
+#+last_modified:  
+

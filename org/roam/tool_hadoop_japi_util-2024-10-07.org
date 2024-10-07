@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       d318866b-4a1f-4a10-891c-d1db303d71bd
+:END:
+#+title: tool-hadoop-japi-util
+#+date: [2024-10-07 周一]
+#+last_modified:  
+

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       cd5753a3-8ec4-484f-8700-e0a1cb4cc38c
+:END:
+#+title: tool-hadoop-yarn
+#+date: [2024-10-06 周日]
+#+last_modified:  
+
