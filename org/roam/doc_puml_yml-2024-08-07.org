@@ -3,8 +3,9 @@
 :END:
 #+title: doc-puml-yml
 #+date: [2024-08-07 三]
-#+last_modified:  
+#+last_modified:
 
+run: |
 
 * 标量和列表表示
 #+HEADER: :results file

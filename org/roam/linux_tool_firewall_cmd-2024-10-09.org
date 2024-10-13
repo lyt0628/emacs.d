@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       bcc565dd-e6a3-4248-878f-8d4b90a8155e
+:END:
+#+title: linux-tool-firewall_cmd
+#+date: [2024-10-09 周三]
+#+last_modified:  
+

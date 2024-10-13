@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       202f09fc-528d-4492-a3bf-f29f187b5095
+:END:
+#+title: git-ghact-gameci
+#+date: [2024-10-10 周四]
+#+last_modified:  
+

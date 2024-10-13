@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       a54a3793-c291-43e1-b178-a8f3879f0ca6
+:END:
+#+title: git-managing
+#+date: [2024-10-09 周三]
+#+last_modified:  
+

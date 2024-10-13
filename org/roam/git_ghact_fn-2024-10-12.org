@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       7b937337-582e-48a4-bd7a-e7817e00fd38
+:END:
+#+title: git-ghact-fn
+#+date: [2024-10-12 周六]
+#+last_modified:  
+
+
+| FN         | Params | Ret  | Note                   |
+|------------+--------+------+------------------------|
+| startsWith | s      | bool | if S start with prefix |
+|            | prefix |      |                        |
+|------------+--------+------+------------------------|

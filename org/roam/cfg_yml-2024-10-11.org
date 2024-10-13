@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       03aa6352-984e-4af4-9beb-f3ecb2d4af31
+:END:
+#+title: cfg-yml
+#+date: [2024-10-11 周五]
+#+last_modified:  
+

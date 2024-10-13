@@ -5,6 +5,13 @@
 #+date: [2024-08-01 周四]
 #+last_modified:  
 
+Unity Contain 4 Shade Pipeline
+- Builtin(default)
+- [[id:bab164c0-dde4-4158-82e3-63e0ef2b01bd][URP]]
+- [[id:e5b96b69-3296-455f-9703-b68018f07ddb][HDRP]](For Nice machine)
+- [[id:ef9746e4-5274-47bc-901a-8820727ac777][SRP]]
+there is no compat, only one of them can be used in a project.
+
 |-----------------+---------------------------|
 | Point           | Note                      |
 |-----------------+---------------------------|

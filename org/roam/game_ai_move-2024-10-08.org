@@ -1,0 +1,82 @@
+:PROPERTIES:
+:ID:       df7c779c-7e2c-4f16-9538-52bb067e78a6
+:END:
+#+title: game-ai-behaviour
+#+date: [2024-10-08 周二]
+#+last_modified:  
+
+
+A behaviour working need infomation and entry to execute the behaviour.
+we sperate a behaviour into two parts: action and infomation.
+|----------------+--------------------------------------------------------------------------+------|
+| Component      | Work                                                                     | Note |
+|----------------+--------------------------------------------------------------------------+------|
+| AgentBehaviour | Algothmn class provide infomation in record Steering to Agent for action |      |
+|----------------+--------------------------------------------------------------------------+------|
+| Agent          | Agent class to perform action                                            |      |
+|----------------+--------------------------------------------------------------------------+------|
+| Steering       | record data classs storing information about action                      |      |
+|----------------+--------------------------------------------------------------------------+------|
+#+NAME: Behaviour
+#+BEGIN_SRC plantuml :file ../tmp/puml-2cc6f25a-a732-40d0-8972-8ea0267a6ccb.png
+class Agent
+class AgentBehaviour
+class Steering
+
+AgentBehaviour ->Agent
+Agent --> Steering
+
+#+END_SRC
+
+#+RESULTS: Behaviour
+[[file:../tmp/puml-2cc6f25a-a732-40d0-8972-8ea0267a6ccb.png]]
+
+
+some step will be perform:
+1. AgentBehaviour update Steering and convert it to Agent
+2. Agent update states and persorm action
+
+In Unity, Update() and LateUpdate() lifecycle can decouple them.
+1. AgnetBehaviour compute Steering in Update(), in the meantime, Agent perform action by
+the Steering in previous Update().
+2. Agent update states in LateUpdate() for next action.
+
+next, we just need to do something in AgentBehaviour to complete Behaviour.
+
+#+NAME: Detailed Move Behaviour
+#+BEGIN_SRC plantuml :file ../tmp/puml-e5834db8-851f-11ef-880b-04421a00482f.png
+@startuml
+
+class Agent{
+== States ==
+- Steering
+- orientation : [0f,360f]
+- velocity : vec3
+== Delta ==
+- rotation : float
+== constants ==
+- maxSpeed
+- maxAccel
+}
+
+class AgentBehaviour{
+- target : GameOjbect
+- Agent
+}
+
+class Steering{
+angular : float
+linear : vec3
+}
+
+AgentBehaviour ->Agent
+Agent --> Steering
+
+
+
+@enduml
+#+END_SRC
+
+#+RESULTS: Detailed Move Behaviour
+[[file:../tmp/puml-e5834db8-851f-11ef-880b-04421a00482f.png]]
+

@@ -12,6 +12,7 @@ In 3D space, some methods can be used to detec Hit
   the problem is the area to accpet attack  must be a bound, is diffecut to change the area.
   and you cannot know what part of ohter injured, the function of collider box just to detect whether collision happen.(in Unity other gameobject will convented to you)
   or mybe you can use a series of collider to all special hitable part, and a bigger collider to a whole object.
+  - Unity Bones Will Move Child, It is easy to bind collider as child of bone to detect Hit, See: [[id:3e29c5eb-08ba-4ad2-bf9a-053c4f02f681][unity-comp-SkinedMeshRenderer]]
 2. Sphere raycast
    you can easy change the diraction of the sphere
 3. fix hit point

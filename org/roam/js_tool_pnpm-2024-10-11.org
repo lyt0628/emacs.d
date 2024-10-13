@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       5ff078f8-c343-4b90-9ca2-381479129f6b
+:END:
+#+title: js-tool-pnpm
+#+date: [2024-10-11 周五]
+#+last_modified:  
+

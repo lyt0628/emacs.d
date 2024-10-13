@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       d2221b23-c7dd-43ae-b573-7393d40776da
+:END:
+#+title: cs-lib-Math
+#+date: [2024-10-08 周二]
+#+last_modified:  
+

@@ -1,0 +1,98 @@
+:PROPERTIES:
+:ID:       f185844e-1de2-4e73-80aa-16c859085f80
+:END:
+#+title: unity-shader-lib-cginc-struct
+#+date: [2024-10-12 周六]
+#+last_modified:  
+
+
+
+* 3D网格结构体
+
+#+NAME: appdata_base 顶点,法向,0号纹理,顶点ID
+#+BEGIN_SRC plantuml :file ../tmp/puml-da17595e-8882-11ef-99c3-04421a00482f.png
+@startuml
+
+struct appdata_base{
+vertex : float4 : POSITION
+normal : float3 : NORMAL
+texcoord : TEXCOORD0
+UNITY_VERTEX_INPUT_INSTANCE_ID
+}
+
+@enduml
+#+END_SRC
+
+#+RESULTS: appdata_base
+[[file:../tmp/puml-da17595e-8882-11ef-99c3-04421a00482f.png]]
+
+
+
+#+NAME: appdata_tan base+切向
+#+BEGIN_SRC plantuml :file ../tmp/puml-48377996-8883-11ef-90dc-04421a00482f.png
+@startuml
+
+struct appdata_base{
+appdata_base
+tangent : float4 : TAnGENT
+}
+
+
+@enduml
+#+END_SRC
+
+#+RESULTS: appdata_tan base+切向
+[[file:../tmp/puml-48377996-8883-11ef-90dc-04421a00482f.png]]
+
+
+
+#+NAME: appdata_tan base+切向 + 其他纹理
+#+BEGIN_SRC plantuml :file ../tmp/puml-48377996-8883-11ef-90dc-04421a00482f.png
+@startuml
+
+struct appdata_base{
+appdata_base
+tangent : float4 : TAnGENT
+texcoord1 : float4 : TEXCOORD1
+texcoord1 : float4 : TEXCOORD2
+texcoord1 : float4 : TEXCOORD3
+}
+
+
+@enduml
+#+END_SRC
+
+
+* Image Process Structure
+  
+#+NAME: appdata_img = appdata_base - NORMAL
+#+BEGIN_SRC plantuml :file ../tmp/puml-01c70d9a-8884-11ef-b220-04421a00482f.png
+@startuml
+
+struct appdata_img{
+vertex : float4 : POSITION
+texcoord : half2 : TEXCOORD0
+unITY_vERTEX_INPUT_INSTANCE_ID
+}
+
+@enduml
+#+END_SRC
+
+#+RESULTS: appdata_img = appdata_base - NORMAL
+[[file:../tmp/puml-01c70d9a-8884-11ef-b220-04421a00482f.png]]
+
+
+#+NAME: v2f_img
+#+BEGIN_SRC plantuml :file ../tmp/puml-362396da-8884-11ef-af1f-04421a00482f.png
+@startuml
+
+struct v2f_img {
+pos : float4 : SV_POSITION
+uv : half2 : TEXCOORD0
+UnITY_VERTEX_INPUT-INSTANCE_ID
+UNITY_VERTEX_OUTPUT_STERE0
+}
+
+@enduml
+#+END_SRC
+

@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       75e34fc6-fa7d-4d42-8584-28e2f9b03850
+:END:
+#+title: game-ai-nav
+#+date: [2024-10-08 周二]
+#+last_modified:  
+

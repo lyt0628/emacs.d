@@ -1,0 +1,28 @@
+:PROPERTIES:
+:ID:       dc4ad8be-b9fa-48d4-aaea-26ba78cf5419
+:END:
+#+title: git-branch-principal line
+#+date: [2024-10-09 周三]
+#+last_modified:  
+
+
+#+NAME: single master branch
+#+BEGIN_SRC dot :file ../tmp/dot-85dd028d-9111-4f44-8e9f-dd2c8bb3d2c0.png
+
+digraph {
+  beg [label="Begin"]
+  c1 [label="First Commit"]
+  c2 [label="Commit"]
+  c3 [label="Commit"]
+  l [label="Latest Commit"]
+
+
+  beg -> c1 -> c2 -> c3 -> l
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:../tmp/dot-85dd028d-9111-4f44-8e9f-dd2c8bb3d2c0.png]]
+
+
+

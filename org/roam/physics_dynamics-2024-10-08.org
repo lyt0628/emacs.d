@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       28c4786f-8c62-4a8d-a1bb-1f2fe1edbd8e
+:END:
+#+title: physics-dynamics
+#+date: [2024-10-08 周二]
+#+last_modified:  
+

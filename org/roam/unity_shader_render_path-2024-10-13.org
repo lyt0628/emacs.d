@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       e04c981f-8acc-40fa-8a82-6472a4de4e8f
+:END:
+#+title: unity-shader-render path
+#+date: [2024-10-13 周日]
+#+last_modified:  
+

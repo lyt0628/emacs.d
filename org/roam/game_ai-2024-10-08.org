@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       b2fe6cfc-abd9-4c2c-bd04-4e02603d232c
+:END:
+#+title: game-ai
+#+date: [2024-10-08 周二]
+#+last_modified:  
+

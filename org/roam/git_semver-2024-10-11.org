@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       d91bbe2f-f43b-43f4-97df-ba4b85c8549e
+:END:
+#+title: git-semver
+#+date: [2024-10-11 周五]
+#+last_modified:  
+

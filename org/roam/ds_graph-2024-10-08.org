@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       b9b803f6-a46b-4478-ad55-a89632937341
+:END:
+#+title: ds-graph
+#+date: [2024-10-08 周二]
+#+last_modified:  
+

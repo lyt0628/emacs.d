@@ -1,0 +1,27 @@
+:PROPERTIES:
+:ID:       d54b8566-290e-4a05-a661-dea11f80e119
+:END:
+#+title: git-ghact-perm
+#+date: [2024-10-11 周五]
+#+last_modified:  
+
+
+
+#+NAME: Default GITHUB_TOKEN permissions
+|---------------------+-----------------------------+-----------------------------|
+| Scope               | Default access (permissive) | Default access (restricted) |
+|---------------------+-----------------------------+-----------------------------|
+| actions             | read/write                  | none                        |
+| checks              | read/write                  | none                        |
+| contents            | read/write                  | read                        |
+| deployments         | read/write                  | none                        |
+| id-token            | none                        | none                        |
+| issues              | read/write                  | none                        |
+| metadata            | read                        | read                        |
+| packages            | read/write                  | read                        |
+| pages               | read/write                  | none                        |
+| pull-requests       | read/write                  | none                        |
+| repository-projects | read/write                  | none                        |
+| security-events     | read/write                  | none                        |
+| statuses            | read/write                  | none                        |
+|---------------------+-----------------------------+-----------------------------|

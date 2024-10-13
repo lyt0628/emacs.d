@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       ee10f2af-9b09-43e9-8d8f-3d876a355e02
+:END:
+#+title: git-managing-licenes
+#+date: [2024-10-09 周三]
+#+last_modified:  
+

@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       ef0bbd2e-508e-46cb-8e57-7bd074d9539a
+:END:
+#+title: game-ai-behaviour-blending
+#+date: [2024-10-08 周二]
+#+last_modified:  
+
+
+
+#+NAME: Factor to affect blending
+|------------------+--------------------------------------------------------------+------------------------------------------------------------------------|
+| Factor           | Mean                                                         | Note                                                                   |
+|------------------+--------------------------------------------------------------+------------------------------------------------------------------------|
+| weight : [0f,1f] | just multiply weight with original value                     |                                                                        |
+|------------------+--------------------------------------------------------------+------------------------------------------------------------------------|
+| priority         | hold a ds Map[priority=>List[Steering]],                     | some behaviour is impotant but no need to move substantially(大幅度地) |
+|                  | compute final Steering of every priority Devision,           |                                                                        |
+|                  | if final steering exceeds the pre-difined threshold, use it. |                                                                        |
+|                  | if no steering reach, lower priority division will be used.  |                                                                        |
+|------------------+--------------------------------------------------------------+------------------------------------------------------------------------|
+
+
+
+The question is how we to combinate different AgentBehaviour.
+In Unity, just set right weight and AddComponent with AgentBehaviour
+

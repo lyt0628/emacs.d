@@ -1,7 +1,21 @@
 :PROPERTIES:
 :ID:       2ce0d4bf-0f2b-45f7-9a1e-a342941a0e67
 :END:
-#+title: js-webcomponent
+#+title: js-webcomp
 #+date: [2024-08-08 周四]
 #+last_modified:  
 
+
+
+#+NAME: Part Of A WebComponent
+|--------------------------+------|
+| Part                     | Note |
+|--------------------------+------|
+| Class extend HTMLElement |      |
+|--------------------------+------|
+| Isolated Shadow DOM      |      |
+|--------------------------+------|
+| Isolated CSS Style       |      |
+|--------------------------+------|
+| Event API                |      |
+|--------------------------+------|

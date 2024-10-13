@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       5d35810a-5d23-4752-8cb7-4645e7144831
+:END:
+#+title: art-hdr
+#+date: [2024-10-07 周一]
+#+last_modified:  
+
+拍摄
+全景相机 : 效率高
+普通相机 : 精度高

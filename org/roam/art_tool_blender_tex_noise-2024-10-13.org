@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       f4bbf9a0-6d42-4cc7-b9ae-7fcb8421b8b1
+:END:
+#+title: art-tool-blender-tex-noise
+#+date: [2024-10-13 周日]
+#+last_modified:  
+

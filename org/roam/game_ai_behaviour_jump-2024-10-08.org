@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       ab9ecf5f-7008-454a-8a2f-b54ef8701f80
+:END:
+#+title: game-ai-behaviour-jump
+#+date: [2024-10-08 周二]
+#+last_modified:  
+

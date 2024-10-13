@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       41c683f9-7243-4ee3-9775-948d043a64ed
+:END:
+#+title: unity-fx-Light
+#+date: [2024-10-13 周日]
+#+last_modified:  
+
+
+
+| Member   | Params | Ret | Note                                         |
+|----------+--------+-----+----------------------------------------------|
+| DrawHelo |        |     | Show  Volumn Light Ball in Position of Light |
+|----------+--------+-----+----------------------------------------------|
+| Flare    |        |     | Spec the shape of Halo Volumn Ball           |
+|----------+--------+-----+----------------------------------------------|
+
