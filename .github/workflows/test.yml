@@ -16,5 +16,5 @@ jobs:
         run: sudo apt-get install emacs
         
       - name: Run Configuration
-        run: emacs -nw 
+        run: emacs --script ./lisp/_init.el
         
