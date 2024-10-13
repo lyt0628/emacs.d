@@ -1,0 +1,20 @@
+name:  Test Emacs Configuration
+
+
+on:
+  push:
+    branches: ['main', 'dev']
+
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Emacs
+        run: sudo apt-get install emacs
+        
+      - name: Run Configuration
+        run: emacs -nw 
+        
