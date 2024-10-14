@@ -9,7 +9,6 @@
 
 
 
-
 (setq org-support-shift-select nil) ;  shift ext-select
 (unbind-key "S-<up>" 'org-mode-map)
 (unbind-key "S-<down>" 'org-mode-map)

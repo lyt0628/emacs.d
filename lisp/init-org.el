@@ -9,15 +9,17 @@
 (require 'cl-lib)
 (require 'org)
 
-(require 'init-util)
+(require 'init-variables)
 
-
-(defconst lyt-note-directory (expand-file-name "org" lyt-emacs-directory))
+(defconst lyt-note-directory
+  (expand-file-name "org" lyt-emacs-directory))
 
 
 (require 'init-org-keymap)
 
-(require 'init-org-babel)
+(require 'init-ob)
+
+(require 'init-org-roam)
 
 (use-package org-download
   :ensure t
@@ -28,7 +30,6 @@
 
 
 
-(require 'init-package-roam)
 
 
 (provide 'init-org)
