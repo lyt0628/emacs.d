@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       8ac35aa8-8352-4e1d-a185-fbf5c4e06b3c
-:END:
-#+title: ds-red_black_tree
-#+date: [2024-07-06 六]
-#+last_modified: [2024-07-06 六 23:08]
-

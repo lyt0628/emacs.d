@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       a99e02cd-5fb7-484d-a047-20ae9cce5d50
-:END:
-#+title: patt-optimize
-#+date: [2024-08-07 三]
-#+last_modified:  
-

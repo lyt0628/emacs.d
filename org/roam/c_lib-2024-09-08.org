@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       11be32f2-04ac-4ea2-995d-696f454557f2
-:END:
-#+title: c-lib
-#+date: [2024-09-08 周日]
-#+last_modified:  
-

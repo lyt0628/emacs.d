@@ -1,9 +1,0 @@
-:PROPERTIES:
-:ID:       ca8ec3a3-bf89-4d36-8108-4e0b63e2a23f
-:END:
-#+title: art
-#+date: [2024-09-10 周二]
-#+last_modified:  
-
-
-HDR

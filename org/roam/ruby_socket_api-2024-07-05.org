@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       e06d43e9-9401-45d6-85b7-8cdc14b87aa4
-:END:
-#+title: ruby-lib-socket
-#+filetags: :prog:ruby:socket:
-#+date: [2024-07-05 五]
-#+last_modified: [2024-07-05 五 21:20]
-

@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       dddc9c07-3fa3-4ebc-9b3b-72ee7f009898
-:END:
-#+title: patt-create
-#+date: [2024-08-07 三]
-#+last_modified:  
-

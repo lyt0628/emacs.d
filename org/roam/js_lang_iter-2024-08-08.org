@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       478681e7-300c-419e-be30-c74675057830
-:END:
-#+title: js-lang-iterator
-#+date: [2024-08-08 周四]
-#+last_modified:  
-

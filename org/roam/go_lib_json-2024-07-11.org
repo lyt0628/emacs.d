@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       6dac7e93-8eb5-4121-901b-2b3cb8da9a8d
-:END:
-#+title: go-std-json
-#+filetags: :js:
-#+date: [2024-07-11 四]
-#+last_modified: [2024-07-11 四 22:15]
-

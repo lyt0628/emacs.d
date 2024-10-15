@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       8faffefc-88a6-45f7-a94b-524575a767cb
-:END:
-#+title: go-std-Reader & Writer
-#+date: [2024-07-11 四]
-#+last_modified: [2024-07-11 四 21:52]
-

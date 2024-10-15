@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       c4dda20d-3874-4548-b3eb-5518b9e3b3cd
-:END:
-#+title: patt-singleton
-#+date: [2024-08-07 三]
-#+last_modified:  
-

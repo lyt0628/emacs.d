@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       0a77a853-a441-446a-90b0-fdb4a225df8e
-:END:
-#+title: go-std-log
-#+filetags: :js:
-#+date: [2024-07-11 四]
-#+last_modified: [2024-07-11 四 22:15]
-

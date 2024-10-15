@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       c8d8fc12-352e-474a-88f3-b5e4c514f234
-:END:
-#+title: sitemap-ruby
-#+date: [2024-08-03 六]
-#+last_modified:  
-

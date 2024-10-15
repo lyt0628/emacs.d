@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       04de60a6-1107-44d3-9b42-15c3837003fd
-:END:
-#+title: db-sql
-#+date: [2024-08-03 六]
-#+last_modified:  
-

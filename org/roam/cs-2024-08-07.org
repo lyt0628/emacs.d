@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       7c55f63b-a876-486d-ae87-e2207163fc9a
-:END:
-#+title: cs
-#+date: [2024-08-07 三]
-#+last_modified:  
-

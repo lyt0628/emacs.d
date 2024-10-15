@@ -1,8 +1,0 @@
-:PROPERTIES:
-:ID:       945cb6f3-e0a6-47cd-907b-9335e1448488
-:END:
-#+title: unity-shader-lib-cginc
-#+date: [2024-10-03 周四]
-#+last_modified:  
-
-Source File See : [[D:\Unity\2022.3.45f1\Editor\Data\CGIncludes]]

@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       3b7cfed9-0f12-40b2-81be-1cc7b8b879f1
-:END:
-#+title: nasm-c&nasm Mix-Compile
-#+date: [2024-07-03 三]
-#+last_modified: [2024-07-03 三 19:33]
-

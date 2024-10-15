@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       321fd8a5-2b80-42e4-9b98-c88b627de60d
-:END:
-#+title: js-ev-input
-#+date: [2024-08-07 三]
-#+last_modified:  
-

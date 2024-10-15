@@ -11,9 +11,6 @@
 
 (require 'init-variables)
 
-(defconst lyt-note-directory
-  (expand-file-name "org" lyt-emacs-directory))
-
 
 (require 'init-org-keymap)
 

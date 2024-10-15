@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       93492b9f-d943-46c8-afd4-22fe27f36792
-:END:
-#+title: js-lang-fn-closure
-#+date: [2024-08-07 三]
-#+last_modified:  
-

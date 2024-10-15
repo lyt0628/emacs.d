@@ -1,7 +1,0 @@
-:PROPERTIES:
-:ID:       d55ddc96-ac42-4eda-9b04-5af87afa174c
-:END:
-#+title: c-tool-cmake
-#+date: [2024-06-28 五]
-#+last_modified: [2024-06-28 五 14:32]
-
