@@ -39,7 +39,7 @@
 	  'org-redisplay-inline-images)
 
 
-(global-visual-line-mode 1) ; Enable soft-wrap
+;(global-visual-line-mode 1) ; Enable soft-wrap
 
 ;; Maintain a list of recent files opened
 (require 'recentf)
