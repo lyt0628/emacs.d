@@ -61,9 +61,9 @@
 		(latex-as-png        . t)))
 
 
-(require 'ob-skynet)
+;(require 'ob-skynet)
 
-(setq org-babel-skynet-home (concat lyt-note-directory "skynet/skynet"))
+;(setq org-babel-skynet-home (concat lyt-note-directory "skynet/skynet"))
 
 
 (require 'ob-html)
