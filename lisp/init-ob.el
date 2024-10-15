@@ -66,7 +66,7 @@
 ;(setq org-babel-skynet-home (concat lyt-note-directory "skynet/skynet"))
 
 
-(require 'ob-html)
+;(require 'ob-html)
 
 
 
