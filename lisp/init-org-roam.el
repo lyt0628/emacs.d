@@ -90,7 +90,7 @@ it can be passed in POS."
    )
 
 (use-package org-roam-ui
-  :if display-graphic-p
+  :if (display-graphic-p)
   :after org-roam
   ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
   ;;         a hookable mode anymore, you're advised to pick something yourself
