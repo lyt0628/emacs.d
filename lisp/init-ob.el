@@ -7,6 +7,7 @@
 
 (require 'org)
 
+(require 'easyob)
 (defvar lyt-note-directory)
 
 
@@ -27,14 +28,25 @@
   :group 'graphviz-dot))
 ;; End of use-package
 
-(use-package ob-latex-as-png :ensure t
-  :config
-  (setq ob-latex-as-png-header '("\\usepackage[greek,english]{babel}")))
+
+(easyob-def tex
+			"pdflatex -shell-escape -output-directory=$FILE_DIR $FILE  && pdftoppm $FILE_SIMPLE.pdf -png $FILE_SIMPLE"
+			:extension ".tex"
+			:file "$FILE_SIMPLE-1.png"
+			:head "
+\\documentclass[varwidth,crop]{standalone}
+\\usepackage[greek,english]{babel}
+\\begin{document}"
+			:tail "
+\\end{document}"
+			)
+
 
 
 (use-package plantuml-mode :ensure t
   :custom
   (org-plantuml-jar-path  (concat lyt-emacs-directory "bin/plantuml-bsd-1.2024.7.jar")))
+
 ;; End of use-package
 
 
@@ -58,7 +70,8 @@
 		(sql                 . t)
 		(plantuml            . t)
 		(dot                 . t)
-		(latex-as-png        . t)))
+ 
+		))
 
 
 ;(require 'ob-skynet)
@@ -114,21 +127,19 @@
 
 ;; ob-java ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require 'ob-java)
+;(require 'ob-java)
 
-(defvar lyt-ob-java-lib-dir "~/")
-(defvar org-babel-default-header-args:java '())
-(let ((library-files (mapconcat 'identity
-				(lyt-util-list-files-in-dir
-				 lyt-ob-java-lib-dir
-				 "jar")
-				":")))
-
-  (nconc org-babel-default-header-args:java
-	 `((:dir . "workdir")
-	   (:cmpflag . ,(concat "-cp " library-files))
-	   (:cmdline . ,(concat "-cp .:"  library-files)))))
-
+;(defvar lyt-ob-java-lib-dir "~/")
+;(defvar org-babel-default-header-args:java '())
+;(let ((library-files (mapconcat 'identity
+;				(lyt-util-list-files-in-dir
+;				 lyt-ob-java-lib-dir
+;				 "jar")
+;				":")))
+; (nconc org-babel-default-header-args:java
+;	 `((:dir . "workdir")
+;	   (:cmpflag . ,(concat "-cp " library-files))
+;	   (:cmdline . ,(concat "-cp .:"  library-files)))))
 
 
 
@@ -136,4 +147,3 @@
 
 
 ;;; init-ob.el ends here
-
