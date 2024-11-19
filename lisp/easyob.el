@@ -1,4 +1,4 @@
-;;; ob-skynet.el --- Org-babel functions for skynet  -*- lexical-binding: t; -*-
+;;; ob-skynet.el --- Org-babel functions for skynet  
 
 ;; Copyright (C) 2024 lyt0628
 
@@ -6,7 +6,7 @@
 ;; Maintainer: lyt0628
 ;; Created: 13 April 2024
 ;; Keywords: lua, skynet, org, babel
-;; Homepage: https://github.com/lyt0628/ob-skynet
+;; Homepage: https://github.com/lyt0628/easyob
 ;; Version: 0.0.1
 
 ;;; License:
@@ -31,6 +31,7 @@
 ;;; Requirements:
 
 ;;; Code:
+(require 'dash)
 (require 's)
 
 
@@ -55,30 +56,31 @@
   (let* (
 		   (easyob-defexe-exename (concat "org-babel-execute:"
 										   lang))
-		   (easyob-defexe-exesymbol (intern easyob-defexe-exename))
+		   (easyob-defexe-exesymbol (intern easyob-defexe-exename)) ; create symbol to bind execute fuction
 		   )
-	  (fset easyob-defexe-exesymbol
+	  (fset easyob-defexe-exesymbol ; bind to execution function, the following lambda is the function
 			`(lambda (body params)
 			   (progn
 				 (let* (
-						(tmp-src-file (org-babel-temp-file ,filename-prefix ,extension))
-						(processed-params (org-babel-process-params params))
+						(tmp-src-file (org-babel-temp-file ,filename-prefix ,extension)) ; temp file to store content of code block
+						(processed-params (org-babel-process-params params)) ; relove params for variables resolution
 						)
 
-				   ;; Complete 
+				   ;; Complete code block ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 				   (unless (and ,complete-check-regx
 								(string-match ,complete-check-regx body))
 					 (setq body (concat
 								 ,complete-prefix
 								 body
 								 ,complete-subfix))
-					 ) ; end unless
+					 ) ; end unless 
 				   (setq body (concat ,head body ,tail))
 
 				   ;; Create temp file
 				   (with-temp-file tmp-src-file (insert body))
 
 				   ;; Run Command
+				   ;; resolve template variables ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 				   (let* (
 						  (processed-command ,command)
 						  (processed-command (s-replace "$FILE_SIMPLE" "$FIlE_DIR/$FILE_BASE"
@@ -103,23 +105,27 @@
 						  (processed-file (s-replace "$BODY" body
 													   processed-file))
 						 )
-					 (message processed-file)
-					 ;; async
+					 (message processed-file) ; for debug
+					 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+					 
+					 ;; async;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					 (when ,async
 						 (async-shell-command
 						  processed-command
 						  ,(concat "*" easyob-defexe-exename "*") ; generate buffer name
 						  ,(s-concat "*" easyob-defexe-exename " Error !!!*") )
 						 ) ; end async
-					 ;; not async
+					 
+					 ;; not async ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 					 (when (not ,async) 
-						 (message "FFF")
 					   (let* (
 							  (result (org-babel-eval processed-command ""))
 							  )
-
-						 (unless (s-blank? processed-file)
+						 ;; file results ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+						 (unless (s-blank? processed-file) ; if output is file, if not :file keyword used, set result as a file. notice , `':results file`' should be declared
 						   (setq result  processed-file))
+
+						 ;; console results ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 						 (when result
 						   (org-babel-reassemble-table
 							(if (or (member "table" (cdr (assoc :result-params processed-params)))
@@ -190,6 +196,7 @@ $BODY : final body
 		 (complete-subfix (plist-get options :complete-subfix))
 		 (file (plist-get options :file))
 		 )
+	;; set default value for options
 	(setq head (if head head ""))
 	(setq tail (if tail tail ""))
 	(setq lang (if lang lang  (symbol-name name)))

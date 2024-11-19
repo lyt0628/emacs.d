@@ -1,3 +1,6 @@
 tmp/
 
 org-roam.db
+
+bookmark-win.el
+custom.el

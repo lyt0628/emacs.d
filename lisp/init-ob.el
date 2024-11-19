@@ -41,6 +41,8 @@
 \\end{document}"
 			)
 
+(easyob-def mysqlsh
+			"echo $BODY | mysqlsh -u root")
 
 
 (use-package plantuml-mode :ensure t
