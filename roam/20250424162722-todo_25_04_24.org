@@ -1,0 +1,38 @@
+:PROPERTIES:
+:ID:       2f66a20f-e0a9-4e0b-9c1b-86179355d841
+:END:
+#+title: todo/25-04-24
+
+* TODO 完善 QS.Reactive
+* TODO 完善 QS.StateMachine
+* TODO 完善 QS.DAG
+* TODO 完善 QS.Timeline
+* TODO 移动状态同步
+* TODO 服务器物理引擎封装
+* TODO 服务器地形导入
+* TODO 服务器角色控制
+* TODO ShuatiBao 建模
+* TODO ShuaTiBao API 
+* TODO 常见光照算法
+* TODO 纹理
+* TODO 变换算法
+* TODO 碰撞算法
+* TODO 高级数据结构
+* TODO OpenGL 编程
+* TODO C# 标准库
+* TODO LINQ 查询
+* TODO C# 并发库
+* TODO C# 表达式树
+* TODO 数据库理论
+* TODO SQL基础
+* TODO SQL 中级
+* TODO 过一遍Unity官方文档
+* TODO UE 入门
+* TODO 软件工程模型
+* TODO 常用测试方法
+* TODO Magit/Git
+* TODO Blender 复习
+* TODO Houdini 使用
+* TODO Unity Shader 编程
+* TODO 编译为 WebGL
+* TODO 部署游戏服务器

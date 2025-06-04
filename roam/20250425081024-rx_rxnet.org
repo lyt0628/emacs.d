@@ -1,0 +1,49 @@
+:PROPERTIES:
+:ID:       88c9b618-221e-49b7-bf55-b155f29efc41
+:END:
+#+title: rx/rxnet
+
+- RxNet 的包装策略是始终包装发布者
+
+
+* 接口设计
+#+BEGIN_SRC plantuml :file ../ffa14d51-47c7-421f-bb05-336b08b5d3e4.png
+  interface IObservable<T>{}
+  interface IObserver<T>{}
+
+  interface IEventSource<T> {
+          Action<T> OnNext():
+  }
+  interface IEventPattern<TSender, TArgs>{
+          TSender sender;
+          TArgs args;
+  }
+  interface IEventPatternSource<TArgs>{
+          EventHandler<TArgs> OnNext;
+  }
+  interface ISubject<T,T> {}
+
+  IObservable <|-- ISubject
+  IObserver <|-- ISubject
+#+END_SRC
+
+#+RESULTS:
+[[file:../ffa14d51-47c7-421f-bb05-336b08b5d3e4.png]]
+
+
+|----------------------+-------------------------------------------------------------------------|
+| 关键接口               | 说明                                                                     |
+|----------------------+-------------------------------------------------------------------------|
+| IEvaluableObservable | 操作符的核心接口，对发布者包装                                               |
+|----------------------+-------------------------------------------------------------------------|
+| ISubject             | 操作符接口，既是观察者，也是观察对象                                          |
+|----------------------+-------------------------------------------------------------------------|
+| IEventPattern        | 与CSharp 的内置事件模型集成。见 [[id:1f8ec2be-be11-4153-9584-34289b1f0aee][csharp/delegate/builtin-delegate]]            |
+|----------------------+-------------------------------------------------------------------------|
+| IEventPatternSource  | 持有一个 OnNext 的标准事件委托，用于把内置事件转换为流的发布者                  |
+|----------------------+-------------------------------------------------------------------------|
+| IEventSource<T>      | 一般的事件源，把事件传给 OnNext 委托。可以看出 RxNet 主要通过委托机制实现响应式流 |
+|----------------------+-------------------------------------------------------------------------|
+
+
+* 责任实现

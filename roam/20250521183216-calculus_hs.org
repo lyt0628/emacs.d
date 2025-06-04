@@ -1,0 +1,64 @@
+:PROPERTIES:
+:ID:       00776d7e-ecc4-472e-8e31-6f7f776eb2e2
+:header-args: :tangle hs/Calculus.hs :comments both :mkdirp t
+:END:
+#+title: calculus/hs
+
+用Haskell 实现 微积分的计算.
+#+BEGIN_SRC haskell
+  module Calculus where
+#+END_SRC
+
+* 表达式抽象
+#+BEGIN_SRC haskell
+  type Symbol = String 
+  data Expr a = Constant a
+              | Var Symbol
+              | Add (Expr a) (Expr a)
+              | Mul (Expr a) (Expr a)
+              deriving(Show)
+#+END_SRC
+类型参数 a 表示数值精度. 支持 Float，和 Double.
+
+
+* 微分计算
+#+BEGIN_SRC haskell
+  class  Differentiable a where
+    symDiff :: Symbol -> a -> a
+    numDiff :: Symbol -> b -> b -> a -> a
+    eval ::[(Symbol, b, b)] -> a -> b
+#+END_SRC
+
+- symDiff, 符号微分，返回微分函数的表达式
+- numDiff, 数值微分，根据符号的指定位置和步长, 然后返回对应的微分表达式
+- eval, 对一个表达式求值, 前面的列表指定了表达式的值. 最后一个远组元素指定差分步长.
+
+
+#+BEGIN_SRC haskell :noweb yes
+  instance Num a => Differentiable (Expr a) where
+    <<Derivative Of Constant>>
+    numDiff = undefined
+    eval = undefined
+#+END_SRC
+
+** 基本求导公式
+:PROPERTIES:
+:header-args:  :tangle no
+:END:
+
+*** 常数项的导数
+常数的变化率为0，
+#+header: :noweb-ref Derivative Of Constant 
+#+begin_src haskell
+  symdiff _ (constant _)   = constant 0
+#+end_src
+
+*** 一次项的导数为1
+
+#+header: :noweb-ref constant diff
+#+begin_src haskell
+
+#+END_SRC
+** 离散近似微分
+
+* 积分计算

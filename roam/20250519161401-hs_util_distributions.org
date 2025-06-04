@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       1433c0e7-9496-4a8a-a217-f0dd5c7ff50c
+:header-args: :tangle hs/Distributions.hs :comments both
+:END:
+#+title: hs/util/distributions
+
+
+
+Haskell 没有内置 高斯分布生成器，我们得自己实现.
+#+BEGIN_SRC haskell
+
+#+END_SRC

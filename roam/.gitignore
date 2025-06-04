@@ -1,0 +1,7 @@
+#*
+qr_*
+__pycache__
+*.log
+/garbage
+/ltximg
+/tmp

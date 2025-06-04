@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       74341fec-c8c2-4752-891d-34388c397b6c
+:END:
+#+title: rb/idiom/ghost-method
+
+幽灵方法: 重写 method_missing 方法，为这些没有的定义的方法执行处理逻辑.

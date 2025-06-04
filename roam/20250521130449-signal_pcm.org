@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       a2f140ca-5806-4eda-a11d-fcc9c3f88c09
+:END:
+#+title: signal/pcm
+
+PCM 通过离散的采样将模拟信号转化为数字信号.
+
+PCM 包含如下几个步骤.
+[[file:assets/pcm.png]]
+
+1. 采样, 以固定的采样率 对模拟信号采样
+2. 量化, 把采样值映射为有意义的数值范围
+3. 编码, 储存为二进制的比特流.
+
+

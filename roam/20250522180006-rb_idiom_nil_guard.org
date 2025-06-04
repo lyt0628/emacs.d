@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       ea9abeb1-addf-400f-bd16-ce7bd0a15c01
+:END:
+#+title: rb/idiom/nil-guard
+: 

@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       eed3385a-42e1-4e21-8a61-4e687b1075b5
+:END:
+#+title: jbullet/linear-math
+
+JBullet 太老了，又不维护，我必须对他进行封装才能够安心时候。
+封装好，无论是替换还是自己实现都安心一点。
+JBullet 的数据类型用的是老的 java3d的实现。
+
+JBullet 核心包有两个，dynmaics 用来做刚体的表现。collision
+用来进行碰撞检测。
+
+Dynamic 包中有一个角色控制器的实现
+

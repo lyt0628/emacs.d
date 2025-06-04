@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       899b37e3-a93c-4871-94d5-e000a26a5246
+:END:
+#+title: cg/sphere/rb
+
+PBRT 的做法是把 形状与世界座标系耦合，提供变换接口，因为他的设计目标是渲染器.
+我希望的笔记的代码尽量清晰，因此每个地方分别定义.
+#+BEGIN_SRC ruby
+  module CG
+    class Shape
+      attr_accessor :reverse_orientation
+    end
+
+  end
+#+END_SRC

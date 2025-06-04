@@ -1,0 +1,270 @@
+:PROPERTIES:
+:ID:       453cdf41-7eba-4ed6-95ec-66aeb02fc1bb
+:header-args: :noweb yes
+:END:
+#+title: cg/3dtransform
+#+filetags: :cg:
+#+LATEX_HEADER \usepackage{amsmath}
+
+
+* 平移矩阵
+点坐标 $(x,y,z)$ 的齐次坐标表示为:
+
+\begin{bmatrix}
+x \\ y \\ z \\ 1
+\end{bmatrix}
+
+齐次平移矩阵为:
+\begin{bmatrix}
+1 & 0 & 0 & t_x \\
+0 & 1 & 0 & t_y \\
+0 & 0 & 1 & t_z \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+
+展开矩阵为
+\begin{align*}
+\mathbf{P}' &= \mathbf{T}\mathbf{P} \\
+&= 
+\begin{bmatrix}
+1\cdot x + 0\cdot y + 0\cdot z + t_x\cdot 1 \\
+0\cdot x + 1\cdot y + 0\cdot z + t_y\cdot 1 \\
+0\cdot x + 0\cdot y + 1\cdot z + t_z\cdot 1 \\
+0\cdot x + 0\cdot y + 0\cdot z + 1\cdot 1
+\end{bmatrix} \\
+&= 
+\begin{bmatrix}
+x + t_x \\
+y + t_y \\
+z + t_z \\
+1
+\end{bmatrix}
+\end{align*}
+
+
+* 旋转矩阵
+
+就像2D 的旋转矩阵是根据圆圆方程推导一样的,
+3D 下的旋转矩阵我们根据球面方程推导.
+我们把空间中一个点绕原点的旋转看作是球面上一点在球面的移动.
+球面参数方程如下. 关于球的知识, See [[id:9715178a-22c5-4229-98d1-6502630477a8][cg/sphere]].
+\begin{cases}
+
+x = \sin\theta \cos\phi \\
+
+y = \sin\theta \sin\phi \\
+
+z = \cos\theta
+
+\end{cases}
+
+θ∈[0,π]θ∈[0,π] 为极角（与z轴夹角）
+ϕ∈[0,2π)ϕ∈[0,2π) 为方位角（xy平面内与x轴夹角）
+
+我们可以这么看空间中点的旋转, 首先在 xy 平面中 将点旋转到对应的角度,
+然后对齐z轴, 旋转到最终位置.
+
+这个在xy平面旋转的角度称为方位角,名称来源与地球仪的上经度(东西).
+与z轴正方向形成的交付称为极角, 顾名思义，以北极(z轴正方向的夹角).
+
+
+** 绕某坐标轴旋转
+这种情况类似于2D坐标下的旋转. See [[id:e359fd7c-717f-44ef-b10b-e192e1f8f3d5#][cg/2dtransform]].
+
+\begin{bmatrix}
+\cos\theta & -\sin\theta & 0 & 0 \\
+\sin\theta & \cos\theta & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+
+#+NAME: 绕 z轴旋转的可视化
+#+BEGIN_SRC  python :results silent
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+from mpl_toolkits.mplot3d import Axes3D
+
+# 创建画布和3D坐标轴
+fig = plt.figure(figsize=(12, 8))
+ax = fig.add_subplot(111, projection='3d')
+
+# 参数设置
+radius = 1.0  # 单位球半径
+theta = 0     # 初始角度
+
+# 生成单位球表面
+u = np.linspace(0, 2 * np.pi, 100)  # θ参数（绕z轴）
+v = np.linspace(0, np.pi, 50)       # φ参数（纬度）
+x = np.outer(np.cos(u), np.sin(v))  # x坐标矩阵
+y = np.outer(np.sin(u), np.sin(v))  # y坐标矩阵
+z = np.outer(np.ones_like(u), np.cos(v))  # z坐标矩阵
+
+# 可视化元素初始化
+surface = ax.plot_surface(x, y, z, alpha=0.3)                     # 单位球面
+point, = ax.plot([], [], [], 'ro', markersize=10)                 # 旋转点
+projection_line, = ax.plot([], [], [], '--', color='gray')        # 投影线
+theta_arc, = ax.plot([], [], [], 'g', lw=2)                       # θ角圆弧
+theta_text = ax.text(0, 0, 0, '', fontsize=12)                    # θ角标注
+vector_line, = ax.plot([], [], [], 'b-', lw=2)                    # 旋转矢量
+
+# 坐标轴设置
+ax.set_xlim(-1.5, 1.5)
+ax.set_ylim(-1.5, 1.5)
+ax.set_zlim(-1.5, 1.5)
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+ax.view_init(elev=25, azim=-35)  # 调整视角
+
+def init():
+    """初始化动画元素"""
+    point.set_data([], [])
+    point.set_3d_properties([])
+    projection_line.set_data([], [])
+    projection_line.set_3d_properties([])
+    theta_arc.set_data([], [])
+    theta_arc.set_3d_properties([])
+    theta_text.set_text('')
+    vector_line.set_data([], [])
+    vector_line.set_3d_properties([])
+    return surface, point, projection_line, theta_arc, theta_text, vector_line
+
+def update(frame):
+    """动画更新函数"""
+    global theta
+    theta = np.radians(frame % 360)
+    
+    # 计算旋转后的点位置
+    x_point = radius * np.cos(theta)
+    y_point = radius * np.sin(theta)
+    z_point = 0
+    
+    # 更新旋转点
+    point.set_data([x_point], [y_point])
+    point.set_3d_properties([z_point])
+    
+    # 更新投影线（垂直投影到XY平面）
+    projection_line.set_data([x_point, x_point], [y_point, y_point])
+    projection_line.set_3d_properties([z_point, radius])
+    
+    # 绘制θ角圆弧（在XY平面上方）
+    arc_theta = np.linspace(0, theta, 30)
+    x_arc = 0.5 * np.cos(arc_theta)
+    y_arc = 0.5 * np.sin(arc_theta)
+    theta_arc.set_data(x_arc, y_arc)
+    theta_arc.set_3d_properties([0.01]*len(x_arc))  # 稍微抬升避免与球体重合
+    
+    # 更新角度标注
+    theta_text.set_position((0.6*x_point, 0.6*y_point))
+    theta_text.set_3d_properties(0.1, zdir='z')
+    theta_text.set_text(f'θ = {frame%360:.0f}°')
+    
+    # 绘制旋转矢量
+    vector_line.set_data([0, x_point], [0, y_point])
+    vector_line.set_3d_properties([0, z_point])
+    
+    return surface, point, projection_line, theta_arc, theta_text, vector_line
+
+# 创建动画
+ani = FuncAnimation(fig, update, frames=np.arange(0, 360, 2),
+                   init_func=init, blit=True, interval=50)
+
+plt.show()
+
+#+END_SRC
+
+对于点 $P(x,y)$ 旋转θ角度后的新坐标 $P'(x',y')$：
+\begin{cases}
+x' = x·cosθ - y·sinθ \\
+y' = x·sinθ + y·cosθ
+\end{cases}
+这里 2D 情况下同理.
+z 轴坐标不变，表示为 $z' = z$ .
+因此变换矩阵为:
+\begin{bmatrix}
+\cos\theta & -\sin\theta & 0 \\
+\sin\theta & \cos\theta & 0 \\
+0 & 0 & 1 
+\end{bmatrix}
+
+写作齐次矩阵,即为:
+
+\begin{bmatrix}
+\cos\theta & -\sin\theta & 0 & 0 \\
+\sin\theta & \cos\theta & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+
+
+
+
+* From Linear Transfomr To TRS
+** Linear Transform
+For a 3D linear transform, as the following format:
+
+\begin{align}
+x^'(x,y,z) = U_1x + V_1 + W_1 + T_1 \\
+y^'(x,y,z) = U_2x + V_2 + W_2 + T_2 \\
+z^'(x,y,z) = U_3x + V_3 + W_3 + T_3
+\end{align}
+
+That can be writted in a matrix format:
+\begin{equation}
+\begin{bmatrix}
+x^' \\
+y^' \\
+z^'
+\end{bmatrix}
+=
+\begin{bmatrix}
+U1 & V1 & W1 \\
+U2 & V2 & W2 \\
+U3 & V3 & W3 \\
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y \\
+z
+\end{bmatrix}
++
+\begin{bmatrix}
+T_1 \\
+T_2 \\
+T_3
+\end{bmatrix}
+\end{equation}
+
+Let us says that The point vector $<x, y, z>$ , each component present the distance away fom origin. The right ChangeShu vector move the coordinate far or near. And the left matrix can do all transform that we familar, with a different point, the effect of left matrix are various, but at least, the right ChangShu vector is awlays the same.
+
+** Scale Transform
+The elem of transform matrix in DuiJiaoXian just scale the value of point in the each axis.
+\begin{equation}
+P^' = 
+\begin{bmatrix}
+a & 0 & 0 \\
+0 & b & 0 \\
+0 & 0 & c
+\end{bmatrix}
+P
+\end{equation}
+
+There is a example:
+#+begin_src lua :noweb yes :dir ./ytcg/src
+  require("Mat")
+
+  p = Vec.new(1, 2, 3)
+  m = Mat.new({
+    {3, 0, 0},
+    {0, 2, 0},
+    {0, 0, 1},
+  })
+  p = m * p
+
+  print(p:x(),p:y(),p:z())
+#+end_src
+
+#+RESULTS:
+: 3	4	3
+

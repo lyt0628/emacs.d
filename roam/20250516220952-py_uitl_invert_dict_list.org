@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       7292c5e3-ba57-41d2-b19c-09a7ab33e286
+:header-args: :tangle py/dict_utils.py :comments both
+:END:
+#+title: py/util/dict_utils
+
+
+#+BEGIN_SRC python
+  def invert_dict_list(original):
+      return {
+          item: key
+          for key, items in original.items()
+          for item in items
+      }
+#+END_SRC

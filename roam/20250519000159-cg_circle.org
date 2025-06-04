@@ -1,0 +1,42 @@
+:PROPERTIES:
+:ID:       c27e6b05-ba6d-4ae0-9b98-9969fe6b73c4
+:END:
+#+title: cg/circle
+
+* 圆的参数方程
+设圆心在原点 $(0,0)$ ，半径为 $r$ ，圆的坐标方程为：
+\[ x^2 + y^2 = r^2 \]
+
+引入参数 $\theta$ 表示旋转角度，则圆上任意点$(x,y)$可表示为：
+\begin{equation}
+\begin{cases}
+x = r \cos\theta \\
+y = r \sin\theta
+\end{cases}
+\end{equation}
+
+验证：
+\begin{align*}
+(r\cos\theta)^2 + (r\sin\theta)^2 &= r^2(\cos^2\theta + \sin^2\theta) \\
+&= r^2 \quad \text{(三角恒等式)}
+\end{align*}
+
+
+当圆心在$(h,k)$时，参数方程变为：
+\begin{equation}
+\begin{cases}
+x = h + r \cos\theta \\
+y = k + r \sin\theta
+\end{cases}
+\quad \theta \in [0,2\pi)
+\end{equation}
+
+
+* 圆上一点旋转 $\theta^\circ$ 的公式
+
+\begin{align*}
+x' &= r\cos\phi\cos\theta - r\sin\phi\sin\theta \\
+   &= r\cos(\phi+\theta) \\
+y' &= r\cos\phi\sin\theta + r\sin\phi\cos\theta \\
+   &= r\sin(\phi+\theta)
+\end{align*}

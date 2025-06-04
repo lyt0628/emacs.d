@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       89ca2372-d20d-4df2-aced-c5a9e9b00922
+:END:
+#+title: rb/module
+
+
+Ruby 的模块的功能，也是通过类型链的方式实现的.
+#+BEGIN_SRC ruby
+  class Object < BasicObject
+    include Kernel
+  end
+#+END_SRC
+
+使用include 混入模块，会产生这样的类型链.模块被插入到当前类型的上方.
+#+BEGIN_SRC plantuml :file tmp/52082d6b-9837-4e7a-ad2c-25217016a395.png
+  @startuml
+  class Object
+  class BasicObject
+  class Kernel << (M,#FF7700) >>
+
+  Object -|> Kernel
+  Kernel -|> BasicObject
+  @enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:tmp/52082d6b-9837-4e7a-ad2c-25217016a395.png]]
+
+在类型链中，多次包含模块，最终只会取最上方的位置插入模块.
+

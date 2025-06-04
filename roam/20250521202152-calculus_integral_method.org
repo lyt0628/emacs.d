@@ -1,0 +1,36 @@
+:PROPERTIES:
+:ID:       464fcb04-2bf8-4489-8e6a-cf8e241c38de
+:END:
+#+title: calculus/integral-method
+
+
+* 分部积分
+分部积分法‌是微积分中处理乘积函数积分的重要方法，基于导数的乘积法则推导而来
+
+乘积法则基础‌：
+若 u(x)u(x) 和 v(x)v(x) 可导，则微分乘积法则为：
+(uv)′=u′v+uv′
+(uv)′=u′v+uv′
+对两边积分后整理得到分部积分公式
+‌简化过程‌：
+∫u dv=uv−∫v du
+∫udv=uv−∫vdu
+
+选择 uu 和 dvdv 的口诀.遵循 ‌“反对幂指三”‌（反三角函数、对数函数、幂函数、指数函数、三角函数）的顺序选择 uu，剩余部分为 dvdv
+
+* 三角代换
+三角代换法（‌Trigonometric Substitution‌）是通过引入三角函数变量替换被积函数中的根式或复杂表达式，将其转化为三角函数的积分形式
+主要适用于以下三类积分：
+
+    含 a2−x2a2−x2
+​ 的积分 → 令 x=asin⁡θx=asinθ
+含 a2+x2a2+x2
+​ 的积分 → 令 x=atan⁡θx=atanθ
+含 x2−a2x2−a2
+​ 的积分 → 令 x=asec⁡θx=asecθ 2
+
+
+
+* 格林公式
+
+

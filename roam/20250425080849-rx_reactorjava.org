@@ -1,0 +1,50 @@
+:PROPERTIES:
+:ID:       a957dd28-2485-48ca-87b4-6fa3d3a31269
+:END:
+#+title: rx/reactorjava
+ * Java Reactor 的分析
+
+#+BEGIN_SRC plantuml :file ../01a6ed5c-b29e-4677-b201-2be6e40ef187.png
+  interface CorePublisher {}
+  interface CoreSubscriber {}
+  interface InternalSubscription {}
+  abstract Flux {}
+  abstract Mono {}
+
+  class FluxFilter {}
+  class MonoEmpty {}
+
+  abstract InternalFluxOperator {}
+
+
+  CorePublisher <|-- Flux
+  CorePublisher <|-- Mono
+
+  Flux <|-- FluxFilter
+  InternalFluxOperator <|-- FluxFilter
+
+  Mono <|-- MonoEmpty
+
+#+END_SRC
+
+#+RESULTS:
+[[file:../01a6ed5c-b29e-4677-b201-2be6e40ef187.png]]
+
+
+|------------+------------------------------------+----------------------------+---------------------------|
+| 核心角色     | 责任                                | 接口                        | 说明                       |
+|------------+------------------------------------+----------------------------+---------------------------|
+| 源头发布者   | 负责数据的生成, 或者接受别人生成的数据， | ISourcePublisher           | 直接继承自IPublisher，      |
+|            | 并投入响应式流                        |                            | 没有自己的定义(角色接口)      |
+|------------+------------------------------------+----------------------------+---------------------------|
+| 数据槽      | 负责生产数据，发射到源头发布者中，      | Sink                       |                           |
+|            | 一般由源头生产者提供                  |                            |                           |
+|------------+------------------------------------+----------------------------+---------------------------|
+| 操作符      | 对源数据进行转换，丢弃，重复操作，      | MonoOperator, FluxOperator | 操作符使用包装订阅者的方式实现 |
+|            | 并投放到下游订阅者                    | MonoFromFluxOperator,      |                           |
+|            |                                    | FluxFromMonoOperator       |                           |
+|------------+------------------------------------+----------------------------+---------------------------|
+| 内部生产者 / | 在操作符中，用发布订阅模型             | InnerComsumer              |                           |
+| 内部消费者   | 来实现操作符功能                      |                            |                           |
+|------------+------------------------------------+----------------------------+---------------------------|
+|            |                                    |                            |                           |

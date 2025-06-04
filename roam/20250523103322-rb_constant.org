@@ -1,0 +1,185 @@
+:PROPERTIES:
+:ID:       9ce12f51-e49e-432f-ac76-ebdeb1bece03
+:END:
+#+title: rb/constant
+
+常量. Ruby 的常量是一种特殊的变量. 常量有不同于 变量的作用域规则.
+类型名，模块名本质上也都是常量.
+常量的作用域类似于文件，根据路径层级索引.只要在不同的层级下，索引到的常量即便名称一致，也不是同一个常量对象.
+变量的话，就是常见的向上索引的方式了.
+
+#+BEGIN_SRC ruby
+  module M
+    class C
+      X = "Constant"
+    end
+  end
+
+  puts M::C::X
+#+END_SRC
+
+#+RESULTS:
+
+Module 有两个方法都叫 constants, 一个是实例方法，返回当前作用域的所有常量.
+一个是 Module 的类方法，返回所有顶级作用域的所有常量.
+
+#+BEGIN_SRC ruby
+  X = "Constant in top scope"
+  module M
+    Y = "Constant in Module M"
+  end
+
+  puts M.constants
+  puts "-----------------------------------"
+  puts Module.constants
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+Y
+-----------------------------------
+Refinement
+Kernel
+StopIteration
+Symbol
+Rational
+Exception
+Range
+IOError
+EOFError
+Gem
+Ractor
+SystemExit
+DidYouMean
+Complex
+SignalException
+Interrupt
+StandardError
+TypeError
+ArgumentError
+IndexError
+KeyError
+String
+Array
+RangeError
+NilClass
+ScriptError
+SyntaxError
+LoadError
+NotImplementedError
+NameError
+Thread
+NoMethodError
+RUBY_PLATFORM
+Hash
+RuntimeError
+FrozenError
+SecurityError
+NoMemoryError
+EncodingError
+RUBY_ENGINE
+NoMatchingPatternError
+NoMatchingPatternKeyError
+RubyVM
+SystemCallError
+IO
+Errno
+Warning
+RUBY_COPYRIGHT
+RUBY_VERSION
+Dir
+ARGV
+RUBY_PATCHLEVEL
+RUBY_REVISION
+RUBY_DESCRIPTION
+RUBY_ENGINE_VERSION
+TOPLEVEL_BINDING
+TracePoint
+RubyInstaller
+TrueClass
+FalseClass
+Encoding
+RUBY_RELEASE_DATE
+SyntaxSuggest
+RbConfig
+Time
+ErrorHighlight
+Comparable
+Enumerable
+ThreadGroup
+UncaughtThrowError
+ThreadError
+Mutex
+Queue
+STDIN
+STDOUT
+STDERR
+ClosedQueueError
+SizedQueue
+ConditionVariable
+Win32
+Random
+Signal
+ARGF
+ZeroDivisionError
+FloatDomainError
+Numeric
+FileTest
+File
+Proc
+Integer
+ENV
+LocalJumpError
+Monitor
+Struct
+Method
+Data
+Float
+RegexpError
+SystemStackError
+MonitorMixin
+UnboundMethod
+Set
+Regexp
+Fiddle
+Binding
+Process
+Math
+MatchData
+CROSS_COMPILING
+GC
+ObjectSpace
+Enumerator
+X
+M
+Marshal
+Fiber
+FiberError
+UnicodeNormalize
+BasicObject
+Module
+Class
+Object
+RUBYGEMS_ACTIVATION_MONITOR
+#+end_example
+
+我们可以拿到 当前作用域路径
+#+BEGIN_SRC ruby
+  module M
+    class C
+      module M2
+        puts Module.nesting
+      end
+    end
+  end
+
+#+END_SRC
+
+#+RESULTS:
+: M::C::M2
+: M::C
+: M
+
+我们利用常量的层级作用域规则来组织类型常量，这时候，我们把这个模块称为命名空间.
+
+

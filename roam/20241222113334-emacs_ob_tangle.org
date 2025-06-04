@@ -1,0 +1,101 @@
+:PROPERTIES:
+:ID:       9db29576-1842-4865-9d79-b535fce295f3
+:header-args: :eval no :noweb yes
+:END:
+#+title: emacs/literable_programing
+#+filetags: :emacs:
+
+Litera programing is a programing method that embbed code into document, instead writing document in code. It is useful to understand code that conatains complex logic.
+
+
+I use this note to try emacs ob to extract source code from org file. let use a simple example.
+
+* Main Loop
+666 It is Emacs
+#+NAME: X
+#+BEGIN_SRC lua  :results code  :var x=5
+  print(x)
+#+END_SRC
+
+#+RESULTS: X
+#+begin_src lua
+nil
+#+end_src
+
+#+RESULTS:
+#+begin_src python
+#+end_src
+
+
+#+begin_src python :noweb yes :results code
+  <<X("666")>>
+#+end_src
+
+#+RESULTS:
+#+begin_src python
+#+end_src
+
+>
+
+#+NAME: :comments header-arg
+|-----------+--------------+-----------------------------------------------------------------------------------|
+| Keyword   | options      | Function                                                                          |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+| :tagnle   | path string  | specify path to tangle code block                                                 |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+|           | no           | disable tangle, default                                                           |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+|           | yes          | tangle code block, and use name of org as default output path(in current dir)     |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+| :comments | org          | this option parse content of org file as comment in the tangled file              |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+|           | no           | No insert extra comments into tangled file. only body of code block               |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+|           | link         | a org style hyperlink that reference to the org file                              |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+|           | both         | eq to org+link. It option is recommended                                          |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+|           | noweb        | Insert hyperlink that reference to Noweb src block                                |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+| :noweb    | no           | not reference to other code block,default                                         |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+|           | yes          | nable noweb refence, the following options are yes enabled                        |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+|           | tangle       | only expand noweb reference when *tangling*                                       |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+|           | strip-tangle | Disable expanding noweb refence when tangling,but endabled in evaluating(C-c C-c) |
+|           |              | and export                                                                        |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+|           | no-export    | Disable expanding noweb refence when export,but endabled in evaluating(C-c C-c)   |
+|           |              | and tangling, Similar to trip-tangle                                              |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+|           | eval         | onl expand noweb refence when evaluating                                          |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+| :result   |              |                                                                                   |
+|-----------+--------------+-----------------------------------------------------------------------------------|
+
+
+#+NAME: action
+#+HEADER: :var instruction="no action"
+#+begin_src python
+  print(instruction)
+#+end_src
+
+* Misc header-args
+
+|--------------+----------------------------------+--------------------------------------------------------|
+| Keyword      | options                          | Function                                               |
+|--------------+----------------------------------+--------------------------------------------------------|
+| :tangle-mode | a unix-style auth symbol, e.g.   | specify the auth of tangled file                       |
+|              | (identity #o444)                 |                                                        |
+|              | o for octal, deault is decemail. |                                                        |
+|              | It is same as convention         |                                                        |
+|--------------+----------------------------------+--------------------------------------------------------|
+| :shebang     | the name of a executor that can  | specify executor to run the tangled file.              |
+|              | be found in PATH.e.g. bash       | which work on header argument #!/bin/env <executor>    |
+|--------------+----------------------------------+--------------------------------------------------------|
+| :mkdirp      | yes or no                        | same as $mkdir -p  if yes.                             |
+|--------------+----------------------------------+--------------------------------------------------------|
+| :dir         | path string                      | specify current working dir.(where path to run tangle) |
+|              |                                  | It make '.' to reference to a specified value          |
+|--------------+----------------------------------+--------------------------------------------------------|

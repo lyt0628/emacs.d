@@ -1,0 +1,29 @@
+:PROPERTIES:
+:ID:       31903b26-f8a5-414f-a11e-55e156aa0cab
+:END:
+#+title: jbullet/character-controller
+
+JBullet 内部有一个比较完善的角色控制器。
+
+状态
+#+BEGIN_SRC plantuml
+  class KinematicCharacterController
+  {
+          fallSpeed : float
+          jumpSpeed : float
+          maxJumpHeight: float
+
+          maxSlopRadians : float
+          maxSlopeCosine : float
+
+          turnAngle : float
+
+          stepHeight : float
+
+          currentPosition : Vec3
+          targetPosition : Vec3
+
+          touchingNormal : Vec3
+          waOnGround : bool
+  }
+#+END_SRC

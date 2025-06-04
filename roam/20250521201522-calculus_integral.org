@@ -1,0 +1,79 @@
+:PROPERTIES:
+:ID:       f3cced24-1b44-4354-a94a-2e665cda2701
+:END:
+#+title: calculus/integral
+
+
+* 不定积分(反导数)
+#+BEGIN_SRC latex :results file
+  $$
+  \int f(x)\,dx = F(x) + C \quad \text{Where} \quad F'(x) = f(x)
+  $$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-Vh6E3L//hQACsd-1.png]]
+
+* 多重积分
+#+BEGIN_SRC latex :results file
+  $$
+  \iint\limits_{D} f(x,y)\,dx\,dy
+  $$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-Vh6E3L//MHCabh-1.png]]
+几何意义‌：
+
+    当 f(x,y)≥0f(x,y)≥0 时，表示 ‌三维曲面与平面区域 DD 之间的体积‌
+    若 f(x,y)=1f(x,y)=1，则积分值为 ‌区域 DD 的面积‌
+
+‌计算方法‌：
+
+    ‌化为累次积分‌（Fubini定理） 
+极坐标系转换‌（当区域为圆形/扇形时）
+#+BEGIN_SRC latex :results file
+$$
+  \iiint\limits_{\Omega} f(x,y,z)\,dx\,dy\,dz
+$$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-Vh6E3L//Da1xOy-1.png]]
+物理意义‌：
+
+    若 f(x,y,z)f(x,y,z) 为密度函数，积分值为 ‌物体 ΩΩ 的总质量‌
+    若 f=1f=1，积分值为 ‌三维区域 ΩΩ 的体积‌
+坐标系选择‌：
+
+    ‌直角坐标系‌：立方体区域
+    ‌柱坐标系‌：圆柱形区域
+    ∭f(r,θ,z) r dr dθ dz
+    ∭f(r,θ,z)rdrdθdz
+    ‌球坐标系‌：球形区域
+    ∭f(ρ,ϕ,θ) ρ2sin⁡ϕ dρ dϕ dθ
+    ∭f(ρ,ϕ,θ)ρ2sinϕdρdϕdθ
+
+
+#+BEGIN_SRC latex :results file
+  $$
+  \idotsint\limits_{V} \mu(u_1,\dots,u_k)\,du_1 \dots du_k
+  $$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-Vh6E3L//bXnnFg-1.png]]
+
+
+* 定积分
+#+BEGIN_SRC latex :results file
+  $$
+  \int_{a}^{b} f(x)\,dx = \lim_{n\to\infty} \sum_{i=1}^{n} f(x_i^*)\Delta x
+  $$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-Vh6E3L//FOvpud-1.png]]
+
+
+

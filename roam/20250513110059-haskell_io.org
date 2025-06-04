@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       5c4d5928-12fa-42da-b85d-63ab8c8571af
+:END:
+#+title: hs/io
+
+readFile 函数提供了基本的 IO 能力
+
+#+NAME: Read File And Count Words In Each Line
+#+BEGIN_SRC haskell :var filepath = "README.org"
+  countWords input = map (length.words) (lines input)
+  countWords :: String -> [Int]
+
+  main = do
+    input <- readFile filepath
+    print $ countWords input
+#+END_SRC
+
+#+RESULTS: Read File And Count Words In Each Line
+: [2,5]
+
+readFile 是一个 monads， 提供反应式编程的数据传递功能，
+<- 符号表示结果传递出来.
+

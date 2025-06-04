@@ -1,0 +1,222 @@
+-- :PROPERTIES:
+-- :ID:       78774724-721f-4c27-81f5-3c87407f1994
+-- :header-args: :tangle hs/AABB.hs :comments both
+-- :END:
+-- #+title: cg/aabb/hs
+
+
+-- [[file:../20250517004345-cg_aabb_hs.org::+BEGIN_SRC haskell][No heading:1]]
+{-# LANGUAGE TypeFamilies #-}
+module AABB where
+
+import Vector
+import Point
+import Data.Kind (Type)
+-- No heading:1 ends here
+
+
+
+-- AABB 是关于点的容器, 我们有时候确实需要这么做，比如，Scale一个 AABB.
+-- 因此有必要为 AABB 实现 函子.
+
+-- [[file:../20250517004345-cg_aabb_hs.org::+BEGIN_SRC haskell][No heading:2]]
+data AABB2D a = AABB2D (Point2D a) (Point2D a) deriving (Eq, Show, Functor)
+data AABB3D a = AABB3D (Point3D a) (Point3D a) deriving (Eq, Show, Functor)
+
+type AABB2f = AABB2D Float
+type AABB3f = AABB3D Float
+type AABB2d = AABB2D Double
+type AABB3d = AABB3D Double
+type AABB2i = AABB2D Integer
+type AABB3i = AABB3D Integer
+-- No heading:2 ends here
+
+
+
+
+-- AABB 不适合定义成应用函子, 它的结构里面没有地方存储态射.
+-- 而在 AABB 上的操作没法在 子结构(Point) 上复合得到.
+
+-- 然后我们定义一些常用的构造器. 以及其他操作.
+-- 在外部定义， AABB 不需要称为 GDAT.
+-- 这里为 AABB 关联对应的点类型.
+
+-- [[file:../20250517004345-cg_aabb_hs.org::+BEGIN_SRC haskell][No heading:3]]
+class AABBOps b where
+  type PointND b a :: Type
+  type VecND b a :: Type
+
+  fromCenterExtent :: Num a => PointND b a -> VecND b a -> b a
+  fromPoint :: PointND b a -> b a
+  union :: Ord a => b a -> b a -> b a
+  intersect :: Ord a => b a -> b a -> b a 
+  expand :: Ord a => PointND b a -> b a -> b a
+  quad :: Num a => a -> PointND b a -> b a
+  overlap :: Ord a => b a -> b a -> Bool
+  corners :: b a -> [PointND b a]
+  inside :: Ord a => PointND b a -> b a -> Bool
+  insideLower :: Ord a => PointND b a -> b a -> Bool
+-- No heading:3 ends here
+
+
+-- 对与 AABB2D 我们关联 Point2D
+
+-- [[file:../20250517004345-cg_aabb_hs.org::+BEGIN_SRC haskell][No heading:4]]
+instance AABBOps AABB2D where
+  type PointND AABB2D a = Point2D a
+  type VecND AABB2D a = Vec2D a
+-- No heading:4 ends here
+
+
+
+
+-- 从中心点和半径构造包围盒子.
+-- 给定一个中心点,和一个向量这个向量从中心点指向高位的角点.
+
+-- [[file:../20250517004345-cg_aabb_hs.org::+BEGIN_SRC haskell][No heading:5]]
+--
+  fromCenterExtent center halfExtent = AABB2D (translate (negate <$> halfExtent) center)
+                                              (translate halfExtent center)
+-- No heading:5 ends here
+
+
+
+-- 包含一个点的 AABB
+
+-- [[file:../20250517004345-cg_aabb_hs.org::+BEGIN_SRC haskell][No heading:6]]
+--
+  fromPoint p = AABB2D p p
+-- No heading:6 ends here
+
+
+
+-- 合并两个 AABB 包围盒子
+
+-- [[file:../20250517004345-cg_aabb_hs.org::+BEGIN_SRC haskell][No heading:7]]
+--
+  union (AABB2D pmin1 pmax1) (AABB2D pmin2 pmax2) =
+    AABB2D (combMin pmin1 pmin2) (combMax pmax1 pmax2)
+-- No heading:7 ends here
+
+-- [[file:../20250517004345-cg_aabb_hs.org::+BEGIN_SRC haskell][No heading:8]]
+--
+  intersect (AABB2D  (Point2D pmin1x pmin1y) (Point2D pmax1x pmax1y))
+    (AABB2D  (Point2D pmin2x pmin2y) (Point2D pmax2x pmax2y)) =
+    AABB2D (Point2D (max pmin1x pmin2x) (max pmin1y pmin2y))
+    (Point2D (min pmax1x pmax2x) (min pmax1y pmax2y))
+-- No heading:8 ends here
+
+
+-- 拓展 AABB包围盒，让他包围住新的一个点.
+
+-- [[file:../20250517004345-cg_aabb_hs.org::+BEGIN_SRC haskell][No heading:9]]
+--
+  expand p (AABB2D pmin pmax) =
+    AABB2D (combMin p pmin) (combMax p pmax)
+-- No heading:9 ends here
+
+
+
+-- 给定中心点和半边长，构建方向
+
+-- [[file:../20250517004345-cg_aabb_hs.org::+BEGIN_SRC haskell][No heading:10]]
+--
+  quad d p = AABB2D (((-)d) <$> p) ((+d) <$> p)
+-- No heading:10 ends here
+
+-- [[file:../20250517004345-cg_aabb_hs.org::+BEGIN_SRC haskell][No heading:11]]
+--
+  overlap (AABB2D  (Point2D pmin1x pmin1y) (Point2D pmax1x pmax1y))
+    (AABB2D  (Point2D pmin2x pmin2y) (Point2D pmax2x pmax2y)) =
+    (overlapRange pmin1x pmax1x pmin2x pmax2x)
+    && (overlapRange pmin1y pmax1y pmin2y pmax2y)
+-- No heading:11 ends here
+
+
+
+-- 获取四个角点.
+
+-- [[file:../20250517004345-cg_aabb_hs.org::+BEGIN_SRC haskell][No heading:12]]
+--
+  corners (AABB2D (Point2D pminx pminy) (Point2D pmaxx pmaxy)) =
+    [
+     Point2D pminx pminy
+    ,Point2D pminx pmaxy
+    ,Point2D pmaxx pmaxy
+    ,Point2D pmaxx pmaxy
+    ]
+-- No heading:12 ends here
+
+-- [[file:../20250517004345-cg_aabb_hs.org::+BEGIN_SRC haskell][No heading:13]]
+--
+  inside (Point2D x y)  (AABB2D (Point2D x1 y1) (Point2D x2 y2)) =
+    (x >= x1 && x <= x2) && (y >= y1 && y <= y2)
+
+  insideLower (Point2D x y)  (AABB2D (Point2D x1 y1) (Point2D x2 y2)) =
+    (x >= x1 && x < x2) && (y >= y1 && y < y2)
+-- No heading:13 ends here
+
+
+
+-- 帮助函数，用来检测区间之间是否有重叠.
+
+-- [[file:../20250517004345-cg_aabb_hs.org::+BEGIN_SRC haskell][No heading:14]]
+overlapRange :: Ord a => a -> a -> a -> a -> Bool
+overlapRange a b c d = (a <= d) && (c <= d)
+-- No heading:14 ends here
+
+
+
+
+-- And all the same for AABB3D.
+
+-- [[file:../20250517004345-cg_aabb_hs.org::+BEGIN_SRC haskell][No heading:15]]
+instance AABBOps AABB3D where
+  type PointND AABB3D a = Point3D a
+  type VecND AABB3D a = Vec3D a
+
+  fromCenterExtent  center halfExtent = AABB3D (translate (negate <$> halfExtent) center)
+                                               (translate halfExtent center)
+
+  fromPoint p = AABB3D p p
+
+  union (AABB3D pmin1 pmax1) (AABB3D pmin2 pmax2) =
+    AABB3D (combMin pmin1 pmin2) (combMax pmax1 pmax2)
+
+  intersect (AABB3D (Point3D pmin1x pmin1y pmin1z) (Point3D pmax1x pmax1y pmax1z))
+    (AABB3D (Point3D pmin2x pmin2y pmin2z) (Point3D pmax2x pmax2y pmax2z))=
+    AABB3D (Point3D (max pmin1x pmin2x) (max pmin1y pmin2y) (max pmin1z pmin2z))
+    (Point3D (min pmax1x pmax2x) (min pmax1y pmax2y) (min pmax1z pmax2z))
+
+  expand p (AABB3D pmin pmax) =
+      AABB3D (combMin p pmin) (combMax p pmax)
+
+  quad d p = AABB3D (((-)d) <$> p) ((+d) <$> p)
+
+  overlap (AABB3D (Point3D pmin1x pmin1y pmin1z) (Point3D pmax1x pmax1y pmax1z))
+    (AABB3D (Point3D pmin2x pmin2y pmin2z) (Point3D pmax2x pmax2y pmax2z))=
+    (overlapRange pmin1x pmax1x pmin2x pmax2x)
+    && (overlapRange pmin1y pmax1y pmin2y pmax2y)
+    && (overlapRange pmin1z pmax1z pmin2z pmax2z)
+
+  corners (AABB3D (Point3D pminx pminy pminz) (Point3D pmaxx pmaxy pmaxz)) =
+    [
+      Point3D pminx pminy pminz
+     ,Point3D pmaxx pmaxy pmaxz
+     ,Point3D pmaxx pminy pminz
+     ,Point3D pminx pmaxy pminz
+     ,Point3D pminx pminy pminz
+     ,Point3D pmaxx pmaxy pminz
+     ,Point3D pminx pmaxy pmaxz
+     ,Point3D pmaxx pminy pmaxz
+    ]
+
+  inside (Point3D x y z) (AABB3D (Point3D x1 y1 z1) (Point3D x2 y2 z2)) =
+    (x >= x1 && x <= x2)
+    &&(x >= y1 && y <= y2)
+    &&(x >= z1 && z <= z2)
+  insideLower (Point3D x y z) (AABB3D (Point3D x1 y1 z1) (Point3D x2 y2 z2)) =
+    (x >= x1 && x < x2)
+    &&(x >= y1 && y < y2)
+    &&(x >= z1 && z < z2)
+-- No heading:15 ends here

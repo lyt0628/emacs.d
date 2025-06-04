@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       f6df9433-ac24-4570-af7f-312a85d63bd7
+:END:
+#+title: cg-symbol
+
+It is a Lua Lib to compute intergration and de
+

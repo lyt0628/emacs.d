@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       57d1afa0-4b1e-4ade-bfee-c4c79ddc17b0
+:END:
+#+title: cg/anim
+

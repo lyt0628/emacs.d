@@ -1,0 +1,11 @@
+:PROPERTIES:
+:ID:       07537aa9-308b-4df5-a319-870a536999ce
+:END:
+#+title: cg/transform/rb
+
+3D 变换和 2D 变化差异很大，我们分开定义.
+
+* Transform2
+
+
+* Transform3

@@ -1,0 +1,55 @@
+:PROPERTIES:
+:ID:       a65c4ca4-b4e1-4c0d-913e-976ff5c67756
+:END:
+#+title: calculus/closed-integral
+
+
+物理意义
+若 FF 表示力场，闭合积分计算‌粒子绕闭合路径一周后力场做的总功‌：
+
+    若总功为 00：能量守恒（保守场，如重力场）
+    若总功非 00：存在能量耗散或外部能量输入（非保守场，如涡旋电场）
+
+* 曲线积分
+#+BEGIN_SRC latex :results file
+  $$
+  \oint\limits_{C} \mathbf{F} \cdot \mathrm{d}\mathbf{r}
+  $$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-Vh6E3L//G9RhpU-1.png]]
+
+如果是在标量场中的积分(分布值为标量)
+物理意义‌：
+
+    计算 ‌曲线 CC 的质量‌（若 ff 表示线密度）
+    计算 ‌曲线长度‌（当 f=1f=1 时）
+
+如果是在向量场中的积分(分布值为向量)
+物理意义‌：
+
+    ‌计算做功‌：向量场 FF 沿曲线 CC 对质点做的功
+>格林公式‌（平面区域）
+
+* 曲面积分
+
+#+BEGIN_SRC latex :results file
+  $$
+  \oiint\limits_{S} \mathbf{E} \cdot \mathrm{d}\mathbf{S}
+  $$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-Vh6E3L//mf2UKz-1.png]]
+
+
+如果是在标量场中的积分
+物理意义‌：
+    计算 ‌曲面 SS 的质量‌（若 ff 表示面密度）
+    计算 ‌曲面面积‌（当 f=1f=1 时）
+
+如果是在向量场中的积分
+物理意义‌：
+    ‌计算通量‌：向量场 FF 穿过曲面 SS 的总流量
+

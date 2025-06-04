@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       946c4e75-4991-40a7-9967-63520cd899ca
+:END:
+#+title: rb/introspection
+
+自省

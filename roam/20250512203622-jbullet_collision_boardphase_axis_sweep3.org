@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       16da92b2-7404-40c1-85e8-ea694d6fa75a
+:END:
+#+title: jbullet/collision/boardphase/axis-sweep3
+
+#+BEGIN_SRC plantuml :file tmp/22a004a3-a11a-431d-a178-5c15749a7992.png
+@startuml
+
+class AxisSweep3 {
+    - handleArray: Handle[]
+    - bounds: Array<Edge>
+    - numHandles: int
+    - worldAabbMin: Vector3f
+    - worldAabbMax: Vector3f
+    - quantize: Vector3f
+    + AxisSweep3(worldAabbMin: Vector3f, worldAabbMax: Vector3f)
+    + createProxy(...): BroadphaseProxy
+    + destroyProxy(...): void
+    + setAabb(...): void
+    + calculateOverlappingPairs(...): void
+    + getOverlappingPairCache(): OverlappingPairCache
+    + getBroadphaseAabb(...): void
+    + printStats(): void
+    - sortMinDown(...): void
+    - sortMinUp(...): void
+    - sortMaxDown(...): void
+    - sortMaxUp(...): void
+}
+
+BroadphaseInterface <|-- AxisSweep3
+@enduml
+
+#+END_SRC

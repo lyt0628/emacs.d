@@ -1,0 +1,233 @@
+:PROPERTIES:
+:ID:       1a38d4af-e192-42bf-a67b-3ce9354aaa1c
+:header-args: :tangle hs/Transform.hs :comments both
+:END:
+#+title: cg/transform/hs
+
+#+BEGIN_SRC haskell
+  {-# LANGUAGE TypeFamilies #-}
+  module Transform(
+    Transform2D, Transform3D
+    ,transform2f, transform2d, transform3f, transform3d
+    ) where
+  import Matrix
+  import Vector
+  import Point
+  import Epsilon
+  import Data.Kind (Type)
+#+END_SRC
+我们不导出 Trnasform 的构造子.我们希望用户仅传入变换矩阵.
+但是构造子同时需要 变换矩阵和他的逆矩阵, 因此我们得额外定义构造器.
+
+#+BEGIN_SRC haskell
+  data Transform2D a = Transform2D (Mat3D a) (Maybe (Mat3D a)) deriving(Eq, Show)
+  data Transform3D a = Transform3D (Mat4D a) (Maybe (Mat4D a)) deriving(Eq, Show)
+#+END_SRC
+
+我们这里的矩阵都使用 齐次矩阵，这样子可以统一处理平移.
+一个矩阵不一定有他的逆, 因此 我们的 逆变换矩阵保存在 一个 Maybe 的函子中.
+
+* Trnasform 的聪明构造器
+
+#+BEGIN_SRC haskell
+  transform2D :: (Floating a, Epsilon a) => Mat3D a -> Transform2D a  
+  transform2D mat3D = Transform2D mat3D (inverse mat3D)
+  transform3D :: (Floating a, Epsilon a) => Mat4D a -> Transform3D a  
+  transform3D mat4D = Transform3D mat4D (inverse mat4D)
+#+END_SRC
+
+最后我们实现类型特化的聪明构造器和别名.
+这里的精度类型不包括 Integer， 这个精度对变换没有意义.
+#+BEGIN_SRC haskell
+  type Transform2f = Transform2D Float
+  transform2f :: Mat3f -> Transform2f
+  transform2f = transform2D
+  type Transform2d = Transform2D Double
+  transform2d :: Mat3d -> Transform2d
+  transform2d = transform2D
+
+  type Transform3f = Transform3D Float
+  transform3f :: Mat4f -> Transform3f
+  transform3f = transform3D
+  type Transform3d = Transform3D Double
+  transform3d ::  Mat4d-> Transform3d
+  transform3d = transform3D
+#+END_SRC
+
+
+* Operations
+即便是方阵也不一定可逆，当且仅当 det 不为0 时候 可逆.
+#+BEGIN_SRC haskell
+  class TransformOps m where
+    type VecND m a :: Type
+    type PointND m a :: Type
+
+    translate :: (Floating a, Epsilon a) => VecND m a -> m a 
+    scale :: (Floating a, Epsilon a) => VecND m a -> m a
+    scaling ::(Floating a, Epsilon a)=> m a -> Bool
+    rotate :: (Floating a, Epsilon a) => a -> VecND m a -> m a
+    changingChirality :: (Floating a, Epsilon a) =>m a -> Bool 
+#+END_SRC
+
+|-------------------+-------------------------------------------------------------|
+| Functions         | Note                                                        |
+|-------------------+-------------------------------------------------------------|
+| changingChirality | 是否改变坐偏手型. 三维中的手性分左手螺旋定则，和右手螺旋定则.        |
+|                   | 在二维中, X轴向右,当Y轴向上时为手性为右，否则为左.(旋转不会改变手性) |
+|-------------------+-------------------------------------------------------------|
+
+
+** Transform2D
+2D 过程变换细节详见, [[id:e359fd7c-717f-44ef-b10b-e192e1f8f3d5][cg/2d_transform]].
+
+#+BEGIN_SRC haskell
+  instance TransformOps Transform2D where
+    type VecND Transform2D a = Vec2D a
+    type PointND Transform2D a = Point2D a
+    translate (Vec2D x y) = Transform2D
+      (Mat3D
+       1 0 x
+       0 1 y
+       0 0 1)
+      (Just (Mat3D
+             1 0 (-x)
+             0 1 (-y)
+             0 0 1))
+
+    scale (Vec2D x y) = Transform2D
+      (Mat3D
+       x 0 0
+       0 y 0
+       0 0 1)
+      (Just (Mat3D
+             (1/x) 0 0
+             0 (1/y) 0
+             0 0 1))
+
+    scaling _ = False
+#+END_SRC
+
+#+BEGIN_SRC haskell
+  --
+    rotate angle (Vec2D x y) =  transform2D (Mat3D
+                                              (cos angle) (-(sin angle)) (x * (1 - cos angle) + y * sin angle) 
+                                              (sin angle) (cos angle) (y * (1 - cos angle) - x * sin angle)
+                                              0           0              1)
+
+#+END_SRC
+在 2D 中旋转退化成了对于点进行旋转. 逆时针为正.
+这里的 Vec2D 实际上表示的是一个 2D 点.
+
+*** 偏手性
+判断变换是否改变偏手性，我们只需要看变换矩阵行列式的值是否为负.
+#+BEGIN_SRC haskell
+  --
+    changingChirality (Transform2D mat3D _) = det mat3D < 0
+#+END_SRC
+
+
+** Transform3D
+
+
+
+* The Transformables
+:PROPERTIES:
+:header-args: :tangle no
+:END:
+我们定义一个类型类来表示那些可以被 变换的类型.
+变换是非常数学非常常用的操作，因此我们为他定义一个操作符 !*.
+#+BEGIN_SRC haskell
+  class Transformable o where
+    type TransformND o a :: Type
+
+    transform :: TransformND o a -> o a -> o a
+#+END_SRC
+
+
+** Point
+对点的变换和对向量的变换是相同的. 不过我们使用 齐次矩阵来表示变换.
+w 坐标保存 透视缩放值.
+#+BEGIN_SRC haskell
+  instance Transformable Point2D where
+    type Transform Point2D a = Transform2D a
+    transform (Point2D x y) (Transform2D (Mat3D
+                                     x11 x12 x13
+                                     x21 x22 x23
+                                     x31 x32 x33)) =
+      let x' = x11 * x + x12 * x
+          y' = x21 * y + x22 * y
+          z' = x31 * x + x32 * y + x33
+      in (Point2D x' y') if z' ==1 else ((/z') <$> (Point2D x' y'))
+        
+#+END_SRC
+
+
+#+BEGIN_SRC haskell
+  instance Transformable Point3D where
+    type TransformND Point3D a = Transform3D a
+#+END_SRC
+
+** Vector
+
+#+BEGIN_SRC haskell
+  instance Transformable Vect2D where
+    type TransformND Vect2D a = Transform2D a
+#+END_SRC
+
+#+BEGIN_SRC haskell
+  instance Transformable Vec3D where
+    type TransformND Vec3D a = Transform3D a
+#+END_SRC
+
+** Normal
+#+BEGIN_SRC haskell
+  instance Transformable Norm2D where
+    type TransformND Norm2D a = Transform2D a
+#+END_SRC
+
+#+BEGIN_SRC haskell
+  instance Transformable Norm3D where
+    type TransformND Norm3D a = Transform3D a
+#+END_SRC
+
+** Ray
+#+BEGIN_SRC haskell
+  instance Transformable Ray2D where
+    type TransformND Ray2D a = Transform2D a
+#+END_SRC
+
+#+BEGIN_SRC haskell
+  instance Transformable Ray3D where
+    type TransformND Ray3D a = Transform3D a
+#+END_SRC
+
+** AABB
+
+#+BEGIN_SRC haskell
+  instance Transformable AABB2D where
+    type TransformND AABB2D a = Transform2D a
+#+END_SRC
+
+#+BEGIN_SRC haskell
+  instance Transformable AABB3D where
+    type TransformND AABB3D a = Transform3D a
+#+END_SRC
+
+
+* 帮助函数 (For 3D)
+:PROPERTIES:
+:header-args: :tangle no
+:END:
+** Rotation XYZ
+围绕某一轴旋转只对 3D 有意义, 二维中我们仅对某一点进行旋转.
+#+BEGIN_SRC haskell
+  -- rotateX :: (Num a) => a -> m a -> -> m a
+  -- rotateY :: (Num a) => a -> m a -> -> m a
+  -- rotateZ :: (Num a) => a -> m a -> -> m a
+#+END_SRC
+
+** The LookAt function
+#+BEGIN_SRC haskell
+  lookAt :: (Num a) => Point3D m a -> Point3D m a -> Vec3D m a -> Transform3D a
+#+END_SRC
+

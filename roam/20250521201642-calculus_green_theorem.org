@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       e792fb14-7e65-477d-b749-cf0b765d08ac
+:END:
+#+title: calculus/green-theorem
+
+格林公式建立了‌平面闭区域上的二重积分‌与‌边界曲线上的曲线积分‌之间的联系.
+
+#+BEGIN_SRC latex :results file
+  $$
+  \oint_{C} P\,dx + Q\,dy = \iint_{D} \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) dA
+  $$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-Vh6E3L//nhF2I5-1.png]]
+
+条件‌：
+    闭区域 DD 由分段光滑的闭合曲线 CC 围成
+    函数 P(x,y)P(x,y) 与 Q(x,y)Q(x,y) 在 DD 上具有一阶连续偏导数12
+
+‌方向约定‌：闭合曲线 CC 取‌逆时针方向‌（正向边界）
+

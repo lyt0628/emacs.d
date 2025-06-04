@@ -1,0 +1,236 @@
+:PROPERTIES:
+:ID:       bab9424b-3d7e-4ee0-8523-e8ba171de401
+:header-args: :tangle hs/Matrix.hs :comments both
+:END:
+#+title: cg/matrix/hs
+
+#+BEGIN_SRC haskell
+  {-# LANGUAGE TypeFamilies #-}
+  module Matrix (
+    Mat2D(..), Mat3D(..), Mat4D(..)
+    ,Mat2i,Mat2f,Mat2d,Mat3i,Mat3f,Mat3d,Mat4i,Mat4f,Mat4d
+    ,mat2i,mat2f,mat2d,mat3i,mat3f,mat3d,mat4i,mat4f,mat4d
+    ,inverse, det, inversable, mul, mulv
+    ) where
+  import Epsilon (Epsilon(..))
+  import Vector
+  import Data.Kind (Type)
+#+END_SRC
+
+矩阵数据类型.
+#+BEGIN_SRC haskell
+  data Mat2D a = Mat2D a a a a deriving (Eq, Show, Functor)
+  data Mat3D a = Mat3D a a a a a a a a a deriving (Eq, Show, Functor)
+  data Mat4D a = Mat4D a a a a a a a a a a a a a a a a deriving (Eq, Show, Functor)
+#+END_SRC
+
+和向量类似，我们定义类型别名和聪明构造器(已经进行类型标注的函数).
+#+BEGIN_SRC haskell
+  type Mat2i = Mat2D Integer
+  mat2i :: Integer -> Integer -> Integer -> Integer -> Mat2i
+  mat2i x11 x12 x21 x22 = Mat2D x11 x12 x21 x22
+  type Mat2f = Mat2D Float
+  mat2f :: Float -> Float -> Float -> Float -> Mat2f
+  mat2f x11 x12 x21 x22 = Mat2D x11 x12 x21 x22
+  type Mat2d = Mat2D Double
+  mat2d :: Double -> Double -> Double -> Double -> Mat2d
+  mat2d x11 x12 x21 x22 = Mat2D x11 x12 x21 x22
+
+  type Mat3i = Mat3D Integer
+  mat3i :: Integer -> Integer -> Integer -> Integer -> Integer-> Integer-> Integer-> Integer-> Integer -> Mat3i
+  mat3i x11 x12 x13 x21 x22 x23 x31 x32 x33  = Mat3D x11 x12 x13 x21 x22 x23 x31 x32 x33
+  type Mat3f = Mat3D Float
+  mat3f :: Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float-> Mat3f
+  mat3f x11 x12 x13 x21 x22 x23 x31 x32 x33  = Mat3D x11 x12 x13 x21 x22 x23 x31 x32 x33
+  type Mat3d = Mat3D Double
+  mat3d :: Double -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> Double-> Mat3d
+  mat3d x11 x12 x13 x21 x22 x23 x31 x32 x33  = Mat3D x11 x12 x13 x21 x22 x23 x31 x32 x33
+
+
+
+  type Mat4i = Mat4D Integer
+  mat4i :: Integer -> Integer ->Integer -> Integer -> Integer -> Integer-> Integer-> Integer-> Integer-> Integer -> Integer -> Integer-> Integer-> Integer-> Integer-> Integer-> Mat4i
+  mat4i x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44  = Mat4D x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44  
+
+  type Mat4f = Mat4D Float
+  mat4f :: Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Float -> Mat4f
+  mat4f x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44  = Mat4D x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44  
+
+
+  type Mat4d = Mat4D Double
+  mat4d :: Double -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> Double -> Mat4d
+  mat4d x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44  = Mat4D x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44 
+
+#+END_SRC
+
+
+
+#+BEGIN_SRC haskell
+  class MatrixOps m where
+    type VecND m a :: Type 
+
+    det:: (Num a, Fractional a) => m a -> a
+    inverse :: (Floating a, Epsilon a) => m a -> Maybe (m a)
+    inversable :: (Floating a, Epsilon a) => m a -> Bool -- 检查矩阵是否可逆
+    transpose :: (Num a) => m a -> m a
+    identity :: (Num a) => m a
+    mul :: (Num a) => m a -> m a -> m a
+    mulv :: (Num a) => m a -> VecND m a -> VecND m a
+#+END_SRC
+在矩阵的抽象层次上，它只需要知道它能对向量和矩阵做变换就好. 只有这两个类型是数学上的抽象.
+因此我们仅仅关联向量类型. 至于点，射线,那是图形学上的抽象, 应该由图形学的结构来实现.
+
+下面列出了每个函数的作用，还有运用函子可以进行的操作
+|------------+--------------------------------+-------------|
+| Operation  | Note                           | Example     |
+|------------+--------------------------------+-------------|
+| 按位四则运算 | 函子映射                         | ((-) m1 m2) |
+|------------+--------------------------------+-------------|
+| det        | 求行列式                         |             |
+|------------+--------------------------------+-------------|
+| inversable | 判断矩阵是否可逆，根据行列式是否为0 |             |
+|------------+--------------------------------+-------------|
+| transpose  | 求矩阵转置                       |             |
+|------------+--------------------------------+-------------|
+| identity   | 获取同形状矩阵的单位矩阵           |             |
+|------------+--------------------------------+-------------|
+| mul        | 矩阵乘法, 因为我们只支持方阵，      |             |
+|            | 所以类型上就可以保证可乘           |             |
+|------------+--------------------------------+-------------|
+| mulv       | 矩阵-向量乘法                    |             |
+|------------+--------------------------------+-------------|
+
+
+在 CG 中我们不会用到非方阵的矩阵. 因此我们这里的操作都带有局限性.
+
+#+BEGIN_SRC haskell
+  -- MatrixOps instances
+  instance MatrixOps Mat2D where
+    type VecND Mat2D a = Vec2D a
+    det(Mat2D a b c d) = a*d - b*c
+
+    inverse mat = let d = det mat
+                  in if nearZero d
+                     then Nothing
+                     else Just $ fmap (/d) (Mat2D d (-b) (-c) a)
+      where (Mat2D a b c d) = transpose mat
+    inversable m = 0 /= (det m)
+    transpose (Mat2D a b c d) = Mat2D a c b d
+
+    identity = Mat2D 1 0 0 1
+
+    mul (Mat2D a1 b1 c1 d1) (Mat2D a2 b2 c2 d2) =
+      Mat2D (a1*a2 + b1*c2) (a1*b2 + b1*d2)
+      (c1*a2 + d1*c2) (c1*b2 + d1*d2)
+
+    mulv (Mat2D x11 x12 x21 x22) (Vec2D x y) =
+      Vec2D (x11*x + x12*x) (x21*y + x22*y)
+#+END_SRC
+
+#+BEGIN_SRC haskell
+  instance MatrixOps Mat3D where
+    type VecND Mat3D a = Vec3D a
+    det(Mat3D a b c d e f g h i) = 
+      a*(e*i - f*h) - b*(d*i - f*g) + c*(d*h - e*g)
+
+    inverse mat@(Mat3D a b c d e f g h i) =
+      let d = det mat
+      in if nearZero d
+         then Nothing
+         else Just $ fmap (/d) $ Mat3D
+              (e*i - f*h) (c*h - b*i) (b*f - c*e)
+              (f*g - d*i) (a*i - c*g) (c*d - a*f)
+              (d*h - e*g) (b*g - a*h) (a*e - b*d)
+
+    inversable m = 0 /= (det m)
+    transpose (Mat3D a b c d e f g h i) = Mat3D a d g b e h c f i
+
+    identity = Mat3D 1 0 0 0 1 0 0 0 1
+
+    mul (Mat3D a1 b1 c1 d1 e1 f1 g1 h1 i1) 
+      (Mat3D a2 b2 c2 d2 e2 f2 g2 h2 i2) =
+      Mat3D
+      (a1*a2 + b1*d2 + c1*g2) (a1*b2 + b1*e2 + c1*h2) (a1*c2 + b1*f2 + c1*i2)
+      (d1*a2 + e1*d2 + f1*g2) (d1*b2 + e1*e2 + f1*h2) (d1*c2 + e1*f2 + f1*i2)
+      (g1*a2 + h1*d2 + i1*g2) (g1*b2 + h1*e2 + i1*h2) (g1*c2 + h1*f2 + i1*i2)
+
+    mulv (Mat3D x11 x12 x13 
+                 x21 x22 x23 
+                 x31 x32 x33) 
+        (Vec3D x y z) =
+      Vec3D (x11*x + x12*y + x13*z)
+            (x21*x + x22*y + x23*z)
+            (x31*x + x32*y + x33*z)
+#+END_SRC
+
+
+#+BEGIN_SRC haskell
+  instance MatrixOps Mat4D where
+    type VecND Mat4D a = Vec4D a
+    det (Mat4D a b c d e f g h i j k l m n o p) =
+      let -- 计算4x4行列式(拉普拉斯展开)
+        det (Mat3D a b c d e f g h i) = a*(e*i - f*h) - b*(d*i - f*g) + c*(d*h - e*g)
+        minor11 = Mat3D f g h j k l n o p
+        minor12 = Mat3D e g h i k l m o p
+        minor13 = Mat3D e f h i j l m n p
+        minor14 = Mat3D e f g i j k m n o
+      in a * det minor11 - b * det minor12 + c * det minor13 - d * det minor14
+
+    inversable m = 0 /= (det m)
+    inverse mat@(Mat4D a b c d e f g h i j k l m n o p) =
+      let d = det mat
+      in if nearZero d
+         then Nothing
+         else Just $ fmap (/d) $ Mat4D
+              (det $ Mat3D f g h j k l n o p)  -- a11 cofactor
+              (- (det $ Mat3D e g h i k l m o p)) -- a12 cofactor
+              (det $ Mat3D e f h i j l m n p)  -- a13 cofactor
+              (- (det $ Mat3D e f g i j k m n o)) -- a14 cofactor
+
+              (- (det $ Mat3D b c d j k l n o p)) -- a21 cofactor
+              (det $ Mat3D a c d i k l m o p)   -- a22 cofactor
+              (- (det $ Mat3D a b d i j l m n p)) -- a23 cofactor
+              (det $ Mat3D a b c i j k m n o)   -- a24 cofactor
+
+              (det $ Mat3D b c d f g h n o p)   -- a31 cofactor
+              (- (det $ Mat3D a c d e g h m o p)) -- a32 cofactor
+              (det $ Mat3D a b d e f h m n p)   -- a33 cofactor
+              (- (det $ Mat3D a b c e f g m n o)) -- a34 cofactor
+
+              (- (det $ Mat3D b c d f g h j k l)) -- a41 cofactor
+              (det $ Mat3D a c d e g h i k l)   -- a42 cofactor
+              (- (det $ Mat3D a b d e f h i j l)) -- a43 cofactor
+              (det $ Mat3D a b c e f g i j k)   -- a44 cofactor
+
+    transpose (Mat4D a b c d e f g h i j k l m n o p) =
+      Mat4D a e i m
+      b f j n
+      c g k o
+      d h l p
+
+    identity = Mat4D
+               1 0 0 0
+               0 1 0 0
+               0 0 1 0
+               0 0 0 1
+
+    mul (Mat4D a1 b1 c1 d1 e1 f1 g1 h1 i1 j1 k1 l1 m1 n1 o1 p1)
+      (Mat4D a2 b2 c2 d2 e2 f2 g2 h2 i2 j2 k2 l2 m2 n2 o2 p2) =
+      Mat4D
+      (a1*a2 + b1*e2 + c1*i2 + d1*m2) (a1*b2 + b1*f2 + c1*j2 + d1*n2) (a1*c2 + b1*g2 + c1*k2 + d1*o2) (a1*d2 + b1*h2 + c1*l2 + d1*p2)
+      (e1*a2 + f1*e2 + g1*i2 + h1*m2) (e1*b2 + f1*f2 + g1*j2 + h1*n2) (e1*c2 + f1*g2 + g1*k2 + h1*o2) (e1*d2 + f1*h2 + g1*l2 + h1*p2)
+      (i1*a2 + j1*e2 + k1*i2 + l1*m2) (i1*b2 + j1*f2 + k1*j2 + l1*n2) (i1*c2 + j1*g2 + k1*k2 + l1*o2) (i1*d2 + j1*h2 + k1*l2 + l1*p2)
+      (m1*a2 + n1*e2 + o1*i2 + p1*m2) (m1*b2 + n1*f2 + o1*j2 + p1*n2) (m1*c2 + n1*g2 + o1*k2 + p1*o2) (m1*d2 + n1*h2 + o1*l2 + p1*p2)
+
+
+    mulv (Mat4D x11 x12 x13 x14
+          x21 x22 x23 x24
+          x31 x32 x33 x34
+          x41 x42 x43 x44)
+      (Vec4D x y z w) =
+      Vec4D
+      (x11*x + x12*y + x13*z + x14*w)
+      (x21*x + x22*y + x23*z + x24*w)
+      (x31*x + x32*y + x33*z + x34*w)
+      (x41*x + x42*y + x43*z + x44*w)
+#+END_SRC

@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       920301ab-73c8-42d4-abbe-f1bd53828e1d
+:END:
+#+title: cg/simu
+
+
+
+The most important component of CG Simulation Animation are *Model* and *Simulation*.
+
+Physical simutation contains two component: Initail environment and physical mode.
+The Major job of simulation is to detemine the states of object over *time*.
+
+The Animation in the CG has two type
+1. The first is Keyframe and Driver Animation. It is the usual work of Animator.
+2. The second is the physcial simulation animation, which is the series talking about.

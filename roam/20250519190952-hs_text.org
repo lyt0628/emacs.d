@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       002abe5f-f5a5-4ea8-9c76-b5618b1863a7
+:END:
+#+title: hs/text
+
+Text is a builtin data structure, which is designed to handle Unicode effectively.
+
+#+BEGIN_SRC haskell
+  {-# LANGUAGE OverloadedStrings #-}
+  import Data.Text
+#+END_SRC
+
+Compaing to String, that is stored in [Char]. If you want to get a specific char.
+you have to range the link of [Char], which is slow.
+And Text store data in a binary array, which has better 性能.
+
+Major operations are following:
+|-----------------------------+---------------------------------|
+| pack(s:String):Text         | Pack String to Text             |
+|-----------------------------+---------------------------------|
+| unpack(t:Text):String       | Unpack Text to String           |
+|-----------------------------+---------------------------------|
+| <>                          | infix operation, to concat Text |
+|-----------------------------+---------------------------------|
+| take(n:Nat):Text,           | slice for specific part of Text |
+| drop(n:Nat):Text            |                                 |
+|-----------------------------+---------------------------------|
+| length(t:Text):Nat          | get count of Char               |
+|-----------------------------+---------------------------------|
+| intercalate(ts:Text..):Text | Concat Text with speartor       |
+|-----------------------------+---------------------------------|
+| splitOn(sep:Text):[Text]    | Split Text by sperator         |
+|-----------------------------+---------------------------------|

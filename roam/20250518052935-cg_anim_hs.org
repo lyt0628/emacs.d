@@ -1,0 +1,46 @@
+:PROPERTIES:
+:ID:       e0ab27ee-c00f-49df-ad1c-ad43db3978d3
+:header-args: :tangle hs/AnimatedTransform.hs :comments both
+:END:
+#+title: cg/anim/hs
+
+
+#+BEGIN_SRC haskell
+  module AnimatedTransform where
+
+  import qualified Transform as T
+  import qualified Vector as V
+  import qualified Matrix as M
+#+END_SRC
+
+
+#+BEGIN_SRC haskell
+  data AnimatedTransform2D a = a (Mat3D a) (Mat3D a) (Mat3D a) a (Mat3D a) (Mat3D a) (Mat3D a) deriving (Eq, Show)
+#+END_SRC
+保存两个时间点的关键帧信息. 以如下格式
+|-------+----------|
+| Field | Note     |
+|-------+----------|
+| time  | 关键帧时间 |
+|-------+----------|
+| T     | 移动矩阵   |
+|-------+----------|
+| R     | 旋转矩阵   |
+|-------+----------|
+| S     | 缩放矩阵   |
+|-------+----------|
+
+#+BEGIN_SRC haskell
+  class AnimatedTransformOps a where
+    type TransformND t a x:: Type
+    type AABBND b a x:: Type
+    interpolate :: Num t => t -> a t -> TransformND t a
+    aabb :: AABBND b a x -> AABBND b a x -> a x 
+#+END_SRC
+
+目前而言，我是以面向对象的方式思考的. 但对于函数式语言，这样子不够抽象.
+例如插值. 应该作为更加广泛的概念的类型类实现, 很多东西都可以插值，不仅仅只有 给定两个时间动的变换.
+思考类型空间中统一的结构是编写Haskell代码最关键的事情.
+
+
+aabb 方法对 AABB 包围盒进行动画, 其含义是获取 由始末两个包围盒组成的更大的包围盒子.

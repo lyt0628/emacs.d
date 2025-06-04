@@ -1,0 +1,221 @@
+module CG
+  module MatrixBehavior
+    attr_reader :rows, :cols
+    def *(other)
+      if other.is_a?(Numeric)
+        self.class.new(*(to_rows.map { |row| row.map { |v| v * other } }))
+      else
+        raise "Dimension mismatch" unless cols == other.rows
+        product = []
+        to_rows.each do |row|
+          new_row = []
+          other.to_rows.transpose.each do |col|
+            new_row << row.zip(col).sum { |a,b| a * b }
+          end
+          product << new_row
+        end
+        self.class.new(*product)
+      end
+    end
+  
+    def to_rows
+      @data.each_slice(@cols).to_a
+    end
+  
+    def [](row, col = nil)
+      if col.nil?
+        # 如果只有一个参数，返回整行
+        row(row)
+      else
+        # 检查行列索引是否有效
+        raise IndexError, "row index out of bounds" unless (0...@rows).cover?(row)
+        raise IndexError, "column index out of bounds" unless (0...@cols).cover?(col)
+  
+        # 返回单个元素
+        @data[row * @cols + col]
+      end
+    end
+  
+    def []=(row, col, value)
+      # Check Shape
+      @data[row * @cols + col] = value
+    end
+  
+    # 获取指定行（通过单个参数）
+    def row(index)
+      # 检查行索引是否有效
+      raise IndexError, "row index out of bounds" unless (0...@rows).cover?(index)
+  
+      # 返回该行的元素数组
+      @data[index * @cols, @cols]
+    end
+  
+    # 矩阵加法
+    def +(other)
+      raise "Dimension mismatch" unless @rows == other.rows && @cols == other.cols
+      self.class.new(*(to_rows.zip(other.to_rows).map { |r1, r2| 
+                         r1.zip(r2).map { |a, b| a + b } 
+                       }))
+    end
+  
+    # 矩阵减法
+    def -(other)
+      raise "Dimension mismatch" unless @rows == other.rows && @cols == other.cols
+      self.class.new(*(to_rows.zip(other.to_rows).map { |r1, r2| 
+                         r1.zip(r2).map { |a, b| a - b } 
+                       }))
+    end
+  
+    # 矩阵转置
+    def transpose
+      self.class.new(*to_rows.transpose)
+    end
+  
+    def to_s
+      to_rows.map { |r| "(#{r.join(', ')})" }.join("\n")
+    end
+  
+    def ==(other)
+      rows == other.rows
+    end
+  
+  end
+  def self.define_matrix(rows, cols)
+    klass = Class.new do
+      include MatrixBehavior
+
+      define_method :initialize do |*values|
+        @rows = rows
+        @cols = cols
+        # Check Shape
+        @data = values.flatten
+      end
+
+      rows.times do |i|
+        define_method("row#{i}") { row(i) }
+      end
+    end
+
+    const_set("Mat#{rows}x#{cols}", klass)
+  end
+
+  define_matrix(2, 2)
+  define_matrix(3, 3)
+  define_matrix(4, 4)
+
+  class Mat2x2
+    # 计算2x2矩阵的逆
+    def inverse
+      a, b = row0
+      c, d = row1
+    
+      det = a * d - b * c
+      raise "Matrix is not invertible" if det.zero?
+    
+      inv_det = 1.0 / det
+      Mat2x2.new(
+        d * inv_det, -b * inv_det,
+        -c * inv_det, a * inv_det
+      )
+    end
+  end
+  class Mat3x3
+    def det
+      a, b, c = row0
+      d, e, f = row1
+      g, h, i = row2
+      a*(e*i - f*h) - b*(d*i - f*g) + c*(d*h - e*g)
+    end
+    # 计算3x3矩阵的逆
+    def inverse
+      a, b, c = row0
+      d, e, f = row1
+      g, h, i = row2
+    
+      det_value = det
+      raise "Matrix is not invertible" if det_value.zero?
+    
+      inv_det = 1.0 / det_value
+    
+      # 计算伴随矩阵(adjugate matrix)
+      a11 = e * i - f * h
+      a12 = -(d * i - f * g)
+      a13 = d * h - e * g
+    
+      a21 = -(b * i - c * h)
+      a22 = a * i - c * g
+      a23 = -(a * h - b * g)
+    
+      a31 = b * f - c * e
+      a32 = -(a * f - c * d)
+      a33 = a * e - b * d
+    
+      Mat3x3.new(
+        a11 * inv_det, a21 * inv_det, a31 * inv_det,
+        a12 * inv_det, a22 * inv_det, a32 * inv_det,
+        a13 * inv_det, a23 * inv_det, a33 * inv_det
+      )
+    end
+  end
+
+  class Mat4x4
+    # 计算4x4矩阵的逆(使用分块矩阵方法)
+    def inverse
+      # 将4x4矩阵分为4个2x2矩阵 [A B; C D]
+      a = Mat2x2.new(self[0,0], self[0,1], self[1,0], self[1,1])
+      b = Mat2x2.new(self[0,2], self[0,3], self[1,2], self[1,3])
+      c = Mat2x2.new(self[2,0], self[2,1], self[3,0], self[3,1])
+      d = Mat2x2.new(self[2,2], self[2,3], self[3,2], self[3,3])
+    
+      # 计算A的逆
+      begin
+        a_inv = a.inverse
+      rescue => e
+        raise "Matrix is not invertible"
+      end
+    
+      # 计算Schur补: S = D - C*A⁻¹*B
+      schur = d - (c * a_inv * b)
+    
+      # 计算S的逆
+      begin
+        s_inv = schur.inverse
+      rescue => e
+        raise "Matrix is not invertible"
+      end
+    
+      # 构建逆矩阵的各个部分
+      m11 = a_inv + (a_inv * b * s_inv * c * a_inv)
+      m12 = (a_inv * b * s_inv) * -1
+      m21 = (s_inv * c * a_inv) * -1
+      m22 = s_inv
+    
+      # 组合成4x4矩阵
+      Mat4x4.new(
+        m11[0,0], m11[0,1], m12[0,0], m12[0,1],
+        m11[1,0], m11[1,1], m12[1,0], m12[1,1],
+        m21[0,0], m21[0,1], m22[0,0], m22[0,1],
+        m21[1,0], m21[1,1], m22[1,0], m22[1,1]
+      )
+    end
+    # 更高效的4x4行列式计算方法(展开形式)
+    def det
+      m = self
+      m00, m01, m02, m03 = m.row0
+      m10, m11, m12, m13 = m.row1
+      m20, m21, m22, m23 = m.row2
+      m30, m31, m32, m33 = m.row3
+    
+      # 完全展开的计算公式
+      (m00 * m11 * m22 * m33 + m00 * m12 * m23 * m31 + m00 * m13 * m21 * m32 +
+       m01 * m10 * m23 * m32 + m01 * m12 * m20 * m33 + m01 * m13 * m22 * m30 +
+       m02 * m10 * m21 * m33 + m02 * m11 * m23 * m30 + m02 * m13 * m20 * m31 +
+       m03 * m10 * m22 * m31 + m03 * m11 * m20 * m32 + m03 * m12 * m21 * m30) -
+      (m00 * m11 * m23 * m32 + m00 * m12 * m21 * m33 + m00 * m13 * m22 * m31 +
+       m01 * m10 * m22 * m33 + m01 * m12 * m23 * m30 + m01 * m13 * m20 * m32 +
+       m02 * m10 * m23 * m31 + m02 * m11 * m20 * m33 + m02 * m13 * m21 * m30 +
+       m03 * m10 * m21 * m32 + m03 * m11 * m22 * m30 + m03 * m12 * m20 * m31)
+    end
+  end
+
+end

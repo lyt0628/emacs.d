@@ -1,0 +1,22 @@
+:PROPERTIES:
+:ID:       f91ec21e-325f-4654-be12-3db28dd87b7b
+:END:
+#+title: jbullet/collision/boardphase
+
+The algorithm of JBullet Boardphase is based on AABB bounding box.
+
+#+BEGIN_SRC plantuml :file tmp/f731255f-7690-450d-bb28-bc535c71e2f9.png
+@startuml
+abstract class BroadphaseInterface {
+    + {abstract} createProxy(aabbMin: Vector3f, aabbMax: Vector3f, shapeType: BroadphaseNativeType, userPtr: Object, collisionFilterGroup: short, collisionFilterMask: short, dispatcher: Dispatcher, multiSapProxy: Object): BroadphaseProxy
+    + {abstract} destroyProxy(proxy: BroadphaseProxy, dispatcher: Dispatcher): void
+    + {abstract} setAabb(proxy: BroadphaseProxy, aabbMin: Vector3f, aabbMax: Vector3f, dispatcher: Dispatcher): void
+    + {abstract} calculateOverlappingPairs(dispatcher: Dispatcher): void
+    + {abstract} getOverlappingPairCache(): OverlappingPairCache
+    + {abstract} getBroadphaseAabb(aabbMin: Vector3f, aabbMax: Vector3f): void
+}
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:tmp/f731255f-7690-450d-bb28-bc535c71e2f9.png]]

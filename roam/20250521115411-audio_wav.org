@@ -1,0 +1,173 @@
+:PROPERTIES:
+:ID:       11bfd7bd-fe90-49b7-a58b-229de80d7159
+:END:
+#+title: audio/wav
+
+WAV 是微软设计的音频储存格式. 为了更好的拓展性, Microsoft 设计了 另外一种格式来 兼容File Format).
+这种做法可能让很多人迷惑，但实际上，我们在设计一种全新的文件格式时候，一般都会考虑兼容性.
+一般做法是在头部多设计几个保留字段, 为此设计一种上层格式是更加强大的兼容做法.
+
+* RIFF 格式
+RIFF文件由许多块(Chunk)组成.
+RIFF 文件用小端序保存.
+
+在 RIFF 的最开头，是一个 four-character code (FOURCC) ,简称 4cc 编码.
+他用一个四个字节长度的字符串来分辨文件类型或是数据块类型,其他很多格式 像 RTC，都有应用 4cc 编码.
+
+在 RIFF 中 4CC 用于标识数据块的类型.
+
+** RIFF Chunk
+RIFF Chunk 是 RIFF 文件最重要的块,它包含了整个文件范围的元信息.
+以如下格式给出
+#+BEGIN_SRC plantuml :file tmp/510e10c9-8d19-4e47-960a-da17d9f66e25.png
+  @startuml
+
+  struct RIFF_Chunk {
+          "RIFF",
+          fileSize: uint32,
+          fileType: 4CC,
+          data: [Chunk]
+  }
+  @enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:tmp/510e10c9-8d19-4e47-960a-da17d9f66e25.png]]
+
+1. "RIFF", 标识 RIFF Trunk 的 4CC 编码.
+2. 4个字节长度的整型, 表示 fileType 的大小 + data 的大小.
+3. fileType, 表示具体的文件类型，比如 WAVXAAA 格式,它规定了 data 应该包含哪些类型的数据块.
+4. data，具体的数据块, 包含文件所表示数据的序列化数据.WAV中就表示 音频的波,采样率，具体采样数据等数据.
+
+
+#+BEGIN_SRC plantuml :file tmp/97b9d67b-d72d-4431-acf8-0da84c83cd7f.png
+  @startuml
+  struct Chunk{
+          chunkID: 4CC,
+          chunkSize: uint32
+          data:[byte]
+  }
+  @enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:tmp/97b9d67b-d72d-4431-acf8-0da84c83cd7f.png]]
+
+1. chunkID, 块的 4CC 编码, 由具体的保存格式决定.
+2. data, 块所保存的数据, 根据 chunkID 才能知道具体格式. 在 Trunk 这个抽象上，我们只把它当作 [byte].
+   data 这一节(section) 数据如果不是 4byte 的倍数长度, 就会被 pad 到 32 字节的倍数长度.
+   RIFF 以小端序保存, padding 当然保存在data的最末尾.
+3. chunkSize, 虽然叫做块大小，实际上表示 dataSize,它表达原始数据的大小,不包括 ChunkID 和ChunkSize.
+   也不包含 data节的 padding.
+
+
+
+* WAV 子块
+
+** "fmt " 块
+#+BEGIN_SRC plantuml :file tmp/3a6d4798-5e78-4eaa-b4ca-e04d2f007753.png
+  @startuml
+  struct fmt_Chunk{
+          "fmt ",
+          chunkSize: uint32
+          data:WAV_Format
+  }
+
+  struct WAV_Format{
+          format: uint16
+          channels: uint16
+          sampleRate: uint32
+          bitRate: uint32
+          sampleSize: uint16
+          accuracy: uint16
+          cap0:uint16
+          cap1:[byte]
+  }
+  fmt_Chunk -> WAV_Format
+  @enduml
+
+#+END_SRC
+
+#+RESULTS:
+[[file:tmp/3a6d4798-5e78-4eaa-b4ca-e04d2f007753.png]]
+
+
+1. format, 具体的音频压缩格式, 1 表示 [[id:a2f140ca-5806-4eda-a11d-fcc9c3f88c09][signal/pcm]] 脉冲调制编码格式.
+2. channels 通道数目, 1 表示单声道， 2 表示双声道
+3. sampleRate: 采样率, 每秒采样次数.常见的采样率有 8.0 kHz, 11.025 kHz, 22.05 kHz, and 44.1 kHz.
+   即8000、16000、32000、44100或48000.
+4. bitRate: 码率, 每秒需要传输的比特数目. 取决于采样率和采样大小. bitRate = sampleSIze * sampleRate.
+5. sampleSize: 保存单次采样需要的字节个数. 对于 PCM 格式, 取决与精度和通道个数.
+   #+BEGIN_SRC python :var channels = 2 accuracy = 16
+     return channels * accuracy / 8
+   #+END_SRC
+
+   #+RESULTS:
+   : 4.0
+6. accuracy, 单个声道保存的比特数目, 常用的有 8 位, 16位和32位.
+7. cap0, 保留字段?
+8. cap1, 附加块,可选?
+
+
+** "data" 块
+data 块保存编码的音频数据. 常用 [[id:a2f140ca-5806-4eda-a11d-fcc9c3f88c09][signal/pcm]] 编码.
+
+#+BEGIN_SRC plantuml :file tmp/a6d4798-5e78-4eaa-b4ca-e04d2f007753.png
+  @startuml
+  struct data_Chunk{
+          "data",
+          chunkSize: uint32
+          data:PCM
+  }
+
+  struct PCM{
+  }
+  data_Chunk -> PCM
+  @enduml
+
+#+END_SRC
+
+#+RESULTS:
+[[file:tmp/a6d4798-5e78-4eaa-b4ca-e04d2f007753.png]]
+
+如果是单声道的音频文件，采样数据按时间的先后顺序依次存入，
+如果是双声道的话就按照 左右-左右 交错的方式存储.即单次采样左声道先存储，然后储存右声道, 交替反复.
+
+
+data 中存储的是原始的 PCM 采样的值.其他的信息已经在 fmt 块中保存好了.
+如果是单声道，PCM 就是保存着一个信号值的数组.
+#+BEGIN_SRC plantuml :file tmp/f360126d-4d9a-4754-a555-9a26f6c84b4a.png
+  struct PCM {
+          samples:[byte]
+  }
+#+END_SRC
+
+#+RESULTS:
+[[file:tmp/f360126d-4d9a-4754-a555-9a26f6c84b4a.png]]
+
+否则，左右声道轮流存储.
+#+BEGIN_SRC plantuml :file tmp/c7e62f80-562b-4f65-bf1a-bd9f315c59ca.png
+  struct PCM {
+          samples:[SampleLR]
+  }
+
+  struct SampleLR {
+          leftSample:[byte]
+          rightSample:[byte]
+  }
+
+  PCM -> SampleLR
+#+END_SRC
+
+#+RESULTS:
+[[file:tmp/c7e62f80-562b-4f65-bf1a-bd9f315c59ca.png]]
+
+每个采样值的大小有 fmt 的 bitDepth 字段指示.
+
+你可能疑惑, 有些字段明明能用其他字段计算出来，为什么还要放文件里面保存呢?
+那是因为我们只考虑了无压缩的 PCM 格式. 如果你使用其他非PCM(non-pcm)的信号格式.
+那些字段就不保证由 我们上面提到的计算公式计算了, 需要依照各个格式标准来计算，在那些
+标准下，就不一定有固定公式计算了.
+
+
+* WAV 拓展格式

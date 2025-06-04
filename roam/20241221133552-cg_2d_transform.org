@@ -1,0 +1,96 @@
+:PROPERTIES:
+:ID:       e359fd7c-717f-44ef-b10b-e192e1f8f3d5#
+:END:
+#+title: cg/2dtransform
+#+filetags: :cg:
+
+我要完全使用 Emacs 工作, 推导数学公式也始终放上面.
+
+2D 欧几里得座标系下，对点(x, y) 进行 变换.
+
+* 平移
+设点 $P=(x,y)$ 平移向量$\mathbf{t}=(t_x,t_y)$，得到新坐标 $P'=(x',y')$ ：
+\begin{cases}
+x' = x + t_x \\
+y' = y + t_y
+\end{cases}
+
+ \begin{bmatrix}
+x' \\ y' \\ 1
+\end{bmatrix} = 
+\begin{bmatrix}
+1 & 0 & t_x \\
+0 & 1 & t_y \\
+0 & 0 & 1
+\end{bmatrix}\begin{bmatrix}
+x \\ y \\ 1
+\end{bmatrix}
+
+将右边变换展开.
+
+\begin{align*}
+\mathbf{P}' &= \mathbf{T}\mathbf{P} \\
+&= 
+\begin{bmatrix}
+1 \cdot x + 0 \cdot y + t_x \cdot 1 \\
+0 \cdot x + 1 \cdot y + t_y \cdot 1 \\
+0 \cdot x + 0 \cdot y + 1 \cdot 1
+\end{bmatrix} \\
+&= 
+\begin{bmatrix}
+x + t_x \\
+y + t_y \\
+1
+\end{bmatrix}
+\end{align*}
+
+最终得到变换方程 与平移方程一致.
+
+* 绕原点旋转
+设点 $P=(x,y)$ ,
+根据圆的参数方程.
+\begin{cases}
+x' = x\cos\theta - y\sin\theta \\
+y' = x\sin\theta + y\cos\theta
+\end{cases}
+
+当 $\theta=0$ 时候
+\begin{cases}
+x' = x \\
+y' = y
+\end{cases}
+
+在原本点上.
+所以这是表示点绕原点旋转的方程组.
+
+将其写作矩阵形式
+\begin{bmatrix}
+\cos\theta & -\sin\theta \\
+\sin\theta & \cos\theta 
+\end{bmatrix}
+
+写作齐次矩阵:
+\begin{bmatrix}
+\cos\theta & -\sin\theta & 0 \\
+\sin\theta & \cos\theta & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+
+
+* 沿坐标轴缩放
+
+\begin{cases}
+x' = s_x x \\
+y' = s_y y
+\end{cases}
+
+\begin{bmatrix}
+x' \\ y' \\ 1
+\end{bmatrix} = 
+\begin{bmatrix}
+s_x & 0 & 0 \\
+0 & s_y & 0 \\
+0 & 0 & 1
+\end{bmatrix}\begin{bmatrix}
+x \\ y \\ 1
+\end{bmatrix}

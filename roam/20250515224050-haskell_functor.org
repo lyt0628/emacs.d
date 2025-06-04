@@ -1,0 +1,18 @@
+:PROPERTIES:
+:ID:       a2833e23-bb82-4671-b46c-976fdba9a72a
+:END:
+#+title: hs/functor
+#+filetags: :hs:
+
+函子类型
+#+BEGIN_SRC haskell
+  class Functor f where
+    fmap :: (a->b):: f a -> f b
+#+END_SRC
+
+对于容器 (f a) 的每个元素， 应用一个映射 (a->b) 生成新的容器 (f b)
+
+
+函子必须满足以下定律：
+1. 恒等律： fmap id = id
+2. 组合律: fmap (f . g) = (fmap f) . (fmap g)

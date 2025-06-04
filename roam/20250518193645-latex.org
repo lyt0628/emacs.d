@@ -1,0 +1,188 @@
+:PROPERTIES:
+:ID:       80f07a2d-7661-4533-8500-07255072f4a1
+:END:
+#+title: latex
+
+#+BEGIN_SRC plantuml
+#+END_SRC
+
+
+
+Inline formula.
+#+BEGIN_SRC latex :results file 
+  Commutative is $a+b+c$, e.g. $1+2=2+1=3$.
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//wdoCLa-1.png]]
+
+
+In displaymath env.
+#+BEGIN_SRC latex :results file
+  Commutative is: \[ a+b=b+a, \]
+  e.g.
+  \[
+  1+2=2+1
+  \]
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//jdoDB7-1.png]]
+
+
+
+In equation env.
+1. Auto numbered. like (1)
+#+BEGIN_SRC latex :results file
+  \begin{equation}
+    a+b=b+a \label{eq:commutative}
+  \end{equation}
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//AiJfFT-1.png]]
+
+\label{eq:commutative} is a key for other code to make reference.
+
+up label or down label
+#+BEGIN_SRC latex :results file
+  $A_{ij}=2^{i+j}$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//vnaPTh-1.png]]
+
+#+BEGIN_SRC latex :results file
+  $A_i^k=B_i^k$ \qquad
+  $K_{n_i}=K_{2^i}=2^{n_i} = 2^{2^i}$ \qquad
+  $3^{3^3{\cdot^{\cdot^3}}}$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//hsTe5x-1.png]]
+
+' prime Symbol
+\prime cannot be directly used near up lablel. see the last example.
+#+BEGIN_SRC latex :results file
+  $a=a'$, $b_0' = b_0''$,
+  ${c'}^2=(c')^2$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//xW8dPh-1.png]]
+
+
+circle \circ
+
+#+BEGIN_SRC latex :results file
+  $A=9^\circ$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//WL7fya-1.png]]
+
+
+new command macro.
+#+BEGIN_SRC latex :results file
+  \newcommand\degree{^\circ}
+
+  $A=90\degree$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//FpoIZ1-1.png]]
+
+
+#+BEGIN_SRC latex :results file
+  \[
+  \max_n{n} = \sum_{i=0}^n A_i
+  \]
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//js8OB3-1.png]]
+
+
+#+BEGIN_SRC latex :results file
+  % \DeclareMathOperator\dif{d\!}
+  \[
+  \int_0^1 f(t) d\! t
+  = \iint_D g(x,y) d\! x d\! y
+  \]
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//cF2lZB-1.png]]
+
+
+
+overlin and underlin
+
+#+BEGIN_SRC latex :results file
+  $\overline{a+b} =
+  \overline a + \overline b$ \\
+  $\overline a = (a_0, a_1, a_2, \dots)$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//DfdDo1-1.png]]
+
+Embbed overline or underline
+#+BEGIN_SRC latex :results file
+  $\overline{\underline{\underline a}
+    + \overline{b}^2} - c^{\underline n}$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//b1Z9cr-1.png]]
+
+
+#+BEGIN_SRC latex :results file
+  $\vec x$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//OhnWDG-1.png]]
+
+* brace
+
+#+BEGIN_SRC latex :results file
+  $\overbrace{a+b+c} = \underbrace{1+2+3}$ \\
+
+  \[
+  (\overbrace{a_0,a_1,\dots,a_n}
+  ^{\text{total $n+1$ items}} ) =
+  (\underbrace{0,0,\dots,0}_{n}, 1)
+  \]
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//iQAHyq-1.png]]
+
+* frac
+#+BEGIN_SRC latex :results file
+  \[
+  \frac 12 + \frac 1a = \frac{2+a}{2a}
+  \]
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//zPH3qj-1.png]]
+
+
+* sqrt
+#+BEGIN_SRC latex :results file
+  $\sqrt 4 =\sqrt[3]{8} = 2$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//bvtPBC-1.png]]
+
+#+BEGIN_SRC latex :results file
+  \[
+  \sqrt[n]{\frac{x^2 + \sqrt 2}{x+y}}
+  \]
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//vGxqVy-1.png]]

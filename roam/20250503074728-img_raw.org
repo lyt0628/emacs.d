@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       c1b4d51a-7be4-44ab-a724-6b5b160504bd
+:END:
+#+title: img/format/raw
+
+Raw is the simplest format for image, which store pixels as simple byte array.
+The width, height, color range, and other such metadata is not stored in image file.
+You must know it when you try to resolve such a raw image.

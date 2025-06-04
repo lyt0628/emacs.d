@@ -1,0 +1,65 @@
+:PROPERTIES:
+:ID:       954b06bc-cd6e-4f69-8b96-f95f4970266a
+:END:
+#+title: img/pnm
+
+PNM family has 3 members.
+- pixmap format (PPM),
+- portable graymap format (PGM),
+- portable bitmap format (PBM)
+
+|--------+---------------+-----------+--------------------------------------|
+| Format | Magic         | Extension | Data Encoding                        |
+|--------+---------------+-----------+--------------------------------------|
+| PBM    | P1(In ascii)  | .pbm      | only 0 for white                     |
+|        | P4(In binary) |           | and 1 for black.                     |
+|--------+---------------+-----------+--------------------------------------|
+| PGM    | P2(In ascii)  | .pgm      | from 0 to the header file *maximum*. |
+|        | P5(In binary) |           |                                      |
+|--------+---------------+-----------+--------------------------------------|
+| PPM    | p3(In ascii)  | .ppm      | from 0 to the header field *maximun* |
+|        | p6(In binary) |           | for each RGB channels.               |
+|--------+---------------+-----------+--------------------------------------|
+
+A simple example for pgb in ascii is following:
+- [[assets/simple.pgm]]. It seems Emacs cannot parse the pgm format.
+  you can open it by Photoshop.
+#+BEGIN_SRC text
+P2 10 14 # PGM in ASCII with 10x14 pixels
+9        # Values from 0 (black) to 9 (white)
+9 6 3 4 9 9 9 9 9 9
+8 4 2 2 6 9 9 9 9 9
+8 6 9 5 4 9 9 9 9 9
+8 9 9 9 4 9 9 9 9 9
+9 9 9 9 4 7 9 9 9 9
+9 9 9 9 3 6 9 9 9 9
+9 9 9 6 1 3 9 9 9 9
+9 9 9 4 0 3 8 9 9 9
+9 9 7 0 4 4 8 9 9 9
+9 9 4 1 7 5 6 9 9 9
+9 7 1 3 9 6 5 9 9 8
+9 5 0 7 9 8 3 8 9 6
+8 1 2 8 9 8 3 3 4 4
+5 2 5 9 9 9 7 2 1 7
+#+END_SRC
+
+|-------------------------------------------+--------------------------|
+| Components                                | Note                     |
+|-------------------------------------------+--------------------------|
+| # some comments                           | Comments in a single row |
+|-------------------------------------------+--------------------------|
+| P2                                        | Magic                    |
+|-------------------------------------------+--------------------------|
+| 10 14                                     | width and hegiht         |
+|-------------------------------------------+--------------------------|
+| 9                                         | maximum value            |
+|-------------------------------------------+--------------------------|
+| the rest part is the value for each pixel |                          |
+|-------------------------------------------+--------------------------|
+
+我们使用 ebnf 语法来描述 P3 格式.（忽略注释#）
+#+BEGIN_SRC ebnf
+  ppm = header body
+  header = "P3" integer integer integer
+  body = {integer}
+#+END_SRC

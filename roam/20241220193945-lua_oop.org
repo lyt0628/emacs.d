@@ -1,0 +1,108 @@
+:PROPERTIES:
+:ID:       a94b176d-3aa4-45f7-b0c0-44a0be98abce
+:END:
+#+title: lua/oop
+#+filetags: :oop:lua:
+
+A Lua Table is a object, Porperty operation is the same as other langugage. but Lua does have no concept about a class, e.g. constructor, method.
+
+* Constructor And Static Method
+we can define a object work as a class to create a new instance, like:
+#+begin_src lua :noweb-ref Cls
+  Cls = {}
+#+end_src
+And Define a factory method as a constructor for Cls.
+#+begin_src lua :noweb-ref Cls
+  function Cls.new()
+    local instance = {}
+    instance.a_prop = "value"
+
+    return instance
+  end
+#+end_src
+
+And we can create a new instance by the factory method.
+#+begin_src lua :noweb yes
+  <<Cls>>
+  i = Cls.new()
+  print(i.a_prop)
+#+end_src
+
+#+RESULTS:
+: value
+
+* Colon Call
+A function does have no reference to one that call the function, unless conver it as a argument, like:
+#+begin_src lua :noweb-ref Cls
+  function Cls.bark(self)
+     print(self.a_prop)
+  end
+#+end_src
+And simply convert instance to the function for function to get context.
+#+begin_src lua :noweb yes
+  <<Cls>>
+  i = Cls.new()
+  Cls.bark(i)
+#+end_src
+
+#+RESULTS:
+: value
+
+Lua provide a simple candy for that, the colon call. Not only colon call attach symbal to a table, but automaticly add the vaiable that call it as the first argument named with self.
+
+Let us define a bark2() with colon call form.
+#+begin_src lua :noweb-ref Cls
+  function Cls:bark2()
+    print(self.a_prop)
+  end
+#+end_src
+
+And try:
+#+begin_src lua :noweb yes
+  <<Cls>>
+  i = Cls.new()
+  Cls:bark2() -- nil, cause self is refer to Cls instead of new instance i
+  Cls.a_prop = "value of Cls"
+  Cls:bark2()
+#+end_src
+
+#+RESULTS:
+: nil
+: value of Cls
+
+
+It is fine, but it still look as a static method or a static property, instead of instance method like `i.bark()`.
+
+* Instance Method
+[[id:5090720f-6118-44eb-ba89-724576a6324f][lua-metatable]] provide a change to get it, which says that if a instance have no definition for a symbol, it will look up the symbol in its metatalbe. If get Cls as the metatable, all instance will get the method defintion. and we can replace `Cls.bark()` with `i.bark()`.
+
+Let define a new factory method.
+#+begin_src lua :noweb-ref Cls :noweb yes
+  function Cls.new2()
+  local i = {}
+  i.a_prop = "value"
+  <<set_Cls_as_metatable_of_i>>
+  return i
+  end
+#+end_src
+
+And Cls as metatable of instance in
+#+NAME: set_Cls_as_metatable_of_i
+#+begin_src lua
+  setmetatable(i,{__index=Cls})
+#+end_src
+
+Let us try:
+#+begin_src lua :noweb yes
+  <<Cls>>
+  i = Cls.new2()
+  i:bark2()
+#+end_src
+
+#+RESULTS:
+: value
+
+Well done!
+
+
+* Inheritance

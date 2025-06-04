@@ -1,0 +1,8 @@
+:PROPERTIES:
+:ID:       52ad39fd-44df-49b3-9e18-a4b9beb12238
+:END:
+#+title: pattern/parent-proxy
+
+
+父类代理: 在子类范围确定的情况下，子类间的微小差异由父类代理子类进行处理
+以简化子类的复杂程度.

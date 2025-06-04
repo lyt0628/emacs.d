@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       37d9e64e-8a00-4119-8120-ebc5a93eb1ff
+:END:
+#+title: calculus/gauss-divergence-theorem
+

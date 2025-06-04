@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       e80615c8-fd84-4371-80a6-b04f1fbf99d3
+:END:
+#+title: emacs/orgmode
+
+
+* Main Keymap
+|--------+-------------------|
+| Keymap | Note              |
+|--------+-------------------|
+| C '    | 进入 Src Edit Buff |
+|--------+-------------------|

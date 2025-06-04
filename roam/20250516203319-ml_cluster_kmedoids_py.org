@@ -1,0 +1,145 @@
+:PROPERTIES:
+:ID:       24443fa7-6d5a-42c6-b65c-10ceaf91c33c
+:header-args: :tangle py/kmedoids.py :comments both
+:END:
+#+title: ml/cluster/kmedoids/py
+
+导入依赖，distances 里面定义了欧式距离的计算.
+
+#+BEGIN_SRC  python
+  import random
+  import math
+  import logging
+  import distances as d
+
+  logger = logging.getLogger(__name__)
+#+END_SRC
+
+#+BEGIN_SRC dot :tangle no :file tmp/9f9a76fa-4e47-48ca-b781-755071532eb3.png
+  digraph KMedoids {
+      rankdir=TB;
+      node [shape=rectangle, style=rounded];
+      Start [label="Start"];
+      Initialize [label="Randomly select k medoids"];
+      Assign [label="Assign points to nearest medoid"];
+      CalculateCost [label="Calculate total cost"];
+      CheckConvergence [label="Cost improved?"];
+      Update [label="Update medoids to minimize cluster cost"];
+      End [label="Return final medoids and clusters"];
+
+  Start -> Initialize;
+  Initialize -> Assign;
+  Assign -> CalculateCost;
+  CalculateCost -> CheckConvergence;
+  CheckConvergence -> End [label="No"];
+  CheckConvergence -> Update [label="Yes"];
+  Update -> Assign;
+
+  {rank=same; Initialize, Assign, CalculateCost}
+  {rank=same; CheckConvergence, Update}
+
+  }
+  
+#+END_SRC
+
+#+RESULTS:
+[[file:tmp/9f9a76fa-4e47-48ca-b781-755071532eb3.png]]
+
+k-medoids 的计算流程:
+1. 首先随机(或者不随机)分配 k 个中心点.
+2. 将非中心点, 关联到最近的中心点
+3. 对于每个中心点, 计算初始代价(簇内的距离和).
+4. 对于每个簇, 寻找簇内距离和最小的点作为新的中心点.
+5. 如果代价更小的了, 回到步骤2 重新计算代价(一次迭代)
+6. 否则，说明计算收敛了, 我们返回聚类结果
+
+
+#+BEGIN_SRC python
+  def initialize_medoids(data, k):
+      """随机初始化中心点"""
+      return random.sample(data, k)
+#+END_SRC
+
+data 是 记录的列表.
+medoids 是中心记录的列表.
+返回 一个字典 [medoid=>[record]].
+对于每个记录，我们遍历中心点，将自己加入最近中心点的簇中.
+#+BEGIN_SRC python
+def assign_clusters(data, medoids):
+    """分配数据点到最近的中心点"""
+    clusters = [[] for _ in range(len(medoids))]
+    for point in data:
+        closest = min(range(len(list(medoids))), 
+                     key=lambda i: d.euclidean(point, medoids[i]))
+        clusters[closest].append(point)
+    return dict(zip(medoids, clusters))
+#+END_SRC
+
+clusters: [medoid=>[record]]
+对于每个簇，遍历所有簇内点，计算距离和.
+#+BEGIN_SRC python
+  def calculate_total_cost(clusters):
+      """计算总成本（所有点到其中心点的距离和）"""
+      total = 0
+      items = clusters.items()
+      for medoid, points in items:
+          for point in points:
+              cost = d.euclidean(point, medoid)
+              total += cost
+              logger.debug(f"cost of medoid :{medoid} to point: {point} is: {cost}")
+
+      return total
+#+END_SRC
+
+
+clusters: [medoid=>[record]]
+对于每个簇，遍历每个节点，找到代价最小的节点作为中心.
+返回一个中心记录的列表.
+#+BEGIN_SRC  python
+  def update_medoids(clusters):
+      """更新中心点为簇内使总距离最小的点"""
+      new_medoids = []
+      for _, points in clusters.items():
+          min_cost = float('inf')
+          best_medoid = None
+          for candidate in points:
+              cost = sum(d.euclidean(p, candidate) for p in points)
+              if cost < min_cost:
+                  min_cost = cost
+                  best_medoid = candidate
+                  logger.info(f"best medoid updated : {best_medoid} with cost {min_cost}")
+
+              logger.debug(f"point: {candidate} with cost: {cost}")
+
+          logger.info(f"final best medoid: {best_medoid} with cost: {min_cost}" )
+          new_medoids.append(best_medoid)
+      return new_medoids
+#+END_SRC
+
+算法主流程, 见流程图.
+#+BEGIN_SRC python :results output
+  def k_medoids(data, k, max_iter=100):
+      """k中心点算法主函数"""
+      medoids = initialize_medoids(data, k)
+      logging.info(f"initial medoids: {medoids}")
+
+      prev_cost = float('inf')
+
+      for n in range(max_iter):
+          logging.info(f"iter : {n}/{max_iter}")
+          clusters = assign_clusters(data, medoids)
+          current_cost = calculate_total_cost(clusters)
+          logging.info(f"current cost: {current_cost}")
+
+          if current_cost >= prev_cost:
+              break
+
+          prev_cost = current_cost
+          medoids = update_medoids(clusters)
+          logging.info(f"new medoids: {medoids}")
+
+
+      return medoids, clusters
+
+#+END_SRC
+

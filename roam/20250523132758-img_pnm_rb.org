@@ -1,0 +1,185 @@
+:PROPERTIES:
+:ID:       dd02bb0e-d4ab-4955-b06c-851bb25298d9
+:END:
+#+title: img/pnm/rb
+
+
+#+BEGIN_SRC ruby :tangle rb/pnm.rb :noweb yes
+  require 'stringio'
+
+  module PNM
+    Magic = %w[P1 P2 P3 P4 P5 P6].freeze
+    <<#PNMBase>>
+    <<#P1 And P2>>
+    <<#P4 And P5>>
+    <<#P3 And P6>>
+
+    module_function
+    def load(path)
+      File.open(path) do |f|
+        header = f.gets.chomp
+        raise "Invalid PNM format" unless Magic.include?(header)
+
+        const_get(header).new(f)
+      end
+    end
+
+  end
+#+END_SRC
+
+* PNMBase
+#+BEGIN_SRC ruby :noweb-ref #PNMBase :noweb yes
+  class PNMBase
+    attr_reader :width, :height, :maxval, :pixels
+    def save(path)
+      File.open(path, 'wb') { |f| f.write(to_s) }
+    end
+
+    def initialize(*args)
+      if args.first.is_a?(IO) || args.first.is_a?(StringIO)
+        f = args.first
+        read_header(f)
+        @pixels = read_pixels(f)
+      else
+        @width, @height = args[0], args[1]
+        @maxval = args[2] || default_maxval
+        @pixels = create_pixels(args[3] || default_color)
+      end
+    end
+    <<#Parent Proxy>>
+
+    private
+    def read_header(f)
+      loop do
+        line = f.gets.chomp
+        next if line.start_with?('#')
+        @width, @height = line.split.map(&:to_i)
+        @maxval = self.class == P1 || self.class == P4 ? 1 : f.gets.to_i
+        break
+      end
+    end
+  end
+#+END_SRC
+
+** Parent Proxy To Create Pixels
+[[id:52ad39fd-44df-49b3-9e18-a4b9beb12238][pattern/parent-proxy]].
+
+#+BEGIN_SRC ruby :noweb-ref #Parent Proxy
+     def default_color
+      case self.class.name.split("::").last
+      when 'P1', 'P4' then 1  # PBM默认白色(1)
+      when 'P2', 'P5' then @maxval  # PGM默认白色(maxval)
+      else Array.new(3, @maxval)  # PPM默认白色(RGB maxval)
+      end
+    end
+    
+    def create_pixels(color)
+      case self.class.name.split("::").last
+      when 'P1', 'P4'
+        Array.new(width * height, color)
+      when 'P2', 'P5'
+        Array.new(width * height, color)
+      when 'P3', 'P6'
+        if color.is_a?(Array)
+          Array.new(width * height) { color }.flatten
+        else
+          Array.new(width * height * 3, color)
+        end
+      end
+    end
+#+END_SRC
+
+* P1, P2
+
+#+BEGIN_SRC ruby :noweb-ref #P1 And P2
+  class P1 < PNMBase # PBM ASCII
+    private def read_pixels(f)
+      f.each_line.with_object([]) do |line, arr|
+        next if line.start_with?('#')
+        arr.concat(line.split.map(&:to_i))
+      end
+    end
+
+    def to_s
+      <<~PNM
+        P1
+        #{width} #{height}
+        #{pixels.each_slice(width).map { |r| r.join(' ') }.join("\n")}
+      PNM
+    end
+  end
+  class P2 < PNMBase # PGM ASCII
+    private def read_pixels(f)
+      f.each_line.with_object([]) do |line, arr|
+        next if line.start_with?('#')
+        arr.concat(line.split.map(&:to_i))
+      end
+    end
+
+    def to_s
+      <<~PNM
+          P2
+          #{width} #{height}
+          #{maxval}
+          #{pixels.each_slice(width).map { |r| r.join(' ') }.join("\n")}
+        PNM
+    end
+  end
+#+END_SRC
+
+* P4 P5
+
+#+BEGIN_SRC ruby :noweb-ref #P4 And P5
+  class P4 < PNMBase # PBM Binary
+    private def read_pixels(f)
+      f.read.unpack('C*')
+    end
+
+    def to_s
+      "P4\n#{width} #{height}\n".b + pixels.pack('C*')
+    end
+  end
+
+  class P5 < PNMBase # PGM Binary
+    private def read_pixels(f)
+      f.read.unpack('n*')
+    end
+
+    def to_s
+      "P5\n#{width} #{height}\n#{maxval}\n".b + pixels.pack('n*')
+    end
+  end
+#+END_SRC
+
+* P3, P6
+
+#+BEGIN_SRC ruby :noweb-ref  #P3 And P6
+  class P3 < PNMBase # PPM ASCII
+    private def read_pixels(f)
+      f.each_line.with_object([]) do |line, arr|
+        next if line.start_with?('#')
+        arr.concat(line.split.map(&:to_i))
+      end
+    end
+
+    def to_s
+      <<~PNM
+          P3
+          #{width} #{height}
+          #{maxval}
+          #{pixels.each_slice(3).map { |rgb| rgb.join(' ') }.join("\n")}
+        PNM
+    end
+  end
+
+  class P6 < PNMBase # PPM Binary
+    private def read_pixels(f)
+      f.read.unpack('C*') # 使用8位无符号字符解包
+    end
+  
+    def to_s
+      "P6\n#{width} #{height}\n#{maxval}\n".b + pixels.pack('C*') # 使用8位无符号字符打包
+    end
+  end
+
+#+END_SRC

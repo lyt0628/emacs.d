@@ -1,0 +1,16 @@
+:PROPERTIES:
+:ID:       ca8ff7a1-62e0-47c6-ae8a-149e9a09ddbd
+:END:
+#+title: jbullet/collision
+
+JBullet 的碰撞检测分为两个阶段 BoardPhase(宽相位检测) 和 NarrowPhase(窄相位检测)。
+BoardPhase 阶段使用 AABB 包围盒等不精确的算法做快速的碰撞检测。
+经过 BoardPhase 阶段过滤后的碰撞对再进入 NarrowPhase
+进行更加精细的碰撞模拟.
+
+碰状检测经过以下几步抽象:
+1. 定义碰撞参与者的形状. See [[id:87ea9840-d0da-4ec6-a5b6-d1ab2636cb74][jbullet/collsion/shape]].
+2. 碰撞检测算法实现
+3. 提供碰撞执行接口
+
+

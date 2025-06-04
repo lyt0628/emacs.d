@@ -1,0 +1,94 @@
+\begin{verbatim}
+import random
+import math
+import distances as d 
+\end{verbatim}
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{tmp/9f9a76fa-4e47-48ca-b781-755071532eb3.png}
+\end{center}
+
+
+
+
+\begin{verbatim}
+def initialize_medoids(data, k):
+    """随机初始化中心点"""
+    return random.sample(data, k)
+\end{verbatim}
+
+
+\begin{verbatim}
+def assign_clusters(data, medoids):
+    """分配数据点到最近的中心点"""
+    clusters = [[] for _ in range(len(medoids))]
+    for point in data:
+        closest = min(range(len(medoids)), 
+                     key=lambda i: d.euclidean(point, medoids[i]))
+        clusters[closest].append(point)
+    return clusters
+\end{verbatim}
+
+
+
+\begin{verbatim}
+def calculate_total_cost(data, medoids):
+    """计算总成本（所有点到其中心点的距离和）"""
+    total = 0
+    for point in data:
+        closest = min(medoids, key=lambda m: calculate_distance(point, m))
+        total += d.euclidean(point, closest)
+    return total
+\end{verbatim}
+
+\begin{verbatim}
+def update_medoids(clusters):
+    """更新中心点为簇内使总距离最小的点"""
+    new_medoids = []
+    for cluster in clusters:
+        min_cost = float('inf')
+        best_medoid = None
+        for candidate in cluster:
+            cost = sum(d.euclidean(p, candidate) for p in cluster)
+            if cost < min_cost:
+                min_cost = cost
+                best_medoid = candidate
+        new_medoids.append(best_medoid)
+    return new_medoids
+
+
+\end{verbatim}
+
+\begin{verbatim}
+def k_medoids(data, k, max_iter=100):
+    """k中心点算法主函数"""
+    medoids = initialize_medoids(data, k)
+    prev_cost = float('inf')
+
+    for _ in range(max_iter):
+        clusters = assign_clusters(data, medoids)
+        current_cost = calculate_total_cost(data, medoids)
+
+        if current_cost >= prev_cost:
+            break
+
+        prev_cost = current_cost
+        medoids = update_medoids(clusters)
+
+    return medoids, clusters
+
+\end{verbatim}
+
+
+
+\begin{verbatim}
+# 示例用法
+if __name__ == "__main__":
+    data = [[1,2], [1,4], [1,0], [4,2], [4,4], [4,0]]
+    k = 2
+    medoids, clusters = k_medoids(data, k)
+    print("Final Kmedoids:", medoids)
+    print("Clusters:", clusters)
+
+
+\end{verbatim}

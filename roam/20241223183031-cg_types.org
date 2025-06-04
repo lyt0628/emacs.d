@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       8a878f29-74b5-4291-b188-5f8f14d706e3
+:END:
+#+title: cg-types
+#+filetags: :cg:
+
+* Module Definition
+
+#+BEGIN_SRC lua :tangle ./ytcg/src/types.lua  :noweb yes :eval no :mkdirp yes :comments both 
+  require("Vec")
+  <<types_definition>>
+#+END_SRC
+
+* Types Definition
+
+#+NAME: types_definition
+#+begin_src lua
+  Color = Vec
+  Radiance = Vec
+#+end_src

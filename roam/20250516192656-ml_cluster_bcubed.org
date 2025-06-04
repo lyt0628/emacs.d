@@ -1,0 +1,62 @@
+:PROPERTIES:
+:ID:       2269507d-2606-47d7-b8a9-ff105ebb1fcd
+:END:
+#+title: ml/cluster/bcubed
+
+BCuded 通过聚类结果与类别标签的匹配程度衡量聚类效果.
+核心是两个指标 *精确率* 和 *召回率*, 然后通过 它们的 *调和平均值* 综合评估效果.
+
+#+BEGIN_SRC latex :results file
+For each element $ i $:
+$$
+\text{Precision}(i) = \frac{|\{\, j \mid C(i) = C(j) \wedge L(i) = L(j) \,\}|}{|\{\, j \mid C(i) = C(j) \,\}|}
+$$
+where:
+\begin{itemize}
+    \item $ C(i) $: Predicted cluster of element $ i $
+    \item $ L(i) $: True class of element $ i $
+    \item $ | \cdot | $: Cardinality of the set
+\end{itemize}
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-8OphX1//ox9n24-1.png]]
+
+精确率的定义如上，C(i) 表示元素 i 的聚类类别，L(i) 表示 i 的标签类别.
+在 i 所在的聚类结果中(C(i) = C(j))， 和 i 标签的别一致的(L(i) = L(j))，
+除 以 i 所在簇的元素个数.
+
+精确率描述的是正确率.
+
+#+BEGIN_SRC latex :results file
+\subsection*{Element-level Recall}
+For each element $ i $:
+$$
+\text{Recall}(i) = \frac{|\{\, j \mid C(i) = C(j) \wedge L(i) = L(j) \,\}|}{|\{\, j \mid L(i) = L(j) \,\}|}
+$$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-8OphX1//w6gCHN-1.png]]
+
+召回率和 精确率相比只有 空间不一样，聚类的正确性的定义还是一致的.
+i 所在的簇中，与 i 聚类关系正确的除以, i 类别标签的总数.
+
+召回率描述的是全部全的问题.
+
+一个生活中的例子，考试时候的多项选择题.
+- 选不全得部分分数(精确率高，召回率低)
+- 选错0分(精确率低)
+- 选择了全部正确答案得全部分(精确率高，召回率高)
+
+
+BCubed F1 评价
+#+BEGIN_SRC latex :results file
+$$
+F1_{\text{BCubed}} = 2 \cdot \frac{\overline{\text{Precision}} \cdot \overline{\text{Recall}}}{\overline{\text{Precision}} + \overline{\text{Recall}}}
+$$
+where $ \overline{\text{Precision}} $ and $ \overline{\text{Recall}} $ represent the arithmetic mean across all elements.
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-8OphX1//W6mpA9-1.png]]

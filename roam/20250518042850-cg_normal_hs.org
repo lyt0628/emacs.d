@@ -1,0 +1,20 @@
+:PROPERTIES:
+:ID:       2f7a6223-93db-4375-9711-3b987bff16ce
+:header-args: :tangle hs/Normal.hs :comments both
+:END:
+#+title: cg/normal/hs
+
+#+BEGIN_SRC haskell
+  module Normal where
+#+END_SRC
+
+Normal is not else but Vector.
+#+BEGIN_SRC haskell
+  newtype Norm2D = Vec2D deriving(Eq,Show,Functor,VectorOps)
+  newtype Norm3D = Vec3D deriving(Eq,Show,Functor,VectorOps)
+#+END_SRC
+
+Normal is a Vector too. All operations can be applied in a vector
+can be applied in a normal.
+So we use newtype keyword to copy definition of VecND to Normal.
+derivin will impletement the corrspond typeclass automaticly.

@@ -1,0 +1,178 @@
+:PROPERTIES:
+:ID:       1afbb06b-aaab-42bf-a9a2-dce2ec373db9
+:END:
+#+title: hs/basic
+
+#+BEGIN_SRC haskell :async t
+  main = putStrLn "Hello, Haskell!"
+#+END_SRC
+
+#+RESULTS:
+
+
+Haskell 的基本公民就是函数，因此无需额外关键字用于声明函数。
+因为一切行为都是为了函数而存在。
+#+NAME: Define a function
+#+BEGIN_SRC haskell 
+  add x y = x + y
+
+  main = do
+    let res = add 1 2
+    putStrLn $ "1 + 2 = " ++ show res
+#+END_SRC
+
+#+RESULTS:
+: 1 + 2 = 3
+
+Haskell 是静态类型语言. 上面例子省略了类型声明，
+因此Haskell 会进行自动类型推导。
+
+我们也可以手动声明类型。
+#+BEGIN_SRC haskell 
+  add x y = x + y -- 声明过程
+  add :: Int -> Int -> Int -- 声明类型
+
+  main = do
+    let res = add 1 2
+    putStrLn $ "1 + 2 = " ++ show res
+#+END_SRC
+
+#+RESULTS:
+: 1 + 2 = 3
+
+
+作为 基于 lambda 的语言，Haskell 天生支持数学归纳法
+的表达.这种表达方式被成为 模式匹配(Pattern Matching).
+#+BEGIN_SRC haskell
+  fact 0 = 1
+  fact n = n * fact (n-1)
+
+  main = do
+    let res = fact 9
+    putStrLn $ "Result: " ++ show res
+#+END_SRC
+
+#+RESULTS:
+: Result: 362880
+
+在这个案例中 参数部分可以看作为隐式地包含了一个
+if 表达式. 有点类似 Clojure 的多重方法， 不过
+多重方法匹配的是类型，而不是通用模式。
+
+
+列表是Haskell 默认支持的类型. 大部分操作都存在于 EmacsLisp中. 
+#+BEGIN_SRC haskell
+-- 定义列表并演示操作
+main :: IO ()
+main = do
+  let numbers = [1, 2, 3, 4]       -- 原始列表
+  
+  -- 输出所有操作结果
+  putStrLn $ "Original List: " ++ show numbers
+  putStrLn $ "Head: " ++ show (head numbers)   -- head
+  putStrLn $ "Rest: " ++ show (tail numbers) -- tail
+  putStrLn $ "Add to head: " ++ show (5 : numbers) -- cons操作符(:)
+  putStrLn $ "Sum: " ++ show (sum numbers)  -- sum
+  putStrLn $ "Length: " ++ show (length numbers) -- length
+
+#+END_SRC
+
+#+RESULTS:
+: Original List: [1,2,3,4]
+: Head: 1
+: Rest: [2,3,4]
+: Add to head: [5,1,2,3,4]
+: Sum: 10
+: Length: 4
+
+除了列表外，Haskell 还提供元组(Tuple) 类型.
+元组不要求所有元素类型一致
+#+BEGIN_SRC haskell
+  main = do
+    let t = (1, "right")
+    print $ t 
+  
+#+END_SRC
+
+#+RESULTS:
+
+Haskell 是静态类型语言，有完成的类型系统。
+常见的类型系统和其他编程语言一致
+- Int
+- Float
+- Bool
+- Char
+- String, 其实是 Char 数组，即 [Char]
+
+data 关键字用于自定义类型
+#+BEGIN_SRC haskell
+  data Color = Red | Green | Blue
+#+END_SRC
+
+| 符号 表示联合，上面例子表示为枚举类型，这和
+Typescript 字面量类型类似.
+
+
+#+BEGIN_SRC haskell
+  data Point = Point Float Float
+  origin :: Point
+  origin = Point 0.0 0.0
+#+END_SRC
+空格分隔则表示结构体类型，类似与 C struct.
+但是不清楚有无空间对齐操作.
+
+这个例子的符号分别表示 类型名， 构造器名字 以及字段列表.
+
+:: 符号用于声明类型. 然后我们使用 Point 构造器
+创建了 一个对象赋值给 origin.
+注意 Haskell 的所有数据是完全不可变的.
+因此 origin 为常量,而非变量.
+
+模式匹配可以向 Clojure 多重方法一样，基于类型匹配过程.
+#+BEGIN_SRC haskell
+  moveRight (Point x y) = Point (x + 1.0) y
+  moveRight :: Point -> Point
+#+END_SRC
+
+这个例子通过 Point 类型进行模式匹配，然后 Haskell
+可以自动解构结构体.
+
+
+当我们需要从 结构体内部拿数据时，需要依靠模式匹配.
+#+BEGIN_SRC haskell
+-- 定义 Point 类型
+data Point = Point Float Float
+
+-- 手动定义访问器
+getX :: Point -> Float
+getX (Point x _) = x  -- 通过模式匹配提取值
+
+getY :: Point -> Float
+getY (Point _ y) = y
+
+-- 使用示例
+origin = Point 1.0 2.0
+main = print $ "X = " ++ show (getX origin)  -- 输出 "X = 0.0"
+#+END_SRC
+
+#+RESULTS:
+: X = 1.0
+
+
+Haskell 提供了叫做记录语法的语法糖. 记录语法会自动生成访问器
+#+BEGIN_SRC haskell :var f = 99 :var v =33 :var a = "as"
+  data Point = Point {
+    x :: Float,
+    y :: Float
+  }
+
+  p :: Point
+  p = Point 1.0 2.0
+  main = do
+    putStrLn $ "X: " ++ show (x p)
+#+END_SRC
+
+#+RESULTS:
+: X: 1.0as
+
+

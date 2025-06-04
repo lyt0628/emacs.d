@@ -1,0 +1,75 @@
+# :PROPERTIES:
+# :ID:       2b6bcd7c-848a-4ebf-96a9-e17c4d931e5a
+# :header-args: :noweb yes
+# :END:
+# #+title: cg/vector/rb
+
+# Each language holds their bindings, which is nightmare for me to matains my note.
+# maybe i should maintains the bindings my note.
+# 先使用 Ruby 来建模吧, 用 Haskell 真的有点累人, 在我来时不太熟悉的情况下.
+
+# 我们定义向量类来支持图形学计算.
+
+# [[file:../20250518132914-cg_vector_rb.org::+BEGIN_SRC ruby :tangle rb/Vector.hs :comments both :mkdirp t][No heading:1]]
+module CG.V
+class Vec2D
+  attr_accessor :x, :y
+    
+def initialize(x, y)
+  @x = x
+       @y = y
+            end
+    
+  end
+
+  class Vec3D
+    attr_accessor :x, :y, :z
+    
+    def initialize(x, y, z)
+      @x = x
+      @y = y
+      @z = z
+    end
+    def +(other)
+      Vector3D.new(x + other.x, y + other.y, z + other.z)
+    end
+    
+    def -(other)
+      Vector3D.new(x - other.x, y - other.y, z - other.z)
+    end
+    
+    def *(scalar)
+      Vector3D.new(x * scalar, y * scalar, z * scalar)
+    end
+    
+    def dot(other)
+       x * other.x + y * other.y + z * other.z
+     end
+    
+    def magnitude
+      Math.sqrt(dot(self))
+    end
+    
+    def normalize
+      len = length
+      Vector3D.new(x / len, y / len, z / len)
+    end
+  end
+
+  class Vec4D
+    attr_accessor :x, :y, :z, :w
+    
+    def initialize(x, y, z, w)
+      @x = x
+      @y = y
+      @z = z
+      @w = w
+    end
+    
+    
+  end
+
+end
+# No heading:1 ends here
+
+

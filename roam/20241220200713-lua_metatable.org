@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       5090720f-6118-44eb-ba89-724576a6324f
+:END:
+#+title: lua/metatable
+#+filetags: :lua:
+

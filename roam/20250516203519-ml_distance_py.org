@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       7f614abf-b97d-4e19-a511-f2fa3fdc7def
+:header-args: :tangle py/distances.py :comments both
+:END:
+#+title: ml/util/distance/py
+
+#+BEGIN_SRC python
+  import math
+#+END_SRC
+
+
+
+#+BEGIN_SRC python
+def euclidean(a, b):
+    """计算欧氏距离"""
+    return math.sqrt(sum((x - y) ** 2 for x, y in zip(a, b)))
+#+END_SRC

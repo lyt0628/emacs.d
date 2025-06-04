@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       f8dda565-700e-45c2-855a-cfe811b45009
+:header-args: :tangle rb/Ray.rb :comments both
+:END:
+#+title: cg/ray/rb
+
+#+BEGIN_SRC ruby
+  puts "ok"
+#+END_SRC

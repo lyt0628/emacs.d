@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       3c1cee53-8318-4394-875b-130f3858c52f
+:END:
+#+title: hs/alternative
+
+
+#+BEGIN_SRC haskell
+  module Control.Applicative where
+  class Applicative f => Alternative f where
+    empty :: f a
+    (<|>) :: f a -> f a -> f a
+    some :: f a -> f [a]
+    many :: f a -> f [a]
+#+END_SRC
+Althernative 如上形式.
+- empty, 表示空，返回一个空的 函子容器
+- <>, 表示连接， 它能通过或逻辑组合结果,返回包含结果的容器.
+- some 表示一个或者多个，类似与 Regx 的 '+' 字符.
+- many 表示 0 个或者多个, 类似于 Regx 的 '?' 字符.

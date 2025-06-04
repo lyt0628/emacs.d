@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       1156bd44-ec2c-4370-8d3b-eab8f9d9adb0
+:END:
+#+title: calculus/partial-derivative
+

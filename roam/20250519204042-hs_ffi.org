@@ -1,0 +1,69 @@
+:PROPERTIES:
+:ID:       31db2fc5-e171-4850-b958-d2b654ca2f7d
+:END:
+#+title: hs/ffi
+
+FFI(Foreign Function Interface) 提供给 Haskell 与外部语言相互调用的机会.
+一些语言中的 FFI 十分繁琐，例如Java， 但幸好 Haskell 的 FFI 接口十分简单.
+
+我们来看个例子, 下面是使用 C 语言编写 的 Fibonacci 数列的函数
+#+BEGIN_SRC c :tangle tmp/fib.c
+  #include <stdint.h>
+
+  uint64_t fibonacci(int n) {
+      if (n <= 1) return n;
+      uint64_t a = 0, b = 1;
+      for (int i = 2; i <= n; i++) {
+          uint64_t c = a + b;
+          a = b;
+          b = c;
+      }
+      return b;
+  }
+#+END_SRC
+
+然后是Haskell的移植代码.
+#+BEGIN_SRC haskell :tangle tmp/CFib.hs
+  {-# LANGUAGE ForeignFunctionInterface #-}
+  module CFib (
+    haskellFib
+    ) where
+
+  import Foreign.C.Types
+  import Foreign.Ptr
+
+  foreign import ccall 
+    fibonacci :: CInt -> IO CULong
+
+  haskellFib :: Int -> IO CULong
+  haskellFib n = fromIntegral <$> fibonacci (fromIntegral n)
+#+END_SRC
+
+最后我们在 Haskell调用
+#+BEGIN_SRC haskell :tangle tmp/Main.hs
+  module Main where
+
+  import CFib (haskellFib)
+  import System.Environment (getArgs)
+
+  main :: IO ()
+  main = do
+    args <- getArgs
+    case args of
+      [n] -> do
+        let num = read n :: Int
+        if num < 0 
+          then putStrLn "请输入非负整数"
+          else do
+            result <- haskellFib num
+            putStrLn $ "Fibonacci(" ++ show num ++ ") = " ++ show result
+      _ -> putStrLn "用法: runhaskell Main.hs <正整数>"
+
+#+END_SRC
+
+
+我们使用 GHC 编译它们.
+#+BEGIN_SRC shell :dir tmp 
+  ghc Main.hs CFib.hs fib.c
+  ./Main.exe 33
+#+END_SRC

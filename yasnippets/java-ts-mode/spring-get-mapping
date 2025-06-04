@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Spring GET Mapping
+# key: get 
+# group: Spring
+# --
+@GetMapping("${1:/post}")
+public ${2:ServerResult<?>} ${3:findAllPosts}(${4:@RequestParam(required = false) String param}) {
+    ${5:// TODO: 实现逻辑}
+    return ${6:ServerResult.ok().build()};$0
+}

@@ -1,0 +1,26 @@
+:PROPERTIES:
+:ID:       e5b5988e-a8b7-4dff-8a84-fa02c03fb0f3
+:END:
+#+title: emacs/yasnippet
+
+* Orgnizing Snippets
+Snippets 根据 Emacs Mini模式进行划分。
+#+BEGIN_SRC text
+.
+|-- c-mode
+|   `-- printf
+|-- java-mode
+|   `-- println
+`-- text-mode
+    |-- email
+    `-- time
+#+END_SRC
+
+它们在运行时，被加载到  snippet tables 中，yasnippet 会根据mini模式查找这个表。
+
+ `yas-snippet-dirs` 变量指向 snippets 的配置文件目录. 两个函数 `yanisppet-global-mode` 和`yas-reload-all`
+ 会读取配置文件到 snippet tables 中。
+
+* Expanding Snippets
+
+* Custom Snippets

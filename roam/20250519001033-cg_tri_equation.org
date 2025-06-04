@@ -1,0 +1,40 @@
+:PROPERTIES:
+:ID:       c66a19af-11c2-4449-9f4f-ba1dd09c9074
+:END:
+#+title: cg/tri-equation
+
+* 合差角公式
+#+BEGIN_SRC latex :results file
+   \subsection{angle sub of cos}
+  \begin{equation}
+  \cos(\alpha - \beta) = \cos\alpha\cos\beta + \sin\alpha\sin\beta
+  \end{equation}
+
+  \subsection{angel sum of cos}
+  \begin{equation}
+  \cos(\alpha + \beta) = \cos\alpha\cos\beta - \sin\alpha\sin\beta
+  \end{equation}
+
+  \subsection{angle sub of sin}
+  \begin{equation}
+  \sin(\alpha - \beta) = \sin\alpha\cos\beta - \cos\alpha\sin\beta
+  \end{equation}
+
+  \subsection{angle sun of sin}
+  \begin{equation}
+  \sin(\alpha + \beta) = \sin\alpha\cos\beta + \cos\alpha\sin\beta
+  \end{equation}
+
+  \subsection{angle sub of tan}
+  \begin{equation}
+  \tan(\alpha - \beta) = \frac{\tan\alpha - \tan\beta}{1 + \tan\alpha\tan\beta}
+  \end{equation}
+
+  \subsection{angle sum of tan}
+  \begin{equation}
+  \tan(\alpha + \beta) = \frac{\tan\alpha + \tan\beta}{1 - \tan\alpha\tan\beta}
+  \end{equation}
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-fXMX1U//pygQcH-1.png]]

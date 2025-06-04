@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       f24710bf-a646-4209-92f6-73f8ed1e6fa4
+:END:
+#+title: cg/nrmal
+
+
+* 法向反射
+
+* 斯涅尔定律

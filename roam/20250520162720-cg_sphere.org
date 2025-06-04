@@ -1,0 +1,59 @@
+:PROPERTIES:
+:ID:       1a9cae2e-7e6e-461b-97dc-5d77701d2526
+:END:
+#+title: cg/sphere
+
+
+
+* 球面与射线求交
+
+我们考虑球面的标准方程
+#+BEGIN_SRC latex :results file
+  \[
+  x^2 + y ^2 + z^2 = r ^2
+  \]
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-Gppd4S//onHREY-1.png]]
+
+把 射线 R = o + d 在三个轴向上的分量分别代入 标准方程.
+#+BEGIN_SRC latex :results file
+  \[
+  (O_x + tD_x)^2 + (O_y + tD_y)^2 + (O_z + tD_z)^2 = r^2
+  \]
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-Gppd4S//wXqNt1-1.png]]
+
+以 t 为自变量 合并同类项
+
+#+BEGIN_SRC latex :results file
+  \[
+  (D_x^2 + D_y^2 + D_z ^2)t^2 + 2(O_x D_x + O_yD_Y + O_zD_z)t^2 + O_x^2 + O_y^2 +O_z^2 = r2
+  \]
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-Gppd4S//SD2LFk-1.png]]
+
+将方程进行下面替换
+#+BEGIN_SRC latex :results file
+  \begin{equation}
+    \begin{aligned}
+      a = D^2 \\
+      b = 2 O \cdot D \\
+      c = O^2 - r^2 \\
+    \end{aligned}
+  \end{equation}
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-Gppd4S//rtlLFv-1.png]]
+这里的三个参数全部都是标量, 因为
+- 向量的平方等于它的模长的平方.
+- 向量的内积是一个标量.
+方程转化为二次方程.
+
+求解交点等同求二次方程的根.

@@ -1,0 +1,146 @@
+:PROPERTIES:
+:ID:       0e2c3f2d-d65c-4d9a-b3f9-7e3aac1b2ccf
+:END:
+#+title: pattern/decorator/example-multiple-encrypt
+
+
+#+BEGIN_SRC plantuml :file tmp/011eb30c-2fa7-4523-89d1-a586729f2e52.png
+@startuml
+interface Encryptable {
+  +encrypt(): String
+}
+
+class SimpleCipher {
+  +encrypt(): String
+}
+
+class ReverseCipher {
+  -Encryptable component
+  +encrypt(): String
+}
+
+class ModuloCipher {
+  -Encryptable component
+  +encrypt(): String
+}
+
+Encryptable <|-- SimpleCipher
+Encryptable <|-- ReverseCipher
+Encryptable <|-- ModuloCipher
+Encryptable <--o ReverseCipher
+Encryptable <--o ModuloCipher
+
+note right of SimpleCipher::encrypt
+  简单移位加密
+end note
+
+note right of ReverseCipher::encrypt
+  逆向输出加密
+end note
+
+note right of ModuloCipher::encrypt
+  求模加密
+end note
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:tmp/011eb30c-2fa7-4523-89d1-a586729f2e52.png]]
+
+
+#+BEGIN_SRC ruby
+  # 加密接口
+  module Encryptable
+    def encrypt
+      raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
+    end
+  end
+
+  # 基础加密类 - 简单移位加密
+  class SimpleCipher
+    include Encryptable
+
+    def initialize(text, shift = 3)
+      @text = text
+      @shift = shift
+    end
+
+    def encrypt
+      @text.chars.map do |char|
+        if char.match?(/[a-zA-Z]/)
+          base = char =~ /[a-z]/ ? 'a'.ord : 'A'.ord
+          ((char.ord - base + @shift) % 26 + base).chr
+        else
+          char
+        end
+      end.join
+    end
+  end
+
+  # 装饰器基类
+  class CipherDecorator
+    include Encryptable
+
+    def initialize(component)
+      @component = component
+    end
+
+    def encrypt
+      @component.encrypt
+    end
+  end
+
+  # 逆向输出加密装饰器
+  class ReverseCipher < CipherDecorator
+    def encrypt
+      super.reverse
+    end
+  end
+
+  # 求模加密装饰器
+  class ModuloCipher < CipherDecorator
+    def encrypt
+      encrypted = super
+      encrypted.chars.map.with_index do |char, index|
+        if char.match?(/\d/)
+          (char.to_i + index) % 10
+        else
+          char
+        end
+      end.join
+    end
+  end
+
+  # 客户端代码
+  def encrypt_text(text, *encryptors)
+    encryptor = SimpleCipher.new(text)
+
+    encryptors.each do |encryptor_type|
+      case encryptor_type
+      when :reverse
+        encryptor = ReverseCipher.new(encryptor)
+      when :modulo
+        encryptor = ModuloCipher.new(encryptor)
+      end
+    end
+
+    encryptor.encrypt
+  end
+
+
+  # 示例使用
+  text = "Hello123"
+
+  puts "原始文本: #{text}"
+  puts "简单加密: #{encrypt_text(text)}"
+  puts "简单+逆向: #{encrypt_text(text, :reverse)}"
+  puts "简单+求模: #{encrypt_text(text, :modulo)}"
+  puts "三重加密: #{encrypt_text(text, :reverse, :modulo, :reverse)}"
+#+END_SRC
+
+#+RESULTS:
+: 原始文本: Hello123
+: 简单加密: Khoor123
+: 简单+逆向: 321roohK
+: 简单+求模: Khoor680
+: 三重加密: Khoor333

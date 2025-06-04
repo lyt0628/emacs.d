@@ -1,0 +1,40 @@
+:PROPERTIES:
+:ID:       5d09d602-caa3-455a-a699-1deda9349fa1
+:END:
+#+title: elisp/macro
+
+* Template Macro
+- `(...): Define a template list, The list would not executed immediately, until expanded
+- ,<expr>: Replace <expr> with the paprameter.
+- ,@(...): Expand list as standalone symbols.
+#+NAME: Template Macro Example
+#+BEGIN_SRC emacs-lisp
+  (defmacro _/inc (v)
+    `(setq ,v (1+ ,v)))
+
+  (defvar _/value 1)
+  (_/inc _/value)
+#+END_SRC
+
+#+RESULTS:
+: 4
+
+
+#+BEGIN_SRC emacs-lisp
+  (macroexpand '(_/inc x))
+#+END_SRC
+
+#+RESULTS:
+| setq | x | (1+ x) |
+
+
+#+NAME: Expand List Example
+#+BEGIN_SRC emacs-lisp
+  (defmacro _/=+ (a b)
+    `(setq ,a (+ ,@b)))
+
+  (_/=+ x (1 2 3))
+#+END_SRC
+
+#+RESULTS:
+: 6

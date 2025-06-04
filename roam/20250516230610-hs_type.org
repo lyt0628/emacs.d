@@ -1,0 +1,103 @@
+:PROPERTIES:
+:ID:       3dcfbf00-77e3-4c95-9f6f-5d19fbaa3e87
+:END:
+#+title: hs/type
+
+
+Haskell has a word: It compiles, it works.
+Haskell has a very strong type system. Is is strict to let your code pass.
+
+Haskell 最基本的类型有两中, 和类型(sum type) 和积类型(product type).
+
+积类型就是表示几种类型的聚合, 这类似于 C 的结构体.
+
+#+BEGIN_SRC haskell
+  data Person = PersonCtor String Integer 
+#+END_SRC
+这里我们声明 Person 是由 两个类型 String 和 Integer 聚合而成的.
+由 PersonCtor 构造子构造.
+
+在只有一个构造子的情况下，我们通常都将它的名称
+
+#+BEGIN_SRC  haskell
+  data Person = Person String Integer 
+#+END_SRC
+
+现在我们知道 Person 持有两个数据 String 和 Integer. 但我们无法使用它们, 它们被包裹在 Person
+类型中.
+
+想使用内部值有两种方式
+
+我们可以通过模式匹配解构类型
+#+BEGIN_SRC haskell
+  homer :: Person
+  homer = Person "Homer Simpson" 38
+
+  name :: Person -> String
+  name = (Person name' age) = name'
+#+END_SRC
+
+在函数参数中，我们可以按照构造顺序将值解构到外部. 如果你用过 JS 的话，
+对解构赋值应该不会陌生.
+
+我们通过了解构赋值手动将值从类型实例中拿了出来.
+但这十分麻烦, 如果我们的类型有更多的属性，我们必须一一为其定义访问器.
+
+Haskell 为我们提供了 叫做记录语法的语法糖.
+#+BEGIN_SRC  haskell
+  data Person = Person {
+    name :: String 
+    ,age :: Integer 
+    }
+#+END_SRC
+当我们使用记录语法定义类型时，它会为每个字段自动创建访问器，
+访问器的名称就是 里面定义的 name,age. 
+注意, Haskell 并不是面向对象的语言.
+很多来自 OOP 世界的 Haskell 新手会这么认为
+"Person 类型有一个 叫做 name 的方法, 他会拿到内部的 一个 String字段".
+从效果来讲是这样子, 但反转了主次关系.
+name 方法 操作Person 实例, 但它并不属于 Person 类型, 只是这个方法是操作 Person 类型的.
+
+函数和类型并不是绑定的, 这点对我们理解Haskell 是有帮助的.
+
+
+#+BEGIN_SRC haskell
+  data Cat = Cat String
+  data Dog = Dog String
+
+  data Anim = Cat | Dog
+#+END_SRC
+
+\| 表示和类型， 在 其他语言中 想 python 和 ts, 大家都用这个符号来表示联合类型.
+这表示，如果 一个值是 Anim 的实例，它可能是 Cat 也可能是 Dog.
+
+#+BEGIN_SRC haskell
+  animal :: Anim
+  animal = Cat "itky"
+#+END_SRC
+
+我们现在有只小猫, 但我们不知道它的名字.
+于是我们想定义一个函数，通过模式匹配拿到它的名称
+我们可以这么做
+#+BEGIN_SRC haskell
+nameCat :: Cat -> String
+nameCat (Cat name') -> name'
+#+END_SRC
+
+当我们使用它的时候，它确实工作得不错，拿出了 ‘itky’ 的名字.
+
+但如果我们现在有条狗，我们也想知道它的名字呢.
+很自然的, 我们再定义一个方法
+#+BEGIN_SRC haskell
+nameDog :: Dog -> String
+nameDog (Dog name') -> name'
+#+END_SRC
+
+这样十分麻烦，如果 Anim 中包含了更多的 动物类型, 我们是不是要为每个动物类型都定义这栋访问器呢.
+你可能想用 记录语法, 但这并不会让我们工作量减少多少.
+
+最重要的是，我们希望用统一的 name 函数 充当 所有 Anim 的访问器，
+而不是丑陋的 nameDog.
+
+如果我们使用模式匹配的话确实可以这样子.
+

@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       f6782896-f442-4062-a35d-b2eb915c8e9e
+:END:
+#+title: calculus/stokes-theorem
+

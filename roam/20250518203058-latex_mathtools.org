@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       33f71f4c-b472-49c5-9892-7946d65b9b20
+:END:
+#+title: latex/mathtools
+
+*bracket
+#+BEGIN_SRC latex :results file 
+  \[\underbracket{\overbracket{1+2}+3}_3\]
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//p7TYB1-1.png]]

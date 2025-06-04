@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       7d88c942-0006-4f67-81de-3bf1d263f9c0
+:END:
+#+title: calculus/numdiff
+
+数值微分方法
+
+* 有限差分方法
+
+
+* Richardson 外推法
+

@@ -1,0 +1,285 @@
+:PROPERTIES:
+:ID:       4c25e769-36cd-4dd7-bce5-442a3515e783
+:header-args: :noweb yes :dir ./ytcg/src
+:END:
+#+title: cg-vector-test
+#+filetags: :lua:linear:test:
+
+
+* Module
+
+#+NAME: M
+#+begin_src lua :noweb yes 
+  require "ytcgtest"
+  local Vec = require "Vec"
+  <<T>>
+#+end_src
+
+* Test Cases
+:PROPERTIES:
+:header-args: :noweb eval :noweb-ref T :dir ./ytcg/test
+:END:
+
+** get()
+#+BEGIN_SRC lua 
+  v = Vec.new(1, 2, 3)
+  assert(v:get(2) == 2)
+#+end_src
+
+
+
+* __index
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3)
+  print(v[1])
+#+end_src
+
+#+RESULTS:
+: 1
+
+
+* with()
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3)
+
+  v = v:with(1, 6)
+  print(v[1])
+#+end_src
+
+#+RESULTS:
+: 6
+
+
+
+* size()
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3)
+  
+  print(v:size())
+#+end_src
+
+#+RESULTS:
+: 3
+
+
+* __len
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3)
+  print(#(v))
+#+end_src
+
+#+RESULTS:
+: 2.4494897427832
+
+* add()
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3)
+  v2 = v:add(v) 
+  print(v2[1], v2[2],v2[3])
+#+end_src
+
+#+RESULTS:
+: 2	4	6
+
+* sub()
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3)
+  v2 = v:sub(v) 
+  print(v2[1], v2[2],v2[3])
+#+end_src
+
+#+RESULTS:
+: 0	0	0
+
+
+* mul()
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3)
+  v2 = v:mul(v) 
+  print(v2[1], v2[2],v2[3])
+#+end_src
+
+#+RESULTS:
+: 1	4	9
+
+* div()
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3)
+  v2 = v:div(v) 
+  print(v2[1], v2[2],v2[3])
+#+end_src
+
+#+RESULTS:
+: 1.0	1.0	1.0
+
+
+
+* __add
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3)
+  v2 = v + v
+  print(v2[1], v2[2],v2[3])
+#+end_src
+
+#+RESULTS:
+: 2	4	6
+
+* __sub
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3)
+  v2 = Vec.new(2, 4, 6)
+  v3 = v - v2
+  print(v3[1], v3[2],v3[3])
+#+end_src
+
+#+RESULTS:
+: -1	-2	-3
+
+
+* __div
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3)
+  v2 = Vec.new(2, 4, 6)
+  v3 = v / v2
+  print(v3[1], v3[2],v3[3])
+#+end_src
+
+#+RESULTS:
+: 0.5	0.5	0.5
+
+* scale()
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3)
+  v = v:scale(3)
+  print(v[1], v[2],v[3])
+#+end_src
+
+#+RESULTS:
+: 3	6	9
+
+
+
+* dot()
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3)
+  r = v:dot(v) 
+  print(r)
+#+end_src
+
+#+RESULTS:
+: 14
+
+* __mul
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3)
+  v = v * 3
+  print(v[1], v[2],v[3])
+
+  
+  v = 3 * v
+  print(v[1], v[2],v[3])
+#+end_src
+
+#+RESULTS:
+: 3	6	9
+: 9	18	27
+
+* clone()
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3)
+  v = v:clone()
+  print(v[1], v[2],v[3])
+#+end_src
+
+#+RESULTS:
+: 1	2	3
+
+
+* slice()
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3, 4)
+  v = v:slice(2, 3)
+  print(#(v))
+  print(v[1], v[2])
+#+end_src
+
+#+RESULTS:
+: 2
+: 2	3
+
+* concat()
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3, 4)
+  v2 = Vec.new(5, 6, 7)
+  v = v:concat(v2)
+  print(#(v))
+  print(v[1], v[2], v[3], v[4], v[5], v[6], v[7])
+#+end_src
+
+#+RESULTS:
+: 7
+: 1	2	3	4	5	6	7
+
+* __concat
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3, 4)
+  v2 = Vec.new(5, 6, 7)
+  v = v .. v2
+  print(#(v))
+  print(v[1], v[2], v[3], v[4], v[5], v[6], v[7])
+#+end_src
+
+#+RESULTS:
+: 7
+: 1	2	3	4	5	6	7
+
+
+
+* Semantic Accessor
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 2, 3, 4)
+  print(v:x(),v:y(),v:z(),v:w())
+  print(v:r(),v:g(),v:b(),v:a())
+  print(v:s(),v:t(),v:p(),v:q())
+  print(v:xy():x(),v:xy():y())
+  print(v:rgb():r(),v:rgb():g(),v:rgb():b())
+#+end_src
+
+#+RESULTS:
+: 1	2	3	4
+: 1	2	3	4
+: 1	2	3	4
+: 1	2
+: 1	2	3
+
+* __concat
+#+begin_src lua
+  <<M>>
+  v = Vec.new(1, 0, 0)
+  v2 = Vec.new(0, 1, 0)
+  v3 = Vec.cross3(v,v2)
+  print(v3[1],v3[2],v3[3])
+#+end_src
+
+#+RESULTS:
+: 0	0	1
+

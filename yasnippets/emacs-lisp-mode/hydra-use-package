@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Hydra use-package 
+# key: hydra
+# --
+  :bind
+  ("{1：keybinding}" . hydra-{2:package}/body)
+  :hydra (hydra-{2} (:hint nil)
+                           {3:key maping}
+                          ("q" nil "quit" :color blue)){0}

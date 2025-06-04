@@ -1,0 +1,63 @@
+:PROPERTIES:
+:ID:       b7848b9c-c13c-4a55-8bab-0ba23aa2e813
+:END:
+#+title: rb/dynamci_method
+
+
+Ruby 的方法可以被动态触发，我们称他 给对象发送一条消息.
+#+BEGIN_SRC ruby
+  class C
+    def method(msg)
+      puts "method " + msg
+    end
+  end
+
+  c = C.new
+
+  c.send(:method, "sunks")
+#+END_SRC
+
+#+RESULTS:
+: method sunks
+
+
+Ruby 的方法可以被动态定义, 只要给定方法名称和方法的逻辑.
+我们使用 define_method 定义一个方法.
+#+BEGIN_SRC ruby
+  class C
+    define_method :my_method do |arg|
+      puts arg * 3
+    end
+  end
+
+  c = C.new
+  c.my_method 2
+#+END_SRC
+
+#+RESULTS:
+: 6
+
+在这里,我们定义方法名称为 my_method, 用 Block 提供方法逻辑.
+实际上方法的名称是可以动态指定的. Wow!, 这已经有了非常强大的类似于宏的功能了.
+#+BEGIN_SRC ruby
+  class C
+    def self.define_mul(name, n)
+      define_method(name)  do |arg|
+        puts "Call #{name}:"
+        puts arg * n
+      end
+    end
+    define_mul :mul2, 2
+    define_mul :mul3, 3
+  end
+
+  c = C.new
+  c.mul2 3
+  c.mul3 3 
+#+END_SRC
+
+#+RESULTS:
+: Call mul2:
+: 6
+: Call mul3:
+: 9

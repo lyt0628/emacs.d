@@ -1,0 +1,137 @@
+:PROPERTIES:
+:ID:       e8c524bc-6162-4d9f-8984-6c158f585809
+:END:
+#+title: pattern/facade/example-entrypt
+
+#+BEGIN_SRC plantuml :file tmp/5f6ad26f-5e9e-4340-8622-3b05782e1fff.png
+  @startuml
+class FileEncryptorFacade {
+  +encrypt_file(input_path, output_path)
+}
+
+class FileReader {
+  +read(file_path): String
+}
+
+class DataEncryptor {
+  +encrypt(data): String
+}
+
+class FileWriter {
+  +write(file_path, content)
+}
+
+FileEncryptorFacade --> FileReader
+FileEncryptorFacade --> DataEncryptor
+FileEncryptorFacade --> FileWriter
+
+note top of FileEncryptorFacade
+  提供统一的加密接口
+  隐藏子系统的复杂性
+end note
+
+note right of FileReader
+  负责读取文件内容
+  使用流式读取
+end note
+
+note left of DataEncryptor
+  负责数据加密逻辑
+  可替换不同加密算法
+end note
+
+note right of FileWriter
+  负责写入文件内容
+  使用流式写入
+end note
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:tmp/5f6ad26f-5e9e-4340-8622-3b05782e1fff.png]]
+
+
+#+BEGIN_SRC ruby
+  class FileReader
+    def read(file_path)
+      puts "从 #{file_path} 读取文件内容..."
+      File.read(file_path)
+    rescue => e
+      puts "文件读取失败: #{e.message}"
+      nil
+    end
+  end
+
+  class DataEncryptor
+    def encrypt(data)
+      puts "加密数据..."
+      data.chars.map { |c| (c.ord + 3).chr }.join
+    end
+  end
+
+  # 文件写入类
+  class FileWriter
+    def write(file_path, content)
+      puts "将加密内容写入 #{file_path}..."
+      File.write(file_path, content)
+      true
+    rescue => e
+      puts "文件写入失败: #{e.message}"
+      false
+    end
+  end
+
+  # 加密外观类
+  class FileEncryptorFacade
+    def initialize
+      @reader = FileReader.new
+      @encryptor = DataEncryptor.new
+      @writer = FileWriter.new
+    end
+
+    def encrypt_file(input_path, output_path)
+      puts "\n开始文件加密流程..."
+    
+      # 1. 读取文件
+      content = @reader.read(input_path)
+      return unless content
+
+      # 2. 加密内容
+      encrypted_content = @encryptor.encrypt(content)
+
+      # 3. 写入文件
+      success = @writer.write(output_path, encrypted_content)
+
+      puts success ? "文件加密完成!" : "文件加密失败!"
+      success
+    end
+  end
+
+    facade = FileEncryptorFacade.new
+  
+    input_file = "tmp/file.txt"
+    output_file = "tmp/encrypted.txt"
+  
+    File.write(input_file, "Hello, this is a secret message!")
+  
+    # 使用外观类完成整个加密流程
+    facade.encrypt_file(input_file, output_file)
+  
+    puts "\n原始文件内容: #{File.read(input_file)}"
+    puts "加密后内容: #{File.read(output_file)}"
+  
+    # 清理测试文件
+    File.delete(input_file) if File.exist?(input_file)
+    File.delete(output_file) if File.exist?(output_file)
+
+#+END_SRC
+
+#+RESULTS:
+: 开始文件加密流程...
+: 从 tmp/file.txt 读取文件内容...
+: 加密数据...
+: 将加密内容写入 tmp/encrypted.txt...
+: 文件加密完成!
+: 
+: 原始文件内容: Hello, this is a secret message!
+: 加密后内容: Khoor/#wklv#lv#d#vhfuhw#phvvdjh$

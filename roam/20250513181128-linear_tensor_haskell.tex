@@ -1,0 +1,186 @@
+% Created 2025-05-13 周二 21:09
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\date{\today}
+\title{linear/tensor/haskell}
+\hypersetup{
+ pdfauthor={},
+ pdftitle={linear/tensor/haskell},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 29.4 (Org mode 9.6.15)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\#+LATEX\textsubscript{HEADER} \usepackage{amsmath}
+
+\section{Module Definition}
+\label{sec:org9319b76}
+\begin{verbatim}
+module Tensor (
+  Tensor(..)
+  )where
+\end{verbatim}
+
+\section{Type Definition}
+\label{sec:org50a87ea}
+
+Tensor 类型：存储形状 (shape) 和扁平化的数据 (values)
+\begin{verbatim}
+data Tensor a = Tensor {
+  shape :: [Int] 
+  , values :: [a]
+  } deriving(Eq, Show)
+
+\end{verbatim}
+\begin{itemize}
+\item 各维度大小，例如 [2,3] 表示 2x3 矩阵
+\item 元素按行优先顺序存储，例如矩阵 [[1,2],[3,4]] 存储为 [1,2,3,4]
+\end{itemize}
+
+
+\section{Constructors}
+\label{sec:org6d2c36f}
+
+\subsection{标量：shape 为空列表，vlaues 单元素}
+\label{sec:org4a9cdbe}
+\begin{verbatim}
+scalar :: a -> Tensor a
+scalar x = Tensor [] [x]
+\end{verbatim}
+
+\subsection{向量}
+\label{sec:org9ce4ca5}
+\begin{verbatim}
+vector :: [a] -> Tensor a
+vector xs = Tensor [length xs] xs
+\end{verbatim}
+
+\subsection{矩阵}
+\label{sec:orgf6f5d93}
+\begin{verbatim}
+matrix :: [[a]] -> Tensor a
+matrix xss
+  | all (== cols) (map length xss) = Tensor [rows, cols] (concat xss)
+  | otherwise = error "Inconsistent row length of matrix!"
+  where
+    rows = length xss
+    cols = if null xss then 0 else length (head xss)
+\end{verbatim}
+
+\section{Basic Operations}
+\label{sec:org114f243}
+\subsection{张量加法, 逐元素加法}
+\label{sec:org9abb247}
+\begin{verbatim}
+add :: Num a => Tensor a -> Tensor a -> Tensor a
+add t1 t2
+  | shape t1 /= shape t2 = error "Shape of tensors mismatch!"
+  | otherwise = Tensor (shape t1) (zipWith (+) (values t1) (values t2))
+\end{verbatim}
+
+\subsection{外积}
+\label{sec:org41e2b7f}
+\begin{verbatim}
+outerProduct :: Num a => Tensor a -> Tensor a -> Tensor a
+outerProduct t1 t2 = Tensor (shape t1 ++ shape t2) [x * y | x <- values t1, y <- values t2]
+\end{verbatim}
+张量的外积定义如下,
+若 t1 的形状为 (d1, d2, \ldots{}, dm)，t2 的形状为 (k1, k2, \ldots{}, kn)，
+则外积结果的形状为 (d1, d2, \ldots{}, dm, k1, k2, \ldots{}, kn)
+
+设张量 AA 和 BB 分别为 mm 阶和 nn 阶张量，其分量分别为：
+\begin{align}
+[
+\mathcal{A}{i_1, i_2, \dots, i_m}, \quad \mathcal{B}{j_1, j_2, \dots, j_n}
+]
+\end{align}
+
+则它们的外积 A⊗BA⊗B 是一个 (m+n)(m+n) 阶张量，其分量定义为：
+\begin{align}
+[
+(\mathcal{A} \otimes \mathcal{B}){i_1, \dots, i_m, j_1, \dots, j_n} = \mathcal{A}{i_1, \dots, i_m} \cdot \mathcal{B}_{j_1, \dots, j_n}
+]
+\end{align}
+
+\section{Demos}
+\label{sec:orga0f7a20}
+\subsection{Scalar constructor}
+\label{sec:org935fa67}
+\begin{verbatim}
+data Tensor a = Tensor {
+  shape :: [Int] 
+  , values :: [a]
+  } deriving(Eq, Show)
+
+scalar :: a -> Tensor a
+scalar x = Tensor [] [x]
+vector :: [a] -> Tensor a
+vector xs = Tensor [length xs] xs
+matrix :: [[a]] -> Tensor a
+matrix xss
+  | all (== cols) (map length xss) = Tensor [rows, cols] (concat xss)
+  | otherwise = error "Inconsistent row length of matrix!"
+  where
+    rows = length xss
+    cols = if null xss then 0 else length (head xss)
+add :: Num a => Tensor a -> Tensor a -> Tensor a
+add t1 t2
+  | shape t1 /= shape t2 = error "Shape of tensors mismatch!"
+  | otherwise = Tensor (shape t1) (zipWith (+) (values t1) (values t2))
+outerProduct :: Num a => Tensor a -> Tensor a -> Tensor a
+outerProduct t1 t2 = Tensor (shape t1 ++ shape t2) [x * y | x <- values t1, y <- values t2]
+
+main = do
+  let s = scalar 3
+  print $ (show s)
+\end{verbatim}
+
+\subsection{scalar add}
+\label{sec:org6d6f5a3}
+\begin{verbatim}
+data Tensor a = Tensor {
+  shape :: [Int] 
+  , values :: [a]
+  } deriving(Eq, Show)
+
+scalar :: a -> Tensor a
+scalar x = Tensor [] [x]
+vector :: [a] -> Tensor a
+vector xs = Tensor [length xs] xs
+matrix :: [[a]] -> Tensor a
+matrix xss
+  | all (== cols) (map length xss) = Tensor [rows, cols] (concat xss)
+  | otherwise = error "Inconsistent row length of matrix!"
+  where
+    rows = length xss
+    cols = if null xss then 0 else length (head xss)
+add :: Num a => Tensor a -> Tensor a -> Tensor a
+add t1 t2
+  | shape t1 /= shape t2 = error "Shape of tensors mismatch!"
+  | otherwise = Tensor (shape t1) (zipWith (+) (values t1) (values t2))
+outerProduct :: Num a => Tensor a -> Tensor a -> Tensor a
+outerProduct t1 t2 = Tensor (shape t1 ++ shape t2) [x * y | x <- values t1, y <- values t2]
+
+main = do
+  let s1 = scalar 3
+  let s2 = scalar 4
+  let s3 = add s1 s2
+
+  print $ (show s3)
+\end{verbatim}
+\end{document}

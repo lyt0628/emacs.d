@@ -1,0 +1,48 @@
+:PROPERTIES:
+:ID:       c80cb597-33d1-4b62-b1d5-7f17c7486805
+:END:
+#+title: hs/overview
+Haskell 是一门数学语言.
+证明即程序，命题即类型
+
+相比与其他语言 class 在 Haskell 更像是声明一种规律.
+是更本质的定义，而不是可归属与显示中的某一实体类型.
+
+Haskell 是一门强类型语言，相对于OOP 的强类型，Haskell
+类型是非常分散的，譬如说如果你把反交换律定义为Typeclass，
+楔积
+
+
+#+BEGIN_SRC plantuml :file tmp/10f06e09-a1e8-4d2a-bf82-90b2917ab7e4.png
+  @startmindmap
+  + 语法结构
+  ++ case 表达式
+  ++ let 语句
+  ++ where语句
+  ++ in语句
+
+  ++ 函数声明与定义
+  ++ 模式匹配
+  +++ 函数参数的模式匹配
+  +++ 模式匹配解构 data
+  +++ 列表展开
+  + 类型系统
+  ++ 原始类型
+  ++ 复合类型
+  +++ 列表类型
+  ++++ 列表推导式
+  ++++ 高阶函数
+  +++ 元组类型
+  ++ 自定义数据类型
+  ++ 类型
+  ++ Monad（单子）
+  + 语言拓展(GHC)
+  ++ GADT（广义代数类型）
+  ++ 类型族
+  ++ 宏
+  ++ 泛型
+  @endmindmap
+#+END_SRC
+
+#+RESULTS:
+[[file:tmp/10f06e09-a1e8-4d2a-bf82-90b2917ab7e4.png]]

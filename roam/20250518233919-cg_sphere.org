@@ -1,0 +1,49 @@
+:PROPERTIES:
+:ID:       9715178a-22c5-4229-98d1-6502630477a8
+:header-args: :tangle hs/Sphere.hs :comments both
+:END:
+#+title: cg/sphere/hs
+
+#+BEGIN_SRC haskell
+  {-# LANGUAGE TypeFamilies #-}
+  module Sphere where
+  import qualified Point as P
+  import qualified Vector as V
+  import qualified Matrix as M
+  import qualified Ray as R
+#+END_SRC
+
+在形状这一方面，我们就无需对维度参数化了，我们考虑的图形，不会抽象到维度泛化.
+我们使用球的参数方程描述球.
+
+#+BEGIN_SRC haskell
+  data Sphere a = Sphere {
+    radius :: a -- 半径
+    ,thetaMin :: a
+    ,thetaMax :: a -- 方位角
+    ,phiMax :: a -- 极角
+    } deriving(Eq, Show)
+#+END_SRC
+
+
+* Ray-Sphere Intersection
+我们已经很清楚标准方程的求交了.
+#+BEGIN_SRC haskell
+  instance R.RayIntersect Sphere where
+    type RayND Sphere a = R.Ray3D a 
+    type PointND Sphere a = P.Point3D a
+    intersectP _ _ = False
+    intersect (R.Ray3D o d) (Sphere r thetaMin thetaMax phiMax)=
+
+#+END_SRC
+首先，我们计算出标准求根的 三个二次方程系数.
+#+BEGIN_SRC haskell
+  ----
+      let a = V.magSq d
+          b = 2 * (V.dot o d)
+          c = (V.magSq o) - r * r
+#+END_SRC
+
+
+相比与 [[id:1a9cae2e-7e6e-461b-97dc-5d77701d2526][cg/sphere]] 讨论的标准方程求交, 我们这里限制了
+极角和方位角.因此需要把这部分的限制转化为

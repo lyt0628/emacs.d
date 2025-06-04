@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       0567b468-6200-42dc-86af-ceb057a5b00a
+:END:
+#+title: hs/functor/maybe
+
+Maybe 是可能失败的计算的句柄，它的映射有两种模式.
+如果给定 Just<x> 则对 x 进行映射，包裹进新的 Just 返回.
+否则，返回 Nothing，表示失败的操作.
+
+#+BEGIN_SRC haskell
+  instance Functor Maybe where
+    fmap _ Nothing = Nothing
+    fmap f (Just x) = Just (f x)
+#+END_SRC

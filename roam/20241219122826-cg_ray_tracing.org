@@ -1,0 +1,42 @@
+:PROPERTIES:
+:ID:       c3affd84-3a2b-4d63-aa25-7c75feb606fc
+:END:
+#+title: cg-ray_tracing
+#+filetags: :cg:
+#+LATEX_HEADER \usepackage{amsmath}
+
+* Abstract
+$a^b$
+
+#+begin_src lua :noweb yes :tangle ../Temp/a.lua
+  <<cg-Vec>>
+  <<cg-Color>>
+  <<cg-PPM>>
+  img = PPM.new(32, 32)
+  img:set(6,6,Color.new(64, 89, 3))
+  img:set(7,6,Color.new(255, 89, 3))
+  img:set(7,6,Color.new(0, 89, 3))
+  img:save("d:/Temp/d.ppm")
+#+end_src 
+
+#+RESULTS:
+
+* Ray Ojbect Interception
+** With Triangle
+*** Ray-Plane Intersection（射线平面求交）
+*** Ray Param Equalition(射线的参数化方程)
+*** Plane Implicit Equalition(平面的隐式方程)
+*** Whether The Intersection Point within The Triganle
+
+** With Box
+*** 
+** With Sphere
+
+** With Cylinder
+
+** With Ring
+* Additional Infomation Computation
+** Normal(法向量)
+** Reflection Vector(反射向量)
+** Refraction Vector(折射向量)
+

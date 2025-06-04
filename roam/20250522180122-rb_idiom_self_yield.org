@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       09ed64d3-7614-4d36-b492-b94abb872266
+:END:
+#+title: rb/idiom/self-yield
+

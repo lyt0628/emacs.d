@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       dc69bca6-a76e-4a9e-be62-b50cf1774888
+:header-args: :tangle py/time_utils.py :comments both
+:END:
+#+title: py/util/time_utils
+
+#+BEGIN_SRC python
+  import time
+  from contextlib import contextmanager
+  import logging
+
+  logger = logging.getLogger(__name__)
+#+END_SRC
+
+#+BEGIN_SRC python
+
+  @contextmanager
+  def timer():
+      start = time.perf_counter()
+      yield
+      end = time.perf_counter()
+      logger.info(f"Used time: {end - start:.4f}s")
+#+END_SRC

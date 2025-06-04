@@ -1,0 +1,118 @@
+:PROPERTIES:
+:ID:       a6b151be-6f36-4823-b3aa-de62ee68f950
+:header-args: :noweb-ref kdtree  :tangle tmp/KDTree.hs :comments both
+:END:
+#+title: data/kdtree/hs
+
+* Demos
+:PROPERTIES:
+:header-args: :noweb yes :noweb-ref _ :tangle no
+:END:
+** Neighbor
+:PROPERTIES:
+:header-args: :noweb-ref nearestNeighbor 
+:END:
+  
+返回 最近邻居点
+#+BEGIN_SRC haskell 
+  nearestNeighbor :: (Coord a, Floating a) => ([a] -> [a] -> a) -> [a] -> KDTree a -> [a]
+#+END_SRC
+
+上面代码片段定义了一个 knn 函数， 它接收三个参数
+- 距离函数，接收两个元素，返回 Float 类型的距离度量
+- [a], 求取邻居的 点
+- KDTree， KDTRee 的加速结构，储存了所有可能的邻居
+
+
+
+我们遍历kdtree, 递归的比较最近的子节点和自己的距离
+#+BEGIN_SRC haskell 
+  nearestNeighbor _ _ Empty = []
+  nearestNeighbor distanceRule target (Node current axis leftTree rightTree) =
+    let bestChildTree = if target !! axis < current !! axis then leftTree else rightTree
+        bestInChild = case bestChildTree of
+          Empty -> current
+          _ -> nearestNeighbor distanceRule target bestChildTree
+        currentDistance = distanceRule target current
+        bestDistanceInChild = distanceRule target bestInChild
+    in if currentDistance < bestDistanceInChild then current else bestInChild
+#+END_SRC
+很容易拓展成 KNN， 我们只需要让左右子树返回 k 个最近元素，2k 在加上一个自己，选出 k 个最近的提交给父节点就好.
+
+定义欧几里得距离度量
+#+BEGIN_SRC haskell
+euclidean :: Floating a => [a] -> [a] -> a
+euclidean a b = sqrt . sum $ zipWith (\x y -> (x - y)^2) a b
+#+END_SRC
+
+
+#+BEGIN_SRC haskell :noweb-ref _ :noweb yes
+  <<kdtree>>
+  <<nearestNeighbor>>
+  main = do
+    let points = [[2, 3]
+                 ,[5, 4]
+                 ,[9, 6]
+                 ,[4, 7]
+                 ,[8, 1]
+                 ,[7, 2]]
+        kdtree = buildKD points 0
+        neighbor = nearestNeighbor euclidean [6, 3] kdtree
+
+    print neighbor
+
+#+END_SRC
+
+#+RESULTS:
+: [5.0,4.0]
+
+
+* Module Definition
+#+BEGIN_SRC haskell :noweb-ref _ 
+  module Tensor (
+    KDTree,
+    buildKD
+    )where
+
+#+END_SRC
+
+依赖
+#+BEGIN_SRC haskell
+import Data.List (sortBy, delete)
+import Data.Ord (comparing)
+#+END_SRC
+* Data Definition
+#+BEGIN_SRC haskell
+  data KDTree a = Empty
+    |Node {
+        point :: [a]
+        ,axis :: Int
+        ,left :: KDTree a
+        ,right :: KDTree a
+        }
+
+  type Coord a = (Ord a, Enum a)
+#+END_SRC
+- Coord 泛型约束，我们规定 KDTree 所能索引的数据结构为
+  必须可比较，
+  必须可枚举，也就是可以产生序列，关键特性是 我们可以通过前驱获取后继，也可从后继获取前驱
+
+* Builder
+#+BEGIN_SRC haskell
+  buildKD :: Coord a => [[a]] -> Int -> KDTree a
+  buildKD [] _ = Empty
+  buildKD points depth =
+    let k = length (head points)
+        axis = depth `mod` k -- 轮转分割轴
+        sorted = sortBy (comparing (!! axis)) points -- 在轴向对元素排序
+        midIndex = length sorted `div` 2 -- 在这个轴向对元素二分
+        median = sorted !! midIndex -- 取出中间元素作为轴元素
+        remaining = delete median sorted -- 取出轴元素，剩余的元素 二分
+        leftPoints = filter (\p -> p !! axis < median !! axis) remaining
+        rightPoints = filter (\p -> p !! axis >= median !! axis) remaining
+    in Node median axis -- 构造 节点，递归构建子树
+       (buildKD leftPoints (depth + 1))
+       (buildKD rightPoints (depth + 1))
+#+END_SRC
+
+- depth 参数用于指定分割轴，0 表示按顺序进行空间分割

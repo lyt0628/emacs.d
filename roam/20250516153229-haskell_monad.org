@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       665af6d8-87f3-4376-947a-b850ae2c7f2f
+:END:
+#+title: hs/monad
+
+
+Monad >>= 的一般过程是，
+1. 解构 源 Monad，
+2. 将状态 进行态射，然后在结构态射后的 Monad
+3. 执行副作用

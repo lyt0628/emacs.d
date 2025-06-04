@@ -1,0 +1,23 @@
+:PROPERTIES:
+:ID:       2a64ba8f-362f-44a5-9ab5-e28d064dd7fd
+:END:
+#+title: spring/state-machine
+
+* 顶层接口设计
+
+
+* Spring 集成
+** 自动配置
+
+** 监听器特定注释
+
+
+* 设计细节
+** 执行器-逻辑外包
+
+** 状态类别-父子耦合
+
+
+** 层次化构造配置器
+
+

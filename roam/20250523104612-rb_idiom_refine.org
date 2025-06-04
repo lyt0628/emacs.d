@@ -1,0 +1,40 @@
+:PROPERTIES:
+:ID:       7f3f7300-9bfb-4408-9d45-fe4aa36e9d54
+:END:
+#+title: rb/idiom/refine
+
+使用 refine 关键字定义的猴子补丁，需要被动态启用
+
+#+BEGIN_SRC ruby
+  class C
+    def a
+      puts "A"
+    end
+
+    def call_a
+      puts a
+    end
+  end
+
+  module CExntensions
+    refine C do
+      def a
+        puts "A1"
+      end
+    end
+  end
+
+  c = C.new
+  c.a
+  c.call_a
+  using CExntensions
+  c.a
+  c.call_a
+#+END_SRC
+
+#+RESULTS:
+: A
+: A
+: 
+: A1
+: A

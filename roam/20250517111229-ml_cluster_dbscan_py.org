@@ -1,0 +1,139 @@
+:PROPERTIES:
+:ID:       dfd0572a-7d4b-4be7-bca4-53adbcdac30d
+:header-args: :tangle py/dbscan.py :comments both
+:END:
+#+title: ml/cluster/dbscan/py
+
+
+#+BEGIN_SRC dot :file tmp/fc9e44af-a5ab-4294-b57f-0ee3e660b3b9.png
+digraph DBSCAN {
+    rankdir=TB;
+    node [shape=rectangle, style="rounded,filled", fillcolor="#f0f8ff"];
+    
+    // Nodes
+    start [label="Start", shape=ellipse, fillcolor="#ffdddd"];
+    end [label="End", shape=ellipse, fillcolor="#ffdddd"];
+    
+    init [label="Initialization\n- Data dimensions\n- Feature count\n- LSH table"];
+    hash_buckets [label="Hashing\n- Compute hash for each point\n- Store in buckets"];
+    find_neighbors [label="Find Neighbors\n- Check points in same bucket\n- Calculate Euclidean distance"];
+    cluster_process [label="Clustering\n- Process unlabeled points\n- Expand core points"];
+    noise_filter [label="Noise Filtering\n- Mark points with insufficient neighbors"];
+    
+    // Decision nodes
+    check_unvisited [label="Unvisited?", shape=diamond];
+    is_core_point [label="Neighbors ≥ min_neighbors?", shape=diamond];
+    expand_cluster [label="Expand Cluster\n- BFS traversal\n- Assign cluster ID"];
+    
+    // Edges
+    start -> init;
+    init -> hash_buckets;
+    hash_buckets -> find_neighbors;
+    find_neighbors -> cluster_process;
+    
+    cluster_process -> check_unvisited;
+    check_unvisited -> noise_filter [label="No"];
+    check_unvisited -> is_core_point [label="Yes"];
+    is_core_point -> noise_filter [label="No"];
+    is_core_point -> expand_cluster [label="Yes"];
+    expand_cluster -> cluster_process;
+    noise_filter -> cluster_process;
+    
+    cluster_process -> end [label="All points processed"];
+    
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        labelloc=b;
+        style=dashed;
+        legend1 [label="Ellipse: Start/End nodes", shape=plaintext];
+        legend2 [label="Rectangle: Process steps", shape=plaintext];
+        legend3 [label="Diamond: Conditions", shape=plaintext];
+    }
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:tmp/fc9e44af-a5ab-4294-b57f-0ee3e660b3b9.png]]
+
+#+BEGIN_SRC  python
+  import hashs
+  import random
+  import math
+  import distances
+  import logging
+  from collections import deque
+
+  logger = logging.getLogger(__name__)
+#+END_SRC
+
+
+#+BEGIN_SRC python
+def lookup_neighbors(data, epsilon, table, bucket_index):
+    neighbor_index = []
+    for idx, point in enumerate(data):
+        h = bucket_index[idx]
+        bucket = table[h]
+        neighbors = []
+        for maybe_neighbor in bucket:
+            if maybe_neighbor == idx:
+                continue
+
+            if distances.euclidean(point, data[maybe_neighbor]) <= epsilon:
+                neighbors.append(maybe_neighbor)
+        neighbor_index.append(neighbors)
+        # logger.info(f"point {idx} with neighbors {neighbors}")
+        if len(neighbors) == 0:
+            logger.info(f"point {idx} has no neighbor")
+    return neighbor_index
+
+
+#+END_SRC
+
+
+#+BEGIN_SRC python
+  def dbscan(data, epsilon, min_neighbors, width=5):
+      data_size = len(data)
+      dims = len(data[0])
+      e2lsh = hashs.E2LSH(dims, width)
+      bucket_index = []
+      labels = [None] * data_size
+      table = {}
+      # Hash 分桶
+      for idx, point in enumerate(data):
+          h = e2lsh.hash(point)
+          bucket = table.get(h, [])
+          bucket.append(idx)
+          table[h] = bucket
+          bucket_index.append(h)
+
+      neighbor_index = lookup_neighbors(data, epsilon, table, bucket_index)
+
+
+      for idx in range(len(data)):
+          q = deque()
+          if(labels[idx] == None):
+              labels[idx] = idx
+              q.append(idx)
+          else: # 跳过已经访问的的店
+              continue
+        
+          if(len(neighbor_index[idx]) < min_neighbors): # 过滤噪声点
+              labels[idx] = -1
+              continue
+
+          while len(q) > 0:
+              current = q.pop()
+              current_label = labels[current]
+              neighbors = neighbor_index[current]
+            
+              valid_neighbors = filter(lambda neighbor: labels[neighbor] == None ,
+                                 neighbors)
+              for n in valid_neighbors:
+                  labels[n] = current_label
+
+              q.extend(valid_neighbors)
+
+      return [None if x == -1 else x for x in labels ]
+#+END_SRC
+

@@ -1,0 +1,5 @@
+:PROPERTIES:
+:ID:       bce57ce4-de20-4512-89a7-2a81fceb5003
+:END:
+#+title: linear/matrix/hs
+

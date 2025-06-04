@@ -1,0 +1,6 @@
+:PROPERTIES:
+:ID:       6eb4ffb1-837c-4943-8e19-b14a80b597d2
+:END:
+#+title: rb/idiom/mimin-method
+
+拟态方法

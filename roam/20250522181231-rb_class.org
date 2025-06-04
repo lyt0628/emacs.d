@@ -1,0 +1,199 @@
+:PROPERTIES:
+:ID:       439fede1-ca67-46ef-88e8-fa5a859c5482
+:END:
+#+title: rb/class
+
+Ruby 最大的优点是，能够以惊人的速度把我们的想法落地成可执行的程序.
+
+
+Ruby 的类定义语句和其他语句没有区别，Ruby的语句几乎可以在所有位置上运行.
+#+BEGIN_SRC ruby
+  3.times do
+    class C
+      puts "Hello"
+    end
+  end
+#+END_SRC
+
+#+RESULTS:
+: Hello
+: Hello
+: Hello
+
+Ruby 的类与其他语言不一样，Ruby的类是
+用户代码可以访问到的数据，而大部分其他语言
+中，这些程序的元信息只有编译器能修改.
+
+class 更像是一个特殊的作用域区间
+#+BEGIN_SRC ruby
+  class C end
+  {  }
+#+END_SRC
+不过 只有在 class 作用于中，我们可以操作
+类型级的数据罢了.
+
+这种用户代码可以操作类型信息的模式
+称为开放类.
+
+对于一个类型(Class 对象)，
+他的方法就是所谓的类方法，
+他的实例方法只能在实例中调用，
+对于实例称为方法.
+
+#+BEGIN_SRC plantuml :file tmp/3b2887fb-d1d5-450c-a3e6-d0bc4001ad45.png
+
+@startuml
+skinparam classFontSize 12
+skinparam classAttributeFontSize 10
+
+class BasicObject {
+  + __send__
+  + equal?
+  + instance_eval
+}
+
+class Object << (O,#FF7700) >> {
+  + to_s
+  + class
+  + methods
+}
+
+class Module {
+  + attr_accessor
+  + include
+  + ancestors
+}
+
+class Class {
+  + new
+  + superclass
+}
+
+class Numeric
+class Integer
+class Float
+class String
+class Array
+class Hash
+class Symbol
+class Regexp
+class TrueClass
+class FalseClass
+class NilClass
+
+BasicObject <|-- Object
+Object <|-- Module
+Module <|-- Class
+
+Object <|-- Numeric
+Numeric <|-- Integer
+Numeric <|-- Float
+
+Object <|-- String
+Object <|-- Array
+Object <|-- Hash
+Object <|-- Symbol
+Object <|-- Regexp
+Object <|-- TrueClass
+Object <|-- FalseClass
+Object <|-- NilClass
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:tmp/3b2887fb-d1d5-450c-a3e6-d0bc4001ad45.png]]
+
+#+NAME: Class Is A Special Module
+#+BEGIN_SRC ruby
+puts Class.superclass
+#+END_SRC
+
+#+NAME: Hieararchy In Ruby Class Chaim
+#+BEGIN_SRC ruby
+  puts Array.class
+  puts Array.superclass
+  puts Class.class
+  puts Class.superclass
+  puts Object.class
+  puts Object.superclass
+  puts BasicObject.class
+  puts BasicObject.superclass
+#+END_SRC
+
+#+BEGIN_SRC plantuml :file tmp/a0404cc7-86e8-4bf0-b4f7-d33fbea1a23d.png
+
+  @startuml
+  skinparam classFontSize 12
+  skinparam classAttributeFontSize 10
+
+  class Module {
+  }
+
+  class Class {
+    + new()
+    + superclass()
+    + allocate()
+  }
+
+  Module <|-- Class
+  @enduml
+
+#+END_SRC
+
+#+RESULTS:
+[[file:tmp/a0404cc7-86e8-4bf0-b4f7-d33fbea1a23d.png]]
+
+
+
+
+#+RESULTS: Hieararchy In Ruby Class Chaim
+: Class
+: Object
+: Class
+: Module
+: Class
+: BasicObject
+: Class
+
+
+Ruby 的私有方法是，不能通过 self 关键字索引使用的方法，只能通过Ruby的默认推断使用.
+在类型内部使用 self， self 隐式的指向实例对象.
+在类型外部使用 方法，方法的接受者会被指定为 self.
+
+Ruby 中所谓的顶层上下文其实是一个 main对象, 类似于:
+#+BEGIN_SRC ruby
+  main = Object.new
+  self = main
+
+  / Your Code Here
+#+END_SRC
+
+因此在顶层上下文中，self 指向这个 main 对象.
+#+BEGIN_SRC ruby
+  puts self
+  puts self.class
+#+END_SRC
+
+#+RESULTS:
+: main
+: Object
+
+在其他的上下文中，self 关键字指向当前的上下文对象
+#+BEGIN_SRC ruby
+  module M
+    puts self
+    class C
+      puts self
+      module M2
+        puts self
+      end
+    end
+  end
+#+END_SRC
+
+#+RESULTS:
+: M
+: M::C
+: M::C::M2
+
+

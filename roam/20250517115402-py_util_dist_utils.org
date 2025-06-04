@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       42923711-fe51-4122-9c42-5f8887afe801
+:header-args: :tangle py/distributions.py :comments both
+:END:
+#+title: py/util/distributions
+
+分布工具
+
+#+BEGIN_SRC python
+  import random
+#+END_SRC
+
+#+BEGIN_SRC python
+  def avange(a, b, size):
+      return [random.uniform(a, b) for _ in range(size)]
+#+END_SRC
+
+#+BEGIN_SRC python
+  def gauss(size):
+      return [random.gauss(0, 1) for _ in range(size)]
+#+END_SRC

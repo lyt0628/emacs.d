@@ -1,0 +1,154 @@
+-- :PROPERTIES:
+-- :ID:       717658cb-6c6b-45ac-9d47-2da04e886ba9
+-- :header-args: :tangle hs/Point.hs :comments both
+-- :END:
+-- #+title: cg/point/hs
+
+-- Haskell 记录语法 为记录生成的自动 访问器名字和字段名字一样
+-- 所以必须要把 2D点和 3D点定义在不同模块.
+-- 与 Vector 不同，这些属性的访问并不泛化，因此不能使用类型类来统一定义.
+
+-- do we need to extract data from record? in most case, not.
+-- destruct assginment is good enogth to operate inner data in a function.
+-- we should not use internal data without a method.
+
+-- lets define a module to put us code in.
+
+
+-- [[file:../20250514215837-cg_point_haskell.org::+BEGIN_SRC haskell][No heading:1]]
+{-# LANGUAGE TypeFamilies #-}
+module Point (
+  Point2D(..), Point3D(..)
+  ,distance, distance2
+  ,combMin, combMax
+  ,translate
+  ) where
+import Vector
+import Data.Kind (Type)
+-- No heading:1 ends here
+
+
+
+-- In CG, only 2D and 3D point are meaningful.
+
+-- And define record to store compoents of points.
+
+
+-- [[file:../20250514215837-cg_point_haskell.org::+BEGIN_SRC haskell][No heading:2]]
+data Point2D a = Point2D a a deriving(Eq, Show)
+data Point3D a = Point3D a a a deriving(Eq, Show)
+-- No heading:2 ends here
+
+
+
+-- Notice! we doest not difine accessor for fileds.
+-- In most case, destruct assginment is that we wanted.
+
+-- 事实上，点类型和向量类型本质一样的，我们需要为点类型定义函子.
+
+-- [[file:../20250514215837-cg_point_haskell.org::+BEGIN_SRC haskell][No heading:3]]
+instance Functor Point2D where
+  fmap f (Point2D x y) = Point2D (f x) (f y)
+
+instance Functor Point3D where
+  fmap f (Point3D x y z) = Point3D (f x) (f y) (f z)
+-- No heading:3 ends here
+
+
+
+-- 定义应用函子，这可以用来判断点的相对关系
+
+-- [[file:../20250514215837-cg_point_haskell.org::+BEGIN_SRC haskell][No heading:4]]
+instance Applicative Point2D where
+  pure x = Point2D x x 
+
+  liftA2 f (Point2D x1 y1) (Point2D x2 y2) = Point2D (f x1 x2) (f y1 y2)
+
+  (<*>) (Point2D f g) (Point2D x y) = Point2D (f x) (g y)
+
+instance Applicative Point3D where
+  pure x = Point3D x x x
+
+  liftA2 f (Point3D x1 y1 z1) (Point3D x2 y2 z2) = Point3D (f x1 x2) (f y1 y2) (f z1 z2)
+
+  (<*>) (Point3D f g h) (Point3D x y z) = Point3D (f x) (g y) (h z)
+-- No heading:4 ends here
+
+-- [[file:../20250514215837-cg_point_haskell.org::+BEGIN_SRC haskell][No heading:5]]
+class PointOps p where
+  distance :: (Floating a) => p a -> p a -> a
+  distance2 :: (Num a) => p a -> p a -> a
+  combMin :: (Ord a) => p a -> p a -> p a
+  combMax :: (Ord a) => p a -> p a -> p a
+
+  type VecND p a :: Type
+  translate :: (Num a) => VecND p a -> p a ->  p a
+-- No heading:5 ends here
+
+
+
+-- The thing we want to know about point almost distance.
+-- combXxx methods to combine a new point by comparing each compoents, which is
+-- useful when us construct AABB bounding box.
+
+-- Last, we define a associated type family called VecND.
+-- we use it to bind Vec to point for using proper Vec in translate function.
+-- The sematic meaning of the `type VecND a:: *` is that
+-- given a certain a, VecND is *.
+
+-- Notice, we import Data.Kind (Type), using Type to repalce * to represent a generic type.
+
+-- lets computing distance for those points.
+
+-- [[file:../20250514215837-cg_point_haskell.org::+BEGIN_SRC haskell][No heading:6]]
+instance PointOps Point2D where
+  distance (Point2D x1 y1) (Point2D x2 y2) =
+    let dx = x2 - x1
+        dy = y2 - y1
+    in sqrt $ (dx*dx + dy*dy)
+
+  distance2 (Point2D x1 y1) (Point2D x2 y2) =
+    let dx = x2 - x1
+        dy = y2 - y1
+    in  (dx*dx + dy*dy)
+
+  combMax (Point2D x1 y1) (Point2D x2 y2) =
+    Point2D (max x1 x2) (max y1 y2)
+
+  combMin (Point2D x1 y1) (Point2D x2 y2) =
+    Point2D (min x1 x2) (min y1 y2)
+
+  type VecND Point2D a = Vec2D a
+  translate (Vec2D dx dy) (Point2D x y)  = Point2D (x+dx) (y+dy)
+-- No heading:6 ends here
+
+
+
+-- In the last place, we define bind Vec2D to Point2D.
+-- we can read the code as Given Point2D with elem type a, the VecND is Vec2D.
+
+-- And 3D Points
+
+-- [[file:../20250514215837-cg_point_haskell.org::+BEGIN_SRC haskell][No heading:7]]
+instance PointOps Point3D where
+  distance (Point3D x1 y1 z1) (Point3D x2 y2 z2) =
+    let dx = x2 - x1
+        dy = y2 - y1
+        dz = z2 - z1
+    in sqrt $ (dx*dx + dy*dy + dz*dz)
+
+  distance2 (Point3D x1 y1 z1) (Point3D x2 y2 z2) =
+    let dx = x2 - x1
+        dy = y2 - y1
+        dz = z2 - z1
+    in (dx*dx + dy*dy + dz*dz)
+
+  combMax  (Point3D x1 y1 z1) (Point3D x2 y2 z2) =
+    Point3D (max x1 x2) (max y1 y2) (max z1 z2)
+
+  combMin  (Point3D x1 y1 z1) (Point3D x2 y2 z2) =
+    Point3D (min x1 x2) (min y1 y2) (min z1 z2)
+
+  type VecND Point3D a = Vec3D a 
+  translate (Vec3D dx dy dz) (Point3D x y z)  = Point3D (x+dx) (y+dy) (z+dz)
+-- No heading:7 ends here

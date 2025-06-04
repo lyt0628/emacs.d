@@ -1,0 +1,116 @@
+:PROPERTIES:
+:ID:       b6e343fd-a96a-480f-a70e-466742fe4de8
+:header-args:  :tangle hs/Music.hs :comments both
+:END:
+#+title: hs/music
+
+#+BEGIN_SRC haskell
+  module Music where
+#+END_SRC
+
+
+#+BEGIN_SRC haskell
+  type Sample = Double
+  type Signal = [Sample]
+  type Hz = Double
+  type Seconds = Double
+
+  sampleRate :: Double
+  sampleRate = 44100
+  samplesPerPeriod :: Hz -> Int
+  samplesPerPeriod hz = round $ sampleRate / hz
+
+  samplesPerSecond :: Seconds -> Int
+  samplesPerSecond duration = round $ duration * sampleRate
+#+END_SRC
+
+我们定义了四个类型来支持声音采样
+- Sample 表示单次的声音采样
+- Single 一段信号，是一个 个采样值的 列表
+- Hz 赫兹，频率单位
+- Seconds 一段时间，单位是秒
+
+
+然后定义全局变量， 采样率
+以及两个help 方法，告诉我们在 频率和时间的度量下，
+我们每秒要采样几次
+
+
+* 定义常见波形
+
+#+BEGIN_SRC haskell
+  type Wave = Double -> Sample
+#+END_SRC
+
+下面的波形，都是从0秒到1秒完成一个周期的形状.
+** 正弦波
+
+#+BEGIN_SRC haskell
+  sin :: Wave
+  sin t = Prelude.sin $ 2 * pi * t 
+#+END_SRC
+
+** 方波
+
+#+BEGIN_SRC haskell
+  sqw :: Wave
+  sqw t
+    | t <= 0.5 = -1
+    | otherwise = 1
+#+END_SRC
+
+** 锯齿波
+#+BEGIN_SRC haskell
+
+  saw :: Wave
+  saw t
+    | t < 0 = -1
+    | t > 0 = 1
+    | otherwise = (2 * t) - 1
+#+END_SRC
+
+
+** 三角波
+#+BEGIN_SRC haskell
+  tri :: Wave
+  tri t
+    | t < 0 = -1
+    | t > 1 = 1
+    | t < 0.5 = 4 * t - 1
+    | otherwise = -4 * t + 3
+#+END_SRC
+
+
+* 从波形中采样
+** 寂静产生器
+#+BEGIN_SRC haskell
+  silence :: Seconds -> Signal
+  silence t = replicate (samplesPerSecond t) 0
+#+END_SRC
+
+** 波形产生器
+#+BEGIN_SRC haskell
+  tone :: Wave -> Hz -> Seconds -> Signal
+
+  tone wave freq t = map wave periodValues
+    where
+      nSamples = samplesPerPeriod freq
+      periodValues =
+        map
+        (\x -> fromIntegral (x `mod` nSamples) / fromIntegral nSamples) -- 模操作控制输入范围， 然后进行归一化
+        [0 .. samplesPerSecond t] --  生成 0 到最大采样次数的列表
+#+END_SRC
+
+采样时间给定，波形是确定的，得到采样点就是确定的.
+频率高采样采得多，更贴合原波形.
+
+
+
+#+BEGIN_SRC haskell
+  import Data.Array.Unboxed (listArray)
+  import Data.Audio
+  main = do
+    print $ "ok"
+#+END_SRC
+
+#+RESULTS:

@@ -1,0 +1,70 @@
+:PROPERTIES:
+:ID:       69ef07a4-594e-45b6-afb4-a9b2b537aba3
+:END:
+#+title: latex/amsmath
+
+amsmath is a math macros package maintained by america math association.
+
+text env can make character valid in math env.
+#+BEGIN_SRC latex
+  $\text{被减数} - \text{减数} = \text{差}$
+#+END_SRC
+
+
+* arrow
+#+BEGIN_SRC latex :results file
+  $\overleftarrow{a+b}$
+  $\overrightarrow{a+b}$
+  $\overleftrightarrow{a+b}$ \\
+
+  $\underleftarrow{a+b}$
+  $\underrightarrow{a+b}$
+  $\underleftrightarrow{a+b}$
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//OApy96-1.png]]
+
+* matrix
+
+#+BEGIN_SRC latex :results file
+  \[
+  A = \begin{pmatrix}
+    a_{11} & a_{12} & a_{13} \\
+    0 & a_{22} & a_{23} \\
+    0 & 0 & a_{33}
+    \end{pmatrix}
+  \]
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//olhMNy-1.png]]
+
+#+BEGIN_SRC latex :results file
+  \[
+  A = \begin{bmatrix}
+    a_{11} & \dots & a_{1n} \\
+    & \ddots & \vdots \\
+    0 & & a_{nm}
+    \end{bmatrix}
+  \]
+#+END_SRC
+
+#+RESULTS:
+[[file:c:/Users/ASUS/AppData/Local/Temp/babel-KFrl00//zTjF8R-1.png]]
+
+
+
+* Options
+|------------+--------------------------------------------------------------------------------------------------|
+| Options    | Note                                                                                             |
+|------------+--------------------------------------------------------------------------------------------------|
+| centertags | default enabled, Number in the vertical center when formula occupling multiple lines.            |
+|------------+--------------------------------------------------------------------------------------------------|
+| tbtags     | Number was placed in where newar eqno when formula occupling multiple lines.                     |
+|------------+--------------------------------------------------------------------------------------------------|
+| sumlimits  | default enabled,                                                                                 |
+|            | when displying formula, up label or down label show above or below the sumary(link sum, product) |
+|------------+--------------------------------------------------------------------------------------------------|
+| ..         |                                                                                                  |
+|------------+--------------------------------------------------------------------------------------------------|

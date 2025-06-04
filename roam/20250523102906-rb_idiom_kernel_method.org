@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       9accccc1-8866-45ec-9c7e-6b89579443e8
+:END:
+#+title: rb/idiom/kernel-method
+
+把方法声明在上级类型或模块，使得子级用起来像是关键字一样. 如果是声明在 Kenel 模块
+就几乎可以在 Ruby的任何位置使用了. 类似于 puts.

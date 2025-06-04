@@ -1,0 +1,36 @@
+
+module M
+  def self.define_matrix(rows, cols)
+    klass = Class.new do
+      include MatrixBehavior
+
+      define_method :initialize do |*values|
+        @rows = rows
+        @cols = cols
+        @data = values.flatten
+      end
+
+      rows.times do |i|
+        define_method("row#{i}") { rows[i] }
+      end
+    end
+
+    const_set("Mat#{rows}x#{cols}", klass)
+  end
+
+  define_matrix(2, 2)
+  define_matrix(3, 3)
+  define_matrix(4, 4)
+
+  class Mat3x3
+    def determinant
+      a, b, c = row0
+      d, e, f = row1
+      g, h, i = row2
+      a*(e*i - f*h) - b*(d*i - f*g) + c*(d*h - e*g)
+    end
+  end
+end
+
+m = M::Mat2x2.new [[1, 2], [3, 4]]
+puts m[0, 1]

@@ -1,0 +1,302 @@
+:PROPERTIES:
+:ID:       7a12fb92-dd45-4176-9983-0e39df8d396c
+:header-args: :tangle hs/Tensor1.hs :comments both
+:END:
+#+title: linear/tensor/hs-1
+#+LATEX_HEADER \usepackage{amsmath}
+
+This impletement define all dimensions tensor as single class,
+and not specify dimensions in runtime.
+Haskell is a type static langugage, not a duck.
+We can define tensor more strict.
+
+#+BEGIN_SRC haskell 
+  module Tensor1 {
+    Tensor(..)
+    ,scalar,vector,matrix
+    ,reshape
+    ,transposeTensor
+    ,tensorProduct
+    ,contract
+    )where
+#+END_SRC
+
+Tensor 类型：存储形状 (shape) 和扁平化的数据 (values)
+#+BEGIN_SRC haskell 
+  data Tensor a = Tensor {
+    shape :: [Int] 
+    ,values :: [a]
+    }deriving(Eq, Show)
+#+END_SRC
+
+- 各维度大小，例如 [2,3] 表示 2x3 矩阵. 这里的张量形状是在运行时候维护的
+- 元素按行优先顺序存储，例如矩阵 [[1,2],[3,4]] 存储为 [1,2,3,4]
+  
+  
+#+BEGIN_SRC haskell
+  scalar :: a -> Tensor a
+  scalar x = Tensor [] [x]
+#+END_SRC
+
+#+BEGIN_SRC haskell
+  vector :: [a] -> Tensor a
+  vector xs = Tensor [length xs] xs
+#+END_SRC
+
+#+BEGIN_SRC haskell
+  matrix :: [[a]] -> Tensor a
+  matrix xss
+    | all (== cols) (map length xss) = Tensor [rows, cols] (concat xss)
+    | otherwise = error "Inconsistent row length of matrix!"
+    where
+      rows = length xss
+      cols = if null xss then 0 else length (head xss)
+#+END_SRC
+
+张量加法, 逐元素加法
+#+BEGIN_SRC haskell
+  add :: Num a => Tensor a -> Tensor a -> Tensor a
+  add t1 t2
+    | shape t1 /= shape t2 = error "Shape of tensors mismatch!"
+    | otherwise = Tensor (shape t1) (zipWith (+) (values t1) (values t2))
+#+END_SRC
+
+张量积
+#+BEGIN_SRC haskell
+  product :: Num a => Tensor a -> Tensor a -> Tensor a
+  product t1 t2 = Tensor (shape t1 ++ shape t2) [x * y | x <- values t1, y <- values t2]
+#+END_SRC
+- 张量积的结果维度为原维度之和.
+- 张量积的元素为原本维度的两两组合，这里使用迭代器语法来生成组合
+
+对列表元素转置
+#+BEGIN_SRC haskell
+  transpose :: [[a]] -> [[a]]
+  transpose
+    | [] = []
+    | ([] : xss) = transpose xss  -- 跳过空行
+    | ((x : xs) : xss) =
+      (x : [h | (h : _) <- xss]) :  -- 取出所有行的第一个元素
+      transpose (xs : [t | (_ : t) <- xss])  -- 处理剩余元素
+#+END_SRC
+我们的做法是，取出所有行的第一个元素，组成一列，然后递归，
+取出第二行的元素，组成第二列...
+1. 递归终止条件‌：
+- 输入为空列表时返回空。
+- 遇到空行 ([] : xss) 时跳过，继续处理后续行。
+  输入的列表，解构为 头部 [] 空列表，和剩下的元素. 如果匹配上了这个模式，
+  就直接转置剩下的元素
+
+‌2. 提取当前列‌：
+- 使用列表推导 [h | (h : _ ) <- xss] 取出每行的第一个元素.
+  ,: 运算符‌：表示列表的头部 (h) 和尾部 (_)，例如 [1, 2, 3] 可分解为 1 : [2, 3]
+   (h : _)‌：匹配一个 ‌非空列表‌，提取第一个元素（头部）为 h，并忽略剩余元素（尾部用 _ 表示）
+   
+‌3. 处理剩余元素‌：
+- 对每行的剩余部分 (xs 和 t) 递归调用 transpose
+
+#+BEGIN_SRC haskell
+  transposeTensor :: Tensor a -> Tensor a
+  transposeTensor t
+    | length (shape t) < 2 = t  -- 标量或向量无需转置
+    | otherwise = Tensor newShape (concat $ transpose chunks)
+    where
+      -- 将数据分块为最内层维度
+      chunkSize = last (shape t)
+      chunks = chunksOf chunkSize (values t)
+      -- 交换最后两个维度
+      newShape = init (init (shape t)) ++ [last (shape t)] ++ [shape t !! (length (shape t) - 2)]
+#+END_SRC
+
+- 这两个交换维度是随便选定的，哪两个都行.
+- init (shape t)‌
+  提取原形状列表 ‌除最后一个元素外的所有元素‌。两个 init 就去除了最后两个元素
+  例如：若 shape t = [2, 3, 4]，则 init (shape t) = [2, 3]。
+
+- ‌[last (shape t)]‌
+  提取原形状的 ‌最后一个元素‌，并包装成单元素列表。
+  例如：last (shape t) = 4 → [4]。
+
+‌- shape t !! (length (shape t) - 2)‌
+!! 是索引操作符号, 相当于其他语言的 []
+提取原形状的 ‌倒数第二个元素‌（索引从 0 开始）。
+例如：shape t = [2, 3, 4]，则 length (shape t) - 2 = 1 → shape t !! 1 = 3。
+
+这里的 init 和 last，可以类系 Lisp 的 构造子列表 car 和 cdr.
+不过它们在构造方向上是相反的.
+
+
+#+BEGIN_SRC haskell
+  reshape :: [Int] -> Tensor a -> Tensor a
+  reshape newShape t
+    | product newShape == product (shape t) = Tensor newShape (values t)
+    | otherwise = error "新形状元素总数不匹配"
+#+END_SRC
+我们使用扁平结构保存张量元素，因此改变形状只需要改变 shape 列表就好.
+
+* Contract(收缩)
+#+BEGIN_SRC haskell
+  -- 张量收缩（例如矩阵乘法）
+  -- 参数：收缩 t1 的第 k 个轴和 t2 的第 l 个轴
+  contract :: Num a => Int -> Int -> Tensor a -> Tensor a -> Tensor a
+  contract k l t1 t2
+    | s1 !! k /= s2 !! l = error "收缩维度长度不匹配"
+    | otherwise = Tensor newShape [sumProd xs ys | xs <- groupedT1, ys <- groupedT2]
+    where
+      s1 = shape t1
+      s2 = shape t2
+      -- 计算新形状
+      newShape = removeAt k s1 ++ removeAt l s2
+      -- 分组待收缩维度
+      groupedT1 = groupAxes k t1
+      groupedT2 = groupAxes l t2
+      -- 计算对应组的点积和
+      sumProd xs ys = sum $ zipWith (*) xs ys
+
+  -- ======================
+  --       内部工具函数
+  -- ======================
+
+  -- 按指定轴分组数据（用于收缩）
+  groupAxes :: Int -> Tensor a -> [[a]]
+  groupAxes axis t = chunksOf chunkSize grouped
+    where
+      s = shape t
+      axisSize = s !! axis
+      -- 计算其他维度的总长度
+      outerDims = product (removeAt axis s)
+      -- 每个组的元素数量为轴的大小
+      chunkSize = axisSize
+      -- 将轴移动到末尾并分组
+      permutedIndices = permutation axis (length s)
+      rearranged = transpose (chunksOf (product (drop (axis + 1) s)) (values t))
+      grouped = concat rearranged
+
+  -- 生成调整维度的排列（将指定轴移到最后）
+  permutation :: Int -> Int -> [Int]
+  permutation axis n = [0..axis-1] ++ [axis+1..n-1] ++ [axis]
+
+  -- 辅助函数：从列表中移除指定位置元素
+  removeAt :: Int -> [a] -> [a]
+  removeAt idx xs = take idx xs ++ drop (idx + 1) xs
+
+  -- 将列表分割成大小为 n 的子列表
+  chunksOf :: Int -> [a] -> [[a]]
+  chunksOf _ [] = []
+  chunksOf n xs = take n xs : chunksOf n (drop n xs)
+#+END_SRC
+
+#+RESULTS:
+
+
+
+* Demos
+:PROPERTIES:
+:header-args: :noweb yes :noweb-ref _ :tangle no
+:END:
+
+** Scalar constructor
+#+BEGIN_SRC haskell
+  <<tensor>>
+  
+  main = do
+    let s = scalar 3
+    print $ (show s)
+#+END_SRC
+
+#+RESULTS:
+: Tensor {shape = [], values = [3]}
+
+** Vector Constructor
+#+BEGIN_SRC haskell
+  <<tensor>>
+
+  main = do
+    let vec = vector [1, 2, 3] :: Tensor Int
+    print $ (show vec)
+#+END_SRC
+
+#+RESULTS:
+: Tensor {shape = [3], values = [1,2,3]}
+
+** Matric Contstructor
+#+BEGIN_SRC haskell
+  <<tensor>>
+  main = do
+    let mat = matrix [[1,2], [3,4]]
+    print $ (show mat)
+#+END_SRC
+
+#+RESULTS:
+: Tensor {shape = [2,2], values = [1,2,3,4]}
+
+** 3D Tensor
+#+BEGIN_SRC haskell
+  <<tensor>>
+  main = do
+    let tensor3D = reshape [3,2,2] (vector [1..12])
+    print $ (show tensor3D)
+#+END_SRC
+
+#+RESULTS:
+: Tensor {shape = [3,2,2], values = [1,2,3,4,5,6,7,8,9,10,11,12]}
+
+
+** scalar add
+#+BEGIN_SRC haskell
+  <<tensor>>
+
+  main = do
+    let s1 = scalar 3
+    let s2 = scalar 4
+    let s3 = add s1 s2
+
+    print $ (show s3)
+#+END_SRC
+
+#+RESULTS:
+: Tensor {shape = [], values = [7]}
+
+** 2x3 Matrix Tranpsoe
+#+BEGIN_SRC haskell
+  <<tensor>>
+
+  main = do
+    let m = [[1,2,3], [4,5,6]]
+    print $ (show (transpose m))
+#+END_SRC
+
+#+RESULTS:
+: [[1,4],[2,5],[3,6]]
+
+** Contract (Matrix Multiply)
+矩阵乘法 = 收缩第一个矩阵的最后一列（轴1）和第二个矩阵的首行（轴0）
+#+BEGIN_SRC haskell
+    <<tensor>>
+    main = do
+      let matrixA = matrix [[1,2],
+                            [3,4]] 
+      let matrixB = matrix [[5,6],
+                            [7,8]]
+      let matrixProduct = contract 1 0 matrixA matrixB
+      print $ (show matrixProduct)
+#+END_SRC
+
+#+RESULTS:
+: Tensor {shape = [2,2], values = [19,22,43,50]}
+
+** 3D Tensor Contract
+- 收缩 tensorA 的轴1（长度3）和 tensorB 的轴0（长度3）
+#+BEGIN_SRC haskell
+  <<tensor>>
+
+  main = do
+    let tensorA = reshape [2,3,4] (vector [1..24])  -- shape [2,3,4]
+    let tensorB = reshape [3,4,2] (vector [1..24])  -- shape [3,4,2]
+
+    let contracted = contract 1 0 tensorA tensorB  -- 新形状 [2,4,4,2]
+    print $ (show contracted)
+#+END_SRC
+
+#+RESULTS:
+: Tensor {shape = [2,4,4,2], values = [199,214,229,244,259,274,289,304,523,574,625,676,727,778,829,880,226,244,262,280,298,316,334,352,550,604,658,712,766,820,874,928,253,274,295,316,337,358,379,400,577,634,691,748,805,862,919,976,280,304,328,352,376,400,424,448,604,664,724,784,844,904,964,1024]}

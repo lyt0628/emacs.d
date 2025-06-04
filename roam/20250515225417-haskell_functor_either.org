@@ -1,0 +1,13 @@
+:PROPERTIES:
+:ID:       3ba9443b-e20c-4cdc-bd40-b23dc57a7a2c
+:END:
+#+title: hs/functor/Either
+
+Either 是持有两条路径的类型，相比与 Maybe，在失败的情况下它能返回一个静态的类型参数作为错误信息.
+#+BEGIN_SRC haskell
+  instance Functor (Either e) where
+    fmap _ (Left e) = Left e
+    fmap f (Right x) = Right (f x)
+#+END_SRC
+
+使用 instance 实现 Functor 类型类 的是带有类型参数 e 的参数话类型 Either.

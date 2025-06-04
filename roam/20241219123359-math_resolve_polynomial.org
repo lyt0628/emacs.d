@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       f3b60ba4-143c-4969-a0e6-a6259bc6d3a1
+:END:
+#+title: math-resolve_polynomial
+
+#+NAME: p
+#+begin_src lua :noweb yes
+  print(88g)
+#+end_src

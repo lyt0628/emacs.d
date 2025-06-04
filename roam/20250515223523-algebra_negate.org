@@ -1,0 +1,15 @@
+:PROPERTIES:
+:ID:       2f22110d-468d-4a48-ba23-71d4a5fe5a5a
+:header-args: :tangle hs/Negatable.hs :comments both
+:END:
+#+title: algebra/negate
+
+#+BEGIN_SRC haskell
+  module Negatable where
+
+  class Negatable a where
+    negate :: a -> a
+#+END_SRC
+
+
+Negatable 类型类的实例 必须支持negate 操作，并且这个操作是封闭的.
